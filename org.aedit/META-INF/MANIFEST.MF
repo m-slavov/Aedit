@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.aedit
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.aedit; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib,
+ org.eclipse.emf.common,
+ org.xtext.example.myavdl;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.aedit.scoping,
+ org.aedit.services,
+ org.aedit.serializer,
+ org.aedit.aedit,
+ org.aedit.aedit.impl,
+ org.aedit.generator,
+ org.aedit.parser.antlr,
+ org.aedit,
+ org.aedit.aedit.util,
+ org.aedit.parser.antlr.internal,
+ org.aedit.validation,
+ org.aedit.formatting2
+Import-Package: org.apache.log4j

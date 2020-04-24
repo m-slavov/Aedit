@@ -1,0 +1,140 @@
+grammar org.aedit.Aedit with org.eclipse.xtext.common.Terminals
+
+generate aedit "http://www.aedit.org/Aedit"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.xtext.org/example/mydsl/MyAvdl" as avroIDL
+
+Model:
+	ruleDeclarations+=RuleDeclaration*
+	ruleMaps+=RuleMap*
+	features+=Feature*
+	featureMaps+=FeatureMap*
+;
+
+Feature:
+	'feature' name=ID (':' extend=[Feature])? '{' ruleMaps+=[RuleMap]* '}'
+;
+
+FeatureMap:
+	'use' name=[Feature] ';'
+;
+
+RuleMap:
+	'ruleset' name=ID '{' rules+=[RuleDeclaration]* '}'	
+;
+
+RuleDeclaration:
+	'rule' name=ID '{' rules+=GenericRule* '}'
+;
+
+GenericRule:
+	RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum
+;
+
+SchemaRule:
+	RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType
+;
+
+EnumRule:
+	RemoveEnum | RenameEnum | AddEnum
+;
+
+ChangeSchema:
+	'change' ('record'|'error') schema=[avroIDL::Type | QN] '{' rules+=SchemaRule* '}'
+;
+
+ChangeEnum:
+	'change' 'enum' schema=[avroIDL::EnumType | QN] '{' rules+=EnumRule* '}'
+;
+
+Add:
+	AddRecord | AddEnumeration
+;
+
+AddRecord:
+	'add.at' '(' index=INT ')' 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID '{' fields+=Field* '}'
+;
+
+AddEnumeration:
+	'add.at' '(' index=INT ')' 'enum' namespace=[avroIDL::AvroIDLFile] '.' enumName=ID '{' symbols+=ID* '}'
+;
+
+AddVariable:
+	'add.at' '(' index=INT ')' newVar=Field ';' 
+;
+
+AddEnum:
+	'add.at' '(' index=INT ')' varName=ID';' 
+;
+
+RemoveSchema:
+	'remove' schemaType=SCHEMA_TYPE schema=[avroIDL::Type | QN] ';'
+;
+
+RemoveVariable:
+	'remove' variable=[avroIDL::Field | QN] ';'
+;
+
+RemoveEnum:
+	'remove' varName=ID ';'
+;
+
+RenameSchema:
+	'rename' schemaType=SCHEMA_TYPE schema=[avroIDL::Type | QN] '=>' newSchName=ID ';'
+;
+
+RenameVariable:
+	'rename' variable=[avroIDL::Field | QN] '=>' newVarName=ID ';'
+;
+
+RenameEnum:
+	'rename' oldName=ID '=>' newEnumName=ID ';'
+;
+
+ChangeDefValue:
+	'set_val' field=[avroIDL::Field | QN] '=>' newVal=Value ';'
+;
+
+ChangeType:
+	'set_type' field=[avroIDL::Field | QN] '=>' newType=VARIABLE_TYPE ';'
+;
+
+Field:
+	type=VARIABLE_TYPE varName=ID ('=' value=Value)?
+;
+
+Value:
+	FloatValue | IntValue | StringValue
+;
+
+FloatValue:
+	val=Real
+;
+
+StringValue:
+	val=ID
+;
+
+IntValue:
+	val=INT
+;
+
+Real returns ecore::EFloat: '-'? INT '.' (INT);
+
+SCHEMA_TYPE:
+	'record'	|
+	'enum'
+;
+
+VARIABLE_TYPE:
+	'void'		|
+	'int'		|
+	'double'	|
+	'string'	|
+	'long'
+;
+
+QN:
+	ID ('.' ID)*
+;
