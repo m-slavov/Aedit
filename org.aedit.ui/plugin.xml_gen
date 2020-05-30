@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="windows-1252"?>
 <?eclipse version="3.0"?>
 <plugin>
 	<extension
@@ -7,7 +7,7 @@
 			class="org.aedit.ui.AeditExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
 			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
 			default="true"
-			extensions="aedit"
+			extensions="aedit,aeditm"
 			id="org.aedit.Aedit"
 			name="Aedit Editor">
 		</editor>
@@ -218,6 +218,19 @@
 			uriExtension="aedit">
 		</resourceServiceProvider>
 	</extension>
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="org.aedit.ui.AeditExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="aeditm">
+		</parser>
+	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+		<resourceServiceProvider
+			class="org.aedit.ui.AeditExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+			uriExtension="aeditm">
+		</resourceServiceProvider>
+	</extension>
 	<!-- marker definitions for org.aedit.Aedit -->
 	<extension
 			id="aedit.check.fast"
@@ -243,7 +256,7 @@
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
 			class="org.aedit.ui.AeditExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
-			fileExtensions="aedit"/>
+			fileExtensions="aedit,aeditm"/>
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
@@ -386,24 +399,28 @@
 	<extension point="org.eclipse.compare.contentViewers">
 		<viewer id="org.aedit.Aedit.compare.contentViewers"
 			class="org.aedit.ui.AeditExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-			extensions="aedit">
+			extensions="aedit,aeditm">
 		</viewer>
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
 		<viewer id="org.aedit.Aedit.compare.contentMergeViewers"
 			class="org.aedit.ui.AeditExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-			extensions="aedit" label="Aedit Compare">
+			extensions="aedit,aeditm" label="Aedit Compare">
 		</viewer>
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
 		<provider id="org.aedit.Aedit.editors.documentProviders"
 			class="org.aedit.ui.AeditExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-			extensions="aedit">
+			extensions="aedit,aeditm">
 		</provider>
 	</extension>
 	<extension point="org.eclipse.team.core.fileTypes">
 		<fileTypes
 			extension="aedit"
+			type="text">
+		</fileTypes>
+		<fileTypes
+			extension="aeditm"
 			type="text">
 		</fileTypes>
 	</extension>

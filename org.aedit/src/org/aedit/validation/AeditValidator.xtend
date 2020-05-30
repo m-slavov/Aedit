@@ -28,14 +28,15 @@ import org.aedit.aedit.RenameVariable
 import org.aedit.aedit.RuleDeclaration
 import org.aedit.aedit.RuleMap
 import org.eclipse.xtext.validation.Check
-import org.xtext.example.mydsl.myAvdl.AvroIDLFile
-import org.xtext.example.mydsl.myAvdl.EnumType
-import org.xtext.example.mydsl.myAvdl.PrimativeTypeLink
-import org.xtext.example.mydsl.myAvdl.RecordType
-import org.xtext.example.mydsl.myAvdl.TypeDef
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.PrimativeTypeLink
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef
 import org.aedit.aedit.StringValue
 import org.aedit.aedit.IntValue
 import org.aedit.aedit.FloatValue
+import org.aedit.aedit.AddEnum
 
 /**
  * This class contains custom validation rules. 
@@ -49,15 +50,23 @@ class AeditValidator extends AbstractAeditValidator {
 	private List<String> newVariables = new ArrayList<String>()
 	private List<String> existingVariables = new ArrayList<String>()
 
+	protected static val ISSUE_CODE_PREFIX = "org.aedit.";
+	public static val REMOVE_SCHEMA = ISSUE_CODE_PREFIX + "RemoveSchema";
+	public static val REMOVE_VARIABLE = ISSUE_CODE_PREFIX + "RemoveVariable";
+	public static val REMOVE_ENUM_CONST = ISSUE_CODE_PREFIX + "RemoveEnumConst";
+	public static val DUPLICATE_FIELD = ISSUE_CODE_PREFIX + "DuplicateField";
+
 	private String currentSchema;
 	private String currentProtocol;
 
 	@Check
 	def checkModel(Model model) {
+		protocols.clear
+
 		if (protocols.empty) {
 			protocols = HelperClass.getAvroFiles(model.eResource)
 			protocols.forEach [ p1, p2 |
-				getAllSchemas(p2)
+				existingVariables.addAll(HelperClass.getSchemasAndFields(p2))
 			]
 		}
 	}
@@ -81,7 +90,8 @@ class AeditValidator extends AbstractAeditValidator {
 		var fullName = currentProtocol + '.' + currentSchema
 
 		if (removedVariables.contains(fullName)) {
-			error("Variable has been deleted!", AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA)
+			error("Schema does not exist!", AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA,
+				org.aedit.validation.AeditValidator.REMOVE_SCHEMA, fullName)
 		}
 	}
 
@@ -96,7 +106,8 @@ class AeditValidator extends AbstractAeditValidator {
 		var fullName = currentProtocol + '.' + currentSchema
 
 		if (removedVariables.contains(fullName)) {
-			error("Variable has been deleted!", AeditPackage.Literals.CHANGE_ENUM__SCHEMA)
+			error("Schema does not exist!", AeditPackage.Literals.CHANGE_ENUM__SCHEMA,
+				org.aedit.validation.AeditValidator.REMOVE_SCHEMA, fullName)
 		}
 	}
 
@@ -106,7 +117,8 @@ class AeditValidator extends AbstractAeditValidator {
 		var fullName = currentProtocol + '.' + currentSchema + '.' + removeVariable.variable.name
 
 		if (removedVariables.contains(fullName)) {
-			error("Variable has been deleted!", AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE)
+			error("Variable has been deleted!", AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE, REMOVE_VARIABLE,
+				fullName)
 		} else {
 			removedVariables.add(fullName)
 		}
@@ -120,7 +132,8 @@ class AeditValidator extends AbstractAeditValidator {
 		var newVar = currentProtocol + '.' + currentSchema + '.' + renameVariable.newVarName
 
 		if (removedVariables.contains(oldVar)) {
-			error("Variable has been deleted!", AeditPackage.Literals.RENAME_VARIABLE__VARIABLE)
+			error("Variable has been deleted!", AeditPackage.Literals.RENAME_VARIABLE__VARIABLE, REMOVE_VARIABLE,
+				oldVar)
 		}
 
 		if (isUnique(newVar)) {
@@ -142,7 +155,8 @@ class AeditValidator extends AbstractAeditValidator {
 		var fullName = protocolName + '.' + schemaName
 
 		if (removedVariables.contains(fullName)) {
-			error("Schema does not exist!", AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA)
+			error("Schema does not exist!", AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA,
+				org.aedit.validation.AeditValidator.REMOVE_SCHEMA, fullName)
 		} else {
 			removedVariables.add(fullName)
 		}
@@ -159,21 +173,22 @@ class AeditValidator extends AbstractAeditValidator {
 		var fullName = protocolName + '.' + schemaName
 
 		if (removedVariables.contains(fullName)) {
-			error("Schema does not exist!", AeditPackage.Literals.RENAME_SCHEMA__SCHEMA)
+			error("Schema does not exist!", AeditPackage.Literals.RENAME_SCHEMA__SCHEMA,
+				org.aedit.validation.AeditValidator.REMOVE_SCHEMA, fullName)
 		} else {
 			removedVariables.add(fullName)
 		}
 	}
 
 	@Check
-	def checkRemoveEnum(RemoveEnum removeEnum) {
+	def checkRemoveEnumConstant(RemoveEnum removeEnum) {
 
 		var fullName = currentProtocol + '.' + currentSchema + '.' + removeEnum.varName
 
 		if (removedVariables.contains(fullName)) {
-			error("Variable is already deleted!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME)
+			error("Constant does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, REMOVE_ENUM_CONST, fullName)
 		} else if (!existingVariables.contains(fullName)) {
-			error("Variable does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME)
+			error("Constant does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, REMOVE_ENUM_CONST, fullName)
 		} else {
 			removedVariables.add(fullName)
 		}
@@ -181,7 +196,7 @@ class AeditValidator extends AbstractAeditValidator {
 	}
 
 	@Check
-	def checkRenameEnum(RenameEnum renameEnum) {
+	def checkRenameEnumConstant(RenameEnum renameEnum) {
 
 		var oldEnum = currentProtocol + '.' + currentSchema + '.' + renameEnum.oldName
 		var newEnum = currentProtocol + '.' + currentSchema + '.' + renameEnum.newEnumName
@@ -203,11 +218,12 @@ class AeditValidator extends AbstractAeditValidator {
 	@Check
 	def checkChangeType(ChangeType changeType) {
 
+		var variable = getVariable(currentProtocol, currentSchema, changeType.field.name).^default
 		var fullName = currentProtocol + '.' + currentSchema + '.' + changeType.field.name
 
 		if (removedVariables.contains(fullName)) {
-			error("Variable does not exist!", AeditPackage.Literals.CHANGE_TYPE__FIELD)
-		} else if (changeType.field.^default !== null) {
+			error("Variable has been deleted!", AeditPackage.Literals.CHANGE_TYPE__FIELD, REMOVE_VARIABLE, fullName)
+		} else if (variable !== null) {
 
 			var varType = changeType.field.type
 			if (varType instanceof PrimativeTypeLink) {
@@ -235,6 +251,32 @@ class AeditValidator extends AbstractAeditValidator {
 							error("Cannot convert from double to string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
 						case 'int':
 							error("Cannot convert from double to int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+						case 'double':
+							error("Variable is already of type double!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+					}
+
+				} else if (varType.target.equals('string')) {
+					switch (changeType.newType) {
+						case 'string':
+							error("Variable is already of type string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+					}
+				}
+			}
+		} else {
+			var varType = changeType.field.type
+			if (varType instanceof PrimativeTypeLink) {
+				if (varType.target.equals('int')) {
+					switch (changeType.newType) {
+						case 'int':
+							error("Variable is already of type int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+					}
+				} else if (varType.target.equals('long')) {
+					switch (changeType.newType) {
+						case 'long':
+							error("Variable is already of type long!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+					}
+				} else if (varType.target.equals('double')) {
+					switch (changeType.newType) {
 						case 'double':
 							error("Variable is already of type double!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
 					}
@@ -289,7 +331,8 @@ class AeditValidator extends AbstractAeditValidator {
 				}
 			}
 		} else {
-			error("Variable does not exist!", AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD)
+			error("Variable has been deleted!", AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD, REMOVE_VARIABLE,
+				fullName)
 		}
 
 	}
@@ -300,7 +343,7 @@ class AeditValidator extends AbstractAeditValidator {
 
 		if (existingVariables.contains(recordName)) {
 			error("Record with this name already exists in this namespace!",
-				AeditPackage.Literals.ADD_RECORD__RECORD_NAME)
+				AeditPackage.Literals.ADD_RECORD__RECORD_NAME, DUPLICATE_FIELD, recordName)
 		} else {
 			newVariables.add(recordName)
 
@@ -342,8 +385,25 @@ class AeditValidator extends AbstractAeditValidator {
 	}
 
 	@Check
+	def checkAddEnumConstant(AddEnum addEnum) {
+		var fullName = currentProtocol + '.' + currentSchema + '.' + addEnum.varName
+
+		if (existingVariables.contains(fullName)) {
+			error("Field with this name already exists!", AeditPackage.Literals.ADD_ENUM__VAR_NAME, DUPLICATE_FIELD,
+				fullName)
+		}
+
+	}
+
+	@Check
 	def checkAddVariable(AddVariable addVariable) {
-		// TODO: Add	
+		var fullName = currentProtocol + '.' + currentSchema + '.' + addVariable.newVar.varName
+		if (!isUnique(fullName)) {
+			newVariables.add(fullName)
+		} else {
+			error("Field with this name already exists!", AeditPackage.Literals.ADD_VARIABLE__NEW_VAR, DUPLICATE_FIELD,
+				fullName)
+		}
 	}
 
 	@Check
@@ -485,24 +545,34 @@ class AeditValidator extends AbstractAeditValidator {
 		}
 	}
 
-	// Helper methods
-	def getAllSchemas(AvroIDLFile file) {
-		for (typeDef : file.elements.filter(TypeDef)) {
-			var currentSchema = typeDef.type
+//	// Helper methods
+//	def getAllSchemas(AvroIDLFile file) {
+//		for (typeDef : file.elements.filter(TypeDef)) {
+//			var currentSchema = typeDef.type
+//
+//			if (currentSchema instanceof EnumType) {
+//				existingVariables.add(file.name + '.' + currentSchema.name)
+//				for (literal : currentSchema.literals) {
+//					existingVariables.add(file.name + '.' + currentSchema.name + '.' + literal)
+//				}
+//			} else if (currentSchema instanceof RecordType) {
+//				existingVariables.add(file.name + '.' + currentSchema.name)
+//				for (field : currentSchema.fields) {
+//					existingVariables.add(file.name + '.' + currentSchema.name + '.' + field.name)
+//				}
+//			}
+//
+//		}
+//	}
 
-			if (currentSchema instanceof EnumType) {
-				existingVariables.add(file.name + '.' + currentSchema.name)
-				for (literal : currentSchema.literals) {
-					existingVariables.add(file.name + '.' + currentSchema.name + '.' + literal)
-				}
-			} else if (currentSchema instanceof RecordType) {
-				existingVariables.add(file.name + '.' + currentSchema.name)
-				for (field : currentSchema.fields) {
-					existingVariables.add(file.name + '.' + currentSchema.name + '.' + field.name)
-				}
-			}
+	def getVariable(String currentProtocol, String currentSchema, String fieldName) {
+		var field = protocols.get(currentProtocol).eAllContents.filter(
+			org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field).filter [
+			it.name.equals(fieldName)
+		].toList
 
-		}
+		return field.filter[(it.eContainer as RecordType).name.equals(currentSchema)].toList.get(0)
+//		return field.get(0).^default
 	}
 
 	def isUnique(String fullName) {

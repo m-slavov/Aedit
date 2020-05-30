@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.xtext.example.mydsl.myAvdl.EnumType;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType;
 
 /**
  * <!-- begin-user-doc -->

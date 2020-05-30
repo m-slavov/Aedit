@@ -1,0 +1,7 @@
+rule Rule1 {
+	remove record house.Garage;
+}
+
+ruleset RuleSet1 {
+	Rule1
+}

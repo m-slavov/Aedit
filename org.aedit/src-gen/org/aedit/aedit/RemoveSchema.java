@@ -3,7 +3,7 @@
  */
 package org.aedit.aedit;
 
-import org.xtext.example.mydsl.myAvdl.Type;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Type;
 
 /**
  * <!-- begin-user-doc -->

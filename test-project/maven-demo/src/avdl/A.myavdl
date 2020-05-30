@@ -1,0 +1,35 @@
+@namespace('house')
+protocol House{
+
+	record Garage{
+		string car = "Audi";
+		string car2 = "Peugeot";
+		int numCars = 2;
+	}
+	
+	enum Paint{
+		Red, Green, Blue
+	}
+	
+	enum ToRemove{
+		Red, Green, Blue 
+	}
+	
+	enum Changable{
+		Paris, Vienna
+	}
+	
+	record Test{
+		int a;
+		double b;
+		long c;
+		string d;
+	}
+	
+	record Test1{
+		int aInt;
+		double bDouble = 1.0;
+		long cLong = 1;
+		string dString;
+	}
+}

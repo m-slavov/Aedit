@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.xtext.example.mydsl.myAvdl.AvroIDLFile;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile;
 
 /**
  * <!-- begin-user-doc -->

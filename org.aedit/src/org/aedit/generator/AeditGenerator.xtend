@@ -35,12 +35,12 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import org.xtext.example.mydsl.myAvdl.AvroIDLFile
-import org.xtext.example.mydsl.myAvdl.EnumType
-import org.xtext.example.mydsl.myAvdl.MyAvdlFactory
-import org.xtext.example.mydsl.myAvdl.RecordType
-import org.xtext.example.mydsl.myAvdl.TypeDef
-import org.xtext.example.mydsl.myAvdl.Value
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvdlClipseFactory
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Value
 import java.io.PrintWriter
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -57,29 +57,38 @@ import org.aedit.aedit.StringValue
  */
 class AeditGenerator extends AbstractGenerator {
 
-	private Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
+	public Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
 	private String filePath = "D:\\School\\runtime-EclipseXtext\\Testbench\\src\\avdl";
 
 	private String currentProtocol;
 	private String currentSchema;
 	private int index;
-	
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+
+		val workSpaceDir = Singleton.instance.workspaceDir
 
 		protocols = HelperClass.getAvroFiles(resource)
 
 		if (!resource.allContents.toIterable.filter(FeatureMap).empty) {
+
 			// Traverse the AST
 			for (e : resource.allContents.toIterable.filter(FeatureMap)) {
 				e.compile
-			} 
+			}
+
 			// Save the newly edited models
+			
 			protocols.forEach [ p1, p2 |
-				saveAvroIDLFile(
-					URI.createURI("platform:/resource/Testbench/src-gen/m2m-gen/GEN" + p1 + ".myavdl"),
-					p2
-				)
+				if (!workSpaceDir.equals("undefined")) {
+					saveAvroIDLFile(
+						URI.createFileURI(workSpaceDir + "\\aedit-gen\\" + p1 + ".avdlclipse"),
+						p2
+					)
+				}
+
 			]
+
 		}
 
 	}
@@ -104,22 +113,21 @@ class AeditGenerator extends AbstractGenerator {
 		// Use formatter for pretty printing of the new .avdl files.
 		rs.save(null)
 
-		// REMOVE WHEN USING Avroclipse
-		myavdl2avdl
+	// REMOVE WHEN USING Avroclipse
+//		myavdl2avdl
 	}
 
 	// TODO:REMOVE
 	def myavdl2avdl() {
 
 //		deleteDir(new File("D:\\School\\runtime-EclipseXtext\\Testbench\\src-gen\\avdl-gen\\"))
-
 		val path = "D:\\School\\runtime-EclipseXtext\\Testbench\\src-gen\\m2m-gen\\"
 		val dir = new File(path)
 		val directoryListing = dir.listFiles();
-		
-		for (file : directoryListing){
+
+		for (file : directoryListing) {
 			val newFileName = file.name.replace("myavdl", "avdl")
-			val newFile = new File("D:\\School\\runtime-EclipseXtext\\Testbench\\src-gen\\avdl-gen\\"+newFileName)
+			val newFile = new File("D:\\School\\runtime-EclipseXtext\\Testbench\\src-gen\\avdl-gen\\" + newFileName)
 			newFile.createNewFile
 			val prw = new PrintWriter(newFile.absolutePath)
 			prw.println(new String(Files.readAllBytes(Paths.get(file.path))))
@@ -231,8 +239,8 @@ class AeditGenerator extends AbstractGenerator {
 		// Get name of the protocol
 		val protocolName = addRecord.namespace.name
 
-		val TypeDef newTypeDef = MyAvdlFactory.eINSTANCE.createTypeDef
-		newTypeDef.type = MyAvdlFactory.eINSTANCE.createRecordType => [
+		val TypeDef newTypeDef = AvdlClipseFactory.eINSTANCE.createTypeDef
+		newTypeDef.type = AvdlClipseFactory.eINSTANCE.createRecordType => [
 			name = schemaName
 
 			addRecord.fields.forEach [ field |
@@ -250,8 +258,8 @@ class AeditGenerator extends AbstractGenerator {
 		// Get name of the protocol
 		val protocolName = addEnumeration.namespace.name
 
-		val TypeDef newTypeDef = MyAvdlFactory.eINSTANCE.createTypeDef
-		newTypeDef.type = MyAvdlFactory.eINSTANCE.createEnumType => [
+		val TypeDef newTypeDef = AvdlClipseFactory.eINSTANCE.createTypeDef
+		newTypeDef.type = AvdlClipseFactory.eINSTANCE.createEnumType => [
 			name = schemaName
 
 			addEnumeration.symbols.forEach [ symbol |
@@ -311,7 +319,8 @@ class AeditGenerator extends AbstractGenerator {
 		protocols.get(currentProtocol).elements.filter(TypeDef).forEach [ typeDef |
 			if (typeDef.type instanceof RecordType) {
 				if (typeDef.type.name.equals(currentSchema)) {
-					(typeDef.type as RecordType).fields.add(addVariable.index, HelperClass.createField(addVariable.newVar))
+					(typeDef.type as RecordType).fields.add(addVariable.index,
+						HelperClass.createField(addVariable.newVar))
 				}
 			}
 		]
@@ -327,19 +336,19 @@ class AeditGenerator extends AbstractGenerator {
 
 					switch (newVal) {
 						case newVal instanceof IntValue:
-							newDefValue = MyAvdlFactory.eINSTANCE.createIntValue => [
+							newDefValue = AvdlClipseFactory.eINSTANCE.createIntValue => [
 								^val = (newVal as IntValue).^val
 							]
 						case newVal instanceof FloatValue:
-							newDefValue = MyAvdlFactory.eINSTANCE.createFloatValue => [
+							newDefValue = AvdlClipseFactory.eINSTANCE.createFloatValue => [
 								^val = (newVal as FloatValue).^val
 							]
 						case newVal instanceof IntValue:
-							newDefValue = MyAvdlFactory.eINSTANCE.createIntValue => [
+							newDefValue = AvdlClipseFactory.eINSTANCE.createIntValue => [
 								^val = (newVal as IntValue).^val
 							]
 						default:
-							newDefValue = MyAvdlFactory.eINSTANCE.createStringValue => [
+							newDefValue = AvdlClipseFactory.eINSTANCE.createStringValue => [
 								^val = (newVal as StringValue).^val
 							]
 					}
@@ -350,13 +359,13 @@ class AeditGenerator extends AbstractGenerator {
 			}
 		]
 	}
-	
-	def compile(ChangeType changeType){
+
+	def compile(ChangeType changeType) {
 		protocols.get(currentProtocol).elements.filter(TypeDef).filter[type instanceof RecordType].forEach [ typeDef |
 			if ((typeDef.type as RecordType).name.equals(currentSchema)) {
 				(typeDef.type as RecordType).fields.filter[it.name.equals(changeType.field.name)].forEach [ field |
 
-					field.type = MyAvdlFactory.eINSTANCE.createPrimativeTypeLink=>[
+					field.type = AvdlClipseFactory.eINSTANCE.createPrimativeTypeLink => [
 						target = changeType.newType
 					]
 

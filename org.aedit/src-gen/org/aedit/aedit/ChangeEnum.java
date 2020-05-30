@@ -5,7 +5,7 @@ package org.aedit.aedit;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.xtext.example.mydsl.myAvdl.EnumType;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType;
 
 /**
  * <!-- begin-user-doc -->

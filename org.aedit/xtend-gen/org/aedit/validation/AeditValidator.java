@@ -5,11 +5,13 @@ package org.aedit.validation;
 
 import HelperClass.HelperClass;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import org.aedit.aedit.AddEnum;
 import org.aedit.aedit.AddEnumeration;
 import org.aedit.aedit.AddRecord;
 import org.aedit.aedit.AddVariable;
@@ -37,15 +39,15 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
-import org.xtext.example.mydsl.myAvdl.AvroIDLFile;
-import org.xtext.example.mydsl.myAvdl.EnumType;
-import org.xtext.example.mydsl.myAvdl.FieldType;
-import org.xtext.example.mydsl.myAvdl.PrimativeTypeLink;
-import org.xtext.example.mydsl.myAvdl.RecordType;
-import org.xtext.example.mydsl.myAvdl.Type;
-import org.xtext.example.mydsl.myAvdl.TypeDef;
-import org.xtext.example.mydsl.myAvdl.Value;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.FieldType;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.PrimativeTypeLink;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Value;
 
 /**
  * This class contains custom validation rules.
@@ -62,17 +64,28 @@ public class AeditValidator extends AbstractAeditValidator {
   
   private List<String> existingVariables = new ArrayList<String>();
   
+  protected final static String ISSUE_CODE_PREFIX = "org.aedit.";
+  
+  public final static String REMOVE_SCHEMA = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveSchema");
+  
+  public final static String REMOVE_VARIABLE = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveVariable");
+  
+  public final static String REMOVE_ENUM_CONST = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveEnumConst");
+  
+  public final static String DUPLICATE_FIELD = (AeditValidator.ISSUE_CODE_PREFIX + "DuplicateField");
+  
   private String currentSchema;
   
   private String currentProtocol;
   
   @Check
   public void checkModel(final Model model) {
+    AeditValidator.protocols.clear();
     boolean _isEmpty = AeditValidator.protocols.isEmpty();
     if (_isEmpty) {
       AeditValidator.protocols = HelperClass.getAvroFiles(model.eResource());
       final BiConsumer<String, AvroIDLFile> _function = (String p1, AvroIDLFile p2) -> {
-        this.getAllSchemas(p2);
+        this.existingVariables.addAll(HelperClass.getSchemasAndFields(p2));
       };
       AeditValidator.protocols.forEach(_function);
     }
@@ -94,7 +107,8 @@ public class AeditValidator extends AbstractAeditValidator {
     String fullName = ((this.currentProtocol + ".") + this.currentSchema);
     boolean _contains = this.removedVariables.contains(fullName);
     if (_contains) {
-      this.error("Variable has been deleted!", AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA);
+      this.error("Schema does not exist!", AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA, 
+        AeditValidator.REMOVE_SCHEMA, fullName);
     }
   }
   
@@ -108,7 +122,8 @@ public class AeditValidator extends AbstractAeditValidator {
     String fullName = ((this.currentProtocol + ".") + this.currentSchema);
     boolean _contains = this.removedVariables.contains(fullName);
     if (_contains) {
-      this.error("Variable has been deleted!", AeditPackage.Literals.CHANGE_ENUM__SCHEMA);
+      this.error("Schema does not exist!", AeditPackage.Literals.CHANGE_ENUM__SCHEMA, 
+        AeditValidator.REMOVE_SCHEMA, fullName);
     }
   }
   
@@ -121,7 +136,7 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _xifexpression = false;
       boolean _contains = this.removedVariables.contains(fullName);
       if (_contains) {
-        this.error("Variable has been deleted!", AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE);
+        this.error("Variable has been deleted!", AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE, AeditValidator.REMOVE_VARIABLE, fullName);
       } else {
         _xifexpression = this.removedVariables.add(fullName);
       }
@@ -140,7 +155,7 @@ public class AeditValidator extends AbstractAeditValidator {
       String newVar = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _newVarName);
       boolean _contains = this.removedVariables.contains(oldVar);
       if (_contains) {
-        this.error("Variable has been deleted!", AeditPackage.Literals.RENAME_VARIABLE__VARIABLE);
+        this.error("Variable has been deleted!", AeditPackage.Literals.RENAME_VARIABLE__VARIABLE, AeditValidator.REMOVE_VARIABLE, oldVar);
       }
       boolean _xifexpression = false;
       boolean _isUnique = this.isUnique(newVar);
@@ -167,7 +182,8 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _xifexpression = false;
       boolean _contains = this.removedVariables.contains(fullName);
       if (_contains) {
-        this.error("Schema does not exist!", AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA);
+        this.error("Schema does not exist!", AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA, 
+          AeditValidator.REMOVE_SCHEMA, fullName);
       } else {
         _xifexpression = this.removedVariables.add(fullName);
       }
@@ -189,7 +205,8 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _xifexpression = false;
       boolean _contains = this.removedVariables.contains(fullName);
       if (_contains) {
-        this.error("Schema does not exist!", AeditPackage.Literals.RENAME_SCHEMA__SCHEMA);
+        this.error("Schema does not exist!", AeditPackage.Literals.RENAME_SCHEMA__SCHEMA, 
+          AeditValidator.REMOVE_SCHEMA, fullName);
       } else {
         _xifexpression = this.removedVariables.add(fullName);
       }
@@ -199,7 +216,7 @@ public class AeditValidator extends AbstractAeditValidator {
   }
   
   @Check
-  public Boolean checkRemoveEnum(final RemoveEnum removeEnum) {
+  public Boolean checkRemoveEnumConstant(final RemoveEnum removeEnum) {
     boolean _xblockexpression = false;
     {
       String _varName = removeEnum.getVarName();
@@ -207,13 +224,13 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _xifexpression = false;
       boolean _contains = this.removedVariables.contains(fullName);
       if (_contains) {
-        this.error("Variable is already deleted!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME);
+        this.error("Constant does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, AeditValidator.REMOVE_ENUM_CONST, fullName);
       } else {
         boolean _xifexpression_1 = false;
         boolean _contains_1 = this.existingVariables.contains(fullName);
         boolean _not = (!_contains_1);
         if (_not) {
-          this.error("Variable does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME);
+          this.error("Constant does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, AeditValidator.REMOVE_ENUM_CONST, fullName);
         } else {
           _xifexpression_1 = this.removedVariables.add(fullName);
         }
@@ -225,7 +242,7 @@ public class AeditValidator extends AbstractAeditValidator {
   }
   
   @Check
-  public Boolean checkRenameEnum(final RenameEnum renameEnum) {
+  public Boolean checkRenameEnumConstant(final RenameEnum renameEnum) {
     boolean _xblockexpression = false;
     {
       String _oldName = renameEnum.getOldName();
@@ -256,15 +273,14 @@ public class AeditValidator extends AbstractAeditValidator {
   
   @Check
   public void checkChangeType(final ChangeType changeType) {
+    Value variable = this.getVariable(this.currentProtocol, this.currentSchema, changeType.getField().getName()).getDefault();
     String _name = changeType.getField().getName();
     String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
     boolean _contains = this.removedVariables.contains(fullName);
     if (_contains) {
-      this.error("Variable does not exist!", AeditPackage.Literals.CHANGE_TYPE__FIELD);
+      this.error("Variable has been deleted!", AeditPackage.Literals.CHANGE_TYPE__FIELD, AeditValidator.REMOVE_VARIABLE, fullName);
     } else {
-      Value _default = changeType.getField().getDefault();
-      boolean _tripleNotEquals = (_default != null);
-      if (_tripleNotEquals) {
+      if ((variable != null)) {
         FieldType varType = changeType.getField().getType();
         if ((varType instanceof PrimativeTypeLink)) {
           boolean _equals = ((PrimativeTypeLink)varType).getTarget().equals("int");
@@ -323,6 +339,57 @@ public class AeditValidator extends AbstractAeditValidator {
                   String _newType_3 = changeType.getNewType();
                   if (_newType_3 != null) {
                     switch (_newType_3) {
+                      case "string":
+                        this.error("Variable is already of type string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                        break;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else {
+        FieldType varType_1 = changeType.getField().getType();
+        if ((varType_1 instanceof PrimativeTypeLink)) {
+          boolean _equals_4 = ((PrimativeTypeLink)varType_1).getTarget().equals("int");
+          if (_equals_4) {
+            String _newType_4 = changeType.getNewType();
+            if (_newType_4 != null) {
+              switch (_newType_4) {
+                case "int":
+                  this.error("Variable is already of type int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                  break;
+              }
+            }
+          } else {
+            boolean _equals_5 = ((PrimativeTypeLink)varType_1).getTarget().equals("long");
+            if (_equals_5) {
+              String _newType_5 = changeType.getNewType();
+              if (_newType_5 != null) {
+                switch (_newType_5) {
+                  case "long":
+                    this.error("Variable is already of type long!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                    break;
+                }
+              }
+            } else {
+              boolean _equals_6 = ((PrimativeTypeLink)varType_1).getTarget().equals("double");
+              if (_equals_6) {
+                String _newType_6 = changeType.getNewType();
+                if (_newType_6 != null) {
+                  switch (_newType_6) {
+                    case "double":
+                      this.error("Variable is already of type double!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                      break;
+                  }
+                }
+              } else {
+                boolean _equals_7 = ((PrimativeTypeLink)varType_1).getTarget().equals("string");
+                if (_equals_7) {
+                  String _newType_7 = changeType.getNewType();
+                  if (_newType_7 != null) {
+                    switch (_newType_7) {
                       case "string":
                         this.error("Variable is already of type string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
                         break;
@@ -412,7 +479,7 @@ public class AeditValidator extends AbstractAeditValidator {
         }
       }
     } else {
-      this.error("Variable does not exist!", AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD);
+      this.error("Variable has been deleted!", AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD, AeditValidator.REMOVE_VARIABLE, fullName);
     }
   }
   
@@ -425,7 +492,7 @@ public class AeditValidator extends AbstractAeditValidator {
     boolean _contains = this.existingVariables.contains(recordName);
     if (_contains) {
       this.error("Record with this name already exists in this namespace!", 
-        AeditPackage.Literals.ADD_RECORD__RECORD_NAME);
+        AeditPackage.Literals.ADD_RECORD__RECORD_NAME, AeditValidator.DUPLICATE_FIELD, recordName);
     } else {
       this.newVariables.add(recordName);
       EList<Field> _fields = addRecord.getFields();
@@ -474,8 +541,32 @@ public class AeditValidator extends AbstractAeditValidator {
   }
   
   @Check
-  public Object checkAddVariable(final AddVariable addVariable) {
-    return null;
+  public void checkAddEnumConstant(final AddEnum addEnum) {
+    String _varName = addEnum.getVarName();
+    String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _varName);
+    boolean _contains = this.existingVariables.contains(fullName);
+    if (_contains) {
+      this.error("Field with this name already exists!", AeditPackage.Literals.ADD_ENUM__VAR_NAME, AeditValidator.DUPLICATE_FIELD, fullName);
+    }
+  }
+  
+  @Check
+  public Boolean checkAddVariable(final AddVariable addVariable) {
+    boolean _xblockexpression = false;
+    {
+      String _varName = addVariable.getNewVar().getVarName();
+      String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _varName);
+      boolean _xifexpression = false;
+      boolean _isUnique = this.isUnique(fullName);
+      boolean _not = (!_isUnique);
+      if (_not) {
+        _xifexpression = this.newVariables.add(fullName);
+      } else {
+        this.error("Field with this name already exists!", AeditPackage.Literals.ADD_VARIABLE__NEW_VAR, AeditValidator.DUPLICATE_FIELD, fullName);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return Boolean.valueOf(_xblockexpression);
   }
   
   @Check
@@ -617,49 +708,17 @@ public class AeditValidator extends AbstractAeditValidator {
     }
   }
   
-  public void getAllSchemas(final AvroIDLFile file) {
-    Iterable<TypeDef> _filter = Iterables.<TypeDef>filter(file.getElements(), TypeDef.class);
-    for (final TypeDef typeDef : _filter) {
-      {
-        Type currentSchema = typeDef.getType();
-        if ((currentSchema instanceof EnumType)) {
-          String _name = file.getName();
-          String _plus = (_name + ".");
-          String _name_1 = ((EnumType)currentSchema).getName();
-          String _plus_1 = (_plus + _name_1);
-          this.existingVariables.add(_plus_1);
-          EList<String> _literals = ((EnumType)currentSchema).getLiterals();
-          for (final String literal : _literals) {
-            String _name_2 = file.getName();
-            String _plus_2 = (_name_2 + ".");
-            String _name_3 = ((EnumType)currentSchema).getName();
-            String _plus_3 = (_plus_2 + _name_3);
-            String _plus_4 = (_plus_3 + ".");
-            String _plus_5 = (_plus_4 + literal);
-            this.existingVariables.add(_plus_5);
-          }
-        } else {
-          if ((currentSchema instanceof RecordType)) {
-            String _name_4 = file.getName();
-            String _plus_6 = (_name_4 + ".");
-            String _name_5 = ((RecordType)currentSchema).getName();
-            String _plus_7 = (_plus_6 + _name_5);
-            this.existingVariables.add(_plus_7);
-            EList<org.xtext.example.mydsl.myAvdl.Field> _fields = ((RecordType)currentSchema).getFields();
-            for (final org.xtext.example.mydsl.myAvdl.Field field : _fields) {
-              String _name_6 = file.getName();
-              String _plus_8 = (_name_6 + ".");
-              String _name_7 = ((RecordType)currentSchema).getName();
-              String _plus_9 = (_plus_8 + _name_7);
-              String _plus_10 = (_plus_9 + ".");
-              String _name_8 = field.getName();
-              String _plus_11 = (_plus_10 + _name_8);
-              this.existingVariables.add(_plus_11);
-            }
-          }
-        }
-      }
-    }
+  public org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field getVariable(final String currentProtocol, final String currentSchema, final String fieldName) {
+    final Function1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field, Boolean> _function = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field it) -> {
+      return Boolean.valueOf(it.getName().equals(fieldName));
+    };
+    List<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field> field = IteratorExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>toList(IteratorExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(Iterators.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(AeditValidator.protocols.get(currentProtocol).eAllContents(), 
+      org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field.class), _function));
+    final Function1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field, Boolean> _function_1 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field it) -> {
+      EObject _eContainer = it.eContainer();
+      return Boolean.valueOf(((RecordType) _eContainer).getName().equals(currentSchema));
+    };
+    return IterableExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>toList(IterableExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(field, _function_1)).get(0);
   }
   
   public boolean isUnique(final String fullName) {

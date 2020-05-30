@@ -3,7 +3,7 @@
  */
 package org.aedit.aedit;
 
-import org.xtext.example.mydsl.myAvdl.AvroIDLFile;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile;
 
 /**
  * <!-- begin-user-doc -->

@@ -49,7 +49,7 @@ public class AeditSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	/**
 	 * Ambiguous syntax:
-	 *     'error' | 'record'
+	 *     'record' | 'error'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'change' (ambiguity) schema=[Type|QN]

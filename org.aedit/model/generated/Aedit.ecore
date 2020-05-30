@@ -34,18 +34,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="SchemaRule"/>
   <eClassifiers xsi:type="ecore:EClass" name="EnumRule"/>
   <eClassifiers xsi:type="ecore:EClass" name="ChangeSchema" eSuperTypes="#//GenericRule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//SchemaRule" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ChangeEnum" eSuperTypes="#//GenericRule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//EnumType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//EnumType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//EnumRule" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Add" eSuperTypes="#//GenericRule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//AvroIDLFile"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//AvroIDLFile"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AddRecord" eSuperTypes="#//Add">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -68,21 +68,21 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RemoveSchema" eSuperTypes="#//GenericRule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="schemaType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RemoveVariable" eSuperTypes="#//SchemaRule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//Field"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//Field"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RemoveEnum" eSuperTypes="#//EnumRule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RenameSchema" eSuperTypes="#//GenericRule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="schemaType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newSchName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RenameVariable" eSuperTypes="#//SchemaRule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//Field"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//Field"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newVarName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RenameEnum" eSuperTypes="#//EnumRule">
@@ -90,12 +90,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newEnumName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ChangeDefValue" eSuperTypes="#//SchemaRule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="field" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//Field"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="field" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//Field"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="newVal" eType="#//Value"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ChangeType" eSuperTypes="#//SchemaRule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="field" eType="ecore:EClass platform:/resource/org.xtext.example.myavdl/model/generated/MyAvdl.ecore#//Field"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="field" eType="ecore:EClass platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.ecore#//Field"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Field">

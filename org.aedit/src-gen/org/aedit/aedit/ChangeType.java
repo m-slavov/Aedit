@@ -3,7 +3,7 @@
  */
 package org.aedit.aedit;
 
-import org.xtext.example.mydsl.myAvdl.Field;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field;
 
 /**
  * <!-- begin-user-doc -->

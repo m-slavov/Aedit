@@ -3,9 +3,13 @@
  */
 package org.aedit.generator;
 
+import com.google.common.io.Files;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import org.aedit.AeditStandaloneSetup;
 import org.eclipse.emf.common.util.URI;
@@ -18,18 +22,23 @@ import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
+//import org.xtext.example.mydsl.MyAvdlStandaloneSetup;
+import org.xtext.example.org.xtext.example.avdlclipse.AvdlClipseStandaloneSetup;
 
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("Present Project Directory : "+ System.getProperty("user.dir"));
-//		if (args.length == 0) {
-//			System.err.println("Aborting: no path to EMF resource provided!");
-//			return;
-//		}
-//		Injector injector = new AeditStandaloneSetup().createInjectorAndDoEMFRegistration();
-//		Main main = injector.getInstance(Main.class);
-//		main.runGenerator(args[0]);
+		// if (args.length == 0) {
+		// System.err.println("Aborting: no path to EMF resource provided!");
+		// return;
+		// }
+		Injector injector = new AeditStandaloneSetup().createInjectorAndDoEMFRegistration();
+
+		new AvdlClipseStandaloneSetup().createInjectorAndDoEMFRegistration();
+		Main main = injector.getInstance(Main.class);
+				
+		Singleton.getInstance().setWorkspaceDir("D:\\School\\runtime-EclipseXtext\\Testbench");
+		main.runGenerator("D:\\School\\runtime-EclipseXtext\\Testbench");
 	}
 
 	@Inject
@@ -41,29 +50,47 @@ public class Main {
 	@Inject
 	private GeneratorDelegate generator;
 
-	@Inject 
+	@Inject
 	private JavaIoFileSystemAccess fileAccess;
 
-	protected void runGenerator(String string) {
-		// Load the resource
+	protected void runGenerator(String rootDirPath) {
+		List<Resource> mainFiles = new ArrayList<Resource>();
+		
 		ResourceSet set = resourceSetProvider.get();
-		Resource resource = set.getResource(URI.createFileURI(string), true);
 
-		// Validate the resource
-		List<Issue> list = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
-		if (!list.isEmpty()) {
-			for (Issue issue : list) {
-				System.err.println(issue);
-			}
-			return;
-		}
+		getFiles(rootDirPath, mainFiles, set);
 
 		// Configure and start the generator
-		fileAccess.setOutputPath("src-gen/");
+		fileAccess.setOutputPath(rootDirPath + "\\aedit-gen");
+
 		GeneratorContext context = new GeneratorContext();
 		context.setCancelIndicator(CancelIndicator.NullImpl);
-		generator.generate(resource, fileAccess, context);
+
+		for (Resource resource : mainFiles) {
+			generator.generate(resource, fileAccess, context);
+		}
 
 		System.out.println("Code generation finished.");
+	}
+
+	public void getFiles(String directoryName, List<Resource> mainFiles, ResourceSet set) {
+		File directory = new File(directoryName);
+
+		// Get all files from a directory.
+		File[] fList = directory.listFiles();
+		if (fList != null)
+			for (File file : fList) {
+				if (file.isFile()) {
+
+					if (Files.getFileExtension(file.getPath()).equals("aedit")) {
+						mainFiles.add(set.getResource(URI.createFileURI(file.getPath()), true));
+					} else if (Files.getFileExtension(file.getPath()).equals("avdlclipse")) {
+						set.getResource(URI.createFileURI(file.getPath()), true);
+					}
+
+				} else if (file.isDirectory()) {
+					getFiles(file.getAbsolutePath(), mainFiles, set);
+				}
+			}
 	}
 }

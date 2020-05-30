@@ -41,7 +41,7 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
-import org.xtext.example.mydsl.myAvdl.MyAvdlPackage;
+import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvdlClipsePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -296,7 +296,7 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     isInited = true;
 
     // Initialize simple dependencies
-    MyAvdlPackage.eINSTANCE.eClass();
+    AvdlClipsePackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theAeditPackage.createPackageContents();
@@ -1222,7 +1222,7 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    MyAvdlPackage theMyAvdlPackage = (MyAvdlPackage)EPackage.Registry.INSTANCE.getEPackage(MyAvdlPackage.eNS_URI);
+    AvdlClipsePackage theAvdlClipsePackage = (AvdlClipsePackage)EPackage.Registry.INSTANCE.getEPackage(AvdlClipsePackage.eNS_URI);
 
     // Create type parameters
 
@@ -1278,16 +1278,16 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     initEClass(enumRuleEClass, EnumRule.class, "EnumRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(changeSchemaEClass, ChangeSchema.class, "ChangeSchema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getChangeSchema_Schema(), theMyAvdlPackage.getType(), null, "schema", null, 0, 1, ChangeSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getChangeSchema_Schema(), theAvdlClipsePackage.getType(), null, "schema", null, 0, 1, ChangeSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getChangeSchema_Rules(), this.getSchemaRule(), null, "rules", null, 0, -1, ChangeSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(changeEnumEClass, ChangeEnum.class, "ChangeEnum", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getChangeEnum_Schema(), theMyAvdlPackage.getEnumType(), null, "schema", null, 0, 1, ChangeEnum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getChangeEnum_Schema(), theAvdlClipsePackage.getEnumType(), null, "schema", null, 0, 1, ChangeEnum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getChangeEnum_Rules(), this.getEnumRule(), null, "rules", null, 0, -1, ChangeEnum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(addEClass, Add.class, "Add", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAdd_Index(), ecorePackage.getEInt(), "index", null, 0, 1, Add.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAdd_Namespace(), theMyAvdlPackage.getAvroIDLFile(), null, "namespace", null, 0, 1, Add.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAdd_Namespace(), theAvdlClipsePackage.getAvroIDLFile(), null, "namespace", null, 0, 1, Add.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(addRecordEClass, AddRecord.class, "AddRecord", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAddRecord_RecordName(), ecorePackage.getEString(), "recordName", null, 0, 1, AddRecord.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1307,21 +1307,21 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
 
     initEClass(removeSchemaEClass, RemoveSchema.class, "RemoveSchema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRemoveSchema_SchemaType(), ecorePackage.getEString(), "schemaType", null, 0, 1, RemoveSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRemoveSchema_Schema(), theMyAvdlPackage.getType(), null, "schema", null, 0, 1, RemoveSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRemoveSchema_Schema(), theAvdlClipsePackage.getType(), null, "schema", null, 0, 1, RemoveSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(removeVariableEClass, RemoveVariable.class, "RemoveVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRemoveVariable_Variable(), theMyAvdlPackage.getField(), null, "variable", null, 0, 1, RemoveVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRemoveVariable_Variable(), theAvdlClipsePackage.getField(), null, "variable", null, 0, 1, RemoveVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(removeEnumEClass, RemoveEnum.class, "RemoveEnum", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRemoveEnum_VarName(), ecorePackage.getEString(), "varName", null, 0, 1, RemoveEnum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(renameSchemaEClass, RenameSchema.class, "RenameSchema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRenameSchema_SchemaType(), ecorePackage.getEString(), "schemaType", null, 0, 1, RenameSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRenameSchema_Schema(), theMyAvdlPackage.getType(), null, "schema", null, 0, 1, RenameSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRenameSchema_Schema(), theAvdlClipsePackage.getType(), null, "schema", null, 0, 1, RenameSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRenameSchema_NewSchName(), ecorePackage.getEString(), "newSchName", null, 0, 1, RenameSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(renameVariableEClass, RenameVariable.class, "RenameVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRenameVariable_Variable(), theMyAvdlPackage.getField(), null, "variable", null, 0, 1, RenameVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRenameVariable_Variable(), theAvdlClipsePackage.getField(), null, "variable", null, 0, 1, RenameVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRenameVariable_NewVarName(), ecorePackage.getEString(), "newVarName", null, 0, 1, RenameVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(renameEnumEClass, RenameEnum.class, "RenameEnum", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1329,11 +1329,11 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     initEAttribute(getRenameEnum_NewEnumName(), ecorePackage.getEString(), "newEnumName", null, 0, 1, RenameEnum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(changeDefValueEClass, ChangeDefValue.class, "ChangeDefValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getChangeDefValue_Field(), theMyAvdlPackage.getField(), null, "field", null, 0, 1, ChangeDefValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getChangeDefValue_Field(), theAvdlClipsePackage.getField(), null, "field", null, 0, 1, ChangeDefValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getChangeDefValue_NewVal(), this.getValue(), null, "newVal", null, 0, 1, ChangeDefValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(changeTypeEClass, ChangeType.class, "ChangeType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getChangeType_Field(), theMyAvdlPackage.getField(), null, "field", null, 0, 1, ChangeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getChangeType_Field(), theAvdlClipsePackage.getField(), null, "field", null, 0, 1, ChangeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getChangeType_NewType(), ecorePackage.getEString(), "newType", null, 0, 1, ChangeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

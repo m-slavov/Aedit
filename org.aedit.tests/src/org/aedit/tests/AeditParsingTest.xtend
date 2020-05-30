@@ -11,19 +11,17 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.eclipse.emf.ecore.resource.ResourceSet
+import javax.inject.Provider
+import org.eclipse.xtext.testing.validation.ValidationTestHelper
+import org.aedit.aedit.AeditPackage
+import org.aedit.validation.AeditValidator
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.util.StringInputStream
+import com.google.inject.Injector
 
 @RunWith(XtextRunner)
-@InjectWith(AeditInjectorProvider)
+@InjectWith(AvroclipseProvider)
 class AeditParsingTest {
-	@Inject
-	ParseHelper<Model> parseHelper
 	
-	@Test
-	def void loadModel() {
-		val result = parseHelper.parse('''
-			Hello Xtext!
-		''')
-		Assert.assertNotNull(result)
-		Assert.assertTrue(result.eResource.errors.isEmpty)
-	}
 }

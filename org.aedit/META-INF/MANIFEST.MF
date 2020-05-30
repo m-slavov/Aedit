@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.util,
  org.eclipse.xtend.lib,
  org.eclipse.emf.common,
- org.xtext.example.myavdl;bundle-version="1.0.0"
+ org.xtext.example.avdlclipse;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.aedit.scoping,
  org.aedit.services,
@@ -29,3 +29,5 @@ Export-Package: org.aedit.scoping,
  org.aedit.validation,
  org.aedit.formatting2
 Import-Package: org.apache.log4j
+Bundle-ClassPath: lib/maven-plugin-annotations-3.6.0.jar,
+ .

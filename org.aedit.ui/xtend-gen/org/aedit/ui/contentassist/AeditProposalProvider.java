@@ -4,10 +4,7 @@
 package org.aedit.ui.contentassist;
 
 import com.google.common.base.Predicate;
-import org.aedit.aedit.ChangeEnum;
-import org.aedit.aedit.ChangeSchema;
 import org.aedit.ui.contentassist.AbstractAeditProposalProvider;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.Assignment;
@@ -15,9 +12,6 @@ import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
-import org.eclipse.xtext.xbase.lib.Conversions;
-import org.xtext.example.mydsl.myAvdl.AvroIDLFile;
-import org.xtext.example.mydsl.myAvdl.TypeDef;
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -67,51 +61,23 @@ public class AeditProposalProvider extends AbstractAeditProposalProvider {
   
   @Override
   public void completeRemoveEnum_VarName(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
-    ChangeEnum parentContainer = null;
-    if ((model instanceof ChangeEnum)) {
-      parentContainer = ((ChangeEnum)model);
-    } else {
-      EObject _eContainer = model.eContainer();
-      parentContainer = ((ChangeEnum) _eContainer);
-    }
-    final EList<String> enumList = parentContainer.getSchema().getLiterals();
-    for (final String enum_ : enumList) {
-      acceptor.accept(this.createCompletionProposal(enum_, context));
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field schema is undefined for the type ChangeEnum"
+      + "\nliterals cannot be resolved");
   }
   
   @Override
   public void completeRenameEnum_OldName(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
-    ChangeEnum parentContainer = null;
-    if ((model instanceof ChangeEnum)) {
-      parentContainer = ((ChangeEnum)model);
-    } else {
-      EObject _eContainer = model.eContainer();
-      parentContainer = ((ChangeEnum) _eContainer);
-    }
-    final EList<String> enumList = parentContainer.getSchema().getLiterals();
-    for (final String enum_ : enumList) {
-      acceptor.accept(this.createCompletionProposal(enum_, context));
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field schema is undefined for the type ChangeEnum"
+      + "\nliterals cannot be resolved");
   }
   
   public boolean isInScope(final IEObjectDescription entry, final EObject model) {
-    int _length = ((Object[])Conversions.unwrapArray(entry.getQualifiedName().getSegments(), Object.class)).length;
-    boolean _greaterThan = (_length > 2);
-    if (_greaterThan) {
-      final String fieldSchemaName = entry.getQualifiedName().getSegments().get(1);
-      final String fieldNamespace = entry.getQualifiedName().getSegments().get(0);
-      EObject _eContainer = model.eContainer();
-      final ChangeSchema parentContainer = ((ChangeSchema) _eContainer);
-      final String parentSchemaName = parentContainer.getSchema().getName();
-      EObject _eContainer_1 = parentContainer.getSchema().eContainer();
-      TypeDef parentNamespaceContainer = ((TypeDef) _eContainer_1);
-      EObject _eContainer_2 = parentNamespaceContainer.eContainer();
-      final String parentNamespace = ((AvroIDLFile) _eContainer_2).getName();
-      if ((fieldSchemaName.equals(parentSchemaName) && fieldNamespace.equals(parentNamespace))) {
-        return true;
-      }
-    }
-    return false;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field schema is undefined for the type ChangeSchema"
+      + "\nThe method or field schema is undefined for the type ChangeSchema"
+      + "\nname cannot be resolved"
+      + "\neContainer cannot be resolved");
   }
 }
