@@ -1,14 +1,14 @@
 package org.aedit.tests;
 
-import org.xtext.example.org.xtext.example.avdlclipse.AvdlClipseStandaloneSetup;
-
 import com.google.inject.Injector;
+
+import avroclipse.AvroIDLStandaloneSetup;
 
 public class AvroclipseProvider extends AeditInjectorProvider{
 
 	@Override
 	protected Injector internalCreateInjector() {
-		AvdlClipseStandaloneSetup.doSetup();
+		AvroIDLStandaloneSetup.doSetup();
 		return super.internalCreateInjector();
 		
 	}

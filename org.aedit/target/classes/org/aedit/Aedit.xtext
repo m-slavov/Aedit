@@ -3,7 +3,8 @@ grammar org.aedit.Aedit with org.eclipse.xtext.common.Terminals
 generate aedit "http://www.aedit.org/Aedit"
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-import "http://www.xtext.org/example/org/xtext/example/avdlclipse/AvdlClipse" as avroIDL
+//import "http://www.xtext.org/example/org/xtext/example/avdlclipse/AvdlClipse" as avroIDL
+import "http://avroclipse/AvroIDL" as avroIDL
 
 Model:
 	ruleDeclarations+=RuleDeclaration*
@@ -57,7 +58,7 @@ AddRecord:
 ;
 
 AddEnumeration:
-	'add.at' '(' index=INT ')' 'enum' namespace=[avroIDL::AvroIDLFile] '.' enumName=ID '{' symbols+=ID* '}'
+	'add.at' '(' index=INT ')' 'enum' namespace=[avroIDL::AvroIDLFile] '.' enumName=ID '{' symbols+=ID (',' symbols+=ID)* '}'
 ;
 
 AddVariable:
@@ -100,12 +101,21 @@ ChangeType:
 	'set_type' field=[avroIDL::Field | QN] '=>' newType=VARIABLE_TYPE ';'
 ;
 
+
 Field:
+	PrimitiveTypeField | CustomTypeField
+;
+
+CustomTypeField:
+	type=[avroIDL::Type | QN] varName=ID ';'
+;
+
+PrimitiveTypeField:
 	type=VARIABLE_TYPE varName=ID ('=' value=Value)?
 ;
 
 Value:
-	FloatValue | IntValue | StringValue
+	FloatValue | IntValue | StringValue | BooleanValue | Null
 ;
 
 FloatValue:
@@ -120,7 +130,16 @@ IntValue:
 	val=INT
 ;
 
+Null:
+	val='null'
+;
+
+BooleanValue:
+	val=Boolean
+;
+
 Real returns ecore::EFloat: '-'? INT '.' (INT);
+Boolean returns ecore::EBoolean: 'true' | 'false';
 
 SCHEMA_TYPE:
 	'record'	|
@@ -128,11 +147,12 @@ SCHEMA_TYPE:
 ;
 
 VARIABLE_TYPE:
-	'void'		|
 	'int'		|
 	'double'	|
 	'string'	|
-	'long'
+	'long'		|
+	'boolean'	|
+	'float'
 ;
 
 QN:

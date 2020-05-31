@@ -39,7 +39,7 @@ class AeditValidatorTest {
 						remove record house.Garage;
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -59,7 +59,7 @@ class AeditValidatorTest {
 						remove record house.Garage;
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -78,7 +78,7 @@ class AeditValidatorTest {
 						rename record house.Garage => NewGarage;
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -97,7 +97,7 @@ class AeditValidatorTest {
 						rename record house.Garage => OldGarage;
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -116,7 +116,7 @@ class AeditValidatorTest {
 						change record house.Garage {};
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -135,7 +135,7 @@ class AeditValidatorTest {
 						change record house.Garage {}
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -155,7 +155,7 @@ class AeditValidatorTest {
 						add.at(0) record house.Garage()
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -179,7 +179,7 @@ class AeditValidatorTest {
 						}
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -202,7 +202,7 @@ class AeditValidatorTest {
 						}
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -225,7 +225,7 @@ class AeditValidatorTest {
 						}
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -248,7 +248,7 @@ class AeditValidatorTest {
 						}
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -271,7 +271,7 @@ class AeditValidatorTest {
 						}
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -294,7 +294,7 @@ class AeditValidatorTest {
 						}
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -316,7 +316,7 @@ class AeditValidatorTest {
 						}
 					}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -337,7 +337,7 @@ class AeditValidatorTest {
 					}
 				}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -364,7 +364,7 @@ class AeditValidatorTest {
 					}
 				}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{
@@ -390,7 +390,7 @@ class AeditValidatorTest {
 					}
 				}
 		''', URI.createFileURI("/Main.aedit"), rsp.get => [
-			createResource(URI.createFileURI("/Other.avdlclipse")) => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
 				load(new StringInputStream('''
 				@namespace('house')
 				protocol House{

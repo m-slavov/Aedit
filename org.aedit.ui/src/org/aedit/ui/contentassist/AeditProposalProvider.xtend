@@ -3,16 +3,20 @@
  */
 package org.aedit.ui.contentassist
 
+import org.aedit.aedit.AddRecord
+import org.aedit.aedit.ChangeEnum
+import org.aedit.aedit.ChangeSchema
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.Assignment
 import org.eclipse.xtext.CrossReference
+import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
-import org.aedit.aedit.ChangeSchema
-import org.xtext.example.mydsl.myAvdl.AvroIDLFile
-import org.xtext.example.mydsl.myAvdl.TypeDef
-import org.eclipse.xtext.resource.IEObjectDescription
-import org.aedit.aedit.ChangeEnum
+import avroclipse.avroIDL.AvroIDLFile
+import avroclipse.avroIDL.TypeDef
+import avroclipse.avroIDL.EnumType
+import avroclipse.avroIDL.RecordType
+import org.aedit.aedit.RuleMap
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -73,7 +77,6 @@ class AeditProposalProvider extends AbstractAeditProposalProvider {
 		} else {
 			parentContainer = model.eContainer as ChangeEnum
 		}
-
 		// Get list of enums
 		val enumList = parentContainer.schema.literals
 		for (enum : enumList) {

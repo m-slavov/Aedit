@@ -8,6 +8,8 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
 
+import avroclipse.AvroIDLStandaloneSetup;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,23 +24,21 @@ import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
-//import org.xtext.example.mydsl.MyAvdlStandaloneSetup;
-import org.xtext.example.org.xtext.example.avdlclipse.AvdlClipseStandaloneSetup;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// if (args.length == 0) {
-		// System.err.println("Aborting: no path to EMF resource provided!");
-		// return;
-		// }
+		if (args.length == 0) {
+			System.err.println("Aborting: no path to EMF resource provided!");
+			return;
+		}
 		Injector injector = new AeditStandaloneSetup().createInjectorAndDoEMFRegistration();
 
-		new AvdlClipseStandaloneSetup().createInjectorAndDoEMFRegistration();
+		new AvroIDLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		Main main = injector.getInstance(Main.class);
-				
-		Singleton.getInstance().setWorkspaceDir("D:\\School\\runtime-EclipseXtext\\Testbench");
-		main.runGenerator("D:\\School\\runtime-EclipseXtext\\Testbench");
+
+		Singleton.getInstance().setWorkspaceDir(args[0]);
+		main.runGenerator(args[0]);
 	}
 
 	@Inject
@@ -55,7 +55,7 @@ public class Main {
 
 	protected void runGenerator(String rootDirPath) {
 		List<Resource> mainFiles = new ArrayList<Resource>();
-		
+
 		ResourceSet set = resourceSetProvider.get();
 
 		getFiles(rootDirPath, mainFiles, set);
@@ -84,7 +84,7 @@ public class Main {
 
 					if (Files.getFileExtension(file.getPath()).equals("aedit")) {
 						mainFiles.add(set.getResource(URI.createFileURI(file.getPath()), true));
-					} else if (Files.getFileExtension(file.getPath()).equals("avdlclipse")) {
+					} else if (Files.getFileExtension(file.getPath()).equals("avdl")) {
 						set.getResource(URI.createFileURI(file.getPath()), true);
 					}
 

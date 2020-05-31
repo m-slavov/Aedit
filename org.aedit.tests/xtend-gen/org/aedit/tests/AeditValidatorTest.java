@@ -59,7 +59,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -106,7 +106,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -153,7 +153,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -200,7 +200,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -247,7 +247,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -294,7 +294,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -344,7 +344,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -404,7 +404,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -463,7 +463,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -522,7 +522,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -581,7 +581,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -640,7 +640,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -699,7 +699,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -755,7 +755,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -809,7 +809,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -879,7 +879,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();
@@ -946,7 +946,7 @@ public class AeditValidatorTest {
       URI _createFileURI = URI.createFileURI("/Main.aedit");
       ResourceSet _get = this.rsp.get();
       final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdlclipse"));
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
         final Procedure1<Resource> _function_1 = (Resource it_1) -> {
           try {
             StringConcatenation _builder_1 = new StringConcatenation();

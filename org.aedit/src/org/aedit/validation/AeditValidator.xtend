@@ -28,15 +28,16 @@ import org.aedit.aedit.RenameVariable
 import org.aedit.aedit.RuleDeclaration
 import org.aedit.aedit.RuleMap
 import org.eclipse.xtext.validation.Check
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.PrimativeTypeLink
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef
+import avroclipse.avroIDL.AvroIDLFile
+import avroclipse.avroIDL.EnumType
+import avroclipse.avroIDL.PrimativeTypeLink
+import avroclipse.avroIDL.RecordType
+import avroclipse.avroIDL.TypeDef
 import org.aedit.aedit.StringValue
 import org.aedit.aedit.IntValue
 import org.aedit.aedit.FloatValue
 import org.aedit.aedit.AddEnum
+import org.aedit.aedit.PrimitiveTypeField
 
 /**
  * This class contains custom validation rules. 
@@ -407,18 +408,18 @@ class AeditValidator extends AbstractAeditValidator {
 	}
 
 	@Check
-	def checkField(Field field) {
+	def checkField(PrimitiveTypeField field) {
 		if (field.type.equals("long")) {
 			if (field.value as Object instanceof String) {
-				error("Cannot assign string value to long!", AeditPackage.Literals.FIELD__VALUE)
+				error("Cannot assign string value to long!", AeditPackage.Literals.PRIMITIVE_TYPE_FIELD__VALUE)
 			}
 		} else if (field.type.equals("double")) {
 			if (field.value as Object instanceof String) {
-				error("Cannot assign string value to double!", AeditPackage.Literals.FIELD__VALUE)
+				error("Cannot assign string value to double!", AeditPackage.Literals.PRIMITIVE_TYPE_FIELD__VALUE)
 			}
 		} else if (field.type.equals("int")) {
 			if (field.value as Object instanceof String) {
-				error("Cannot assign string value to int!", AeditPackage.Literals.FIELD__VALUE)
+				error("Cannot assign string value to int!", AeditPackage.Literals.PRIMITIVE_TYPE_FIELD__VALUE)
 			}
 		}
 	}
@@ -545,34 +546,12 @@ class AeditValidator extends AbstractAeditValidator {
 		}
 	}
 
-//	// Helper methods
-//	def getAllSchemas(AvroIDLFile file) {
-//		for (typeDef : file.elements.filter(TypeDef)) {
-//			var currentSchema = typeDef.type
-//
-//			if (currentSchema instanceof EnumType) {
-//				existingVariables.add(file.name + '.' + currentSchema.name)
-//				for (literal : currentSchema.literals) {
-//					existingVariables.add(file.name + '.' + currentSchema.name + '.' + literal)
-//				}
-//			} else if (currentSchema instanceof RecordType) {
-//				existingVariables.add(file.name + '.' + currentSchema.name)
-//				for (field : currentSchema.fields) {
-//					existingVariables.add(file.name + '.' + currentSchema.name + '.' + field.name)
-//				}
-//			}
-//
-//		}
-//	}
-
 	def getVariable(String currentProtocol, String currentSchema, String fieldName) {
-		var field = protocols.get(currentProtocol).eAllContents.filter(
-			org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field).filter [
+		var field = protocols.get(currentProtocol).eAllContents.filter(avroclipse.avroIDL.Field).filter [
 			it.name.equals(fieldName)
 		].toList
 
 		return field.filter[(it.eContainer as RecordType).name.equals(currentSchema)].toList.get(0)
-//		return field.get(0).^default
 	}
 
 	def isUnique(String fullName) {

@@ -4,6 +4,12 @@
 package org.aedit.validation;
 
 import HelperClass.HelperClass;
+import avroclipse.avroIDL.AvroIDLFile;
+import avroclipse.avroIDL.FieldType;
+import avroclipse.avroIDL.PrimativeTypeLink;
+import avroclipse.avroIDL.RecordType;
+import avroclipse.avroIDL.TypeDef;
+import avroclipse.avroIDL.Value;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import java.util.ArrayList;
@@ -25,6 +31,7 @@ import org.aedit.aedit.FloatValue;
 import org.aedit.aedit.GenericRule;
 import org.aedit.aedit.IntValue;
 import org.aedit.aedit.Model;
+import org.aedit.aedit.PrimitiveTypeField;
 import org.aedit.aedit.RemoveEnum;
 import org.aedit.aedit.RemoveSchema;
 import org.aedit.aedit.RemoveVariable;
@@ -42,12 +49,6 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.FieldType;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.PrimativeTypeLink;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Value;
 
 /**
  * This class contains custom validation rules.
@@ -64,15 +65,15 @@ public class AeditValidator extends AbstractAeditValidator {
   
   private List<String> existingVariables = new ArrayList<String>();
   
-  protected final static String ISSUE_CODE_PREFIX = "org.aedit.";
+  protected static final String ISSUE_CODE_PREFIX = "org.aedit.";
   
-  public final static String REMOVE_SCHEMA = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveSchema");
+  public static final String REMOVE_SCHEMA = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveSchema");
   
-  public final static String REMOVE_VARIABLE = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveVariable");
+  public static final String REMOVE_VARIABLE = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveVariable");
   
-  public final static String REMOVE_ENUM_CONST = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveEnumConst");
+  public static final String REMOVE_ENUM_CONST = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveEnumConst");
   
-  public final static String DUPLICATE_FIELD = (AeditValidator.ISSUE_CODE_PREFIX + "DuplicateField");
+  public static final String DUPLICATE_FIELD = (AeditValidator.ISSUE_CODE_PREFIX + "DuplicateField");
   
   private String currentSchema;
   
@@ -570,26 +571,26 @@ public class AeditValidator extends AbstractAeditValidator {
   }
   
   @Check
-  public void checkField(final Field field) {
+  public void checkField(final PrimitiveTypeField field) {
     boolean _equals = field.getType().equals("long");
     if (_equals) {
       org.aedit.aedit.Value _value = field.getValue();
       if ((((Object) _value) instanceof String)) {
-        this.error("Cannot assign string value to long!", AeditPackage.Literals.FIELD__VALUE);
+        this.error("Cannot assign string value to long!", AeditPackage.Literals.PRIMITIVE_TYPE_FIELD__VALUE);
       }
     } else {
       boolean _equals_1 = field.getType().equals("double");
       if (_equals_1) {
         org.aedit.aedit.Value _value_1 = field.getValue();
         if ((((Object) _value_1) instanceof String)) {
-          this.error("Cannot assign string value to double!", AeditPackage.Literals.FIELD__VALUE);
+          this.error("Cannot assign string value to double!", AeditPackage.Literals.PRIMITIVE_TYPE_FIELD__VALUE);
         }
       } else {
         boolean _equals_2 = field.getType().equals("int");
         if (_equals_2) {
           org.aedit.aedit.Value _value_2 = field.getValue();
           if ((((Object) _value_2) instanceof String)) {
-            this.error("Cannot assign string value to int!", AeditPackage.Literals.FIELD__VALUE);
+            this.error("Cannot assign string value to int!", AeditPackage.Literals.PRIMITIVE_TYPE_FIELD__VALUE);
           }
         }
       }
@@ -616,15 +617,15 @@ public class AeditValidator extends AbstractAeditValidator {
     final Iterable<RemoveSchema> bRules = Iterables.<RemoveSchema>filter(IteratorExtensions.<EObject>toList(b.eAllContents()), RemoveSchema.class);
     for (int i = 0; (i < ((Object[])Conversions.unwrapArray(aRules, Object.class)).length); i++) {
       {
-        final String aSchemaName = ((RemoveSchema[])Conversions.unwrapArray(aRules, RemoveSchema.class))[i].getSchema().getName();
-        EObject _eContainer = ((RemoveSchema[])Conversions.unwrapArray(aRules, RemoveSchema.class))[i].getSchema().eContainer();
+        final String aSchemaName = (((RemoveSchema[])Conversions.unwrapArray(aRules, RemoveSchema.class))[i]).getSchema().getName();
+        EObject _eContainer = (((RemoveSchema[])Conversions.unwrapArray(aRules, RemoveSchema.class))[i]).getSchema().eContainer();
         final TypeDef aSchemaContainer = ((TypeDef) _eContainer);
         EObject _eContainer_1 = aSchemaContainer.eContainer();
         final String aProtocolName = ((AvroIDLFile) _eContainer_1).getName();
         for (int j = 0; (j < ((Object[])Conversions.unwrapArray(bRules, Object.class)).length); j++) {
           {
-            final String bSchemaName = ((RemoveSchema[])Conversions.unwrapArray(bRules, RemoveSchema.class))[j].getSchema().getName();
-            EObject _eContainer_2 = ((RemoveSchema[])Conversions.unwrapArray(bRules, RemoveSchema.class))[j].getSchema().eContainer();
+            final String bSchemaName = (((RemoveSchema[])Conversions.unwrapArray(bRules, RemoveSchema.class))[j]).getSchema().getName();
+            EObject _eContainer_2 = (((RemoveSchema[])Conversions.unwrapArray(bRules, RemoveSchema.class))[j]).getSchema().eContainer();
             final TypeDef bSchemaContainer = ((TypeDef) _eContainer_2);
             EObject _eContainer_3 = bSchemaContainer.eContainer();
             final String bProtocolName = ((AvroIDLFile) _eContainer_3).getName();
@@ -646,15 +647,15 @@ public class AeditValidator extends AbstractAeditValidator {
     this.currentRuleIndex = index;
     for (int i = 0; (i < ((Object[])Conversions.unwrapArray(aRules, Object.class)).length); i++) {
       {
-        final String aSchemaName = ((ChangeSchema[])Conversions.unwrapArray(aRules, ChangeSchema.class))[i].getSchema().getName();
-        EObject _eContainer = ((ChangeSchema[])Conversions.unwrapArray(aRules, ChangeSchema.class))[i].getSchema().eContainer();
+        final String aSchemaName = (((ChangeSchema[])Conversions.unwrapArray(aRules, ChangeSchema.class))[i]).getSchema().getName();
+        EObject _eContainer = (((ChangeSchema[])Conversions.unwrapArray(aRules, ChangeSchema.class))[i]).getSchema().eContainer();
         final TypeDef aSchemaContainer = ((TypeDef) _eContainer);
         EObject _eContainer_1 = aSchemaContainer.eContainer();
         final String aProtocolName = ((AvroIDLFile) _eContainer_1).getName();
         for (int j = 0; (j < ((Object[])Conversions.unwrapArray(bRules, Object.class)).length); j++) {
           {
-            final String bSchemaName = ((ChangeSchema[])Conversions.unwrapArray(bRules, ChangeSchema.class))[j].getSchema().getName();
-            EObject _eContainer_2 = ((ChangeSchema[])Conversions.unwrapArray(bRules, ChangeSchema.class))[j].getSchema().eContainer();
+            final String bSchemaName = (((ChangeSchema[])Conversions.unwrapArray(bRules, ChangeSchema.class))[j]).getSchema().getName();
+            EObject _eContainer_2 = (((ChangeSchema[])Conversions.unwrapArray(bRules, ChangeSchema.class))[j]).getSchema().eContainer();
             final TypeDef bSchemaContainer = ((TypeDef) _eContainer_2);
             EObject _eContainer_3 = bSchemaContainer.eContainer();
             final String bProtocolName = ((AvroIDLFile) _eContainer_3).getName();
@@ -682,15 +683,15 @@ public class AeditValidator extends AbstractAeditValidator {
     this.currentRuleIndex = index;
     for (int i = 0; (i < ((Object[])Conversions.unwrapArray(aRules, Object.class)).length); i++) {
       {
-        final String aSchemaName = ((ChangeEnum[])Conversions.unwrapArray(aRules, ChangeEnum.class))[i].getSchema().getName();
-        EObject _eContainer = ((ChangeEnum[])Conversions.unwrapArray(aRules, ChangeEnum.class))[i].getSchema().eContainer();
+        final String aSchemaName = (((ChangeEnum[])Conversions.unwrapArray(aRules, ChangeEnum.class))[i]).getSchema().getName();
+        EObject _eContainer = (((ChangeEnum[])Conversions.unwrapArray(aRules, ChangeEnum.class))[i]).getSchema().eContainer();
         final TypeDef aSchemaContainer = ((TypeDef) _eContainer);
         EObject _eContainer_1 = aSchemaContainer.eContainer();
         final String aProtocolName = ((AvroIDLFile) _eContainer_1).getName();
         for (int j = 0; (j < ((Object[])Conversions.unwrapArray(bRules, Object.class)).length); j++) {
           {
-            final String bSchemaName = ((ChangeEnum[])Conversions.unwrapArray(bRules, ChangeEnum.class))[j].getSchema().getName();
-            EObject _eContainer_2 = ((ChangeEnum[])Conversions.unwrapArray(bRules, ChangeEnum.class))[j].getSchema().eContainer();
+            final String bSchemaName = (((ChangeEnum[])Conversions.unwrapArray(bRules, ChangeEnum.class))[j]).getSchema().getName();
+            EObject _eContainer_2 = (((ChangeEnum[])Conversions.unwrapArray(bRules, ChangeEnum.class))[j]).getSchema().eContainer();
             final TypeDef bSchemaContainer = ((TypeDef) _eContainer_2);
             EObject _eContainer_3 = bSchemaContainer.eContainer();
             final String bProtocolName = ((AvroIDLFile) _eContainer_3).getName();
@@ -708,17 +709,16 @@ public class AeditValidator extends AbstractAeditValidator {
     }
   }
   
-  public org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field getVariable(final String currentProtocol, final String currentSchema, final String fieldName) {
-    final Function1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field, Boolean> _function = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field it) -> {
+  public avroclipse.avroIDL.Field getVariable(final String currentProtocol, final String currentSchema, final String fieldName) {
+    final Function1<avroclipse.avroIDL.Field, Boolean> _function = (avroclipse.avroIDL.Field it) -> {
       return Boolean.valueOf(it.getName().equals(fieldName));
     };
-    List<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field> field = IteratorExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>toList(IteratorExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(Iterators.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(AeditValidator.protocols.get(currentProtocol).eAllContents(), 
-      org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field.class), _function));
-    final Function1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field, Boolean> _function_1 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field it) -> {
+    List<avroclipse.avroIDL.Field> field = IteratorExtensions.<avroclipse.avroIDL.Field>toList(IteratorExtensions.<avroclipse.avroIDL.Field>filter(Iterators.<avroclipse.avroIDL.Field>filter(AeditValidator.protocols.get(currentProtocol).eAllContents(), avroclipse.avroIDL.Field.class), _function));
+    final Function1<avroclipse.avroIDL.Field, Boolean> _function_1 = (avroclipse.avroIDL.Field it) -> {
       EObject _eContainer = it.eContainer();
       return Boolean.valueOf(((RecordType) _eContainer).getName().equals(currentSchema));
     };
-    return IterableExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>toList(IterableExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(field, _function_1)).get(0);
+    return IterableExtensions.<avroclipse.avroIDL.Field>toList(IterableExtensions.<avroclipse.avroIDL.Field>filter(field, _function_1)).get(0);
   }
   
   public boolean isUnique(final String fullName) {

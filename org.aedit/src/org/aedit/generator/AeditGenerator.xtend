@@ -5,6 +5,9 @@ package org.aedit.generator
 
 import HelperClass.HelperClass
 import java.io.File
+import java.io.PrintWriter
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.HashMap
 import java.util.Map
 import org.aedit.aedit.Add
@@ -12,13 +15,17 @@ import org.aedit.aedit.AddEnum
 import org.aedit.aedit.AddEnumeration
 import org.aedit.aedit.AddRecord
 import org.aedit.aedit.AddVariable
+import org.aedit.aedit.BooleanValue
 import org.aedit.aedit.ChangeDefValue
 import org.aedit.aedit.ChangeEnum
 import org.aedit.aedit.ChangeSchema
+import org.aedit.aedit.ChangeType
 import org.aedit.aedit.EnumRule
 import org.aedit.aedit.Feature
 import org.aedit.aedit.FeatureMap
+import org.aedit.aedit.FloatValue
 import org.aedit.aedit.GenericRule
+import org.aedit.aedit.IntValue
 import org.aedit.aedit.RemoveEnum
 import org.aedit.aedit.RemoveSchema
 import org.aedit.aedit.RemoveVariable
@@ -28,6 +35,7 @@ import org.aedit.aedit.RenameVariable
 import org.aedit.aedit.RuleDeclaration
 import org.aedit.aedit.RuleMap
 import org.aedit.aedit.SchemaRule
+import org.aedit.aedit.StringValue
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
@@ -35,20 +43,13 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvdlClipseFactory
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Value
-import java.io.PrintWriter
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.util.Properties
-import org.aedit.aedit.ChangeType
-import org.aedit.aedit.IntValue
-import org.aedit.aedit.FloatValue
-import org.aedit.aedit.StringValue
+import avroclipse.avroIDL.AvroIDLFactory
+import avroclipse.avroIDL.AvroIDLFile
+import avroclipse.avroIDL.EnumType
+import avroclipse.avroIDL.RecordType
+import avroclipse.avroIDL.TypeDef
+import avroclipse.avroIDL.Value
+import org.eclipse.xtext.resource.SaveOptions
 
 /**
  * Generates code from your model files on save.
@@ -58,7 +59,6 @@ import org.aedit.aedit.StringValue
 class AeditGenerator extends AbstractGenerator {
 
 	public Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
-	private String filePath = "D:\\School\\runtime-EclipseXtext\\Testbench\\src\\avdl";
 
 	private String currentProtocol;
 	private String currentSchema;
@@ -78,11 +78,10 @@ class AeditGenerator extends AbstractGenerator {
 			}
 
 			// Save the newly edited models
-			
 			protocols.forEach [ p1, p2 |
 				if (!workSpaceDir.equals("undefined")) {
 					saveAvroIDLFile(
-						URI.createFileURI(workSpaceDir + "\\aedit-gen\\" + p1 + ".avdlclipse"),
+						URI.createFileURI(workSpaceDir + "\\aedit-gen\\NEW" + p1 + ".avdl"),
 						p2
 					)
 				}
@@ -239,8 +238,8 @@ class AeditGenerator extends AbstractGenerator {
 		// Get name of the protocol
 		val protocolName = addRecord.namespace.name
 
-		val TypeDef newTypeDef = AvdlClipseFactory.eINSTANCE.createTypeDef
-		newTypeDef.type = AvdlClipseFactory.eINSTANCE.createRecordType => [
+		val TypeDef newTypeDef = AvroIDLFactory.eINSTANCE.createTypeDef
+		newTypeDef.type = AvroIDLFactory.eINSTANCE.createRecordType => [
 			name = schemaName
 
 			addRecord.fields.forEach [ field |
@@ -258,8 +257,8 @@ class AeditGenerator extends AbstractGenerator {
 		// Get name of the protocol
 		val protocolName = addEnumeration.namespace.name
 
-		val TypeDef newTypeDef = AvdlClipseFactory.eINSTANCE.createTypeDef
-		newTypeDef.type = AvdlClipseFactory.eINSTANCE.createEnumType => [
+		val TypeDef newTypeDef = AvroIDLFactory.eINSTANCE.createTypeDef
+		newTypeDef.type = AvroIDLFactory.eINSTANCE.createEnumType => [
 			name = schemaName
 
 			addEnumeration.symbols.forEach [ symbol |
@@ -336,19 +335,23 @@ class AeditGenerator extends AbstractGenerator {
 
 					switch (newVal) {
 						case newVal instanceof IntValue:
-							newDefValue = AvdlClipseFactory.eINSTANCE.createIntValue => [
+							newDefValue = AvroIDLFactory.eINSTANCE.createIntValue => [
 								^val = (newVal as IntValue).^val
 							]
 						case newVal instanceof FloatValue:
-							newDefValue = AvdlClipseFactory.eINSTANCE.createFloatValue => [
+							newDefValue = AvroIDLFactory.eINSTANCE.createFloatValue => [
 								^val = (newVal as FloatValue).^val
 							]
 						case newVal instanceof IntValue:
-							newDefValue = AvdlClipseFactory.eINSTANCE.createIntValue => [
+							newDefValue = AvroIDLFactory.eINSTANCE.createIntValue => [
 								^val = (newVal as IntValue).^val
 							]
+						case newVal instanceof BooleanValue:
+							newDefValue = AvroIDLFactory.eINSTANCE.createBooleanValue => [
+								^val = (newVal as BooleanValue).^val
+							]
 						default:
-							newDefValue = AvdlClipseFactory.eINSTANCE.createStringValue => [
+							newDefValue = AvroIDLFactory.eINSTANCE.createStringValue => [
 								^val = (newVal as StringValue).^val
 							]
 					}
@@ -365,7 +368,7 @@ class AeditGenerator extends AbstractGenerator {
 			if ((typeDef.type as RecordType).name.equals(currentSchema)) {
 				(typeDef.type as RecordType).fields.filter[it.name.equals(changeType.field.name)].forEach [ field |
 
-					field.type = AvdlClipseFactory.eINSTANCE.createPrimativeTypeLink => [
+					field.type = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink => [
 						target = changeType.newType
 					]
 

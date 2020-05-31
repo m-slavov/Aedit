@@ -4,6 +4,15 @@
 package org.aedit.generator;
 
 import HelperClass.HelperClass;
+import avroclipse.avroIDL.AvroIDLFactory;
+import avroclipse.avroIDL.AvroIDLFile;
+import avroclipse.avroIDL.EnumType;
+import avroclipse.avroIDL.PrimativeTypeLink;
+import avroclipse.avroIDL.ProtocolElement;
+import avroclipse.avroIDL.RecordType;
+import avroclipse.avroIDL.StringValue;
+import avroclipse.avroIDL.Type;
+import avroclipse.avroIDL.TypeDef;
 import com.google.common.collect.Iterables;
 import java.io.File;
 import java.io.PrintWriter;
@@ -19,6 +28,7 @@ import org.aedit.aedit.AddEnum;
 import org.aedit.aedit.AddEnumeration;
 import org.aedit.aedit.AddRecord;
 import org.aedit.aedit.AddVariable;
+import org.aedit.aedit.BooleanValue;
 import org.aedit.aedit.ChangeDefValue;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
@@ -56,15 +66,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvdlClipseFactory;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.PrimativeTypeLink;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.ProtocolElement;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.StringValue;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Type;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef;
 
 /**
  * Generates code from your model files on save.
@@ -74,8 +75,6 @@ import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef;
 @SuppressWarnings("all")
 public class AeditGenerator extends AbstractGenerator {
   public Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
-  
-  private String filePath = "D:\\School\\runtime-EclipseXtext\\Testbench\\src\\avdl";
   
   private String currentProtocol;
   
@@ -99,7 +98,7 @@ public class AeditGenerator extends AbstractGenerator {
         boolean _not_1 = (!_equals);
         if (_not_1) {
           this.saveAvroIDLFile(
-            URI.createFileURI((((workSpaceDir + "\\aedit-gen\\") + p1) + ".avdlclipse")), p2);
+            URI.createFileURI((((workSpaceDir + "\\aedit-gen\\NEW") + p1) + ".avdl")), p2);
         }
       };
       this.protocols.forEach(_function);
@@ -302,8 +301,8 @@ public class AeditGenerator extends AbstractGenerator {
   public void compile(final AddRecord addRecord) {
     final String schemaName = addRecord.getRecordName();
     final String protocolName = addRecord.getNamespace().getName();
-    final TypeDef newTypeDef = AvdlClipseFactory.eINSTANCE.createTypeDef();
-    RecordType _createRecordType = AvdlClipseFactory.eINSTANCE.createRecordType();
+    final TypeDef newTypeDef = AvroIDLFactory.eINSTANCE.createTypeDef();
+    RecordType _createRecordType = AvroIDLFactory.eINSTANCE.createRecordType();
     final Procedure1<RecordType> _function = (RecordType it) -> {
       it.setName(schemaName);
       final Consumer<Field> _function_1 = (Field field) -> {
@@ -319,8 +318,8 @@ public class AeditGenerator extends AbstractGenerator {
   public void compile(final AddEnumeration addEnumeration) {
     final String schemaName = addEnumeration.getEnumName();
     final String protocolName = addEnumeration.getNamespace().getName();
-    final TypeDef newTypeDef = AvdlClipseFactory.eINSTANCE.createTypeDef();
-    EnumType _createEnumType = AvdlClipseFactory.eINSTANCE.createEnumType();
+    final TypeDef newTypeDef = AvroIDLFactory.eINSTANCE.createTypeDef();
+    EnumType _createEnumType = AvroIDLFactory.eINSTANCE.createEnumType();
     final Procedure1<EnumType> _function = (EnumType it) -> {
       it.setName(schemaName);
       final Consumer<String> _function_1 = (String symbol) -> {
@@ -385,7 +384,7 @@ public class AeditGenerator extends AbstractGenerator {
         boolean _equals = ((RecordType) _type_1).getName().equals(this.currentSchema);
         if (_equals) {
           Type _type_2 = typeDef.getType();
-          final Predicate<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field> _function_1 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field it) -> {
+          final Predicate<avroclipse.avroIDL.Field> _function_1 = (avroclipse.avroIDL.Field it) -> {
             return it.getName().equals(removeVariable.getVariable().getName());
           };
           ((RecordType) _type_2).getFields().removeIf(_function_1);
@@ -403,13 +402,13 @@ public class AeditGenerator extends AbstractGenerator {
         boolean _equals = ((RecordType) _type_1).getName().equals(this.currentSchema);
         if (_equals) {
           Type _type_2 = typeDef.getType();
-          final Function1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field, Boolean> _function_1 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field it) -> {
+          final Function1<avroclipse.avroIDL.Field, Boolean> _function_1 = (avroclipse.avroIDL.Field it) -> {
             return Boolean.valueOf(it.getName().equals(renameVariable.getVariable().getName()));
           };
-          final Consumer<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field> _function_2 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field field) -> {
+          final Consumer<avroclipse.avroIDL.Field> _function_2 = (avroclipse.avroIDL.Field field) -> {
             field.setName(renameVariable.getNewVarName());
           };
-          IterableExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(((RecordType) _type_2).getFields(), _function_1).forEach(_function_2);
+          IterableExtensions.<avroclipse.avroIDL.Field>filter(((RecordType) _type_2).getFields(), _function_1).forEach(_function_2);
         }
       }
     };
@@ -441,55 +440,66 @@ public class AeditGenerator extends AbstractGenerator {
       boolean _equals = ((RecordType) _type).getName().equals(this.currentSchema);
       if (_equals) {
         Type _type_1 = typeDef.getType();
-        final Function1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field, Boolean> _function_2 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field it) -> {
+        final Function1<avroclipse.avroIDL.Field, Boolean> _function_2 = (avroclipse.avroIDL.Field it) -> {
           return Boolean.valueOf(it.getName().equals(changeDefValue.getField().getName()));
         };
-        final Consumer<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field> _function_3 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field field) -> {
+        final Consumer<avroclipse.avroIDL.Field> _function_3 = (avroclipse.avroIDL.Field field) -> {
           final Value newVal = changeDefValue.getNewVal();
-          org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Value newDefValue = null;
+          avroclipse.avroIDL.Value newDefValue = null;
           boolean _matched = false;
           if ((newVal instanceof IntValue)) {
             _matched=true;
-            org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue _createIntValue = AvdlClipseFactory.eINSTANCE.createIntValue();
-            final Procedure1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue> _function_4 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue it) -> {
+            avroclipse.avroIDL.IntValue _createIntValue = AvroIDLFactory.eINSTANCE.createIntValue();
+            final Procedure1<avroclipse.avroIDL.IntValue> _function_4 = (avroclipse.avroIDL.IntValue it) -> {
               it.setVal(((IntValue) newVal).getVal());
             };
-            org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue _doubleArrow = ObjectExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue>operator_doubleArrow(_createIntValue, _function_4);
+            avroclipse.avroIDL.IntValue _doubleArrow = ObjectExtensions.<avroclipse.avroIDL.IntValue>operator_doubleArrow(_createIntValue, _function_4);
             newDefValue = _doubleArrow;
           }
           if (!_matched) {
             if ((newVal instanceof FloatValue)) {
               _matched=true;
-              org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.FloatValue _createFloatValue = AvdlClipseFactory.eINSTANCE.createFloatValue();
-              final Procedure1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.FloatValue> _function_5 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.FloatValue it) -> {
+              avroclipse.avroIDL.FloatValue _createFloatValue = AvroIDLFactory.eINSTANCE.createFloatValue();
+              final Procedure1<avroclipse.avroIDL.FloatValue> _function_5 = (avroclipse.avroIDL.FloatValue it) -> {
                 it.setVal(((FloatValue) newVal).getVal());
               };
-              org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.FloatValue _doubleArrow_1 = ObjectExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.FloatValue>operator_doubleArrow(_createFloatValue, _function_5);
+              avroclipse.avroIDL.FloatValue _doubleArrow_1 = ObjectExtensions.<avroclipse.avroIDL.FloatValue>operator_doubleArrow(_createFloatValue, _function_5);
               newDefValue = _doubleArrow_1;
             }
           }
           if (!_matched) {
             if ((newVal instanceof IntValue)) {
               _matched=true;
-              org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue _createIntValue_1 = AvdlClipseFactory.eINSTANCE.createIntValue();
-              final Procedure1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue> _function_6 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue it) -> {
+              avroclipse.avroIDL.IntValue _createIntValue_1 = AvroIDLFactory.eINSTANCE.createIntValue();
+              final Procedure1<avroclipse.avroIDL.IntValue> _function_6 = (avroclipse.avroIDL.IntValue it) -> {
                 it.setVal(((IntValue) newVal).getVal());
               };
-              org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue _doubleArrow_2 = ObjectExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue>operator_doubleArrow(_createIntValue_1, _function_6);
+              avroclipse.avroIDL.IntValue _doubleArrow_2 = ObjectExtensions.<avroclipse.avroIDL.IntValue>operator_doubleArrow(_createIntValue_1, _function_6);
               newDefValue = _doubleArrow_2;
             }
           }
           if (!_matched) {
-            StringValue _createStringValue = AvdlClipseFactory.eINSTANCE.createStringValue();
-            final Procedure1<StringValue> _function_7 = (StringValue it) -> {
+            if ((newVal instanceof BooleanValue)) {
+              _matched=true;
+              avroclipse.avroIDL.BooleanValue _createBooleanValue = AvroIDLFactory.eINSTANCE.createBooleanValue();
+              final Procedure1<avroclipse.avroIDL.BooleanValue> _function_7 = (avroclipse.avroIDL.BooleanValue it) -> {
+                it.setVal(((BooleanValue) newVal).isVal());
+              };
+              avroclipse.avroIDL.BooleanValue _doubleArrow_3 = ObjectExtensions.<avroclipse.avroIDL.BooleanValue>operator_doubleArrow(_createBooleanValue, _function_7);
+              newDefValue = _doubleArrow_3;
+            }
+          }
+          if (!_matched) {
+            StringValue _createStringValue = AvroIDLFactory.eINSTANCE.createStringValue();
+            final Procedure1<StringValue> _function_8 = (StringValue it) -> {
               it.setVal(((org.aedit.aedit.StringValue) newVal).getVal());
             };
-            StringValue _doubleArrow_3 = ObjectExtensions.<StringValue>operator_doubleArrow(_createStringValue, _function_7);
-            newDefValue = _doubleArrow_3;
+            StringValue _doubleArrow_4 = ObjectExtensions.<StringValue>operator_doubleArrow(_createStringValue, _function_8);
+            newDefValue = _doubleArrow_4;
           }
           field.setDefault(newDefValue);
         };
-        IterableExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(((RecordType) _type_1).getFields(), _function_2).forEach(_function_3);
+        IterableExtensions.<avroclipse.avroIDL.Field>filter(((RecordType) _type_1).getFields(), _function_2).forEach(_function_3);
       }
     };
     IterableExtensions.<TypeDef>filter(Iterables.<TypeDef>filter(this.protocols.get(this.currentProtocol).getElements(), TypeDef.class), _function).forEach(_function_1);
@@ -505,18 +515,18 @@ public class AeditGenerator extends AbstractGenerator {
       boolean _equals = ((RecordType) _type).getName().equals(this.currentSchema);
       if (_equals) {
         Type _type_1 = typeDef.getType();
-        final Function1<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field, Boolean> _function_2 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field it) -> {
+        final Function1<avroclipse.avroIDL.Field, Boolean> _function_2 = (avroclipse.avroIDL.Field it) -> {
           return Boolean.valueOf(it.getName().equals(changeType.getField().getName()));
         };
-        final Consumer<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field> _function_3 = (org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field field) -> {
-          PrimativeTypeLink _createPrimativeTypeLink = AvdlClipseFactory.eINSTANCE.createPrimativeTypeLink();
+        final Consumer<avroclipse.avroIDL.Field> _function_3 = (avroclipse.avroIDL.Field field) -> {
+          PrimativeTypeLink _createPrimativeTypeLink = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink();
           final Procedure1<PrimativeTypeLink> _function_4 = (PrimativeTypeLink it) -> {
             it.setTarget(changeType.getNewType());
           };
           PrimativeTypeLink _doubleArrow = ObjectExtensions.<PrimativeTypeLink>operator_doubleArrow(_createPrimativeTypeLink, _function_4);
           field.setType(_doubleArrow);
         };
-        IterableExtensions.<org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field>filter(((RecordType) _type_1).getFields(), _function_2).forEach(_function_3);
+        IterableExtensions.<avroclipse.avroIDL.Field>filter(((RecordType) _type_1).getFields(), _function_2).forEach(_function_3);
       }
     };
     IterableExtensions.<TypeDef>filter(Iterables.<TypeDef>filter(this.protocols.get(this.currentProtocol).getElements(), TypeDef.class), _function).forEach(_function_1);

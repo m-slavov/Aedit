@@ -1,5 +1,0 @@
-feature FeatureOne {
-	RuleSet1
-}
-
-use FeatureOne; 

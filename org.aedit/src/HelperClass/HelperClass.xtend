@@ -1,64 +1,78 @@
 package HelperClass
 
-//import org.xtext.example.mydsl.myAvdl.AvdlClipseFactory
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvdlClipseFactory
-import org.aedit.aedit.Field
-//import org.xtext.example.mydsl.myAvdl.Value
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Value
-import java.io.ByteArrayOutputStream
-import java.io.ObjectOutputStream
+//import org.xtext.example.mydsl.myAvdl.AvroIDLFactory
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
-import java.io.File
-import java.util.Map
-//import org.xtext.example.mydsl.myAvdl.AvroIDLFile
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile
+import java.io.ObjectOutputStream
+import java.util.ArrayList
 import java.util.HashMap
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.EcoreUtil2
+import java.util.List
+import java.util.Map
+import org.aedit.aedit.BooleanValue
+import org.aedit.aedit.Field
+import org.aedit.aedit.FloatValue
 import org.aedit.aedit.IntValue
 import org.aedit.aedit.StringValue
-import org.aedit.aedit.FloatValue
-import java.util.List
-import com.google.common.io.Files
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType
-import java.util.ArrayList
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.EcoreUtil2
+import avroclipse.avroIDL.AvroIDLFactory
+import avroclipse.avroIDL.AvroIDLFile
+import avroclipse.avroIDL.EnumType
+import avroclipse.avroIDL.RecordType
+import avroclipse.avroIDL.TypeDef
+import avroclipse.avroIDL.Value
+import org.aedit.aedit.PrimitiveTypeField
+import org.aedit.aedit.CustomTypeField
 
 class HelperClass {
 
-	private final static String AVROCLIPSE_GRAMMAR_EXTENSION = "avdlclipse"
+	private final static String AVROCLIPSE_GRAMMAR_EXTENSION = "avdl"
 
 	def static createField(Field field) {
 
-		var newField = AvdlClipseFactory.eINSTANCE.createField => [
+		if (field instanceof PrimitiveTypeField) {
+			return createPrimitiveTypeField(field)
+		} else if (field instanceof CustomTypeField) {
+			return createCustomTypeField(field)
+		}
+
+	}
+
+	def private static createPrimitiveTypeField(PrimitiveTypeField field) {
+		var newField = AvroIDLFactory.eINSTANCE.createField => [
 			name = field.varName
-			type = AvdlClipseFactory.eINSTANCE.createPrimativeTypeLink => [
+			type = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink => [
 				target = field.type
 			]
-			
-			if (field.value !== null){
-				
-			var Value defValue;
+
+			if (field.value !== null) {
+
+				var Value defValue;
 				switch (field.type) {
 					case 'int':
-						defValue = AvdlClipseFactory.eINSTANCE.createIntValue => [
+						defValue = AvroIDLFactory.eINSTANCE.createIntValue => [
 							^val = (field.value as IntValue).^val
 						]
 					case 'double':
-						defValue = AvdlClipseFactory.eINSTANCE.createFloatValue => [
+						defValue = AvroIDLFactory.eINSTANCE.createFloatValue => [
 							^val = (field.value as FloatValue).^val
 						]
 					case 'string':
-						defValue = AvdlClipseFactory.eINSTANCE.createStringValue => [
+						defValue = AvroIDLFactory.eINSTANCE.createStringValue => [
 							^val = (field.value as StringValue).^val
 						]
 					case 'long':
-						defValue = AvdlClipseFactory.eINSTANCE.createIntValue => [
+						defValue = AvroIDLFactory.eINSTANCE.createIntValue => [
 							^val = (field.value as IntValue).^val
+						]
+					case 'float':
+						defValue = AvroIDLFactory.eINSTANCE.createFloatValue => [
+							^val = (field.value as FloatValue).^val
+						]
+					case 'boolean':
+						defValue = AvroIDLFactory.eINSTANCE.createBooleanValue => [
+							^val = (field.value as BooleanValue).^val
 						]
 				}
 				^default = defValue
@@ -68,17 +82,17 @@ class HelperClass {
 		return newField
 	}
 
-//	def static Object getValue(org.aedit.aedit.Value value){
-//		if (value.string !== null){
-//			value.string
-//		} else if (value.float !== 0.0){
-//			value.float
-//		} else if (value.int !== 0){
-//			value.int
-//		} else {
-//			value.float
-//		}
-//	}
+	def private static createCustomTypeField(CustomTypeField field) {
+		var newField = AvroIDLFactory.eINSTANCE.createField => [
+			name = field.varName
+			type = AvroIDLFactory.eINSTANCE.createCustomTypeLink => [
+				target = field.type
+			]
+		]
+
+		return newField
+	}
+
 	def static boolean tryParseInt(String value) {
 		try {
 			Integer.parseInt(value)
@@ -121,8 +135,6 @@ class HelperClass {
 	}
 
 	private static Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
-//	private static String filePath = "D:\\School\\runtime-EclipseXtext\\Testbench\\src\\avdl\\";
-	private static String filePath = "D:\\School\\runtime-EclipseXtext\\Testbench\\src\\avdl\\";
 
 	def static getAvroFiles(Resource resource) {
 
@@ -139,39 +151,6 @@ class HelperClass {
 		}
 
 		return protocols
-	}
-
-	// Helper methods for importing avdl files
-	def private static loadAvroIDLFile(URI uri, Resource resource) {
-
-		// Load the model from the original file
-		val res = resource.resourceSet.getResource(uri, true)
-		val originalAvroFile = res.contents.get(0) as AvroIDLFile
-
-		// Create a copy, otherwise cross references can be messed up during the editing
-		val copyAvroFile = EcoreUtil2.copy(originalAvroFile)
-
-		return copyAvroFile
-	}
-
-	def private static getFiles(String directoryName, Resource resource) {
-		val directory = new File(directoryName);
-
-		// Get all files from a directory.
-		val File[] fList = directory.listFiles();
-		if (fList !== null)
-			for (File file : fList) {
-				if (file.isFile()) {
-
-					if (Files.getFileExtension(file.getPath()).equals("avdlclipse")) {
-						var avroIDLFile = loadAvroIDLFile(URI.createFileURI(file.path), resource)
-						protocols.put(avroIDLFile.name, avroIDLFile);
-					}
-
-				} else if (file.isDirectory()) {
-					getFiles(file.getAbsolutePath(), resource);
-				}
-			}
 	}
 
 	def static getSchemasAndFields(AvroIDLFile file) {

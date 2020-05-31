@@ -1,46 +1,58 @@
 package HelperClass;
 
+import avroclipse.avroIDL.AvroIDLFactory;
+import avroclipse.avroIDL.AvroIDLFile;
+import avroclipse.avroIDL.BooleanValue;
+import avroclipse.avroIDL.CustomTypeLink;
+import avroclipse.avroIDL.EnumType;
+import avroclipse.avroIDL.Field;
+import avroclipse.avroIDL.FloatValue;
+import avroclipse.avroIDL.IntValue;
+import avroclipse.avroIDL.PrimativeTypeLink;
+import avroclipse.avroIDL.RecordType;
+import avroclipse.avroIDL.StringValue;
+import avroclipse.avroIDL.Type;
+import avroclipse.avroIDL.TypeDef;
 import com.google.common.collect.Iterables;
-import com.google.common.io.Files;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.aedit.aedit.CustomTypeField;
+import org.aedit.aedit.PrimitiveTypeField;
 import org.aedit.aedit.Value;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvdlClipseFactory;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.AvroIDLFile;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.EnumType;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Field;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.FloatValue;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.IntValue;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.PrimativeTypeLink;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.RecordType;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.StringValue;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Type;
-import org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.TypeDef;
 
 @SuppressWarnings("all")
 public class HelperClass {
-  private final static String AVROCLIPSE_GRAMMAR_EXTENSION = "avdlclipse";
+  private static final String AVROCLIPSE_GRAMMAR_EXTENSION = "avdl";
   
   public static Field createField(final org.aedit.aedit.Field field) {
-    Field _createField = AvdlClipseFactory.eINSTANCE.createField();
+    if ((field instanceof PrimitiveTypeField)) {
+      return HelperClass.createPrimitiveTypeField(((PrimitiveTypeField)field));
+    } else {
+      if ((field instanceof CustomTypeField)) {
+        return HelperClass.createCustomTypeField(((CustomTypeField)field));
+      }
+    }
+    return null;
+  }
+  
+  private static Field createPrimitiveTypeField(final PrimitiveTypeField field) {
+    Field _createField = AvroIDLFactory.eINSTANCE.createField();
     final Procedure1<Field> _function = (Field it) -> {
       it.setName(field.getVarName());
-      PrimativeTypeLink _createPrimativeTypeLink = AvdlClipseFactory.eINSTANCE.createPrimativeTypeLink();
+      PrimativeTypeLink _createPrimativeTypeLink = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink();
       final Procedure1<PrimativeTypeLink> _function_1 = (PrimativeTypeLink it_1) -> {
         it_1.setTarget(field.getType());
       };
@@ -49,12 +61,12 @@ public class HelperClass {
       Value _value = field.getValue();
       boolean _tripleNotEquals = (_value != null);
       if (_tripleNotEquals) {
-        org.xtext.example.org.xtext.example.avdlclipse.avdlClipse.Value defValue = null;
+        avroclipse.avroIDL.Value defValue = null;
         String _type = field.getType();
         if (_type != null) {
           switch (_type) {
             case "int":
-              IntValue _createIntValue = AvdlClipseFactory.eINSTANCE.createIntValue();
+              IntValue _createIntValue = AvroIDLFactory.eINSTANCE.createIntValue();
               final Procedure1<IntValue> _function_2 = (IntValue it_1) -> {
                 Value _value_1 = field.getValue();
                 it_1.setVal(((org.aedit.aedit.IntValue) _value_1).getVal());
@@ -63,7 +75,7 @@ public class HelperClass {
               defValue = _doubleArrow_1;
               break;
             case "double":
-              FloatValue _createFloatValue = AvdlClipseFactory.eINSTANCE.createFloatValue();
+              FloatValue _createFloatValue = AvroIDLFactory.eINSTANCE.createFloatValue();
               final Procedure1<FloatValue> _function_3 = (FloatValue it_1) -> {
                 Value _value_1 = field.getValue();
                 it_1.setVal(((org.aedit.aedit.FloatValue) _value_1).getVal());
@@ -72,7 +84,7 @@ public class HelperClass {
               defValue = _doubleArrow_2;
               break;
             case "string":
-              StringValue _createStringValue = AvdlClipseFactory.eINSTANCE.createStringValue();
+              StringValue _createStringValue = AvroIDLFactory.eINSTANCE.createStringValue();
               final Procedure1<StringValue> _function_4 = (StringValue it_1) -> {
                 Value _value_1 = field.getValue();
                 it_1.setVal(((org.aedit.aedit.StringValue) _value_1).getVal());
@@ -81,7 +93,7 @@ public class HelperClass {
               defValue = _doubleArrow_3;
               break;
             case "long":
-              IntValue _createIntValue_1 = AvdlClipseFactory.eINSTANCE.createIntValue();
+              IntValue _createIntValue_1 = AvroIDLFactory.eINSTANCE.createIntValue();
               final Procedure1<IntValue> _function_5 = (IntValue it_1) -> {
                 Value _value_1 = field.getValue();
                 it_1.setVal(((org.aedit.aedit.IntValue) _value_1).getVal());
@@ -89,10 +101,43 @@ public class HelperClass {
               IntValue _doubleArrow_4 = ObjectExtensions.<IntValue>operator_doubleArrow(_createIntValue_1, _function_5);
               defValue = _doubleArrow_4;
               break;
+            case "float":
+              FloatValue _createFloatValue_1 = AvroIDLFactory.eINSTANCE.createFloatValue();
+              final Procedure1<FloatValue> _function_6 = (FloatValue it_1) -> {
+                Value _value_1 = field.getValue();
+                it_1.setVal(((org.aedit.aedit.FloatValue) _value_1).getVal());
+              };
+              FloatValue _doubleArrow_5 = ObjectExtensions.<FloatValue>operator_doubleArrow(_createFloatValue_1, _function_6);
+              defValue = _doubleArrow_5;
+              break;
+            case "boolean":
+              BooleanValue _createBooleanValue = AvroIDLFactory.eINSTANCE.createBooleanValue();
+              final Procedure1<BooleanValue> _function_7 = (BooleanValue it_1) -> {
+                Value _value_1 = field.getValue();
+                it_1.setVal(((org.aedit.aedit.BooleanValue) _value_1).isVal());
+              };
+              BooleanValue _doubleArrow_6 = ObjectExtensions.<BooleanValue>operator_doubleArrow(_createBooleanValue, _function_7);
+              defValue = _doubleArrow_6;
+              break;
           }
         }
         it.setDefault(defValue);
       }
+    };
+    Field newField = ObjectExtensions.<Field>operator_doubleArrow(_createField, _function);
+    return newField;
+  }
+  
+  private static Field createCustomTypeField(final CustomTypeField field) {
+    Field _createField = AvroIDLFactory.eINSTANCE.createField();
+    final Procedure1<Field> _function = (Field it) -> {
+      it.setName(field.getVarName());
+      CustomTypeLink _createCustomTypeLink = AvroIDLFactory.eINSTANCE.createCustomTypeLink();
+      final Procedure1<CustomTypeLink> _function_1 = (CustomTypeLink it_1) -> {
+        it_1.setTarget(field.getType());
+      };
+      CustomTypeLink _doubleArrow = ObjectExtensions.<CustomTypeLink>operator_doubleArrow(_createCustomTypeLink, _function_1);
+      it.setType(_doubleArrow);
     };
     Field newField = ObjectExtensions.<Field>operator_doubleArrow(_createField, _function);
     return newField;
@@ -104,7 +149,6 @@ public class HelperClass {
       return true;
     } catch (final Throwable _t) {
       if (_t instanceof Exception) {
-        final Exception exception = (Exception)_t;
         return false;
       } else {
         throw Exceptions.sneakyThrow(_t);
@@ -118,7 +162,6 @@ public class HelperClass {
       return true;
     } catch (final Throwable _t) {
       if (_t instanceof Exception) {
-        final Exception exception = (Exception)_t;
         return false;
       } else {
         throw Exceptions.sneakyThrow(_t);
@@ -132,7 +175,6 @@ public class HelperClass {
       return true;
     } catch (final Throwable _t) {
       if (_t instanceof Exception) {
-        final Exception exception = (Exception)_t;
         return false;
       } else {
         throw Exceptions.sneakyThrow(_t);
@@ -162,8 +204,6 @@ public class HelperClass {
   
   private static Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
   
-  private static String filePath = "D:\\School\\runtime-EclipseXtext\\Testbench\\src\\avdl\\";
-  
   public static Map<String, AvroIDLFile> getAvroFiles(final Resource resource) {
     EList<Resource> _resources = resource.getResourceSet().getResources();
     for (final Resource res : _resources) {
@@ -181,37 +221,6 @@ public class HelperClass {
       }
     }
     return HelperClass.protocols;
-  }
-  
-  private static AvroIDLFile loadAvroIDLFile(final URI uri, final Resource resource) {
-    final Resource res = resource.getResourceSet().getResource(uri, true);
-    EObject _get = res.getContents().get(0);
-    final AvroIDLFile originalAvroFile = ((AvroIDLFile) _get);
-    final AvroIDLFile copyAvroFile = EcoreUtil2.<AvroIDLFile>copy(originalAvroFile);
-    return copyAvroFile;
-  }
-  
-  private static Object getFiles(final String directoryName, final Resource resource) {
-    final File directory = new File(directoryName);
-    final File[] fList = directory.listFiles();
-    if ((fList != null)) {
-      for (final File file : fList) {
-        boolean _isFile = file.isFile();
-        if (_isFile) {
-          boolean _equals = Files.getFileExtension(file.getPath()).equals("avdlclipse");
-          if (_equals) {
-            AvroIDLFile avroIDLFile = HelperClass.loadAvroIDLFile(URI.createFileURI(file.getPath()), resource);
-            HelperClass.protocols.put(avroIDLFile.getName(), avroIDLFile);
-          }
-        } else {
-          boolean _isDirectory = file.isDirectory();
-          if (_isDirectory) {
-            HelperClass.getFiles(file.getAbsolutePath(), resource);
-          }
-        }
-      }
-    }
-    return null;
   }
   
   public static List<String> getSchemasAndFields(final AvroIDLFile file) {

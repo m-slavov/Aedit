@@ -34,8 +34,9 @@ Workflow {
 
 		language = StandardLanguage {
 			name = "org.aedit.Aedit"
-			fileExtensions = "aedit, aeditm"
-			referencedResource = "platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.genmodel"
+			fileExtensions = "aedit"
+//			referencedResource = "platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.genmodel"
+			referencedResource = "platform:/resource/avroclipse/model/generated/AvroIDL.genmodel"
 			
 			serializer = {
 				generateStub = false
