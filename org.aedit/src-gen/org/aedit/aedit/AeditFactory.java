@@ -87,6 +87,15 @@ public interface AeditFactory extends EFactory
   SchemaRule createSchemaRule();
 
   /**
+   * Returns a new object of class '<em>Array Edit Rules</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Edit Rules</em>'.
+   * @generated
+   */
+  ArrayEditRules createArrayEditRules();
+
+  /**
    * Returns a new object of class '<em>Enum Rule</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -94,6 +103,60 @@ public interface AeditFactory extends EFactory
    * @generated
    */
   EnumRule createEnumRule();
+
+  /**
+   * Returns a new object of class '<em>Add Annotation To Schema</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Add Annotation To Schema</em>'.
+   * @generated
+   */
+  AddAnnotationToSchema createAddAnnotationToSchema();
+
+  /**
+   * Returns a new object of class '<em>Add Annotation To Field</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Add Annotation To Field</em>'.
+   * @generated
+   */
+  AddAnnotationToField createAddAnnotationToField();
+
+  /**
+   * Returns a new object of class '<em>Add Name Annotation To Field</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Add Name Annotation To Field</em>'.
+   * @generated
+   */
+  AddNameAnnotationToField createAddNameAnnotationToField();
+
+  /**
+   * Returns a new object of class '<em>Remove Annotation From Schema</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Remove Annotation From Schema</em>'.
+   * @generated
+   */
+  RemoveAnnotationFromSchema createRemoveAnnotationFromSchema();
+
+  /**
+   * Returns a new object of class '<em>Remove Annotation From Field</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Remove Annotation From Field</em>'.
+   * @generated
+   */
+  RemoveAnnotationFromField createRemoveAnnotationFromField();
+
+  /**
+   * Returns a new object of class '<em>Remove Name Annotation From Field</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Remove Name Annotation From Field</em>'.
+   * @generated
+   */
+  RemoveNameAnnotationFromField createRemoveNameAnnotationFromField();
 
   /**
    * Returns a new object of class '<em>Change Schema</em>'.
@@ -130,6 +193,15 @@ public interface AeditFactory extends EFactory
    * @generated
    */
   AddRecord createAddRecord();
+
+  /**
+   * Returns a new object of class '<em>Add Error</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Add Error</em>'.
+   * @generated
+   */
+  AddError createAddError();
 
   /**
    * Returns a new object of class '<em>Add Enumeration</em>'.
@@ -231,6 +303,33 @@ public interface AeditFactory extends EFactory
   ChangeType createChangeType();
 
   /**
+   * Returns a new object of class '<em>Remove Array Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Remove Array Value</em>'.
+   * @generated
+   */
+  RemoveArrayValue createRemoveArrayValue();
+
+  /**
+   * Returns a new object of class '<em>Remove Array Value At Index</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Remove Array Value At Index</em>'.
+   * @generated
+   */
+  RemoveArrayValueAtIndex createRemoveArrayValueAtIndex();
+
+  /**
+   * Returns a new object of class '<em>Add Value To Array</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Add Value To Array</em>'.
+   * @generated
+   */
+  AddValueToArray createAddValueToArray();
+
+  /**
    * Returns a new object of class '<em>Field</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -256,6 +355,87 @@ public interface AeditFactory extends EFactory
    * @generated
    */
   PrimitiveTypeField createPrimitiveTypeField();
+
+  /**
+   * Returns a new object of class '<em>Complex Type Field</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Complex Type Field</em>'.
+   * @generated
+   */
+  ComplexTypeField createComplexTypeField();
+
+  /**
+   * Returns a new object of class '<em>Array Type Field</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Type Field</em>'.
+   * @generated
+   */
+  ArrayTypeField createArrayTypeField();
+
+  /**
+   * Returns a new object of class '<em>Annotated Types</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Annotated Types</em>'.
+   * @generated
+   */
+  AnnotatedTypes createAnnotatedTypes();
+
+  /**
+   * Returns a new object of class '<em>Types</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Types</em>'.
+   * @generated
+   */
+  Types createTypes();
+
+  /**
+   * Returns a new object of class '<em>Custom Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Custom Type</em>'.
+   * @generated
+   */
+  CustomType createCustomType();
+
+  /**
+   * Returns a new object of class '<em>Primitive Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Primitive Type</em>'.
+   * @generated
+   */
+  PrimitiveType createPrimitiveType();
+
+  /**
+   * Returns a new object of class '<em>Annotation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Annotation</em>'.
+   * @generated
+   */
+  Annotation createAnnotation();
+
+  /**
+   * Returns a new object of class '<em>Values</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Values</em>'.
+   * @generated
+   */
+  Values createValues();
+
+  /**
+   * Returns a new object of class '<em>Array</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array</em>'.
+   * @generated
+   */
+  Array createArray();
 
   /**
    * Returns a new object of class '<em>Value</em>'.

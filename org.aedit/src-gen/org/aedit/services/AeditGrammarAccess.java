@@ -6,6 +6,7 @@ package org.aedit.services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.List;
+import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
@@ -253,12 +254,14 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAddParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cChangeSchemaParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cChangeEnumParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cAddAnnotationToSchemaParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cRemoveAnnotationFromSchemaParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
 		//GenericRule:
-		//	RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum;
+		//	RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum | AddAnnotationToSchema | RemoveAnnotationFromSchema;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum
+		//RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum | AddAnnotationToSchema | RemoveAnnotationFromSchema
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//RenameSchema
@@ -275,6 +278,12 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ChangeEnum
 		public RuleCall getChangeEnumParserRuleCall_4() { return cChangeEnumParserRuleCall_4; }
+		
+		//AddAnnotationToSchema
+		public RuleCall getAddAnnotationToSchemaParserRuleCall_5() { return cAddAnnotationToSchemaParserRuleCall_5; }
+		
+		//RemoveAnnotationFromSchema
+		public RuleCall getRemoveAnnotationFromSchemaParserRuleCall_6() { return cRemoveAnnotationFromSchemaParserRuleCall_6; }
 	}
 	public class SchemaRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.SchemaRule");
@@ -284,12 +293,19 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAddVariableParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cChangeDefValueParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cChangeTypeParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cAddAnnotationToFieldParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cAddNameAnnotationToFieldParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cRemoveAnnotationFromFieldParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cRemoveNameAnnotationFromFieldParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cArrayEditRulesParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
 		
 		//SchemaRule:
-		//	RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType;
+		//	RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType | AddAnnotationToField |
+		//	AddNameAnnotationToField | RemoveAnnotationFromField | RemoveNameAnnotationFromField | ArrayEditRules;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType
+		//RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType | AddAnnotationToField |
+		//AddNameAnnotationToField | RemoveAnnotationFromField | RemoveNameAnnotationFromField | ArrayEditRules
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//RemoveVariable
@@ -306,6 +322,44 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ChangeType
 		public RuleCall getChangeTypeParserRuleCall_4() { return cChangeTypeParserRuleCall_4; }
+		
+		//AddAnnotationToField
+		public RuleCall getAddAnnotationToFieldParserRuleCall_5() { return cAddAnnotationToFieldParserRuleCall_5; }
+		
+		//AddNameAnnotationToField
+		public RuleCall getAddNameAnnotationToFieldParserRuleCall_6() { return cAddNameAnnotationToFieldParserRuleCall_6; }
+		
+		//RemoveAnnotationFromField
+		public RuleCall getRemoveAnnotationFromFieldParserRuleCall_7() { return cRemoveAnnotationFromFieldParserRuleCall_7; }
+		
+		//RemoveNameAnnotationFromField
+		public RuleCall getRemoveNameAnnotationFromFieldParserRuleCall_8() { return cRemoveNameAnnotationFromFieldParserRuleCall_8; }
+		
+		//ArrayEditRules
+		public RuleCall getArrayEditRulesParserRuleCall_9() { return cArrayEditRulesParserRuleCall_9; }
+	}
+	public class ArrayEditRulesElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.ArrayEditRules");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cRemoveArrayValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cRemoveArrayValueAtIndexParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAddValueToArrayParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//ArrayEditRules:
+		//	RemoveArrayValue | RemoveArrayValueAtIndex | AddValueToArray;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//RemoveArrayValue | RemoveArrayValueAtIndex | AddValueToArray
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//RemoveArrayValue
+		public RuleCall getRemoveArrayValueParserRuleCall_0() { return cRemoveArrayValueParserRuleCall_0; }
+		
+		//RemoveArrayValueAtIndex
+		public RuleCall getRemoveArrayValueAtIndexParserRuleCall_1() { return cRemoveArrayValueAtIndexParserRuleCall_1; }
+		
+		//AddValueToArray
+		public RuleCall getAddValueToArrayParserRuleCall_2() { return cAddValueToArrayParserRuleCall_2; }
 	}
 	public class EnumRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.EnumRule");
@@ -330,13 +384,300 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		//AddEnum
 		public RuleCall getAddEnumParserRuleCall_2() { return cAddEnumParserRuleCall_2; }
 	}
+	public class AddAnnotationToSchemaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AddAnnotationToSchema");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAddAnnotKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cSchemaTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cSchemaTypeSCHEMA_TYPEParserRuleCall_1_0 = (RuleCall)cSchemaTypeAssignment_1.eContents().get(0);
+		private final Assignment cSchemaAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cSchemaTypeCrossReference_2_0 = (CrossReference)cSchemaAssignment_2.eContents().get(0);
+		private final RuleCall cSchemaTypeQNParserRuleCall_2_0_1 = (RuleCall)cSchemaTypeCrossReference_2_0.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cAnnotationAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cAnnotationAnnotationParserRuleCall_4_0 = (RuleCall)cAnnotationAssignment_4.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//AddAnnotationToSchema:
+		//	'add.annot' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' annotation=Annotation ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'add.annot' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' annotation=Annotation ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'add.annot'
+		public Keyword getAddAnnotKeyword_0() { return cAddAnnotKeyword_0; }
+		
+		//schemaType=SCHEMA_TYPE
+		public Assignment getSchemaTypeAssignment_1() { return cSchemaTypeAssignment_1; }
+		
+		//SCHEMA_TYPE
+		public RuleCall getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0() { return cSchemaTypeSCHEMA_TYPEParserRuleCall_1_0; }
+		
+		//schema=[avroIDL::Type|QN]
+		public Assignment getSchemaAssignment_2() { return cSchemaAssignment_2; }
+		
+		//[avroIDL::Type|QN]
+		public CrossReference getSchemaTypeCrossReference_2_0() { return cSchemaTypeCrossReference_2_0; }
+		
+		//QN
+		public RuleCall getSchemaTypeQNParserRuleCall_2_0_1() { return cSchemaTypeQNParserRuleCall_2_0_1; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_3() { return cEqualsSignGreaterThanSignKeyword_3; }
+		
+		//annotation=Annotation
+		public Assignment getAnnotationAssignment_4() { return cAnnotationAssignment_4; }
+		
+		//Annotation
+		public RuleCall getAnnotationAnnotationParserRuleCall_4_0() { return cAnnotationAnnotationParserRuleCall_4_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
+	public class AddAnnotationToFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AddAnnotationToField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAddAnnotKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cVariableFieldCrossReference_1_0 = (CrossReference)cVariableAssignment_1.eContents().get(0);
+		private final RuleCall cVariableFieldQNParserRuleCall_1_0_1 = (RuleCall)cVariableFieldCrossReference_1_0.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cAnnotationAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cAnnotationAnnotationParserRuleCall_3_0 = (RuleCall)cAnnotationAssignment_3.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//AddAnnotationToField:
+		//	'add.annot' variable=[avroIDL::Field|QN] '=>' annotation=Annotation ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'add.annot' variable=[avroIDL::Field|QN] '=>' annotation=Annotation ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'add.annot'
+		public Keyword getAddAnnotKeyword_0() { return cAddAnnotKeyword_0; }
+		
+		//variable=[avroIDL::Field|QN]
+		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
+		
+		//[avroIDL::Field|QN]
+		public CrossReference getVariableFieldCrossReference_1_0() { return cVariableFieldCrossReference_1_0; }
+		
+		//QN
+		public RuleCall getVariableFieldQNParserRuleCall_1_0_1() { return cVariableFieldQNParserRuleCall_1_0_1; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+		
+		//annotation=Annotation
+		public Assignment getAnnotationAssignment_3() { return cAnnotationAssignment_3; }
+		
+		//Annotation
+		public RuleCall getAnnotationAnnotationParserRuleCall_3_0() { return cAnnotationAnnotationParserRuleCall_3_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+	}
+	public class AddNameAnnotationToFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AddNameAnnotationToField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAddName_annotKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cVariableFieldCrossReference_1_0 = (CrossReference)cVariableAssignment_1.eContents().get(0);
+		private final RuleCall cVariableFieldQNParserRuleCall_1_0_1 = (RuleCall)cVariableFieldCrossReference_1_0.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cAnnotationAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cAnnotationAnnotationParserRuleCall_3_0 = (RuleCall)cAnnotationAssignment_3.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//AddNameAnnotationToField:
+		//	'add.name_annot' variable=[avroIDL::Field|QN] '=>' annotation=Annotation ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'add.name_annot' variable=[avroIDL::Field|QN] '=>' annotation=Annotation ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'add.name_annot'
+		public Keyword getAddName_annotKeyword_0() { return cAddName_annotKeyword_0; }
+		
+		//variable=[avroIDL::Field|QN]
+		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
+		
+		//[avroIDL::Field|QN]
+		public CrossReference getVariableFieldCrossReference_1_0() { return cVariableFieldCrossReference_1_0; }
+		
+		//QN
+		public RuleCall getVariableFieldQNParserRuleCall_1_0_1() { return cVariableFieldQNParserRuleCall_1_0_1; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+		
+		//annotation=Annotation
+		public Assignment getAnnotationAssignment_3() { return cAnnotationAssignment_3; }
+		
+		//Annotation
+		public RuleCall getAnnotationAnnotationParserRuleCall_3_0() { return cAnnotationAnnotationParserRuleCall_3_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+	}
+	public class RemoveAnnotationFromSchemaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.RemoveAnnotationFromSchema");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cRemoveAnnotKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cSchemaTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cSchemaTypeSCHEMA_TYPEParserRuleCall_1_0 = (RuleCall)cSchemaTypeAssignment_1.eContents().get(0);
+		private final Assignment cSchemaAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cSchemaTypeCrossReference_2_0 = (CrossReference)cSchemaAssignment_2.eContents().get(0);
+		private final RuleCall cSchemaTypeQNParserRuleCall_2_0_1 = (RuleCall)cSchemaTypeCrossReference_2_0.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cAnnotationToRemoveAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cAnnotationToRemoveAnnotationCrossReference_4_0 = (CrossReference)cAnnotationToRemoveAssignment_4.eContents().get(0);
+		private final RuleCall cAnnotationToRemoveAnnotationQNParserRuleCall_4_0_1 = (RuleCall)cAnnotationToRemoveAnnotationCrossReference_4_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//RemoveAnnotationFromSchema:
+		//	'remove.annot' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'remove.annot' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'remove.annot'
+		public Keyword getRemoveAnnotKeyword_0() { return cRemoveAnnotKeyword_0; }
+		
+		//schemaType=SCHEMA_TYPE
+		public Assignment getSchemaTypeAssignment_1() { return cSchemaTypeAssignment_1; }
+		
+		//SCHEMA_TYPE
+		public RuleCall getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0() { return cSchemaTypeSCHEMA_TYPEParserRuleCall_1_0; }
+		
+		//schema=[avroIDL::Type|QN]
+		public Assignment getSchemaAssignment_2() { return cSchemaAssignment_2; }
+		
+		//[avroIDL::Type|QN]
+		public CrossReference getSchemaTypeCrossReference_2_0() { return cSchemaTypeCrossReference_2_0; }
+		
+		//QN
+		public RuleCall getSchemaTypeQNParserRuleCall_2_0_1() { return cSchemaTypeQNParserRuleCall_2_0_1; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_3() { return cEqualsSignGreaterThanSignKeyword_3; }
+		
+		//annotationToRemove=[avroIDL::Annotation|QN]
+		public Assignment getAnnotationToRemoveAssignment_4() { return cAnnotationToRemoveAssignment_4; }
+		
+		//[avroIDL::Annotation|QN]
+		public CrossReference getAnnotationToRemoveAnnotationCrossReference_4_0() { return cAnnotationToRemoveAnnotationCrossReference_4_0; }
+		
+		//QN
+		public RuleCall getAnnotationToRemoveAnnotationQNParserRuleCall_4_0_1() { return cAnnotationToRemoveAnnotationQNParserRuleCall_4_0_1; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
+	public class RemoveAnnotationFromFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.RemoveAnnotationFromField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cRemoveAnnotKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cVariableFieldCrossReference_1_0 = (CrossReference)cVariableAssignment_1.eContents().get(0);
+		private final RuleCall cVariableFieldQNParserRuleCall_1_0_1 = (RuleCall)cVariableFieldCrossReference_1_0.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cAnnotationToRemoveAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cAnnotationToRemoveAnnotationCrossReference_3_0 = (CrossReference)cAnnotationToRemoveAssignment_3.eContents().get(0);
+		private final RuleCall cAnnotationToRemoveAnnotationQNParserRuleCall_3_0_1 = (RuleCall)cAnnotationToRemoveAnnotationCrossReference_3_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//RemoveAnnotationFromField:
+		//	'remove.annot' variable=[avroIDL::Field|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'remove.annot' variable=[avroIDL::Field|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'remove.annot'
+		public Keyword getRemoveAnnotKeyword_0() { return cRemoveAnnotKeyword_0; }
+		
+		//variable=[avroIDL::Field|QN]
+		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
+		
+		//[avroIDL::Field|QN]
+		public CrossReference getVariableFieldCrossReference_1_0() { return cVariableFieldCrossReference_1_0; }
+		
+		//QN
+		public RuleCall getVariableFieldQNParserRuleCall_1_0_1() { return cVariableFieldQNParserRuleCall_1_0_1; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+		
+		//annotationToRemove=[avroIDL::Annotation|QN]
+		public Assignment getAnnotationToRemoveAssignment_3() { return cAnnotationToRemoveAssignment_3; }
+		
+		//[avroIDL::Annotation|QN]
+		public CrossReference getAnnotationToRemoveAnnotationCrossReference_3_0() { return cAnnotationToRemoveAnnotationCrossReference_3_0; }
+		
+		//QN
+		public RuleCall getAnnotationToRemoveAnnotationQNParserRuleCall_3_0_1() { return cAnnotationToRemoveAnnotationQNParserRuleCall_3_0_1; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+	}
+	public class RemoveNameAnnotationFromFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.RemoveNameAnnotationFromField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cRemoveName_annotKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cVariableFieldCrossReference_1_0 = (CrossReference)cVariableAssignment_1.eContents().get(0);
+		private final RuleCall cVariableFieldQNParserRuleCall_1_0_1 = (RuleCall)cVariableFieldCrossReference_1_0.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cAnnotationToRemoveAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cAnnotationToRemoveAnnotationCrossReference_3_0 = (CrossReference)cAnnotationToRemoveAssignment_3.eContents().get(0);
+		private final RuleCall cAnnotationToRemoveAnnotationQNParserRuleCall_3_0_1 = (RuleCall)cAnnotationToRemoveAnnotationCrossReference_3_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//RemoveNameAnnotationFromField:
+		//	'remove.name_annot' variable=[avroIDL::Field|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'remove.name_annot' variable=[avroIDL::Field|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'remove.name_annot'
+		public Keyword getRemoveName_annotKeyword_0() { return cRemoveName_annotKeyword_0; }
+		
+		//variable=[avroIDL::Field|QN]
+		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
+		
+		//[avroIDL::Field|QN]
+		public CrossReference getVariableFieldCrossReference_1_0() { return cVariableFieldCrossReference_1_0; }
+		
+		//QN
+		public RuleCall getVariableFieldQNParserRuleCall_1_0_1() { return cVariableFieldQNParserRuleCall_1_0_1; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+		
+		//annotationToRemove=[avroIDL::Annotation|QN]
+		public Assignment getAnnotationToRemoveAssignment_3() { return cAnnotationToRemoveAssignment_3; }
+		
+		//[avroIDL::Annotation|QN]
+		public CrossReference getAnnotationToRemoveAnnotationCrossReference_3_0() { return cAnnotationToRemoveAnnotationCrossReference_3_0; }
+		
+		//QN
+		public RuleCall getAnnotationToRemoveAnnotationQNParserRuleCall_3_0_1() { return cAnnotationToRemoveAnnotationQNParserRuleCall_3_0_1; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+	}
 	public class ChangeSchemaElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.ChangeSchema");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cChangeKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Keyword cRecordKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
-		private final Keyword cErrorKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		private final Assignment cSchemaTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Alternatives cSchemaTypeAlternatives_1_0 = (Alternatives)cSchemaTypeAssignment_1.eContents().get(0);
+		private final Keyword cSchemaTypeRecordKeyword_1_0_0 = (Keyword)cSchemaTypeAlternatives_1_0.eContents().get(0);
+		private final Keyword cSchemaTypeErrorKeyword_1_0_1 = (Keyword)cSchemaTypeAlternatives_1_0.eContents().get(1);
 		private final Assignment cSchemaAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final CrossReference cSchemaTypeCrossReference_2_0 = (CrossReference)cSchemaAssignment_2.eContents().get(0);
 		private final RuleCall cSchemaTypeQNParserRuleCall_2_0_1 = (RuleCall)cSchemaTypeCrossReference_2_0.eContents().get(1);
@@ -346,23 +687,26 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//ChangeSchema:
-		//	'change' ('record' | 'error') schema=[avroIDL::Type|QN] '{' rules+=SchemaRule* '}';
+		//	'change' schemaType=('record' | 'error') schema=[avroIDL::Type|QN] '{' rules+=SchemaRule* '}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'change' ('record' | 'error') schema=[avroIDL::Type|QN] '{' rules+=SchemaRule* '}'
+		//'change' schemaType=('record' | 'error') schema=[avroIDL::Type|QN] '{' rules+=SchemaRule* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'change'
 		public Keyword getChangeKeyword_0() { return cChangeKeyword_0; }
 		
+		//schemaType=('record' | 'error')
+		public Assignment getSchemaTypeAssignment_1() { return cSchemaTypeAssignment_1; }
+		
 		//('record' | 'error')
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		public Alternatives getSchemaTypeAlternatives_1_0() { return cSchemaTypeAlternatives_1_0; }
 		
 		//'record'
-		public Keyword getRecordKeyword_1_0() { return cRecordKeyword_1_0; }
+		public Keyword getSchemaTypeRecordKeyword_1_0_0() { return cSchemaTypeRecordKeyword_1_0_0; }
 		
 		//'error'
-		public Keyword getErrorKeyword_1_1() { return cErrorKeyword_1_1; }
+		public Keyword getSchemaTypeErrorKeyword_1_0_1() { return cSchemaTypeErrorKeyword_1_0_1; }
 		
 		//schema=[avroIDL::Type|QN]
 		public Assignment getSchemaAssignment_2() { return cSchemaAssignment_2; }
@@ -436,20 +780,24 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Add");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cAddRecordParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cAddEnumerationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAddErrorParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAddEnumerationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Add:
-		//	AddRecord | AddEnumeration;
+		//	AddRecord | AddError | AddEnumeration;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//AddRecord | AddEnumeration
+		//AddRecord | AddError | AddEnumeration
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//AddRecord
 		public RuleCall getAddRecordParserRuleCall_0() { return cAddRecordParserRuleCall_0; }
 		
+		//AddError
+		public RuleCall getAddErrorParserRuleCall_1() { return cAddErrorParserRuleCall_1; }
+		
 		//AddEnumeration
-		public RuleCall getAddEnumerationParserRuleCall_1() { return cAddEnumerationParserRuleCall_1; }
+		public RuleCall getAddEnumerationParserRuleCall_2() { return cAddEnumerationParserRuleCall_2; }
 	}
 	public class AddRecordElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AddRecord");
@@ -513,6 +861,81 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ID
 		public RuleCall getRecordNameIDTerminalRuleCall_7_0() { return cRecordNameIDTerminalRuleCall_7_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_8() { return cLeftCurlyBracketKeyword_8; }
+		
+		//fields+=Field*
+		public Assignment getFieldsAssignment_9() { return cFieldsAssignment_9; }
+		
+		//Field
+		public RuleCall getFieldsFieldParserRuleCall_9_0() { return cFieldsFieldParserRuleCall_9_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_10() { return cRightCurlyBracketKeyword_10; }
+	}
+	public class AddErrorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AddError");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAddAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cIndexAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cIndexINTTerminalRuleCall_2_0 = (RuleCall)cIndexAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Keyword cErrorKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cNamespaceAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final CrossReference cNamespaceAvroIDLFileCrossReference_5_0 = (CrossReference)cNamespaceAssignment_5.eContents().get(0);
+		private final RuleCall cNamespaceAvroIDLFileIDTerminalRuleCall_5_0_1 = (RuleCall)cNamespaceAvroIDLFileCrossReference_5_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cErrorNameAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cErrorNameIDTerminalRuleCall_7_0 = (RuleCall)cErrorNameAssignment_7.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cFieldsAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cFieldsFieldParserRuleCall_9_0 = (RuleCall)cFieldsAssignment_9.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		
+		//AddError:
+		//	'add.at' '(' index=INT ')' 'error' namespace=[avroIDL::AvroIDLFile] '.' errorName=ID '{' fields+=Field* '}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'add.at' '(' index=INT ')' 'error' namespace=[avroIDL::AvroIDLFile] '.' errorName=ID '{' fields+=Field* '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'add.at'
+		public Keyword getAddAtKeyword_0() { return cAddAtKeyword_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		
+		//index=INT
+		public Assignment getIndexAssignment_2() { return cIndexAssignment_2; }
+		
+		//INT
+		public RuleCall getIndexINTTerminalRuleCall_2_0() { return cIndexINTTerminalRuleCall_2_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+		
+		//'error'
+		public Keyword getErrorKeyword_4() { return cErrorKeyword_4; }
+		
+		//namespace=[avroIDL::AvroIDLFile]
+		public Assignment getNamespaceAssignment_5() { return cNamespaceAssignment_5; }
+		
+		//[avroIDL::AvroIDLFile]
+		public CrossReference getNamespaceAvroIDLFileCrossReference_5_0() { return cNamespaceAvroIDLFileCrossReference_5_0; }
+		
+		//ID
+		public RuleCall getNamespaceAvroIDLFileIDTerminalRuleCall_5_0_1() { return cNamespaceAvroIDLFileIDTerminalRuleCall_5_0_1; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_6() { return cFullStopKeyword_6; }
+		
+		//errorName=ID
+		public Assignment getErrorNameAssignment_7() { return cErrorNameAssignment_7; }
+		
+		//ID
+		public RuleCall getErrorNameIDTerminalRuleCall_7_0() { return cErrorNameIDTerminalRuleCall_7_0; }
 		
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_8() { return cLeftCurlyBracketKeyword_8; }
@@ -1021,102 +1444,554 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
-	public class FieldElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Field");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cPrimitiveTypeFieldParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cCustomTypeFieldParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+	public class RemoveArrayValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.RemoveArrayValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cRemoveKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cArrayAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cArrayFieldCrossReference_1_0 = (CrossReference)cArrayAssignment_1.eContents().get(0);
+		private final RuleCall cArrayFieldIDTerminalRuleCall_1_0_1 = (RuleCall)cArrayFieldCrossReference_1_0.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cValueToRemoveAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cValueToRemoveValueParserRuleCall_3_0 = (RuleCall)cValueToRemoveAssignment_3.eContents().get(0);
 		
-		//Field:
-		//	PrimitiveTypeField | CustomTypeField;
+		//RemoveArrayValue:
+		//	'remove' array=[avroIDL::Field] '=>' valueToRemove=Value;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//PrimitiveTypeField | CustomTypeField
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//'remove' array=[avroIDL::Field] '=>' valueToRemove=Value
+		public Group getGroup() { return cGroup; }
+		
+		//'remove'
+		public Keyword getRemoveKeyword_0() { return cRemoveKeyword_0; }
+		
+		//array=[avroIDL::Field]
+		public Assignment getArrayAssignment_1() { return cArrayAssignment_1; }
+		
+		//[avroIDL::Field]
+		public CrossReference getArrayFieldCrossReference_1_0() { return cArrayFieldCrossReference_1_0; }
+		
+		//ID
+		public RuleCall getArrayFieldIDTerminalRuleCall_1_0_1() { return cArrayFieldIDTerminalRuleCall_1_0_1; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+		
+		//valueToRemove=Value
+		public Assignment getValueToRemoveAssignment_3() { return cValueToRemoveAssignment_3; }
+		
+		//Value
+		public RuleCall getValueToRemoveValueParserRuleCall_3_0() { return cValueToRemoveValueParserRuleCall_3_0; }
+	}
+	public class RemoveArrayValueAtIndexElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.RemoveArrayValueAtIndex");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cRemoveAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cIndexAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cIndexINTTerminalRuleCall_2_0 = (RuleCall)cIndexAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cArrayAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cArrayFieldCrossReference_4_0 = (CrossReference)cArrayAssignment_4.eContents().get(0);
+		private final RuleCall cArrayFieldIDTerminalRuleCall_4_0_1 = (RuleCall)cArrayFieldCrossReference_4_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//RemoveArrayValueAtIndex:
+		//	'remove.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'remove.at' '(' index=INT ')' array=[avroIDL::Field] ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'remove.at'
+		public Keyword getRemoveAtKeyword_0() { return cRemoveAtKeyword_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		
+		//index=INT
+		public Assignment getIndexAssignment_2() { return cIndexAssignment_2; }
+		
+		//INT
+		public RuleCall getIndexINTTerminalRuleCall_2_0() { return cIndexINTTerminalRuleCall_2_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+		
+		//array=[avroIDL::Field]
+		public Assignment getArrayAssignment_4() { return cArrayAssignment_4; }
+		
+		//[avroIDL::Field]
+		public CrossReference getArrayFieldCrossReference_4_0() { return cArrayFieldCrossReference_4_0; }
+		
+		//ID
+		public RuleCall getArrayFieldIDTerminalRuleCall_4_0_1() { return cArrayFieldIDTerminalRuleCall_4_0_1; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
+	public class AddValueToArrayElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AddValueToArray");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAddAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cIndexAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cIndexINTTerminalRuleCall_2_0 = (RuleCall)cIndexAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cArrayAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cArrayFieldCrossReference_4_0 = (CrossReference)cArrayAssignment_4.eContents().get(0);
+		private final RuleCall cArrayFieldIDTerminalRuleCall_4_0_1 = (RuleCall)cArrayFieldCrossReference_4_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//AddValueToArray:
+		//	'add.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'add.at' '(' index=INT ')' array=[avroIDL::Field] ';'
+		public Group getGroup() { return cGroup; }
+		
+		//'add.at'
+		public Keyword getAddAtKeyword_0() { return cAddAtKeyword_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		
+		//index=INT
+		public Assignment getIndexAssignment_2() { return cIndexAssignment_2; }
+		
+		//INT
+		public RuleCall getIndexINTTerminalRuleCall_2_0() { return cIndexINTTerminalRuleCall_2_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+		
+		//array=[avroIDL::Field]
+		public Assignment getArrayAssignment_4() { return cArrayAssignment_4; }
+		
+		//[avroIDL::Field]
+		public CrossReference getArrayFieldCrossReference_4_0() { return cArrayFieldCrossReference_4_0; }
+		
+		//ID
+		public RuleCall getArrayFieldIDTerminalRuleCall_4_0_1() { return cArrayFieldIDTerminalRuleCall_4_0_1; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
+	public class FieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Field");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cFieldTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Alternatives cFieldTypeAlternatives_1_0 = (Alternatives)cFieldTypeAssignment_1.eContents().get(0);
+		private final RuleCall cFieldTypePrimitiveTypeFieldParserRuleCall_1_0_0 = (RuleCall)cFieldTypeAlternatives_1_0.eContents().get(0);
+		private final RuleCall cFieldTypeCustomTypeFieldParserRuleCall_1_0_1 = (RuleCall)cFieldTypeAlternatives_1_0.eContents().get(1);
+		private final RuleCall cFieldTypeComplexTypeFieldParserRuleCall_1_0_2 = (RuleCall)cFieldTypeAlternatives_1_0.eContents().get(2);
+		
+		//Field:
+		//	annotations+=Annotation* fieldType=(PrimitiveTypeField | CustomTypeField | ComplexTypeField);
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotations+=Annotation* fieldType=(PrimitiveTypeField | CustomTypeField | ComplexTypeField)
+		public Group getGroup() { return cGroup; }
+		
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+		
+		//fieldType=(PrimitiveTypeField | CustomTypeField | ComplexTypeField)
+		public Assignment getFieldTypeAssignment_1() { return cFieldTypeAssignment_1; }
+		
+		//(PrimitiveTypeField | CustomTypeField | ComplexTypeField)
+		public Alternatives getFieldTypeAlternatives_1_0() { return cFieldTypeAlternatives_1_0; }
 		
 		//PrimitiveTypeField
-		public RuleCall getPrimitiveTypeFieldParserRuleCall_0() { return cPrimitiveTypeFieldParserRuleCall_0; }
+		public RuleCall getFieldTypePrimitiveTypeFieldParserRuleCall_1_0_0() { return cFieldTypePrimitiveTypeFieldParserRuleCall_1_0_0; }
 		
 		//CustomTypeField
-		public RuleCall getCustomTypeFieldParserRuleCall_1() { return cCustomTypeFieldParserRuleCall_1; }
+		public RuleCall getFieldTypeCustomTypeFieldParserRuleCall_1_0_1() { return cFieldTypeCustomTypeFieldParserRuleCall_1_0_1; }
+		
+		//ComplexTypeField
+		public RuleCall getFieldTypeComplexTypeFieldParserRuleCall_1_0_2() { return cFieldTypeComplexTypeFieldParserRuleCall_1_0_2; }
 	}
 	public class CustomTypeFieldElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.CustomTypeField");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cTypeTypeCrossReference_0_0 = (CrossReference)cTypeAssignment_0.eContents().get(0);
-		private final RuleCall cTypeTypeQNParserRuleCall_0_0_1 = (RuleCall)cTypeTypeCrossReference_0_0.eContents().get(1);
-		private final Assignment cVarNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cVarNameIDTerminalRuleCall_1_0 = (RuleCall)cVarNameAssignment_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final RuleCall cTypeCustomTypeParserRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
+		private final Assignment cNameAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cNameAnnotationsAssignment_1.eContents().get(0);
+		private final Assignment cVarNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cVarNameIDTerminalRuleCall_2_0 = (RuleCall)cVarNameAssignment_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//CustomTypeField:
-		//	type=[avroIDL::Type|QN] varName=ID ';';
+		//	type=CustomType nameAnnotations+=Annotation* varName=ID ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=[avroIDL::Type|QN] varName=ID ';'
+		//type=CustomType nameAnnotations+=Annotation* varName=ID ';'
 		public Group getGroup() { return cGroup; }
 		
-		//type=[avroIDL::Type|QN]
+		//type=CustomType
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 		
-		//[avroIDL::Type|QN]
-		public CrossReference getTypeTypeCrossReference_0_0() { return cTypeTypeCrossReference_0_0; }
+		//CustomType
+		public RuleCall getTypeCustomTypeParserRuleCall_0_0() { return cTypeCustomTypeParserRuleCall_0_0; }
 		
-		//QN
-		public RuleCall getTypeTypeQNParserRuleCall_0_0_1() { return cTypeTypeQNParserRuleCall_0_0_1; }
+		//nameAnnotations+=Annotation*
+		public Assignment getNameAnnotationsAssignment_1() { return cNameAnnotationsAssignment_1; }
+		
+		//Annotation
+		public RuleCall getNameAnnotationsAnnotationParserRuleCall_1_0() { return cNameAnnotationsAnnotationParserRuleCall_1_0; }
 		
 		//varName=ID
-		public Assignment getVarNameAssignment_1() { return cVarNameAssignment_1; }
+		public Assignment getVarNameAssignment_2() { return cVarNameAssignment_2; }
 		
 		//ID
-		public RuleCall getVarNameIDTerminalRuleCall_1_0() { return cVarNameIDTerminalRuleCall_1_0; }
+		public RuleCall getVarNameIDTerminalRuleCall_2_0() { return cVarNameIDTerminalRuleCall_2_0; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 	public class PrimitiveTypeFieldElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.PrimitiveTypeField");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cTypeVARIABLE_TYPEParserRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
-		private final Assignment cVarNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cVarNameIDTerminalRuleCall_1_0 = (RuleCall)cVarNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cEqualsSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cValueValueParserRuleCall_2_1_0 = (RuleCall)cValueAssignment_2_1.eContents().get(0);
+		private final RuleCall cTypePrimitiveTypeParserRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
+		private final Assignment cNameAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cNameAnnotationsAssignment_1.eContents().get(0);
+		private final Assignment cVarNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cVarNameIDTerminalRuleCall_2_0 = (RuleCall)cVarNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cEqualsSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cValueAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cValueValueParserRuleCall_3_1_0 = (RuleCall)cValueAssignment_3_1.eContents().get(0);
 		
 		//PrimitiveTypeField:
-		//	type=VARIABLE_TYPE varName=ID ('=' value=Value)?;
+		//	type=PrimitiveType nameAnnotations+=Annotation* varName=ID ('=' value=Value)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=VARIABLE_TYPE varName=ID ('=' value=Value)?
+		//type=PrimitiveType nameAnnotations+=Annotation* varName=ID ('=' value=Value)?
 		public Group getGroup() { return cGroup; }
 		
-		//type=VARIABLE_TYPE
+		//type=PrimitiveType
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 		
-		//VARIABLE_TYPE
-		public RuleCall getTypeVARIABLE_TYPEParserRuleCall_0_0() { return cTypeVARIABLE_TYPEParserRuleCall_0_0; }
+		//PrimitiveType
+		public RuleCall getTypePrimitiveTypeParserRuleCall_0_0() { return cTypePrimitiveTypeParserRuleCall_0_0; }
+		
+		//nameAnnotations+=Annotation*
+		public Assignment getNameAnnotationsAssignment_1() { return cNameAnnotationsAssignment_1; }
+		
+		//Annotation
+		public RuleCall getNameAnnotationsAnnotationParserRuleCall_1_0() { return cNameAnnotationsAnnotationParserRuleCall_1_0; }
 		
 		//varName=ID
-		public Assignment getVarNameAssignment_1() { return cVarNameAssignment_1; }
+		public Assignment getVarNameAssignment_2() { return cVarNameAssignment_2; }
 		
 		//ID
-		public RuleCall getVarNameIDTerminalRuleCall_1_0() { return cVarNameIDTerminalRuleCall_1_0; }
+		public RuleCall getVarNameIDTerminalRuleCall_2_0() { return cVarNameIDTerminalRuleCall_2_0; }
 		
 		//('=' value=Value)?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_3() { return cGroup_3; }
 		
 		//'='
-		public Keyword getEqualsSignKeyword_2_0() { return cEqualsSignKeyword_2_0; }
+		public Keyword getEqualsSignKeyword_3_0() { return cEqualsSignKeyword_3_0; }
 		
 		//value=Value
-		public Assignment getValueAssignment_2_1() { return cValueAssignment_2_1; }
+		public Assignment getValueAssignment_3_1() { return cValueAssignment_3_1; }
 		
 		//Value
-		public RuleCall getValueValueParserRuleCall_2_1_0() { return cValueValueParserRuleCall_2_1_0; }
+		public RuleCall getValueValueParserRuleCall_3_1_0() { return cValueValueParserRuleCall_3_1_0; }
+	}
+	public class ComplexTypeFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.ComplexTypeField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cTypeArrayTypeFieldParserRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
+		private final Assignment cNameAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cNameAnnotationsAssignment_1.eContents().get(0);
+		private final Assignment cVarNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cVarNameIDTerminalRuleCall_2_0 = (RuleCall)cVarNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cEqualsSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cValueAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cValueArrayParserRuleCall_3_1_0 = (RuleCall)cValueAssignment_3_1.eContents().get(0);
+		
+		//ComplexTypeField:
+		//	type=ArrayTypeField nameAnnotations+=Annotation* varName=ID ('=' value=Array)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//type=ArrayTypeField nameAnnotations+=Annotation* varName=ID ('=' value=Array)?
+		public Group getGroup() { return cGroup; }
+		
+		//type=ArrayTypeField
+		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
+		
+		//ArrayTypeField
+		public RuleCall getTypeArrayTypeFieldParserRuleCall_0_0() { return cTypeArrayTypeFieldParserRuleCall_0_0; }
+		
+		//nameAnnotations+=Annotation*
+		public Assignment getNameAnnotationsAssignment_1() { return cNameAnnotationsAssignment_1; }
+		
+		//Annotation
+		public RuleCall getNameAnnotationsAnnotationParserRuleCall_1_0() { return cNameAnnotationsAnnotationParserRuleCall_1_0; }
+		
+		//varName=ID
+		public Assignment getVarNameAssignment_2() { return cVarNameAssignment_2; }
+		
+		//ID
+		public RuleCall getVarNameIDTerminalRuleCall_2_0() { return cVarNameIDTerminalRuleCall_2_0; }
+		
+		//('=' value=Array)?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_3_0() { return cEqualsSignKeyword_3_0; }
+		
+		//value=Array
+		public Assignment getValueAssignment_3_1() { return cValueAssignment_3_1; }
+		
+		//Array
+		public RuleCall getValueArrayParserRuleCall_3_1_0() { return cValueArrayParserRuleCall_3_1_0; }
+	}
+	public class ArrayTypeFieldElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.ArrayTypeField");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cArrayKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLessThanSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTypeAnnotatedTypesParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//ArrayTypeField:
+		//	'array' '<' type=AnnotatedTypes '>';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'array' '<' type=AnnotatedTypes '>'
+		public Group getGroup() { return cGroup; }
+		
+		//'array'
+		public Keyword getArrayKeyword_0() { return cArrayKeyword_0; }
+		
+		//'<'
+		public Keyword getLessThanSignKeyword_1() { return cLessThanSignKeyword_1; }
+		
+		//type=AnnotatedTypes
+		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
+		
+		//AnnotatedTypes
+		public RuleCall getTypeAnnotatedTypesParserRuleCall_2_0() { return cTypeAnnotatedTypesParserRuleCall_2_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_3() { return cGreaterThanSignKeyword_3; }
+	}
+	public class AnnotatedTypesElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AnnotatedTypes");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotataionsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotataionsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotataionsAssignment_0.eContents().get(0);
+		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTypeTypesParserRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
+		
+		//AnnotatedTypes:
+		//	annotataions+=Annotation* type=Types;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotataions+=Annotation* type=Types
+		public Group getGroup() { return cGroup; }
+		
+		//annotataions+=Annotation*
+		public Assignment getAnnotataionsAssignment_0() { return cAnnotataionsAssignment_0; }
+		
+		//Annotation
+		public RuleCall getAnnotataionsAnnotationParserRuleCall_0_0() { return cAnnotataionsAnnotationParserRuleCall_0_0; }
+		
+		//type=Types
+		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
+		
+		//Types
+		public RuleCall getTypeTypesParserRuleCall_1_0() { return cTypeTypesParserRuleCall_1_0; }
+	}
+	public class TypesElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Types");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cCustomTypeParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cPrimitiveTypeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cArrayTypeFieldParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//Types:
+		//	CustomType | PrimitiveType | ArrayTypeField;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//CustomType | PrimitiveType | ArrayTypeField
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//CustomType
+		public RuleCall getCustomTypeParserRuleCall_0() { return cCustomTypeParserRuleCall_0; }
+		
+		//PrimitiveType
+		public RuleCall getPrimitiveTypeParserRuleCall_1() { return cPrimitiveTypeParserRuleCall_1; }
+		
+		//ArrayTypeField
+		public RuleCall getArrayTypeFieldParserRuleCall_2() { return cArrayTypeFieldParserRuleCall_2; }
+	}
+	public class CustomTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.CustomType");
+		private final Assignment cTargetAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cTargetTypeCrossReference_0 = (CrossReference)cTargetAssignment.eContents().get(0);
+		private final RuleCall cTargetTypeQNParserRuleCall_0_1 = (RuleCall)cTargetTypeCrossReference_0.eContents().get(1);
+		
+		//CustomType:
+		//	target=[avroIDL::Type|QN];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//target=[avroIDL::Type|QN]
+		public Assignment getTargetAssignment() { return cTargetAssignment; }
+		
+		//[avroIDL::Type|QN]
+		public CrossReference getTargetTypeCrossReference_0() { return cTargetTypeCrossReference_0; }
+		
+		//QN
+		public RuleCall getTargetTypeQNParserRuleCall_0_1() { return cTargetTypeQNParserRuleCall_0_1; }
+	}
+	public class PrimitiveTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.PrimitiveType");
+		private final Assignment cTargetAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cTargetVARIABLE_TYPEParserRuleCall_0 = (RuleCall)cTargetAssignment.eContents().get(0);
+		
+		//PrimitiveType:
+		//	target=VARIABLE_TYPE;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//target=VARIABLE_TYPE
+		public Assignment getTargetAssignment() { return cTargetAssignment; }
+		
+		//VARIABLE_TYPE
+		public RuleCall getTargetVARIABLE_TYPEParserRuleCall_0() { return cTargetVARIABLE_TYPEParserRuleCall_0; }
+	}
+	public class AnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Annotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameANParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cValuesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cValuesValuesParserRuleCall_1_1_0 = (RuleCall)cValuesAssignment_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		
+		//Annotation:
+		//	name=AN ('(' values=Values ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//name=AN ('(' values=Values ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//name=AN
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		
+		//AN
+		public RuleCall getNameANParserRuleCall_0_0() { return cNameANParserRuleCall_0_0; }
+		
+		//('(' values=Values ')')?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		
+		//values=Values
+		public Assignment getValuesAssignment_1_1() { return cValuesAssignment_1_1; }
+		
+		//Values
+		public RuleCall getValuesValuesParserRuleCall_1_1_0() { return cValuesValuesParserRuleCall_1_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+	}
+	public class ValuesElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Values");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cValuesAction_0 = (Action)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cValueAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cValueArrayParserRuleCall_1_0_0 = (RuleCall)cValueAssignment_1_0.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Assignment cValueAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cValueValueParserRuleCall_1_1_0_0 = (RuleCall)cValueAssignment_1_1_0.eContents().get(0);
+		private final Group cGroup_1_1_1 = (Group)cGroup_1_1.eContents().get(1);
+		private final Keyword cCommaKeyword_1_1_1_0 = (Keyword)cGroup_1_1_1.eContents().get(0);
+		private final Assignment cValueAssignment_1_1_1_1 = (Assignment)cGroup_1_1_1.eContents().get(1);
+		private final RuleCall cValueValueParserRuleCall_1_1_1_1_0 = (RuleCall)cValueAssignment_1_1_1_1.eContents().get(0);
+		
+		//Values:
+		//	{Values} (value+=Array | value+=Value (',' value+=Value)*)*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Values} (value+=Array | value+=Value (',' value+=Value)*)*
+		public Group getGroup() { return cGroup; }
+		
+		//{Values}
+		public Action getValuesAction_0() { return cValuesAction_0; }
+		
+		//(value+=Array | value+=Value (',' value+=Value)*)*
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		
+		//value+=Array
+		public Assignment getValueAssignment_1_0() { return cValueAssignment_1_0; }
+		
+		//Array
+		public RuleCall getValueArrayParserRuleCall_1_0_0() { return cValueArrayParserRuleCall_1_0_0; }
+		
+		//value+=Value (',' value+=Value)*
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//value+=Value
+		public Assignment getValueAssignment_1_1_0() { return cValueAssignment_1_1_0; }
+		
+		//Value
+		public RuleCall getValueValueParserRuleCall_1_1_0_0() { return cValueValueParserRuleCall_1_1_0_0; }
+		
+		//(',' value+=Value)*
+		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
+		
+		//','
+		public Keyword getCommaKeyword_1_1_1_0() { return cCommaKeyword_1_1_1_0; }
+		
+		//value+=Value
+		public Assignment getValueAssignment_1_1_1_1() { return cValueAssignment_1_1_1_1; }
+		
+		//Value
+		public RuleCall getValueValueParserRuleCall_1_1_1_1_0() { return cValueValueParserRuleCall_1_1_1_1_0; }
+	}
+	public class ArrayElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Array");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cValuesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cValuesValuesParserRuleCall_1_0 = (RuleCall)cValuesAssignment_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//Array:
+		//	=> '[' values=Values ']';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//=> '[' values=Values ']'
+		public Group getGroup() { return cGroup; }
+		
+		//=> '['
+		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
+		
+		//values=Values
+		public Assignment getValuesAssignment_1() { return cValuesAssignment_1; }
+		
+		//Values
+		public RuleCall getValuesValuesParserRuleCall_1_0() { return cValuesValuesParserRuleCall_1_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_2() { return cRightSquareBracketKeyword_2; }
 	}
 	public class ValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Value");
@@ -1182,17 +2057,25 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	public class IntValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.IntValue");
 		private final Assignment cValAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValINTTerminalRuleCall_0 = (RuleCall)cValAssignment.eContents().get(0);
+		private final Alternatives cValAlternatives_0 = (Alternatives)cValAssignment.eContents().get(0);
+		private final RuleCall cValINTTerminalRuleCall_0_0 = (RuleCall)cValAlternatives_0.eContents().get(0);
+		private final RuleCall cValNegativeIntParserRuleCall_0_1 = (RuleCall)cValAlternatives_0.eContents().get(1);
 		
 		//IntValue:
-		//	val=INT;
+		//	val=(INT | NegativeInt);
 		@Override public ParserRule getRule() { return rule; }
 		
-		//val=INT
+		//val=(INT | NegativeInt)
 		public Assignment getValAssignment() { return cValAssignment; }
 		
+		//(INT | NegativeInt)
+		public Alternatives getValAlternatives_0() { return cValAlternatives_0; }
+		
 		//INT
-		public RuleCall getValINTTerminalRuleCall_0() { return cValINTTerminalRuleCall_0; }
+		public RuleCall getValINTTerminalRuleCall_0_0() { return cValINTTerminalRuleCall_0_0; }
+		
+		//NegativeInt
+		public RuleCall getValNegativeIntParserRuleCall_0_1() { return cValNegativeIntParserRuleCall_0_1; }
 	}
 	public class NullElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Null");
@@ -1270,25 +2153,49 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		//'false'
 		public Keyword getFalseKeyword_1() { return cFalseKeyword_1; }
 	}
+	public class NegativeIntElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.NegativeInt");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		
+		//NegativeInt ecore::EInt:
+		//	'-' INT;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'-' INT
+		public Group getGroup() { return cGroup; }
+		
+		//'-'
+		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
+		
+		//INT
+		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
+	}
 	public class SCHEMA_TYPEElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.SCHEMA_TYPE");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Keyword cRecordKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cEnumKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cErrorKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cEnumKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
 		
 		//SCHEMA_TYPE:
 		//	'record' |
+		//	'error' |
 		//	'enum';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'record' | 'enum'
+		//'record' | 'error' | 'enum'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//'record'
 		public Keyword getRecordKeyword_0() { return cRecordKeyword_0; }
 		
+		//'error'
+		public Keyword getErrorKeyword_1() { return cErrorKeyword_1; }
+		
 		//'enum'
-		public Keyword getEnumKeyword_1() { return cEnumKeyword_1; }
+		public Keyword getEnumKeyword_2() { return cEnumKeyword_2; }
 	}
 	public class VARIABLE_TYPEElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.VARIABLE_TYPE");
@@ -1357,6 +2264,37 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
+	public class ANElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AN");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cHyphenMinusKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		
+		//AN:
+		//	'@' ID ('-' ID)*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'@' ID ('-' ID)*
+		public Group getGroup() { return cGroup; }
+		
+		//'@'
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+		
+		//('-' ID)*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'-'
+		public Keyword getHyphenMinusKeyword_2_0() { return cHyphenMinusKeyword_2_0; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_2_1() { return cIDTerminalRuleCall_2_1; }
+	}
 	
 	
 	private final ModelElements pModel;
@@ -1366,11 +2304,19 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	private final RuleDeclarationElements pRuleDeclaration;
 	private final GenericRuleElements pGenericRule;
 	private final SchemaRuleElements pSchemaRule;
+	private final ArrayEditRulesElements pArrayEditRules;
 	private final EnumRuleElements pEnumRule;
+	private final AddAnnotationToSchemaElements pAddAnnotationToSchema;
+	private final AddAnnotationToFieldElements pAddAnnotationToField;
+	private final AddNameAnnotationToFieldElements pAddNameAnnotationToField;
+	private final RemoveAnnotationFromSchemaElements pRemoveAnnotationFromSchema;
+	private final RemoveAnnotationFromFieldElements pRemoveAnnotationFromField;
+	private final RemoveNameAnnotationFromFieldElements pRemoveNameAnnotationFromField;
 	private final ChangeSchemaElements pChangeSchema;
 	private final ChangeEnumElements pChangeEnum;
 	private final AddElements pAdd;
 	private final AddRecordElements pAddRecord;
+	private final AddErrorElements pAddError;
 	private final AddEnumerationElements pAddEnumeration;
 	private final AddVariableElements pAddVariable;
 	private final AddEnumElements pAddEnum;
@@ -1382,9 +2328,21 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	private final RenameEnumElements pRenameEnum;
 	private final ChangeDefValueElements pChangeDefValue;
 	private final ChangeTypeElements pChangeType;
+	private final RemoveArrayValueElements pRemoveArrayValue;
+	private final RemoveArrayValueAtIndexElements pRemoveArrayValueAtIndex;
+	private final AddValueToArrayElements pAddValueToArray;
 	private final FieldElements pField;
 	private final CustomTypeFieldElements pCustomTypeField;
 	private final PrimitiveTypeFieldElements pPrimitiveTypeField;
+	private final ComplexTypeFieldElements pComplexTypeField;
+	private final ArrayTypeFieldElements pArrayTypeField;
+	private final AnnotatedTypesElements pAnnotatedTypes;
+	private final TypesElements pTypes;
+	private final CustomTypeElements pCustomType;
+	private final PrimitiveTypeElements pPrimitiveType;
+	private final AnnotationElements pAnnotation;
+	private final ValuesElements pValues;
+	private final ArrayElements pArray;
 	private final ValueElements pValue;
 	private final FloatValueElements pFloatValue;
 	private final StringValueElements pStringValue;
@@ -1393,9 +2351,11 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	private final BooleanValueElements pBooleanValue;
 	private final RealElements pReal;
 	private final BooleanElements pBoolean;
+	private final NegativeIntElements pNegativeInt;
 	private final SCHEMA_TYPEElements pSCHEMA_TYPE;
 	private final VARIABLE_TYPEElements pVARIABLE_TYPE;
 	private final QNElements pQN;
+	private final ANElements pAN;
 	
 	private final Grammar grammar;
 	
@@ -1413,11 +2373,19 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		this.pRuleDeclaration = new RuleDeclarationElements();
 		this.pGenericRule = new GenericRuleElements();
 		this.pSchemaRule = new SchemaRuleElements();
+		this.pArrayEditRules = new ArrayEditRulesElements();
 		this.pEnumRule = new EnumRuleElements();
+		this.pAddAnnotationToSchema = new AddAnnotationToSchemaElements();
+		this.pAddAnnotationToField = new AddAnnotationToFieldElements();
+		this.pAddNameAnnotationToField = new AddNameAnnotationToFieldElements();
+		this.pRemoveAnnotationFromSchema = new RemoveAnnotationFromSchemaElements();
+		this.pRemoveAnnotationFromField = new RemoveAnnotationFromFieldElements();
+		this.pRemoveNameAnnotationFromField = new RemoveNameAnnotationFromFieldElements();
 		this.pChangeSchema = new ChangeSchemaElements();
 		this.pChangeEnum = new ChangeEnumElements();
 		this.pAdd = new AddElements();
 		this.pAddRecord = new AddRecordElements();
+		this.pAddError = new AddErrorElements();
 		this.pAddEnumeration = new AddEnumerationElements();
 		this.pAddVariable = new AddVariableElements();
 		this.pAddEnum = new AddEnumElements();
@@ -1429,9 +2397,21 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		this.pRenameEnum = new RenameEnumElements();
 		this.pChangeDefValue = new ChangeDefValueElements();
 		this.pChangeType = new ChangeTypeElements();
+		this.pRemoveArrayValue = new RemoveArrayValueElements();
+		this.pRemoveArrayValueAtIndex = new RemoveArrayValueAtIndexElements();
+		this.pAddValueToArray = new AddValueToArrayElements();
 		this.pField = new FieldElements();
 		this.pCustomTypeField = new CustomTypeFieldElements();
 		this.pPrimitiveTypeField = new PrimitiveTypeFieldElements();
+		this.pComplexTypeField = new ComplexTypeFieldElements();
+		this.pArrayTypeField = new ArrayTypeFieldElements();
+		this.pAnnotatedTypes = new AnnotatedTypesElements();
+		this.pTypes = new TypesElements();
+		this.pCustomType = new CustomTypeElements();
+		this.pPrimitiveType = new PrimitiveTypeElements();
+		this.pAnnotation = new AnnotationElements();
+		this.pValues = new ValuesElements();
+		this.pArray = new ArrayElements();
 		this.pValue = new ValueElements();
 		this.pFloatValue = new FloatValueElements();
 		this.pStringValue = new StringValueElements();
@@ -1440,9 +2420,11 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		this.pBooleanValue = new BooleanValueElements();
 		this.pReal = new RealElements();
 		this.pBoolean = new BooleanElements();
+		this.pNegativeInt = new NegativeIntElements();
 		this.pSCHEMA_TYPE = new SCHEMA_TYPEElements();
 		this.pVARIABLE_TYPE = new VARIABLE_TYPEElements();
 		this.pQN = new QNElements();
+		this.pAN = new ANElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1526,7 +2508,7 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//GenericRule:
-	//	RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum;
+	//	RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum | AddAnnotationToSchema | RemoveAnnotationFromSchema;
 	public GenericRuleElements getGenericRuleAccess() {
 		return pGenericRule;
 	}
@@ -1536,13 +2518,24 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SchemaRule:
-	//	RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType;
+	//	RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType | AddAnnotationToField |
+	//	AddNameAnnotationToField | RemoveAnnotationFromField | RemoveNameAnnotationFromField | ArrayEditRules;
 	public SchemaRuleElements getSchemaRuleAccess() {
 		return pSchemaRule;
 	}
 	
 	public ParserRule getSchemaRuleRule() {
 		return getSchemaRuleAccess().getRule();
+	}
+	
+	//ArrayEditRules:
+	//	RemoveArrayValue | RemoveArrayValueAtIndex | AddValueToArray;
+	public ArrayEditRulesElements getArrayEditRulesAccess() {
+		return pArrayEditRules;
+	}
+	
+	public ParserRule getArrayEditRulesRule() {
+		return getArrayEditRulesAccess().getRule();
 	}
 	
 	//EnumRule:
@@ -1555,8 +2548,68 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		return getEnumRuleAccess().getRule();
 	}
 	
+	//AddAnnotationToSchema:
+	//	'add.annot' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' annotation=Annotation ';';
+	public AddAnnotationToSchemaElements getAddAnnotationToSchemaAccess() {
+		return pAddAnnotationToSchema;
+	}
+	
+	public ParserRule getAddAnnotationToSchemaRule() {
+		return getAddAnnotationToSchemaAccess().getRule();
+	}
+	
+	//AddAnnotationToField:
+	//	'add.annot' variable=[avroIDL::Field|QN] '=>' annotation=Annotation ';';
+	public AddAnnotationToFieldElements getAddAnnotationToFieldAccess() {
+		return pAddAnnotationToField;
+	}
+	
+	public ParserRule getAddAnnotationToFieldRule() {
+		return getAddAnnotationToFieldAccess().getRule();
+	}
+	
+	//AddNameAnnotationToField:
+	//	'add.name_annot' variable=[avroIDL::Field|QN] '=>' annotation=Annotation ';';
+	public AddNameAnnotationToFieldElements getAddNameAnnotationToFieldAccess() {
+		return pAddNameAnnotationToField;
+	}
+	
+	public ParserRule getAddNameAnnotationToFieldRule() {
+		return getAddNameAnnotationToFieldAccess().getRule();
+	}
+	
+	//RemoveAnnotationFromSchema:
+	//	'remove.annot' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
+	public RemoveAnnotationFromSchemaElements getRemoveAnnotationFromSchemaAccess() {
+		return pRemoveAnnotationFromSchema;
+	}
+	
+	public ParserRule getRemoveAnnotationFromSchemaRule() {
+		return getRemoveAnnotationFromSchemaAccess().getRule();
+	}
+	
+	//RemoveAnnotationFromField:
+	//	'remove.annot' variable=[avroIDL::Field|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
+	public RemoveAnnotationFromFieldElements getRemoveAnnotationFromFieldAccess() {
+		return pRemoveAnnotationFromField;
+	}
+	
+	public ParserRule getRemoveAnnotationFromFieldRule() {
+		return getRemoveAnnotationFromFieldAccess().getRule();
+	}
+	
+	//RemoveNameAnnotationFromField:
+	//	'remove.name_annot' variable=[avroIDL::Field|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
+	public RemoveNameAnnotationFromFieldElements getRemoveNameAnnotationFromFieldAccess() {
+		return pRemoveNameAnnotationFromField;
+	}
+	
+	public ParserRule getRemoveNameAnnotationFromFieldRule() {
+		return getRemoveNameAnnotationFromFieldAccess().getRule();
+	}
+	
 	//ChangeSchema:
-	//	'change' ('record' | 'error') schema=[avroIDL::Type|QN] '{' rules+=SchemaRule* '}';
+	//	'change' schemaType=('record' | 'error') schema=[avroIDL::Type|QN] '{' rules+=SchemaRule* '}';
 	public ChangeSchemaElements getChangeSchemaAccess() {
 		return pChangeSchema;
 	}
@@ -1576,7 +2629,7 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Add:
-	//	AddRecord | AddEnumeration;
+	//	AddRecord | AddError | AddEnumeration;
 	public AddElements getAddAccess() {
 		return pAdd;
 	}
@@ -1593,6 +2646,16 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAddRecordRule() {
 		return getAddRecordAccess().getRule();
+	}
+	
+	//AddError:
+	//	'add.at' '(' index=INT ')' 'error' namespace=[avroIDL::AvroIDLFile] '.' errorName=ID '{' fields+=Field* '}';
+	public AddErrorElements getAddErrorAccess() {
+		return pAddError;
+	}
+	
+	public ParserRule getAddErrorRule() {
+		return getAddErrorAccess().getRule();
 	}
 	
 	//AddEnumeration:
@@ -1706,8 +2769,38 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		return getChangeTypeAccess().getRule();
 	}
 	
+	//RemoveArrayValue:
+	//	'remove' array=[avroIDL::Field] '=>' valueToRemove=Value;
+	public RemoveArrayValueElements getRemoveArrayValueAccess() {
+		return pRemoveArrayValue;
+	}
+	
+	public ParserRule getRemoveArrayValueRule() {
+		return getRemoveArrayValueAccess().getRule();
+	}
+	
+	//RemoveArrayValueAtIndex:
+	//	'remove.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+	public RemoveArrayValueAtIndexElements getRemoveArrayValueAtIndexAccess() {
+		return pRemoveArrayValueAtIndex;
+	}
+	
+	public ParserRule getRemoveArrayValueAtIndexRule() {
+		return getRemoveArrayValueAtIndexAccess().getRule();
+	}
+	
+	//AddValueToArray:
+	//	'add.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+	public AddValueToArrayElements getAddValueToArrayAccess() {
+		return pAddValueToArray;
+	}
+	
+	public ParserRule getAddValueToArrayRule() {
+		return getAddValueToArrayAccess().getRule();
+	}
+	
 	//Field:
-	//	PrimitiveTypeField | CustomTypeField;
+	//	annotations+=Annotation* fieldType=(PrimitiveTypeField | CustomTypeField | ComplexTypeField);
 	public FieldElements getFieldAccess() {
 		return pField;
 	}
@@ -1717,7 +2810,7 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//CustomTypeField:
-	//	type=[avroIDL::Type|QN] varName=ID ';';
+	//	type=CustomType nameAnnotations+=Annotation* varName=ID ';';
 	public CustomTypeFieldElements getCustomTypeFieldAccess() {
 		return pCustomTypeField;
 	}
@@ -1727,13 +2820,103 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PrimitiveTypeField:
-	//	type=VARIABLE_TYPE varName=ID ('=' value=Value)?;
+	//	type=PrimitiveType nameAnnotations+=Annotation* varName=ID ('=' value=Value)?;
 	public PrimitiveTypeFieldElements getPrimitiveTypeFieldAccess() {
 		return pPrimitiveTypeField;
 	}
 	
 	public ParserRule getPrimitiveTypeFieldRule() {
 		return getPrimitiveTypeFieldAccess().getRule();
+	}
+	
+	//ComplexTypeField:
+	//	type=ArrayTypeField nameAnnotations+=Annotation* varName=ID ('=' value=Array)?;
+	public ComplexTypeFieldElements getComplexTypeFieldAccess() {
+		return pComplexTypeField;
+	}
+	
+	public ParserRule getComplexTypeFieldRule() {
+		return getComplexTypeFieldAccess().getRule();
+	}
+	
+	//ArrayTypeField:
+	//	'array' '<' type=AnnotatedTypes '>';
+	public ArrayTypeFieldElements getArrayTypeFieldAccess() {
+		return pArrayTypeField;
+	}
+	
+	public ParserRule getArrayTypeFieldRule() {
+		return getArrayTypeFieldAccess().getRule();
+	}
+	
+	//AnnotatedTypes:
+	//	annotataions+=Annotation* type=Types;
+	public AnnotatedTypesElements getAnnotatedTypesAccess() {
+		return pAnnotatedTypes;
+	}
+	
+	public ParserRule getAnnotatedTypesRule() {
+		return getAnnotatedTypesAccess().getRule();
+	}
+	
+	//Types:
+	//	CustomType | PrimitiveType | ArrayTypeField;
+	public TypesElements getTypesAccess() {
+		return pTypes;
+	}
+	
+	public ParserRule getTypesRule() {
+		return getTypesAccess().getRule();
+	}
+	
+	//CustomType:
+	//	target=[avroIDL::Type|QN];
+	public CustomTypeElements getCustomTypeAccess() {
+		return pCustomType;
+	}
+	
+	public ParserRule getCustomTypeRule() {
+		return getCustomTypeAccess().getRule();
+	}
+	
+	//PrimitiveType:
+	//	target=VARIABLE_TYPE;
+	public PrimitiveTypeElements getPrimitiveTypeAccess() {
+		return pPrimitiveType;
+	}
+	
+	public ParserRule getPrimitiveTypeRule() {
+		return getPrimitiveTypeAccess().getRule();
+	}
+	
+	//Annotation:
+	//	name=AN ('(' values=Values ')')?;
+	public AnnotationElements getAnnotationAccess() {
+		return pAnnotation;
+	}
+	
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
+	}
+	
+	//Values:
+	//	{Values} (value+=Array | value+=Value (',' value+=Value)*)*;
+	public ValuesElements getValuesAccess() {
+		return pValues;
+	}
+	
+	public ParserRule getValuesRule() {
+		return getValuesAccess().getRule();
+	}
+	
+	//Array:
+	//	=> '[' values=Values ']';
+	public ArrayElements getArrayAccess() {
+		return pArray;
+	}
+	
+	public ParserRule getArrayRule() {
+		return getArrayAccess().getRule();
 	}
 	
 	//Value:
@@ -1767,7 +2950,7 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//IntValue:
-	//	val=INT;
+	//	val=(INT | NegativeInt);
 	public IntValueElements getIntValueAccess() {
 		return pIntValue;
 	}
@@ -1816,8 +2999,19 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		return getBooleanAccess().getRule();
 	}
 	
+	//NegativeInt ecore::EInt:
+	//	'-' INT;
+	public NegativeIntElements getNegativeIntAccess() {
+		return pNegativeInt;
+	}
+	
+	public ParserRule getNegativeIntRule() {
+		return getNegativeIntAccess().getRule();
+	}
+	
 	//SCHEMA_TYPE:
 	//	'record' |
+	//	'error' |
 	//	'enum';
 	public SCHEMA_TYPEElements getSCHEMA_TYPEAccess() {
 		return pSCHEMA_TYPE;
@@ -1850,6 +3044,16 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getQNRule() {
 		return getQNAccess().getRule();
+	}
+	
+	//AN:
+	//	'@' ID ('-' ID)*;
+	public ANElements getANAccess() {
+		return pAN;
+	}
+	
+	public ParserRule getANRule() {
+		return getANAccess().getRule();
 	}
 	
 	//terminal ID:

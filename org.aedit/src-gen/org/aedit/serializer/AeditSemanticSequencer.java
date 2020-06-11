@@ -5,25 +5,43 @@ package org.aedit.serializer;
 
 import com.google.inject.Inject;
 import java.util.Set;
+import org.aedit.aedit.AddAnnotationToField;
+import org.aedit.aedit.AddAnnotationToSchema;
 import org.aedit.aedit.AddEnum;
 import org.aedit.aedit.AddEnumeration;
+import org.aedit.aedit.AddError;
+import org.aedit.aedit.AddNameAnnotationToField;
 import org.aedit.aedit.AddRecord;
+import org.aedit.aedit.AddValueToArray;
 import org.aedit.aedit.AddVariable;
 import org.aedit.aedit.AeditPackage;
+import org.aedit.aedit.AnnotatedTypes;
+import org.aedit.aedit.Annotation;
+import org.aedit.aedit.Array;
+import org.aedit.aedit.ArrayTypeField;
 import org.aedit.aedit.BooleanValue;
 import org.aedit.aedit.ChangeDefValue;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
 import org.aedit.aedit.ChangeType;
+import org.aedit.aedit.ComplexTypeField;
+import org.aedit.aedit.CustomType;
 import org.aedit.aedit.CustomTypeField;
 import org.aedit.aedit.Feature;
 import org.aedit.aedit.FeatureMap;
+import org.aedit.aedit.Field;
 import org.aedit.aedit.FloatValue;
 import org.aedit.aedit.IntValue;
 import org.aedit.aedit.Model;
 import org.aedit.aedit.Null;
+import org.aedit.aedit.PrimitiveType;
 import org.aedit.aedit.PrimitiveTypeField;
+import org.aedit.aedit.RemoveAnnotationFromField;
+import org.aedit.aedit.RemoveAnnotationFromSchema;
+import org.aedit.aedit.RemoveArrayValue;
+import org.aedit.aedit.RemoveArrayValueAtIndex;
 import org.aedit.aedit.RemoveEnum;
+import org.aedit.aedit.RemoveNameAnnotationFromField;
 import org.aedit.aedit.RemoveSchema;
 import org.aedit.aedit.RemoveVariable;
 import org.aedit.aedit.RenameEnum;
@@ -32,6 +50,7 @@ import org.aedit.aedit.RenameVariable;
 import org.aedit.aedit.RuleDeclaration;
 import org.aedit.aedit.RuleMap;
 import org.aedit.aedit.StringValue;
+import org.aedit.aedit.Values;
 import org.aedit.services.AeditGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -57,17 +76,44 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == AeditPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case AeditPackage.ADD_ANNOTATION_TO_FIELD:
+				sequence_AddAnnotationToField(context, (AddAnnotationToField) semanticObject); 
+				return; 
+			case AeditPackage.ADD_ANNOTATION_TO_SCHEMA:
+				sequence_AddAnnotationToSchema(context, (AddAnnotationToSchema) semanticObject); 
+				return; 
 			case AeditPackage.ADD_ENUM:
 				sequence_AddEnum(context, (AddEnum) semanticObject); 
 				return; 
 			case AeditPackage.ADD_ENUMERATION:
 				sequence_AddEnumeration(context, (AddEnumeration) semanticObject); 
 				return; 
+			case AeditPackage.ADD_ERROR:
+				sequence_AddError(context, (AddError) semanticObject); 
+				return; 
+			case AeditPackage.ADD_NAME_ANNOTATION_TO_FIELD:
+				sequence_AddNameAnnotationToField(context, (AddNameAnnotationToField) semanticObject); 
+				return; 
 			case AeditPackage.ADD_RECORD:
 				sequence_AddRecord(context, (AddRecord) semanticObject); 
 				return; 
+			case AeditPackage.ADD_VALUE_TO_ARRAY:
+				sequence_AddValueToArray(context, (AddValueToArray) semanticObject); 
+				return; 
 			case AeditPackage.ADD_VARIABLE:
 				sequence_AddVariable(context, (AddVariable) semanticObject); 
+				return; 
+			case AeditPackage.ANNOTATED_TYPES:
+				sequence_AnnotatedTypes(context, (AnnotatedTypes) semanticObject); 
+				return; 
+			case AeditPackage.ANNOTATION:
+				sequence_Annotation(context, (Annotation) semanticObject); 
+				return; 
+			case AeditPackage.ARRAY:
+				sequence_Array(context, (Array) semanticObject); 
+				return; 
+			case AeditPackage.ARRAY_TYPE_FIELD:
+				sequence_ArrayTypeField(context, (ArrayTypeField) semanticObject); 
 				return; 
 			case AeditPackage.BOOLEAN_VALUE:
 				sequence_BooleanValue(context, (BooleanValue) semanticObject); 
@@ -84,6 +130,12 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 			case AeditPackage.CHANGE_TYPE:
 				sequence_ChangeType(context, (ChangeType) semanticObject); 
 				return; 
+			case AeditPackage.COMPLEX_TYPE_FIELD:
+				sequence_ComplexTypeField(context, (ComplexTypeField) semanticObject); 
+				return; 
+			case AeditPackage.CUSTOM_TYPE:
+				sequence_CustomType(context, (CustomType) semanticObject); 
+				return; 
 			case AeditPackage.CUSTOM_TYPE_FIELD:
 				sequence_CustomTypeField(context, (CustomTypeField) semanticObject); 
 				return; 
@@ -92,6 +144,9 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				return; 
 			case AeditPackage.FEATURE_MAP:
 				sequence_FeatureMap(context, (FeatureMap) semanticObject); 
+				return; 
+			case AeditPackage.FIELD:
+				sequence_Field(context, (Field) semanticObject); 
 				return; 
 			case AeditPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
@@ -105,11 +160,29 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 			case AeditPackage.NULL:
 				sequence_Null(context, (Null) semanticObject); 
 				return; 
+			case AeditPackage.PRIMITIVE_TYPE:
+				sequence_PrimitiveType(context, (PrimitiveType) semanticObject); 
+				return; 
 			case AeditPackage.PRIMITIVE_TYPE_FIELD:
 				sequence_PrimitiveTypeField(context, (PrimitiveTypeField) semanticObject); 
 				return; 
+			case AeditPackage.REMOVE_ANNOTATION_FROM_FIELD:
+				sequence_RemoveAnnotationFromField(context, (RemoveAnnotationFromField) semanticObject); 
+				return; 
+			case AeditPackage.REMOVE_ANNOTATION_FROM_SCHEMA:
+				sequence_RemoveAnnotationFromSchema(context, (RemoveAnnotationFromSchema) semanticObject); 
+				return; 
+			case AeditPackage.REMOVE_ARRAY_VALUE:
+				sequence_RemoveArrayValue(context, (RemoveArrayValue) semanticObject); 
+				return; 
+			case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX:
+				sequence_RemoveArrayValueAtIndex(context, (RemoveArrayValueAtIndex) semanticObject); 
+				return; 
 			case AeditPackage.REMOVE_ENUM:
 				sequence_RemoveEnum(context, (RemoveEnum) semanticObject); 
+				return; 
+			case AeditPackage.REMOVE_NAME_ANNOTATION_FROM_FIELD:
+				sequence_RemoveNameAnnotationFromField(context, (RemoveNameAnnotationFromField) semanticObject); 
 				return; 
 			case AeditPackage.REMOVE_SCHEMA:
 				sequence_RemoveSchema(context, (RemoveSchema) semanticObject); 
@@ -135,10 +208,60 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 			case AeditPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
 				return; 
+			case AeditPackage.VALUES:
+				sequence_Values(context, (Values) semanticObject); 
+				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     SchemaRule returns AddAnnotationToField
+	 *     AddAnnotationToField returns AddAnnotationToField
+	 *
+	 * Constraint:
+	 *     (variable=[Field|QN] annotation=Annotation)
+	 */
+	protected void sequence_AddAnnotationToField(ISerializationContext context, AddAnnotationToField semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__ANNOTATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__ANNOTATION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAddAnnotationToFieldAccess().getVariableFieldQNParserRuleCall_1_0_1(), semanticObject.eGet(AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE, false));
+		feeder.accept(grammarAccess.getAddAnnotationToFieldAccess().getAnnotationAnnotationParserRuleCall_3_0(), semanticObject.getAnnotation());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericRule returns AddAnnotationToSchema
+	 *     AddAnnotationToSchema returns AddAnnotationToSchema
+	 *
+	 * Constraint:
+	 *     (schemaType=SCHEMA_TYPE schema=[Type|QN] annotation=Annotation)
+	 */
+	protected void sequence_AddAnnotationToSchema(ISerializationContext context, AddAnnotationToSchema semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__SCHEMA_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__SCHEMA_TYPE));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__SCHEMA) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__SCHEMA));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__ANNOTATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__ANNOTATION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAddAnnotationToSchemaAccess().getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0(), semanticObject.getSchemaType());
+		feeder.accept(grammarAccess.getAddAnnotationToSchemaAccess().getSchemaTypeQNParserRuleCall_2_0_1(), semanticObject.eGet(AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__SCHEMA, false));
+		feeder.accept(grammarAccess.getAddAnnotationToSchemaAccess().getAnnotationAnnotationParserRuleCall_4_0(), semanticObject.getAnnotation());
+		feeder.finish();
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -178,6 +301,42 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     GenericRule returns AddError
+	 *     Add returns AddError
+	 *     AddError returns AddError
+	 *
+	 * Constraint:
+	 *     (index=INT namespace=[AvroIDLFile|ID] errorName=ID fields+=Field*)
+	 */
+	protected void sequence_AddError(ISerializationContext context, AddError semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SchemaRule returns AddNameAnnotationToField
+	 *     AddNameAnnotationToField returns AddNameAnnotationToField
+	 *
+	 * Constraint:
+	 *     (variable=[Field|QN] annotation=Annotation)
+	 */
+	protected void sequence_AddNameAnnotationToField(ISerializationContext context, AddNameAnnotationToField semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAddNameAnnotationToFieldAccess().getVariableFieldQNParserRuleCall_1_0_1(), semanticObject.eGet(AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE, false));
+		feeder.accept(grammarAccess.getAddNameAnnotationToFieldAccess().getAnnotationAnnotationParserRuleCall_3_0(), semanticObject.getAnnotation());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     GenericRule returns AddRecord
 	 *     Add returns AddRecord
 	 *     AddRecord returns AddRecord
@@ -187,6 +346,29 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 */
 	protected void sequence_AddRecord(ISerializationContext context, AddRecord semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SchemaRule returns AddValueToArray
+	 *     ArrayEditRules returns AddValueToArray
+	 *     AddValueToArray returns AddValueToArray
+	 *
+	 * Constraint:
+	 *     (index=INT array=[Field|ID])
+	 */
+	protected void sequence_AddValueToArray(ISerializationContext context, AddValueToArray semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__INDEX) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__INDEX));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAddValueToArrayAccess().getIndexINTTerminalRuleCall_2_0(), semanticObject.getIndex());
+		feeder.accept(grammarAccess.getAddValueToArrayAccess().getArrayFieldIDTerminalRuleCall_4_0_1(), semanticObject.eGet(AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY, false));
+		feeder.finish();
 	}
 	
 	
@@ -208,6 +390,67 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getAddVariableAccess().getIndexINTTerminalRuleCall_2_0(), semanticObject.getIndex());
 		feeder.accept(grammarAccess.getAddVariableAccess().getNewVarFieldParserRuleCall_4_0(), semanticObject.getNewVar());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AnnotatedTypes returns AnnotatedTypes
+	 *
+	 * Constraint:
+	 *     (annotataions+=Annotation* type=Types)
+	 */
+	protected void sequence_AnnotatedTypes(ISerializationContext context, AnnotatedTypes semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Annotation returns Annotation
+	 *
+	 * Constraint:
+	 *     (name=AN values=Values?)
+	 */
+	protected void sequence_Annotation(ISerializationContext context, Annotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ArrayTypeField returns ArrayTypeField
+	 *     Types returns ArrayTypeField
+	 *
+	 * Constraint:
+	 *     type=AnnotatedTypes
+	 */
+	protected void sequence_ArrayTypeField(ISerializationContext context, ArrayTypeField semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ARRAY_TYPE_FIELD__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ARRAY_TYPE_FIELD__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getArrayTypeFieldAccess().getTypeAnnotatedTypesParserRuleCall_2_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Array returns Array
+	 *
+	 * Constraint:
+	 *     values=Values
+	 */
+	protected void sequence_Array(ISerializationContext context, Array semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ARRAY__VALUES) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ARRAY__VALUES));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getArrayAccess().getValuesValuesParserRuleCall_1_0(), semanticObject.getValues());
 		feeder.finish();
 	}
 	
@@ -272,7 +515,7 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     ChangeSchema returns ChangeSchema
 	 *
 	 * Constraint:
-	 *     (schema=[Type|QN] rules+=SchemaRule*)
+	 *     ((schemaType='record' | schemaType='error') schema=[Type|QN] rules+=SchemaRule*)
 	 */
 	protected void sequence_ChangeSchema(ISerializationContext context, ChangeSchema semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -303,22 +546,43 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
-	 *     Field returns CustomTypeField
+	 *     ComplexTypeField returns ComplexTypeField
+	 *
+	 * Constraint:
+	 *     (type=ArrayTypeField nameAnnotations+=Annotation* varName=ID value=Array?)
+	 */
+	protected void sequence_ComplexTypeField(ISerializationContext context, ComplexTypeField semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     CustomTypeField returns CustomTypeField
 	 *
 	 * Constraint:
-	 *     (type=[Type|QN] varName=ID)
+	 *     (type=CustomType nameAnnotations+=Annotation* varName=ID)
 	 */
 	protected void sequence_CustomTypeField(ISerializationContext context, CustomTypeField semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Types returns CustomType
+	 *     CustomType returns CustomType
+	 *
+	 * Constraint:
+	 *     target=[Type|QN]
+	 */
+	protected void sequence_CustomType(ISerializationContext context, CustomType semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.CUSTOM_TYPE_FIELD__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.CUSTOM_TYPE_FIELD__TYPE));
-			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.FIELD__VAR_NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.FIELD__VAR_NAME));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.CUSTOM_TYPE__TARGET) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.CUSTOM_TYPE__TARGET));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getCustomTypeFieldAccess().getTypeTypeQNParserRuleCall_0_0_1(), semanticObject.eGet(AeditPackage.Literals.CUSTOM_TYPE_FIELD__TYPE, false));
-		feeder.accept(grammarAccess.getCustomTypeFieldAccess().getVarNameIDTerminalRuleCall_1_0(), semanticObject.getVarName());
+		feeder.accept(grammarAccess.getCustomTypeAccess().getTargetTypeQNParserRuleCall_0_1(), semanticObject.eGet(AeditPackage.Literals.CUSTOM_TYPE__TARGET, false));
 		feeder.finish();
 	}
 	
@@ -355,6 +619,18 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     Field returns Field
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* (fieldType=PrimitiveTypeField | fieldType=CustomTypeField | fieldType=ComplexTypeField))
+	 */
+	protected void sequence_Field(ISerializationContext context, Field semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Value returns FloatValue
 	 *     FloatValue returns FloatValue
 	 *
@@ -378,16 +654,10 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     IntValue returns IntValue
 	 *
 	 * Constraint:
-	 *     val=INT
+	 *     (val=INT | val=NegativeInt)
 	 */
 	protected void sequence_IntValue(ISerializationContext context, IntValue semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.INT_VALUE__VAL) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.INT_VALUE__VAL));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getIntValueAccess().getValINTTerminalRuleCall_0(), semanticObject.getVal());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -429,14 +699,125 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
-	 *     Field returns PrimitiveTypeField
 	 *     PrimitiveTypeField returns PrimitiveTypeField
 	 *
 	 * Constraint:
-	 *     (type=VARIABLE_TYPE varName=ID value=Value?)
+	 *     (type=PrimitiveType nameAnnotations+=Annotation* varName=ID value=Value?)
 	 */
 	protected void sequence_PrimitiveTypeField(ISerializationContext context, PrimitiveTypeField semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Types returns PrimitiveType
+	 *     PrimitiveType returns PrimitiveType
+	 *
+	 * Constraint:
+	 *     target=VARIABLE_TYPE
+	 */
+	protected void sequence_PrimitiveType(ISerializationContext context, PrimitiveType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.PRIMITIVE_TYPE__TARGET) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.PRIMITIVE_TYPE__TARGET));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrimitiveTypeAccess().getTargetVARIABLE_TYPEParserRuleCall_0(), semanticObject.getTarget());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SchemaRule returns RemoveAnnotationFromField
+	 *     RemoveAnnotationFromField returns RemoveAnnotationFromField
+	 *
+	 * Constraint:
+	 *     (variable=[Field|QN] annotationToRemove=[Annotation|QN])
+	 */
+	protected void sequence_RemoveAnnotationFromField(ISerializationContext context, RemoveAnnotationFromField semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRemoveAnnotationFromFieldAccess().getVariableFieldQNParserRuleCall_1_0_1(), semanticObject.eGet(AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE, false));
+		feeder.accept(grammarAccess.getRemoveAnnotationFromFieldAccess().getAnnotationToRemoveAnnotationQNParserRuleCall_3_0_1(), semanticObject.eGet(AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GenericRule returns RemoveAnnotationFromSchema
+	 *     RemoveAnnotationFromSchema returns RemoveAnnotationFromSchema
+	 *
+	 * Constraint:
+	 *     (schemaType=SCHEMA_TYPE schema=[Type|QN] annotationToRemove=[Annotation|QN])
+	 */
+	protected void sequence_RemoveAnnotationFromSchema(ISerializationContext context, RemoveAnnotationFromSchema semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRemoveAnnotationFromSchemaAccess().getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0(), semanticObject.getSchemaType());
+		feeder.accept(grammarAccess.getRemoveAnnotationFromSchemaAccess().getSchemaTypeQNParserRuleCall_2_0_1(), semanticObject.eGet(AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA, false));
+		feeder.accept(grammarAccess.getRemoveAnnotationFromSchemaAccess().getAnnotationToRemoveAnnotationQNParserRuleCall_4_0_1(), semanticObject.eGet(AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SchemaRule returns RemoveArrayValueAtIndex
+	 *     ArrayEditRules returns RemoveArrayValueAtIndex
+	 *     RemoveArrayValueAtIndex returns RemoveArrayValueAtIndex
+	 *
+	 * Constraint:
+	 *     (index=INT array=[Field|ID])
+	 */
+	protected void sequence_RemoveArrayValueAtIndex(ISerializationContext context, RemoveArrayValueAtIndex semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__INDEX) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__INDEX));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRemoveArrayValueAtIndexAccess().getIndexINTTerminalRuleCall_2_0(), semanticObject.getIndex());
+		feeder.accept(grammarAccess.getRemoveArrayValueAtIndexAccess().getArrayFieldIDTerminalRuleCall_4_0_1(), semanticObject.eGet(AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SchemaRule returns RemoveArrayValue
+	 *     ArrayEditRules returns RemoveArrayValue
+	 *     RemoveArrayValue returns RemoveArrayValue
+	 *
+	 * Constraint:
+	 *     (array=[Field|ID] valueToRemove=Value)
+	 */
+	protected void sequence_RemoveArrayValue(ISerializationContext context, RemoveArrayValue semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRemoveArrayValueAccess().getArrayFieldIDTerminalRuleCall_1_0_1(), semanticObject.eGet(AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY, false));
+		feeder.accept(grammarAccess.getRemoveArrayValueAccess().getValueToRemoveValueParserRuleCall_3_0(), semanticObject.getValueToRemove());
+		feeder.finish();
 	}
 	
 	
@@ -455,6 +836,28 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getRemoveEnumAccess().getVarNameIDTerminalRuleCall_1_0(), semanticObject.getVarName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SchemaRule returns RemoveNameAnnotationFromField
+	 *     RemoveNameAnnotationFromField returns RemoveNameAnnotationFromField
+	 *
+	 * Constraint:
+	 *     (variable=[Field|QN] annotationToRemove=[Annotation|QN])
+	 */
+	protected void sequence_RemoveNameAnnotationFromField(ISerializationContext context, RemoveNameAnnotationFromField semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRemoveNameAnnotationFromFieldAccess().getVariableFieldQNParserRuleCall_1_0_1(), semanticObject.eGet(AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE, false));
+		feeder.accept(grammarAccess.getRemoveNameAnnotationFromFieldAccess().getAnnotationToRemoveAnnotationQNParserRuleCall_3_0_1(), semanticObject.eGet(AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE, false));
 		feeder.finish();
 	}
 	
@@ -609,6 +1012,18 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getStringValueAccess().getValIDTerminalRuleCall_0(), semanticObject.getVal());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Values returns Values
+	 *
+	 * Constraint:
+	 *     (value+=Array? (value+=Value value+=Value*)?)+
+	 */
+	protected void sequence_Values(ISerializationContext context, Values semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

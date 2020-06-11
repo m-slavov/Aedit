@@ -7,6 +7,7 @@ import com.google.common.base.Objects;
 import org.aedit.aedit.AeditPackage;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
+import org.aedit.aedit.RemoveAnnotationFromSchema;
 import org.aedit.scoping.AbstractAeditScopeProvider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -31,7 +32,14 @@ public class AeditScopeProvider extends AbstractAeditScopeProvider {
     IScope _xblockexpression = null;
     {
       if (((context.eContainer() instanceof ChangeSchema) || (context.eContainer() instanceof ChangeEnum))) {
-        if ((((Objects.equal(reference, AeditPackage.Literals.RENAME_VARIABLE__VARIABLE) || Objects.equal(reference, AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE)) || Objects.equal(reference, AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD)) || Objects.equal(reference, AeditPackage.Literals.CHANGE_TYPE__FIELD))) {
+        if ((((((((Objects.equal(reference, AeditPackage.Literals.RENAME_VARIABLE__VARIABLE) || 
+          Objects.equal(reference, AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE)) || 
+          Objects.equal(reference, AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD)) || 
+          Objects.equal(reference, AeditPackage.Literals.CHANGE_TYPE__FIELD)) || 
+          Objects.equal(reference, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE)) || 
+          Objects.equal(reference, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE)) || 
+          Objects.equal(reference, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE)) || 
+          Objects.equal(reference, AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE))) {
           final IScope scope = super.getScope(context, reference);
           final Function1<IEObjectDescription, AliasedEObjectDescription> _function = (IEObjectDescription d) -> {
             AliasedEObjectDescription _xifexpression = null;
@@ -60,10 +68,70 @@ public class AeditScopeProvider extends AbstractAeditScopeProvider {
           };
           final Iterable<IEObjectDescription> defs = IterableExtensions.<AliasedEObjectDescription, IEObjectDescription>map(IterableExtensions.<IEObjectDescription, AliasedEObjectDescription>map(scope.getAllElements(), _function), _function_1);
           return new SimpleScope(defs);
+        } else {
+          boolean _equals = Objects.equal(reference, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE);
+          if (_equals) {
+            final Iterable<IEObjectDescription> splitRefNamesList = this.splitRefNames(context, reference);
+            return new SimpleScope(splitRefNamesList);
+          } else {
+            boolean _equals_1 = Objects.equal(reference, AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE);
+            if (_equals_1) {
+              final Iterable<IEObjectDescription> splitRefNamesList_1 = this.splitRefNames(context, reference);
+              return new SimpleScope(splitRefNamesList_1);
+            }
+          }
+        }
+      } else {
+        if ((context instanceof RemoveAnnotationFromSchema)) {
+          boolean _equals_2 = Objects.equal(reference, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE);
+          if (_equals_2) {
+            final Iterable<IEObjectDescription> splitRefNamesList_2 = this.splitRefNames(context, reference);
+            return new SimpleScope(splitRefNamesList_2);
+          }
         }
       }
       _xblockexpression = super.getScope(context, reference);
     }
     return _xblockexpression;
+  }
+  
+  public Iterable<IEObjectDescription> splitRefNames(final EObject context, final EReference reference) {
+    final IScope scope = super.getScope(context, reference);
+    final Function1<IEObjectDescription, AliasedEObjectDescription> _function = (IEObjectDescription d) -> {
+      AliasedEObjectDescription _xifexpression = null;
+      int _segmentCount = d.getName().getSegmentCount();
+      boolean _greaterThan = (_segmentCount > 3);
+      if (_greaterThan) {
+        QualifiedName _create = QualifiedName.create(d.getName().getSegments().get(3).replace("@", ""));
+        _xifexpression = new AliasedEObjectDescription(_create, d);
+      } else {
+        AliasedEObjectDescription _xifexpression_1 = null;
+        int _segmentCount_1 = d.getName().getSegmentCount();
+        boolean _greaterThan_1 = (_segmentCount_1 > 2);
+        if (_greaterThan_1) {
+          QualifiedName _create_1 = QualifiedName.create(d.getName().getSegments().get(2).replace("@", ""));
+          _xifexpression_1 = new AliasedEObjectDescription(_create_1, d);
+        } else {
+          AliasedEObjectDescription _xifexpression_2 = null;
+          int _segmentCount_2 = d.getName().getSegmentCount();
+          boolean _greaterThan_2 = (_segmentCount_2 > 1);
+          if (_greaterThan_2) {
+            QualifiedName _create_2 = QualifiedName.create(d.getName().getSegments().get(1).replace("@", ""));
+            _xifexpression_2 = new AliasedEObjectDescription(_create_2, d);
+          } else {
+            QualifiedName _create_3 = QualifiedName.create(d.getName().toString().replace("@", ""));
+            _xifexpression_2 = new AliasedEObjectDescription(_create_3, d);
+          }
+          _xifexpression_1 = _xifexpression_2;
+        }
+        _xifexpression = _xifexpression_1;
+      }
+      return _xifexpression;
+    };
+    final Function1<AliasedEObjectDescription, IEObjectDescription> _function_1 = (AliasedEObjectDescription d) -> {
+      return ((IEObjectDescription) d);
+    };
+    final Iterable<IEObjectDescription> defs = IterableExtensions.<AliasedEObjectDescription, IEObjectDescription>map(IterableExtensions.<IEObjectDescription, AliasedEObjectDescription>map(scope.getAllElements(), _function), _function_1);
+    return defs;
   }
 }

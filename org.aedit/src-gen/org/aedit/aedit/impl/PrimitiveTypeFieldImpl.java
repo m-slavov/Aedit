@@ -3,17 +3,27 @@
  */
 package org.aedit.aedit.impl;
 
+import java.util.Collection;
+
 import org.aedit.aedit.AeditPackage;
+import org.aedit.aedit.Annotation;
+import org.aedit.aedit.PrimitiveType;
 import org.aedit.aedit.PrimitiveTypeField;
 import org.aedit.aedit.Value;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,32 +34,54 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link org.aedit.aedit.impl.PrimitiveTypeFieldImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.PrimitiveTypeFieldImpl#getNameAnnotations <em>Name Annotations</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.PrimitiveTypeFieldImpl#getVarName <em>Var Name</em>}</li>
  *   <li>{@link org.aedit.aedit.impl.PrimitiveTypeFieldImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeField
+public class PrimitiveTypeFieldImpl extends MinimalEObjectImpl.Container implements PrimitiveTypeField
 {
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
+  protected PrimitiveType type;
 
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getNameAnnotations() <em>Name Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getNameAnnotations()
    * @generated
    * @ordered
    */
-  protected String type = TYPE_EDEFAULT;
+  protected EList<Annotation> nameAnnotations;
+
+  /**
+   * The default value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVarName()
+   * @generated
+   * @ordered
+   */
+  protected static final String VAR_NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVarName()
+   * @generated
+   * @ordered
+   */
+  protected String varName = VAR_NAME_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -88,7 +120,7 @@ public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeFi
    * @generated
    */
   @Override
-  public String getType()
+  public PrimitiveType getType()
   {
     return type;
   }
@@ -98,13 +130,78 @@ public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeFi
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public void setType(String newType)
+  public NotificationChain basicSetType(PrimitiveType newType, NotificationChain msgs)
   {
-    String oldType = type;
+    PrimitiveType oldType = type;
     type = newType;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE, oldType, type));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE, oldType, newType);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setType(PrimitiveType newType)
+  {
+    if (newType != type)
+    {
+      NotificationChain msgs = null;
+      if (type != null)
+        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE, null, msgs);
+      if (newType != null)
+        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE, null, msgs);
+      msgs = basicSetType(newType, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE, newType, newType));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<Annotation> getNameAnnotations()
+  {
+    if (nameAnnotations == null)
+    {
+      nameAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, AeditPackage.PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS);
+    }
+    return nameAnnotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getVarName()
+  {
+    return varName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setVarName(String newVarName)
+  {
+    String oldVarName = varName;
+    varName = newVarName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.PRIMITIVE_TYPE_FIELD__VAR_NAME, oldVarName, varName));
   }
 
   /**
@@ -167,6 +264,10 @@ public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeFi
   {
     switch (featureID)
     {
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE:
+        return basicSetType(null, msgs);
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS:
+        return ((InternalEList<?>)getNameAnnotations()).basicRemove(otherEnd, msgs);
       case AeditPackage.PRIMITIVE_TYPE_FIELD__VALUE:
         return basicSetValue(null, msgs);
     }
@@ -185,6 +286,10 @@ public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeFi
     {
       case AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE:
         return getType();
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS:
+        return getNameAnnotations();
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__VAR_NAME:
+        return getVarName();
       case AeditPackage.PRIMITIVE_TYPE_FIELD__VALUE:
         return getValue();
     }
@@ -196,13 +301,21 @@ public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeFi
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
       case AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE:
-        setType((String)newValue);
+        setType((PrimitiveType)newValue);
+        return;
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS:
+        getNameAnnotations().clear();
+        getNameAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__VAR_NAME:
+        setVarName((String)newValue);
         return;
       case AeditPackage.PRIMITIVE_TYPE_FIELD__VALUE:
         setValue((Value)newValue);
@@ -222,7 +335,13 @@ public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeFi
     switch (featureID)
     {
       case AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE:
-        setType(TYPE_EDEFAULT);
+        setType((PrimitiveType)null);
+        return;
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS:
+        getNameAnnotations().clear();
+        return;
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__VAR_NAME:
+        setVarName(VAR_NAME_EDEFAULT);
         return;
       case AeditPackage.PRIMITIVE_TYPE_FIELD__VALUE:
         setValue((Value)null);
@@ -242,7 +361,11 @@ public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeFi
     switch (featureID)
     {
       case AeditPackage.PRIMITIVE_TYPE_FIELD__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+        return type != null;
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS:
+        return nameAnnotations != null && !nameAnnotations.isEmpty();
+      case AeditPackage.PRIMITIVE_TYPE_FIELD__VAR_NAME:
+        return VAR_NAME_EDEFAULT == null ? varName != null : !VAR_NAME_EDEFAULT.equals(varName);
       case AeditPackage.PRIMITIVE_TYPE_FIELD__VALUE:
         return value != null;
     }
@@ -260,8 +383,8 @@ public class PrimitiveTypeFieldImpl extends FieldImpl implements PrimitiveTypeFi
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (type: ");
-    result.append(type);
+    result.append(" (varName: ");
+    result.append(varName);
     result.append(')');
     return result.toString();
   }

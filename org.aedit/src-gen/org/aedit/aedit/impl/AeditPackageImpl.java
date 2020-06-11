@@ -6,17 +6,29 @@ package org.aedit.aedit.impl;
 import avroclipse.avroIDL.AvroIDLPackage;
 
 import org.aedit.aedit.Add;
+import org.aedit.aedit.AddAnnotationToField;
+import org.aedit.aedit.AddAnnotationToSchema;
 import org.aedit.aedit.AddEnum;
 import org.aedit.aedit.AddEnumeration;
+import org.aedit.aedit.AddError;
+import org.aedit.aedit.AddNameAnnotationToField;
 import org.aedit.aedit.AddRecord;
+import org.aedit.aedit.AddValueToArray;
 import org.aedit.aedit.AddVariable;
 import org.aedit.aedit.AeditFactory;
 import org.aedit.aedit.AeditPackage;
+import org.aedit.aedit.AnnotatedTypes;
+import org.aedit.aedit.Annotation;
+import org.aedit.aedit.Array;
+import org.aedit.aedit.ArrayEditRules;
+import org.aedit.aedit.ArrayTypeField;
 import org.aedit.aedit.BooleanValue;
 import org.aedit.aedit.ChangeDefValue;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
 import org.aedit.aedit.ChangeType;
+import org.aedit.aedit.ComplexTypeField;
+import org.aedit.aedit.CustomType;
 import org.aedit.aedit.CustomTypeField;
 import org.aedit.aedit.EnumRule;
 import org.aedit.aedit.Feature;
@@ -27,8 +39,14 @@ import org.aedit.aedit.GenericRule;
 import org.aedit.aedit.IntValue;
 import org.aedit.aedit.Model;
 import org.aedit.aedit.Null;
+import org.aedit.aedit.PrimitiveType;
 import org.aedit.aedit.PrimitiveTypeField;
+import org.aedit.aedit.RemoveAnnotationFromField;
+import org.aedit.aedit.RemoveAnnotationFromSchema;
+import org.aedit.aedit.RemoveArrayValue;
+import org.aedit.aedit.RemoveArrayValueAtIndex;
 import org.aedit.aedit.RemoveEnum;
+import org.aedit.aedit.RemoveNameAnnotationFromField;
 import org.aedit.aedit.RemoveSchema;
 import org.aedit.aedit.RemoveVariable;
 import org.aedit.aedit.RenameEnum;
@@ -38,7 +56,9 @@ import org.aedit.aedit.RuleDeclaration;
 import org.aedit.aedit.RuleMap;
 import org.aedit.aedit.SchemaRule;
 import org.aedit.aedit.StringValue;
+import org.aedit.aedit.Types;
 import org.aedit.aedit.Value;
+import org.aedit.aedit.Values;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -109,7 +129,56 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass arrayEditRulesEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass enumRuleEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass addAnnotationToSchemaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass addAnnotationToFieldEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass addNameAnnotationToFieldEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass removeAnnotationFromSchemaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass removeAnnotationFromFieldEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass removeNameAnnotationFromFieldEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -138,6 +207,13 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   private EClass addRecordEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass addErrorEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -221,6 +297,27 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass removeArrayValueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass removeArrayValueAtIndexEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass addValueToArrayEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass fieldEClass = null;
 
   /**
@@ -236,6 +333,69 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   private EClass primitiveTypeFieldEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass complexTypeFieldEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arrayTypeFieldEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass annotatedTypesEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typesEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass customTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass primitiveTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass annotationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass valuesEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arrayEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -560,9 +720,251 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
+  public EClass getArrayEditRules()
+  {
+    return arrayEditRulesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getArrayEditRules_Array()
+  {
+    return (EReference)arrayEditRulesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getEnumRule()
   {
     return enumRuleEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAddAnnotationToSchema()
+  {
+    return addAnnotationToSchemaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getAddAnnotationToSchema_SchemaType()
+  {
+    return (EAttribute)addAnnotationToSchemaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddAnnotationToSchema_Schema()
+  {
+    return (EReference)addAnnotationToSchemaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddAnnotationToSchema_Annotation()
+  {
+    return (EReference)addAnnotationToSchemaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAddAnnotationToField()
+  {
+    return addAnnotationToFieldEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddAnnotationToField_Variable()
+  {
+    return (EReference)addAnnotationToFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddAnnotationToField_Annotation()
+  {
+    return (EReference)addAnnotationToFieldEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAddNameAnnotationToField()
+  {
+    return addNameAnnotationToFieldEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddNameAnnotationToField_Variable()
+  {
+    return (EReference)addNameAnnotationToFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddNameAnnotationToField_Annotation()
+  {
+    return (EReference)addNameAnnotationToFieldEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRemoveAnnotationFromSchema()
+  {
+    return removeAnnotationFromSchemaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getRemoveAnnotationFromSchema_SchemaType()
+  {
+    return (EAttribute)removeAnnotationFromSchemaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRemoveAnnotationFromSchema_Schema()
+  {
+    return (EReference)removeAnnotationFromSchemaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRemoveAnnotationFromSchema_AnnotationToRemove()
+  {
+    return (EReference)removeAnnotationFromSchemaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRemoveAnnotationFromField()
+  {
+    return removeAnnotationFromFieldEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRemoveAnnotationFromField_Variable()
+  {
+    return (EReference)removeAnnotationFromFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRemoveAnnotationFromField_AnnotationToRemove()
+  {
+    return (EReference)removeAnnotationFromFieldEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRemoveNameAnnotationFromField()
+  {
+    return removeNameAnnotationFromFieldEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRemoveNameAnnotationFromField_Variable()
+  {
+    return (EReference)removeNameAnnotationFromFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRemoveNameAnnotationFromField_AnnotationToRemove()
+  {
+    return (EReference)removeNameAnnotationFromFieldEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -582,9 +984,20 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
+  public EAttribute getChangeSchema_SchemaType()
+  {
+    return (EAttribute)changeSchemaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getChangeSchema_Schema()
   {
-    return (EReference)changeSchemaEClass.getEStructuralFeatures().get(0);
+    return (EReference)changeSchemaEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -595,7 +1008,7 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
   @Override
   public EReference getChangeSchema_Rules()
   {
-    return (EReference)changeSchemaEClass.getEStructuralFeatures().get(1);
+    return (EReference)changeSchemaEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -695,6 +1108,39 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
   public EReference getAddRecord_Fields()
   {
     return (EReference)addRecordEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAddError()
+  {
+    return addErrorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getAddError_ErrorName()
+  {
+    return (EAttribute)addErrorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddError_Fields()
+  {
+    return (EReference)addErrorEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1055,6 +1501,72 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
+  public EClass getRemoveArrayValue()
+  {
+    return removeArrayValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRemoveArrayValue_ValueToRemove()
+  {
+    return (EReference)removeArrayValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRemoveArrayValueAtIndex()
+  {
+    return removeArrayValueAtIndexEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getRemoveArrayValueAtIndex_Index()
+  {
+    return (EAttribute)removeArrayValueAtIndexEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAddValueToArray()
+  {
+    return addValueToArrayEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getAddValueToArray_Index()
+  {
+    return (EAttribute)addValueToArrayEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getField()
   {
     return fieldEClass;
@@ -1066,9 +1578,20 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
-  public EAttribute getField_VarName()
+  public EReference getField_Annotations()
   {
-    return (EAttribute)fieldEClass.getEStructuralFeatures().get(0);
+    return (EReference)fieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getField_FieldType()
+  {
+    return (EReference)fieldEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1099,6 +1622,28 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
+  public EReference getCustomTypeField_NameAnnotations()
+  {
+    return (EReference)customTypeFieldEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getCustomTypeField_VarName()
+  {
+    return (EAttribute)customTypeFieldEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getPrimitiveTypeField()
   {
     return primitiveTypeFieldEClass;
@@ -1110,9 +1655,31 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
-  public EAttribute getPrimitiveTypeField_Type()
+  public EReference getPrimitiveTypeField_Type()
   {
-    return (EAttribute)primitiveTypeFieldEClass.getEStructuralFeatures().get(0);
+    return (EReference)primitiveTypeFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getPrimitiveTypeField_NameAnnotations()
+  {
+    return (EReference)primitiveTypeFieldEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPrimitiveTypeField_VarName()
+  {
+    return (EAttribute)primitiveTypeFieldEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1123,7 +1690,249 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
   @Override
   public EReference getPrimitiveTypeField_Value()
   {
-    return (EReference)primitiveTypeFieldEClass.getEStructuralFeatures().get(1);
+    return (EReference)primitiveTypeFieldEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getComplexTypeField()
+  {
+    return complexTypeFieldEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getComplexTypeField_Type()
+  {
+    return (EReference)complexTypeFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getComplexTypeField_NameAnnotations()
+  {
+    return (EReference)complexTypeFieldEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getComplexTypeField_VarName()
+  {
+    return (EAttribute)complexTypeFieldEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getComplexTypeField_Value()
+  {
+    return (EReference)complexTypeFieldEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getArrayTypeField()
+  {
+    return arrayTypeFieldEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getArrayTypeField_Type()
+  {
+    return (EReference)arrayTypeFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAnnotatedTypes()
+  {
+    return annotatedTypesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAnnotatedTypes_Annotataions()
+  {
+    return (EReference)annotatedTypesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAnnotatedTypes_Type()
+  {
+    return (EReference)annotatedTypesEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getTypes()
+  {
+    return typesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getCustomType()
+  {
+    return customTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getCustomType_Target()
+  {
+    return (EReference)customTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getPrimitiveType()
+  {
+    return primitiveTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPrimitiveType_Target()
+  {
+    return (EAttribute)primitiveTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAnnotation()
+  {
+    return annotationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getAnnotation_Name()
+  {
+    return (EAttribute)annotationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAnnotation_Values()
+  {
+    return (EReference)annotationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getValues()
+  {
+    return valuesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getValues_Value()
+  {
+    return (EReference)valuesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getArray()
+  {
+    return arrayEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getArray_Values()
+  {
+    return (EReference)arrayEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1304,9 +2113,39 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
 
     schemaRuleEClass = createEClass(SCHEMA_RULE);
 
+    arrayEditRulesEClass = createEClass(ARRAY_EDIT_RULES);
+    createEReference(arrayEditRulesEClass, ARRAY_EDIT_RULES__ARRAY);
+
     enumRuleEClass = createEClass(ENUM_RULE);
 
+    addAnnotationToSchemaEClass = createEClass(ADD_ANNOTATION_TO_SCHEMA);
+    createEAttribute(addAnnotationToSchemaEClass, ADD_ANNOTATION_TO_SCHEMA__SCHEMA_TYPE);
+    createEReference(addAnnotationToSchemaEClass, ADD_ANNOTATION_TO_SCHEMA__SCHEMA);
+    createEReference(addAnnotationToSchemaEClass, ADD_ANNOTATION_TO_SCHEMA__ANNOTATION);
+
+    addAnnotationToFieldEClass = createEClass(ADD_ANNOTATION_TO_FIELD);
+    createEReference(addAnnotationToFieldEClass, ADD_ANNOTATION_TO_FIELD__VARIABLE);
+    createEReference(addAnnotationToFieldEClass, ADD_ANNOTATION_TO_FIELD__ANNOTATION);
+
+    addNameAnnotationToFieldEClass = createEClass(ADD_NAME_ANNOTATION_TO_FIELD);
+    createEReference(addNameAnnotationToFieldEClass, ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE);
+    createEReference(addNameAnnotationToFieldEClass, ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION);
+
+    removeAnnotationFromSchemaEClass = createEClass(REMOVE_ANNOTATION_FROM_SCHEMA);
+    createEAttribute(removeAnnotationFromSchemaEClass, REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE);
+    createEReference(removeAnnotationFromSchemaEClass, REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA);
+    createEReference(removeAnnotationFromSchemaEClass, REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE);
+
+    removeAnnotationFromFieldEClass = createEClass(REMOVE_ANNOTATION_FROM_FIELD);
+    createEReference(removeAnnotationFromFieldEClass, REMOVE_ANNOTATION_FROM_FIELD__VARIABLE);
+    createEReference(removeAnnotationFromFieldEClass, REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE);
+
+    removeNameAnnotationFromFieldEClass = createEClass(REMOVE_NAME_ANNOTATION_FROM_FIELD);
+    createEReference(removeNameAnnotationFromFieldEClass, REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE);
+    createEReference(removeNameAnnotationFromFieldEClass, REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE);
+
     changeSchemaEClass = createEClass(CHANGE_SCHEMA);
+    createEAttribute(changeSchemaEClass, CHANGE_SCHEMA__SCHEMA_TYPE);
     createEReference(changeSchemaEClass, CHANGE_SCHEMA__SCHEMA);
     createEReference(changeSchemaEClass, CHANGE_SCHEMA__RULES);
 
@@ -1321,6 +2160,10 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     addRecordEClass = createEClass(ADD_RECORD);
     createEAttribute(addRecordEClass, ADD_RECORD__RECORD_NAME);
     createEReference(addRecordEClass, ADD_RECORD__FIELDS);
+
+    addErrorEClass = createEClass(ADD_ERROR);
+    createEAttribute(addErrorEClass, ADD_ERROR__ERROR_NAME);
+    createEReference(addErrorEClass, ADD_ERROR__FIELDS);
 
     addEnumerationEClass = createEClass(ADD_ENUMERATION);
     createEAttribute(addEnumerationEClass, ADD_ENUMERATION__ENUM_NAME);
@@ -1365,15 +2208,60 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     createEReference(changeTypeEClass, CHANGE_TYPE__FIELD);
     createEAttribute(changeTypeEClass, CHANGE_TYPE__NEW_TYPE);
 
+    removeArrayValueEClass = createEClass(REMOVE_ARRAY_VALUE);
+    createEReference(removeArrayValueEClass, REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE);
+
+    removeArrayValueAtIndexEClass = createEClass(REMOVE_ARRAY_VALUE_AT_INDEX);
+    createEAttribute(removeArrayValueAtIndexEClass, REMOVE_ARRAY_VALUE_AT_INDEX__INDEX);
+
+    addValueToArrayEClass = createEClass(ADD_VALUE_TO_ARRAY);
+    createEAttribute(addValueToArrayEClass, ADD_VALUE_TO_ARRAY__INDEX);
+
     fieldEClass = createEClass(FIELD);
-    createEAttribute(fieldEClass, FIELD__VAR_NAME);
+    createEReference(fieldEClass, FIELD__ANNOTATIONS);
+    createEReference(fieldEClass, FIELD__FIELD_TYPE);
 
     customTypeFieldEClass = createEClass(CUSTOM_TYPE_FIELD);
     createEReference(customTypeFieldEClass, CUSTOM_TYPE_FIELD__TYPE);
+    createEReference(customTypeFieldEClass, CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS);
+    createEAttribute(customTypeFieldEClass, CUSTOM_TYPE_FIELD__VAR_NAME);
 
     primitiveTypeFieldEClass = createEClass(PRIMITIVE_TYPE_FIELD);
-    createEAttribute(primitiveTypeFieldEClass, PRIMITIVE_TYPE_FIELD__TYPE);
+    createEReference(primitiveTypeFieldEClass, PRIMITIVE_TYPE_FIELD__TYPE);
+    createEReference(primitiveTypeFieldEClass, PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS);
+    createEAttribute(primitiveTypeFieldEClass, PRIMITIVE_TYPE_FIELD__VAR_NAME);
     createEReference(primitiveTypeFieldEClass, PRIMITIVE_TYPE_FIELD__VALUE);
+
+    complexTypeFieldEClass = createEClass(COMPLEX_TYPE_FIELD);
+    createEReference(complexTypeFieldEClass, COMPLEX_TYPE_FIELD__TYPE);
+    createEReference(complexTypeFieldEClass, COMPLEX_TYPE_FIELD__NAME_ANNOTATIONS);
+    createEAttribute(complexTypeFieldEClass, COMPLEX_TYPE_FIELD__VAR_NAME);
+    createEReference(complexTypeFieldEClass, COMPLEX_TYPE_FIELD__VALUE);
+
+    arrayTypeFieldEClass = createEClass(ARRAY_TYPE_FIELD);
+    createEReference(arrayTypeFieldEClass, ARRAY_TYPE_FIELD__TYPE);
+
+    annotatedTypesEClass = createEClass(ANNOTATED_TYPES);
+    createEReference(annotatedTypesEClass, ANNOTATED_TYPES__ANNOTATAIONS);
+    createEReference(annotatedTypesEClass, ANNOTATED_TYPES__TYPE);
+
+    typesEClass = createEClass(TYPES);
+
+    customTypeEClass = createEClass(CUSTOM_TYPE);
+    createEReference(customTypeEClass, CUSTOM_TYPE__TARGET);
+
+    primitiveTypeEClass = createEClass(PRIMITIVE_TYPE);
+    createEAttribute(primitiveTypeEClass, PRIMITIVE_TYPE__TARGET);
+
+    annotationEClass = createEClass(ANNOTATION);
+    createEAttribute(annotationEClass, ANNOTATION__NAME);
+    createEReference(annotationEClass, ANNOTATION__VALUES);
+
+    valuesEClass = createEClass(VALUES);
+    createEReference(valuesEClass, VALUES__VALUE);
+
+    arrayEClass = createEClass(ARRAY);
+    createEReference(arrayEClass, ARRAY__VALUES);
 
     valueEClass = createEClass(VALUE);
 
@@ -1425,10 +2313,18 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    arrayEditRulesEClass.getESuperTypes().add(this.getSchemaRule());
+    addAnnotationToSchemaEClass.getESuperTypes().add(this.getGenericRule());
+    addAnnotationToFieldEClass.getESuperTypes().add(this.getSchemaRule());
+    addNameAnnotationToFieldEClass.getESuperTypes().add(this.getSchemaRule());
+    removeAnnotationFromSchemaEClass.getESuperTypes().add(this.getGenericRule());
+    removeAnnotationFromFieldEClass.getESuperTypes().add(this.getSchemaRule());
+    removeNameAnnotationFromFieldEClass.getESuperTypes().add(this.getSchemaRule());
     changeSchemaEClass.getESuperTypes().add(this.getGenericRule());
     changeEnumEClass.getESuperTypes().add(this.getGenericRule());
     addEClass.getESuperTypes().add(this.getGenericRule());
     addRecordEClass.getESuperTypes().add(this.getAdd());
+    addErrorEClass.getESuperTypes().add(this.getAdd());
     addEnumerationEClass.getESuperTypes().add(this.getAdd());
     addVariableEClass.getESuperTypes().add(this.getSchemaRule());
     addEnumEClass.getESuperTypes().add(this.getEnumRule());
@@ -1440,8 +2336,12 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     renameEnumEClass.getESuperTypes().add(this.getEnumRule());
     changeDefValueEClass.getESuperTypes().add(this.getSchemaRule());
     changeTypeEClass.getESuperTypes().add(this.getSchemaRule());
-    customTypeFieldEClass.getESuperTypes().add(this.getField());
-    primitiveTypeFieldEClass.getESuperTypes().add(this.getField());
+    removeArrayValueEClass.getESuperTypes().add(this.getArrayEditRules());
+    removeArrayValueAtIndexEClass.getESuperTypes().add(this.getArrayEditRules());
+    addValueToArrayEClass.getESuperTypes().add(this.getArrayEditRules());
+    arrayTypeFieldEClass.getESuperTypes().add(this.getTypes());
+    customTypeEClass.getESuperTypes().add(this.getTypes());
+    primitiveTypeEClass.getESuperTypes().add(this.getTypes());
     floatValueEClass.getESuperTypes().add(this.getValue());
     stringValueEClass.getESuperTypes().add(this.getValue());
     intValueEClass.getESuperTypes().add(this.getValue());
@@ -1475,9 +2375,39 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
 
     initEClass(schemaRuleEClass, SchemaRule.class, "SchemaRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(arrayEditRulesEClass, ArrayEditRules.class, "ArrayEditRules", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArrayEditRules_Array(), theAvroIDLPackage.getField(), null, "array", null, 0, 1, ArrayEditRules.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(enumRuleEClass, EnumRule.class, "EnumRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(addAnnotationToSchemaEClass, AddAnnotationToSchema.class, "AddAnnotationToSchema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAddAnnotationToSchema_SchemaType(), ecorePackage.getEString(), "schemaType", null, 0, 1, AddAnnotationToSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAddAnnotationToSchema_Schema(), theAvroIDLPackage.getType(), null, "schema", null, 0, 1, AddAnnotationToSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAddAnnotationToSchema_Annotation(), this.getAnnotation(), null, "annotation", null, 0, 1, AddAnnotationToSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(addAnnotationToFieldEClass, AddAnnotationToField.class, "AddAnnotationToField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAddAnnotationToField_Variable(), theAvroIDLPackage.getField(), null, "variable", null, 0, 1, AddAnnotationToField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAddAnnotationToField_Annotation(), this.getAnnotation(), null, "annotation", null, 0, 1, AddAnnotationToField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(addNameAnnotationToFieldEClass, AddNameAnnotationToField.class, "AddNameAnnotationToField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAddNameAnnotationToField_Variable(), theAvroIDLPackage.getField(), null, "variable", null, 0, 1, AddNameAnnotationToField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAddNameAnnotationToField_Annotation(), this.getAnnotation(), null, "annotation", null, 0, 1, AddNameAnnotationToField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(removeAnnotationFromSchemaEClass, RemoveAnnotationFromSchema.class, "RemoveAnnotationFromSchema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRemoveAnnotationFromSchema_SchemaType(), ecorePackage.getEString(), "schemaType", null, 0, 1, RemoveAnnotationFromSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRemoveAnnotationFromSchema_Schema(), theAvroIDLPackage.getType(), null, "schema", null, 0, 1, RemoveAnnotationFromSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRemoveAnnotationFromSchema_AnnotationToRemove(), theAvroIDLPackage.getAnnotation(), null, "annotationToRemove", null, 0, 1, RemoveAnnotationFromSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(removeAnnotationFromFieldEClass, RemoveAnnotationFromField.class, "RemoveAnnotationFromField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRemoveAnnotationFromField_Variable(), theAvroIDLPackage.getField(), null, "variable", null, 0, 1, RemoveAnnotationFromField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRemoveAnnotationFromField_AnnotationToRemove(), theAvroIDLPackage.getAnnotation(), null, "annotationToRemove", null, 0, 1, RemoveAnnotationFromField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(removeNameAnnotationFromFieldEClass, RemoveNameAnnotationFromField.class, "RemoveNameAnnotationFromField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRemoveNameAnnotationFromField_Variable(), theAvroIDLPackage.getField(), null, "variable", null, 0, 1, RemoveNameAnnotationFromField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRemoveNameAnnotationFromField_AnnotationToRemove(), theAvroIDLPackage.getAnnotation(), null, "annotationToRemove", null, 0, 1, RemoveNameAnnotationFromField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(changeSchemaEClass, ChangeSchema.class, "ChangeSchema", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getChangeSchema_SchemaType(), ecorePackage.getEString(), "schemaType", null, 0, 1, ChangeSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getChangeSchema_Schema(), theAvroIDLPackage.getType(), null, "schema", null, 0, 1, ChangeSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getChangeSchema_Rules(), this.getSchemaRule(), null, "rules", null, 0, -1, ChangeSchema.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1492,6 +2422,10 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     initEClass(addRecordEClass, AddRecord.class, "AddRecord", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAddRecord_RecordName(), ecorePackage.getEString(), "recordName", null, 0, 1, AddRecord.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAddRecord_Fields(), this.getField(), null, "fields", null, 0, -1, AddRecord.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(addErrorEClass, AddError.class, "AddError", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAddError_ErrorName(), ecorePackage.getEString(), "errorName", null, 0, 1, AddError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAddError_Fields(), this.getField(), null, "fields", null, 0, -1, AddError.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(addEnumerationEClass, AddEnumeration.class, "AddEnumeration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAddEnumeration_EnumName(), ecorePackage.getEString(), "enumName", null, 0, 1, AddEnumeration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1536,15 +2470,60 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     initEReference(getChangeType_Field(), theAvroIDLPackage.getField(), null, "field", null, 0, 1, ChangeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getChangeType_NewType(), ecorePackage.getEString(), "newType", null, 0, 1, ChangeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(removeArrayValueEClass, RemoveArrayValue.class, "RemoveArrayValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRemoveArrayValue_ValueToRemove(), this.getValue(), null, "valueToRemove", null, 0, 1, RemoveArrayValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(removeArrayValueAtIndexEClass, RemoveArrayValueAtIndex.class, "RemoveArrayValueAtIndex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRemoveArrayValueAtIndex_Index(), ecorePackage.getEInt(), "index", null, 0, 1, RemoveArrayValueAtIndex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(addValueToArrayEClass, AddValueToArray.class, "AddValueToArray", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAddValueToArray_Index(), ecorePackage.getEInt(), "index", null, 0, 1, AddValueToArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getField_VarName(), ecorePackage.getEString(), "varName", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getField_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getField_FieldType(), ecorePackage.getEObject(), null, "fieldType", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(customTypeFieldEClass, CustomTypeField.class, "CustomTypeField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCustomTypeField_Type(), theAvroIDLPackage.getType(), null, "type", null, 0, 1, CustomTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCustomTypeField_Type(), this.getCustomType(), null, "type", null, 0, 1, CustomTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCustomTypeField_NameAnnotations(), this.getAnnotation(), null, "nameAnnotations", null, 0, -1, CustomTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCustomTypeField_VarName(), ecorePackage.getEString(), "varName", null, 0, 1, CustomTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(primitiveTypeFieldEClass, PrimitiveTypeField.class, "PrimitiveTypeField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPrimitiveTypeField_Type(), ecorePackage.getEString(), "type", null, 0, 1, PrimitiveTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimitiveTypeField_Type(), this.getPrimitiveType(), null, "type", null, 0, 1, PrimitiveTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimitiveTypeField_NameAnnotations(), this.getAnnotation(), null, "nameAnnotations", null, 0, -1, PrimitiveTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPrimitiveTypeField_VarName(), ecorePackage.getEString(), "varName", null, 0, 1, PrimitiveTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPrimitiveTypeField_Value(), this.getValue(), null, "value", null, 0, 1, PrimitiveTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(complexTypeFieldEClass, ComplexTypeField.class, "ComplexTypeField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getComplexTypeField_Type(), this.getArrayTypeField(), null, "type", null, 0, 1, ComplexTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getComplexTypeField_NameAnnotations(), this.getAnnotation(), null, "nameAnnotations", null, 0, -1, ComplexTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComplexTypeField_VarName(), ecorePackage.getEString(), "varName", null, 0, 1, ComplexTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getComplexTypeField_Value(), this.getArray(), null, "value", null, 0, 1, ComplexTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arrayTypeFieldEClass, ArrayTypeField.class, "ArrayTypeField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArrayTypeField_Type(), this.getAnnotatedTypes(), null, "type", null, 0, 1, ArrayTypeField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(annotatedTypesEClass, AnnotatedTypes.class, "AnnotatedTypes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAnnotatedTypes_Annotataions(), this.getAnnotation(), null, "annotataions", null, 0, -1, AnnotatedTypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnnotatedTypes_Type(), this.getTypes(), null, "type", null, 0, 1, AnnotatedTypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typesEClass, Types.class, "Types", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(customTypeEClass, CustomType.class, "CustomType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCustomType_Target(), theAvroIDLPackage.getType(), null, "target", null, 0, 1, CustomType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(primitiveTypeEClass, PrimitiveType.class, "PrimitiveType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPrimitiveType_Target(), ecorePackage.getEString(), "target", null, 0, 1, PrimitiveType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAnnotation_Name(), ecorePackage.getEString(), "name", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnnotation_Values(), this.getValues(), null, "values", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(valuesEClass, Values.class, "Values", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getValues_Value(), ecorePackage.getEObject(), null, "value", null, 0, -1, Values.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arrayEClass, Array.class, "Array", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArray_Values(), this.getValues(), null, "values", null, 0, 1, Array.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

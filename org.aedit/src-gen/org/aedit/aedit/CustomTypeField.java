@@ -3,7 +3,9 @@
  */
 package org.aedit.aedit;
 
-import avroclipse.avroIDL.Type;
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,34 +17,70 @@ import avroclipse.avroIDL.Type;
  * </p>
  * <ul>
  *   <li>{@link org.aedit.aedit.CustomTypeField#getType <em>Type</em>}</li>
+ *   <li>{@link org.aedit.aedit.CustomTypeField#getNameAnnotations <em>Name Annotations</em>}</li>
+ *   <li>{@link org.aedit.aedit.CustomTypeField#getVarName <em>Var Name</em>}</li>
  * </ul>
  *
  * @see org.aedit.aedit.AeditPackage#getCustomTypeField()
  * @model
  * @generated
  */
-public interface CustomTypeField extends Field
+public interface CustomTypeField extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Type</b></em>' reference.
+   * Returns the value of the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' reference.
-   * @see #setType(Type)
+   * @return the value of the '<em>Type</em>' containment reference.
+   * @see #setType(CustomType)
    * @see org.aedit.aedit.AeditPackage#getCustomTypeField_Type()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  Type getType();
+  CustomType getType();
 
   /**
-   * Sets the value of the '{@link org.aedit.aedit.CustomTypeField#getType <em>Type</em>}' reference.
+   * Sets the value of the '{@link org.aedit.aedit.CustomTypeField#getType <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' reference.
+   * @param value the new value of the '<em>Type</em>' containment reference.
    * @see #getType()
    * @generated
    */
-  void setType(Type value);
+  void setType(CustomType value);
+
+  /**
+   * Returns the value of the '<em><b>Name Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link org.aedit.aedit.Annotation}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Name Annotations</em>' containment reference list.
+   * @see org.aedit.aedit.AeditPackage#getCustomTypeField_NameAnnotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getNameAnnotations();
+
+  /**
+   * Returns the value of the '<em><b>Var Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Var Name</em>' attribute.
+   * @see #setVarName(String)
+   * @see org.aedit.aedit.AeditPackage#getCustomTypeField_VarName()
+   * @model
+   * @generated
+   */
+  String getVarName();
+
+  /**
+   * Sets the value of the '{@link org.aedit.aedit.CustomTypeField#getVarName <em>Var Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Var Name</em>' attribute.
+   * @see #getVarName()
+   * @generated
+   */
+  void setVarName(String value);
 
 } // CustomTypeField

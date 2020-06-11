@@ -86,6 +86,8 @@ public class Main {
 						mainFiles.add(set.getResource(URI.createFileURI(file.getPath()), true));
 					} else if (Files.getFileExtension(file.getPath()).equals("avdl")) {
 						set.getResource(URI.createFileURI(file.getPath()), true);
+					} else if (Files.getFileExtension(file.getPath()).equals("smap")) {
+						mainFiles.add(set.getResource(URI.createFileURI(file.getPath()), true));
 					}
 
 				} else if (file.isDirectory()) {

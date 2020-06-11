@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.aedit.aedit.ChangeSchema#getSchemaType <em>Schema Type</em>}</li>
  *   <li>{@link org.aedit.aedit.ChangeSchema#getSchema <em>Schema</em>}</li>
  *   <li>{@link org.aedit.aedit.ChangeSchema#getRules <em>Rules</em>}</li>
  * </ul>
@@ -26,6 +27,28 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ChangeSchema extends GenericRule
 {
+  /**
+   * Returns the value of the '<em><b>Schema Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Schema Type</em>' attribute.
+   * @see #setSchemaType(String)
+   * @see org.aedit.aedit.AeditPackage#getChangeSchema_SchemaType()
+   * @model
+   * @generated
+   */
+  String getSchemaType();
+
+  /**
+   * Sets the value of the '{@link org.aedit.aedit.ChangeSchema#getSchemaType <em>Schema Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Schema Type</em>' attribute.
+   * @see #getSchemaType()
+   * @generated
+   */
+  void setSchemaType(String value);
+
   /**
    * Returns the value of the '<em><b>Schema</b></em>' reference.
    * <!-- begin-user-doc -->

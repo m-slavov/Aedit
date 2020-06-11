@@ -1,7 +1,6 @@
 grammar org.aedit.Aedit with org.eclipse.xtext.common.Terminals
 
 generate aedit "http://www.aedit.org/Aedit"
-
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 //import "http://www.xtext.org/example/org/xtext/example/avdlclipse/AvdlClipse" as avroIDL
 import "http://avroclipse/AvroIDL" as avroIDL
@@ -10,151 +9,189 @@ Model:
 	ruleDeclarations+=RuleDeclaration*
 	ruleMaps+=RuleMap*
 	features+=Feature*
-	featureMaps+=FeatureMap*
-;
+	featureMaps+=FeatureMap*;
 
 Feature:
-	'feature' name=ID (':' extend=[Feature])? '{' ruleMaps+=[RuleMap]* '}'
-;
+	'feature' name=ID (':' extend=[Feature])? '{' ruleMaps+=[RuleMap]* '}';
 
 FeatureMap:
-	'use' name=[Feature] ';'
-;
+	'use' name=[Feature] ';';
 
 RuleMap:
-	'ruleset' name=ID '{' rules+=[RuleDeclaration]* '}'	
-;
+	'ruleset' name=ID '{' rules+=[RuleDeclaration]* '}';
 
 RuleDeclaration:
-	'rule' name=ID '{' rules+=GenericRule* '}'
-;
+	'rule' name=ID '{' rules+=GenericRule* '}';
 
 GenericRule:
-	RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum
-;
+	RenameSchema | RemoveSchema | Add | ChangeSchema | ChangeEnum | AddAnnotationToSchema | RemoveAnnotationFromSchema;
 
 SchemaRule:
-	RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType
+	RemoveVariable | RenameVariable | AddVariable | ChangeDefValue | ChangeType | AddAnnotationToField |
+	AddNameAnnotationToField | RemoveAnnotationFromField | RemoveNameAnnotationFromField | ArrayEditRules;
+
+ArrayEditRules:
+	RemoveArrayValue | RemoveArrayValueAtIndex | AddValueToArray
 ;
 
 EnumRule:
-	RemoveEnum | RenameEnum | AddEnum
-;
+	RemoveEnum | RenameEnum | AddEnum;
+
+AddAnnotationToSchema:
+	'add.annot' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' annotation=Annotation ';';
+
+AddAnnotationToField:
+	'add.annot' variable=[avroIDL::Field|QN] '=>' annotation=Annotation ';';
+
+AddNameAnnotationToField:
+	'add.name_annot' variable=[avroIDL::Field|QN] '=>' annotation=Annotation ';';
+
+RemoveAnnotationFromSchema:
+	'remove.annot' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
+
+RemoveAnnotationFromField:
+	'remove.annot' variable=[avroIDL::Field|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
+
+RemoveNameAnnotationFromField:
+	'remove.name_annot' variable=[avroIDL::Field|QN] '=>' annotationToRemove=[avroIDL::Annotation|QN] ';';
 
 ChangeSchema:
-	'change' ('record'|'error') schema=[avroIDL::Type | QN] '{' rules+=SchemaRule* '}'
-;
+	'change' schemaType=('record' | 'error') schema=[avroIDL::Type|QN] '{' rules+=SchemaRule* '}';
 
 ChangeEnum:
-	'change' 'enum' schema=[avroIDL::EnumType | QN] '{' rules+=EnumRule* '}'
-;
+	'change' 'enum' schema=[avroIDL::EnumType|QN] '{' rules+=EnumRule* '}';
 
 Add:
-	AddRecord | AddEnumeration
-;
+	AddRecord | AddError | AddEnumeration;
 
 AddRecord:
-	'add.at' '(' index=INT ')' 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID '{' fields+=Field* '}'
-;
+	'add.at' '(' index=INT ')' 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID '{' fields+=Field* '}';
+
+AddError:
+	'add.at' '(' index=INT ')' 'error' namespace=[avroIDL::AvroIDLFile] '.' errorName=ID '{' fields+=Field* '}';
 
 AddEnumeration:
-	'add.at' '(' index=INT ')' 'enum' namespace=[avroIDL::AvroIDLFile] '.' enumName=ID '{' symbols+=ID (',' symbols+=ID)* '}'
-;
+	'add.at' '(' index=INT ')' 'enum' namespace=[avroIDL::AvroIDLFile] '.' enumName=ID '{' symbols+=ID (',' symbols+=ID)*
+	'}';
 
 AddVariable:
-	'add.at' '(' index=INT ')' newVar=Field ';' 
-;
+	'add.at' '(' index=INT ')' newVar=Field ';';
 
 AddEnum:
-	'add.at' '(' index=INT ')' varName=ID';' 
-;
+	'add.at' '(' index=INT ')' varName=ID ';';
 
 RemoveSchema:
-	'remove' schemaType=SCHEMA_TYPE schema=[avroIDL::Type | QN] ';'
-;
+	'remove' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] ';';
 
 RemoveVariable:
-	'remove' variable=[avroIDL::Field | QN] ';'
-;
+	'remove' variable=[avroIDL::Field|QN] ';';
 
 RemoveEnum:
-	'remove' varName=ID ';'
-;
+	'remove' varName=ID ';';
 
 RenameSchema:
-	'rename' schemaType=SCHEMA_TYPE schema=[avroIDL::Type | QN] '=>' newSchName=ID ';'
-;
+	'rename' schemaType=SCHEMA_TYPE schema=[avroIDL::Type|QN] '=>' newSchName=ID ';';
 
 RenameVariable:
-	'rename' variable=[avroIDL::Field | QN] '=>' newVarName=ID ';'
-;
+	'rename' variable=[avroIDL::Field|QN] '=>' newVarName=ID ';';
 
 RenameEnum:
-	'rename' oldName=ID '=>' newEnumName=ID ';'
-;
+	'rename' oldName=ID '=>' newEnumName=ID ';';
 
 ChangeDefValue:
-	'set_val' field=[avroIDL::Field | QN] '=>' newVal=Value ';'
-;
+	'set_val' field=[avroIDL::Field|QN] '=>' newVal=Value ';';
 
 ChangeType:
-	'set_type' field=[avroIDL::Field | QN] '=>' newType=VARIABLE_TYPE ';'
-;
+	'set_type' field=[avroIDL::Field|QN] '=>' newType=VARIABLE_TYPE ';';
 
+RemoveArrayValue:
+	'remove' array=[avroIDL::Field] '=>' valueToRemove=Value;
+
+RemoveArrayValueAtIndex:
+	'remove.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+
+AddValueToArray:
+	'add.at' '(' index=INT ')' array=[avroIDL::Field] ';';
 
 Field:
-	PrimitiveTypeField | CustomTypeField
-;
+	annotations+=Annotation* fieldType=(PrimitiveTypeField | CustomTypeField | ComplexTypeField);
 
 CustomTypeField:
-	type=[avroIDL::Type | QN] varName=ID ';'
-;
+	type=CustomType nameAnnotations+=Annotation* varName=ID ';';
 
 PrimitiveTypeField:
-	type=VARIABLE_TYPE varName=ID ('=' value=Value)?
-;
+	type=PrimitiveType nameAnnotations+=Annotation* varName=ID ('=' value=Value)?;
+
+ComplexTypeField:
+	type=(ArrayTypeField) nameAnnotations+=Annotation* varName=ID ('=' value=Array)?;
+
+ArrayTypeField:
+	'array' '<' type=AnnotatedTypes '>';
+
+AnnotatedTypes:
+	annotataions+=Annotation* type=Types;
+
+Types:
+	CustomType | PrimitiveType | ArrayTypeField;
+
+CustomType:
+	target=[avroIDL::Type|QN];
+
+PrimitiveType:
+	target=VARIABLE_TYPE;
+
+Annotation:
+	name=AN ('(' values=Values ')')?;
+
+Values:
+	{Values}
+	(value+=Array | value+=Value (',' value+=Value)*)*;
+
+Array:
+	=> '[' values=Values ']';
 
 Value:
-	FloatValue | IntValue | StringValue | BooleanValue | Null
-;
+	FloatValue | IntValue | StringValue | BooleanValue | Null;
 
 FloatValue:
-	val=Real
-;
+	val=Real;
 
 StringValue:
-	val=ID
-;
+	val=ID;
 
 IntValue:
-	val=INT
-;
+	val=(INT | NegativeInt);
 
 Null:
-	val='null'
-;
+	val='null';
 
 BooleanValue:
-	val=Boolean
-;
+	val=Boolean;
 
-Real returns ecore::EFloat: '-'? INT '.' (INT);
-Boolean returns ecore::EBoolean: 'true' | 'false';
+Real returns ecore::EFloat:
+	'-'? INT '.' (INT);
+
+Boolean returns ecore::EBoolean:
+	'true' | 'false';
+
+NegativeInt returns ecore::EInt:
+	'-' INT;
 
 SCHEMA_TYPE:
-	'record'	|
-	'enum'
-;
+	'record' |
+	'error' |
+	'enum';
 
 VARIABLE_TYPE:
-	'int'		|
-	'double'	|
-	'string'	|
-	'long'		|
-	'boolean'	|
-	'float'
-;
+	'int' |
+	'double' |
+	'string' |
+	'long' |
+	'boolean' |
+	'float';
 
 QN:
-	ID ('.' ID)*
-;
+	ID ('.' ID)*;
+
+AN:
+	'@' ID ('-' ID)*;

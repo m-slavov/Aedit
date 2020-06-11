@@ -34,7 +34,7 @@ Workflow {
 
 		language = StandardLanguage {
 			name = "org.aedit.Aedit"
-			fileExtensions = "aedit"
+			fileExtensions = "aedit, smap"
 //			referencedResource = "platform:/resource/org.xtext.example.avdlclipse/model/generated/AvdlClipse.genmodel"
 			referencedResource = "platform:/resource/avroclipse/model/generated/AvroIDL.genmodel"
 			

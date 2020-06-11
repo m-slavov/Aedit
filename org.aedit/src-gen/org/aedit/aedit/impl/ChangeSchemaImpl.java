@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.aedit.aedit.impl.ChangeSchemaImpl#getSchemaType <em>Schema Type</em>}</li>
  *   <li>{@link org.aedit.aedit.impl.ChangeSchemaImpl#getSchema <em>Schema</em>}</li>
  *   <li>{@link org.aedit.aedit.impl.ChangeSchemaImpl#getRules <em>Rules</em>}</li>
  * </ul>
@@ -40,6 +41,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ChangeSchemaImpl extends GenericRuleImpl implements ChangeSchema
 {
+  /**
+   * The default value of the '{@link #getSchemaType() <em>Schema Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSchemaType()
+   * @generated
+   * @ordered
+   */
+  protected static final String SCHEMA_TYPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSchemaType() <em>Schema Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSchemaType()
+   * @generated
+   * @ordered
+   */
+  protected String schemaType = SCHEMA_TYPE_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getSchema() <em>Schema</em>}' reference.
    * <!-- begin-user-doc -->
@@ -79,6 +100,31 @@ public class ChangeSchemaImpl extends GenericRuleImpl implements ChangeSchema
   protected EClass eStaticClass()
   {
     return AeditPackage.Literals.CHANGE_SCHEMA;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getSchemaType()
+  {
+    return schemaType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setSchemaType(String newSchemaType)
+  {
+    String oldSchemaType = schemaType;
+    schemaType = newSchemaType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.CHANGE_SCHEMA__SCHEMA_TYPE, oldSchemaType, schemaType));
   }
 
   /**
@@ -167,6 +213,8 @@ public class ChangeSchemaImpl extends GenericRuleImpl implements ChangeSchema
   {
     switch (featureID)
     {
+      case AeditPackage.CHANGE_SCHEMA__SCHEMA_TYPE:
+        return getSchemaType();
       case AeditPackage.CHANGE_SCHEMA__SCHEMA:
         if (resolve) return getSchema();
         return basicGetSchema();
@@ -187,6 +235,9 @@ public class ChangeSchemaImpl extends GenericRuleImpl implements ChangeSchema
   {
     switch (featureID)
     {
+      case AeditPackage.CHANGE_SCHEMA__SCHEMA_TYPE:
+        setSchemaType((String)newValue);
+        return;
       case AeditPackage.CHANGE_SCHEMA__SCHEMA:
         setSchema((Type)newValue);
         return;
@@ -208,6 +259,9 @@ public class ChangeSchemaImpl extends GenericRuleImpl implements ChangeSchema
   {
     switch (featureID)
     {
+      case AeditPackage.CHANGE_SCHEMA__SCHEMA_TYPE:
+        setSchemaType(SCHEMA_TYPE_EDEFAULT);
+        return;
       case AeditPackage.CHANGE_SCHEMA__SCHEMA:
         setSchema((Type)null);
         return;
@@ -228,12 +282,31 @@ public class ChangeSchemaImpl extends GenericRuleImpl implements ChangeSchema
   {
     switch (featureID)
     {
+      case AeditPackage.CHANGE_SCHEMA__SCHEMA_TYPE:
+        return SCHEMA_TYPE_EDEFAULT == null ? schemaType != null : !SCHEMA_TYPE_EDEFAULT.equals(schemaType);
       case AeditPackage.CHANGE_SCHEMA__SCHEMA:
         return schema != null;
       case AeditPackage.CHANGE_SCHEMA__RULES:
         return rules != null && !rules.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (schemaType: ");
+    result.append(schemaType);
+    result.append(')');
+    return result.toString();
   }
 
 } //ChangeSchemaImpl

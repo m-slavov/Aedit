@@ -5,7 +5,7 @@
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" complianceLevel="8.0"
     copyrightFields="false" runtimeVersion="2.20" usedGenPackages="platform:/resource/avroclipse/model/generated/AvroIDL.genmodel#//avroIDL">
   <genPackages prefix="Aedit" basePackage="org.aedit" disposableProviderFactory="true"
-      fileExtensions="aedit" ecorePackage="Aedit.ecore#/">
+      fileExtensions="aedit,smap" ecorePackage="Aedit.ecore#/">
     <genClasses ecoreClass="Aedit.ecore#//Model">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//Model/ruleDeclarations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//Model/ruleMaps"/>
@@ -30,8 +30,38 @@
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//GenericRule"/>
     <genClasses ecoreClass="Aedit.ecore#//SchemaRule"/>
+    <genClasses ecoreClass="Aedit.ecore#//ArrayEditRules">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//ArrayEditRules/array"/>
+    </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//EnumRule"/>
+    <genClasses ecoreClass="Aedit.ecore#//AddAnnotationToSchema">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//AddAnnotationToSchema/schemaType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddAnnotationToSchema/schema"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddAnnotationToSchema/annotation"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//AddAnnotationToField">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddAnnotationToField/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddAnnotationToField/annotation"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//AddNameAnnotationToField">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddNameAnnotationToField/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddNameAnnotationToField/annotation"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//RemoveAnnotationFromSchema">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//RemoveAnnotationFromSchema/schemaType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveAnnotationFromSchema/schema"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveAnnotationFromSchema/annotationToRemove"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//RemoveAnnotationFromField">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveAnnotationFromField/variable"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveAnnotationFromField/annotationToRemove"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//RemoveNameAnnotationFromField">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveNameAnnotationFromField/variable"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveNameAnnotationFromField/annotationToRemove"/>
+    </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//ChangeSchema">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//ChangeSchema/schemaType"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//ChangeSchema/schema"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//ChangeSchema/rules"/>
     </genClasses>
@@ -46,6 +76,10 @@
     <genClasses ecoreClass="Aedit.ecore#//AddRecord">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//AddRecord/recordName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddRecord/fields"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//AddError">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//AddError/errorName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddError/fields"/>
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//AddEnumeration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//AddEnumeration/enumName"/>
@@ -90,15 +124,59 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//ChangeType/field"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//ChangeType/newType"/>
     </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//RemoveArrayValue">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveArrayValue/valueToRemove"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//RemoveArrayValueAtIndex">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//RemoveArrayValueAtIndex/index"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//AddValueToArray">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//AddValueToArray/index"/>
+    </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//Field">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//Field/varName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//Field/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//Field/fieldType"/>
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//CustomTypeField">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//CustomTypeField/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//CustomTypeField/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//CustomTypeField/nameAnnotations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//CustomTypeField/varName"/>
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//PrimitiveTypeField">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//PrimitiveTypeField/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//PrimitiveTypeField/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//PrimitiveTypeField/nameAnnotations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//PrimitiveTypeField/varName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//PrimitiveTypeField/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//ComplexTypeField">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//ComplexTypeField/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//ComplexTypeField/nameAnnotations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//ComplexTypeField/varName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//ComplexTypeField/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//ArrayTypeField">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//ArrayTypeField/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//AnnotatedTypes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//AnnotatedTypes/annotataions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//AnnotatedTypes/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//Types"/>
+    <genClasses ecoreClass="Aedit.ecore#//CustomType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//CustomType/target"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//PrimitiveType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//PrimitiveType/target"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//Annotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//Annotation/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//Annotation/values"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//Values">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//Values/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//Array">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//Array/values"/>
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//Value"/>
     <genClasses ecoreClass="Aedit.ecore#//FloatValue">

@@ -1,6 +1,15 @@
 package HelperClass
 
 //import org.xtext.example.mydsl.myAvdl.AvroIDLFactory
+
+import avroclipse.avroIDL.Annotation
+import avroclipse.avroIDL.AvroIDLFile
+import avroclipse.avroIDL.EnumType
+import avroclipse.avroIDL.ErrorType
+import avroclipse.avroIDL.Field
+import avroclipse.avroIDL.RecordType
+import avroclipse.avroIDL.Type
+import avroclipse.avroIDL.TypeDef
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
@@ -9,116 +18,12 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import java.util.Map
-import org.aedit.aedit.BooleanValue
-import org.aedit.aedit.Field
-import org.aedit.aedit.FloatValue
-import org.aedit.aedit.IntValue
-import org.aedit.aedit.StringValue
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.EcoreUtil2
-import avroclipse.avroIDL.AvroIDLFactory
-import avroclipse.avroIDL.AvroIDLFile
-import avroclipse.avroIDL.EnumType
-import avroclipse.avroIDL.RecordType
-import avroclipse.avroIDL.TypeDef
-import avroclipse.avroIDL.Value
-import org.aedit.aedit.PrimitiveTypeField
-import org.aedit.aedit.CustomTypeField
 
 class HelperClass {
 
-	private final static String AVROCLIPSE_GRAMMAR_EXTENSION = "avdl"
-
-	def static createField(Field field) {
-
-		if (field instanceof PrimitiveTypeField) {
-			return createPrimitiveTypeField(field)
-		} else if (field instanceof CustomTypeField) {
-			return createCustomTypeField(field)
-		}
-
-	}
-
-	def private static createPrimitiveTypeField(PrimitiveTypeField field) {
-		var newField = AvroIDLFactory.eINSTANCE.createField => [
-			name = field.varName
-			type = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink => [
-				target = field.type
-			]
-
-			if (field.value !== null) {
-
-				var Value defValue;
-				switch (field.type) {
-					case 'int':
-						defValue = AvroIDLFactory.eINSTANCE.createIntValue => [
-							^val = (field.value as IntValue).^val
-						]
-					case 'double':
-						defValue = AvroIDLFactory.eINSTANCE.createFloatValue => [
-							^val = (field.value as FloatValue).^val
-						]
-					case 'string':
-						defValue = AvroIDLFactory.eINSTANCE.createStringValue => [
-							^val = (field.value as StringValue).^val
-						]
-					case 'long':
-						defValue = AvroIDLFactory.eINSTANCE.createIntValue => [
-							^val = (field.value as IntValue).^val
-						]
-					case 'float':
-						defValue = AvroIDLFactory.eINSTANCE.createFloatValue => [
-							^val = (field.value as FloatValue).^val
-						]
-					case 'boolean':
-						defValue = AvroIDLFactory.eINSTANCE.createBooleanValue => [
-							^val = (field.value as BooleanValue).^val
-						]
-				}
-				^default = defValue
-			}
-		]
-
-		return newField
-	}
-
-	def private static createCustomTypeField(CustomTypeField field) {
-		var newField = AvroIDLFactory.eINSTANCE.createField => [
-			name = field.varName
-			type = AvroIDLFactory.eINSTANCE.createCustomTypeLink => [
-				target = field.type
-			]
-		]
-
-		return newField
-	}
-
-	def static boolean tryParseInt(String value) {
-		try {
-			Integer.parseInt(value)
-			return true;
-		} catch (Exception exception) {
-			return false;
-		}
-	}
-
-	def static boolean tryParseFloat(String value) {
-		try {
-			Float.parseFloat(value)
-			return true;
-		} catch (Exception exception) {
-			return false;
-		}
-	}
-
-	def static boolean tryParseLong(String value) {
-		try {
-			Long.parseLong(value)
-			return true;
-		} catch (Exception exception) {
-			return false;
-		}
-	}
+	final static String AVROCLIPSE_GRAMMAR_EXTENSION = "avdl"
 
 	def static Object deepCopy(Object object) {
 		try {
@@ -134,7 +39,7 @@ class HelperClass {
 		}
 	}
 
-	private static Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
+	static Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
 
 	def static getAvroFiles(Resource resource) {
 
@@ -174,6 +79,104 @@ class HelperClass {
 		}
 
 		return existingVariables
+	}
+
+	def static removeAnnotationFromSchema(TypeDef typeDef, Annotation annotationToRemove) {
+		val List<Annotation> found = new ArrayList<Annotation>()
+
+		for (annotation : typeDef.annotations) {
+			if (annotation.name.equals(annotationToRemove.name)) {
+				found.add(annotation)
+			}
+		}
+
+		typeDef.annotations.removeAll(found)
+	}
+
+	def static removeAnnotationFromField(Field field, Annotation annotationToRemove) {
+		val List<Annotation> found = new ArrayList<Annotation>()
+
+		for (annotation : field.annotations) {
+			if (annotation.name.equals(annotationToRemove.name)) {
+				found.add(annotation)
+			}
+		}
+
+		field.annotations.removeAll(found)
+	}
+
+	def static removeNameAnnotationFromField(Field field, Annotation annotationToRemove) {
+		val List<Annotation> found = new ArrayList<Annotation>()
+
+		for (annotation : field.nameAnnotations) {
+			if (annotation.name.equals(annotationToRemove.name)) {
+				found.add(annotation)
+			}
+		}
+
+		field.nameAnnotations.removeAll(found)
+	}
+
+	def static getField(String protocolName, String schemaName, String fieldName, Map<String, AvroIDLFile> avdlFiles) {
+		val typeDefs = avdlFiles.get(protocolName).elements.filter(TypeDef).toList
+
+		for (typeDef : typeDefs) {
+
+			val schema = typeDef.type
+			if (schema instanceof RecordType) {
+				if (schema.name.equals(schemaName)) {
+					for (field : schema.fields) {
+						if (field.name.equals(fieldName)) {
+							return field
+						}
+					}
+				}
+			} else if (schema instanceof ErrorType) {
+				if (schema.name.equals(schemaName)) {
+					for (field : schema.fields) {
+						if (field.name.equals(fieldName)) {
+							return field
+						}
+					}
+				}
+			}
+
+		}
+	}
+
+	def static getFieldFromSchema(Type schema, String fieldName) {
+		if (schema instanceof RecordType) {
+			for (field : schema.fields) {
+				if (field.name.equals(fieldName)) {
+					return field
+				}
+			}
+		} else if (schema instanceof ErrorType) {
+			for (field : schema.fields) {
+				if (field.name.equals(fieldName)) {
+					return field
+				}
+			}
+		}
+	}
+
+	def static getSchema(String protocolName, String schemaName, Map<String, AvroIDLFile> avdlFiles) {
+		val typeDefs = avdlFiles.get(protocolName).elements.filter(TypeDef).toList
+
+		for (typeDef : typeDefs) {
+
+			val schema = typeDef.type
+			if (schema instanceof RecordType) {
+				if (schema.name.equals(schemaName)) {
+					return schema
+				}
+			} else if (schema instanceof ErrorType) {
+				if (schema.name.equals(schemaName)) {
+					return schema
+				}
+			}
+
+		}
 	}
 
 }

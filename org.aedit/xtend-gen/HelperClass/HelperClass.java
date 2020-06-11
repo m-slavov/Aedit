@@ -1,16 +1,11 @@
 package HelperClass;
 
-import avroclipse.avroIDL.AvroIDLFactory;
+import avroclipse.avroIDL.Annotation;
 import avroclipse.avroIDL.AvroIDLFile;
-import avroclipse.avroIDL.BooleanValue;
-import avroclipse.avroIDL.CustomTypeLink;
 import avroclipse.avroIDL.EnumType;
+import avroclipse.avroIDL.ErrorType;
 import avroclipse.avroIDL.Field;
-import avroclipse.avroIDL.FloatValue;
-import avroclipse.avroIDL.IntValue;
-import avroclipse.avroIDL.PrimativeTypeLink;
 import avroclipse.avroIDL.RecordType;
-import avroclipse.avroIDL.StringValue;
 import avroclipse.avroIDL.Type;
 import avroclipse.avroIDL.TypeDef;
 import com.google.common.collect.Iterables;
@@ -22,165 +17,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.aedit.aedit.CustomTypeField;
-import org.aedit.aedit.PrimitiveTypeField;
-import org.aedit.aedit.Value;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.ObjectExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class HelperClass {
   private static final String AVROCLIPSE_GRAMMAR_EXTENSION = "avdl";
-  
-  public static Field createField(final org.aedit.aedit.Field field) {
-    if ((field instanceof PrimitiveTypeField)) {
-      return HelperClass.createPrimitiveTypeField(((PrimitiveTypeField)field));
-    } else {
-      if ((field instanceof CustomTypeField)) {
-        return HelperClass.createCustomTypeField(((CustomTypeField)field));
-      }
-    }
-    return null;
-  }
-  
-  private static Field createPrimitiveTypeField(final PrimitiveTypeField field) {
-    Field _createField = AvroIDLFactory.eINSTANCE.createField();
-    final Procedure1<Field> _function = (Field it) -> {
-      it.setName(field.getVarName());
-      PrimativeTypeLink _createPrimativeTypeLink = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink();
-      final Procedure1<PrimativeTypeLink> _function_1 = (PrimativeTypeLink it_1) -> {
-        it_1.setTarget(field.getType());
-      };
-      PrimativeTypeLink _doubleArrow = ObjectExtensions.<PrimativeTypeLink>operator_doubleArrow(_createPrimativeTypeLink, _function_1);
-      it.setType(_doubleArrow);
-      Value _value = field.getValue();
-      boolean _tripleNotEquals = (_value != null);
-      if (_tripleNotEquals) {
-        avroclipse.avroIDL.Value defValue = null;
-        String _type = field.getType();
-        if (_type != null) {
-          switch (_type) {
-            case "int":
-              IntValue _createIntValue = AvroIDLFactory.eINSTANCE.createIntValue();
-              final Procedure1<IntValue> _function_2 = (IntValue it_1) -> {
-                Value _value_1 = field.getValue();
-                it_1.setVal(((org.aedit.aedit.IntValue) _value_1).getVal());
-              };
-              IntValue _doubleArrow_1 = ObjectExtensions.<IntValue>operator_doubleArrow(_createIntValue, _function_2);
-              defValue = _doubleArrow_1;
-              break;
-            case "double":
-              FloatValue _createFloatValue = AvroIDLFactory.eINSTANCE.createFloatValue();
-              final Procedure1<FloatValue> _function_3 = (FloatValue it_1) -> {
-                Value _value_1 = field.getValue();
-                it_1.setVal(((org.aedit.aedit.FloatValue) _value_1).getVal());
-              };
-              FloatValue _doubleArrow_2 = ObjectExtensions.<FloatValue>operator_doubleArrow(_createFloatValue, _function_3);
-              defValue = _doubleArrow_2;
-              break;
-            case "string":
-              StringValue _createStringValue = AvroIDLFactory.eINSTANCE.createStringValue();
-              final Procedure1<StringValue> _function_4 = (StringValue it_1) -> {
-                Value _value_1 = field.getValue();
-                it_1.setVal(((org.aedit.aedit.StringValue) _value_1).getVal());
-              };
-              StringValue _doubleArrow_3 = ObjectExtensions.<StringValue>operator_doubleArrow(_createStringValue, _function_4);
-              defValue = _doubleArrow_3;
-              break;
-            case "long":
-              IntValue _createIntValue_1 = AvroIDLFactory.eINSTANCE.createIntValue();
-              final Procedure1<IntValue> _function_5 = (IntValue it_1) -> {
-                Value _value_1 = field.getValue();
-                it_1.setVal(((org.aedit.aedit.IntValue) _value_1).getVal());
-              };
-              IntValue _doubleArrow_4 = ObjectExtensions.<IntValue>operator_doubleArrow(_createIntValue_1, _function_5);
-              defValue = _doubleArrow_4;
-              break;
-            case "float":
-              FloatValue _createFloatValue_1 = AvroIDLFactory.eINSTANCE.createFloatValue();
-              final Procedure1<FloatValue> _function_6 = (FloatValue it_1) -> {
-                Value _value_1 = field.getValue();
-                it_1.setVal(((org.aedit.aedit.FloatValue) _value_1).getVal());
-              };
-              FloatValue _doubleArrow_5 = ObjectExtensions.<FloatValue>operator_doubleArrow(_createFloatValue_1, _function_6);
-              defValue = _doubleArrow_5;
-              break;
-            case "boolean":
-              BooleanValue _createBooleanValue = AvroIDLFactory.eINSTANCE.createBooleanValue();
-              final Procedure1<BooleanValue> _function_7 = (BooleanValue it_1) -> {
-                Value _value_1 = field.getValue();
-                it_1.setVal(((org.aedit.aedit.BooleanValue) _value_1).isVal());
-              };
-              BooleanValue _doubleArrow_6 = ObjectExtensions.<BooleanValue>operator_doubleArrow(_createBooleanValue, _function_7);
-              defValue = _doubleArrow_6;
-              break;
-          }
-        }
-        it.setDefault(defValue);
-      }
-    };
-    Field newField = ObjectExtensions.<Field>operator_doubleArrow(_createField, _function);
-    return newField;
-  }
-  
-  private static Field createCustomTypeField(final CustomTypeField field) {
-    Field _createField = AvroIDLFactory.eINSTANCE.createField();
-    final Procedure1<Field> _function = (Field it) -> {
-      it.setName(field.getVarName());
-      CustomTypeLink _createCustomTypeLink = AvroIDLFactory.eINSTANCE.createCustomTypeLink();
-      final Procedure1<CustomTypeLink> _function_1 = (CustomTypeLink it_1) -> {
-        it_1.setTarget(field.getType());
-      };
-      CustomTypeLink _doubleArrow = ObjectExtensions.<CustomTypeLink>operator_doubleArrow(_createCustomTypeLink, _function_1);
-      it.setType(_doubleArrow);
-    };
-    Field newField = ObjectExtensions.<Field>operator_doubleArrow(_createField, _function);
-    return newField;
-  }
-  
-  public static boolean tryParseInt(final String value) {
-    try {
-      Integer.parseInt(value);
-      return true;
-    } catch (final Throwable _t) {
-      if (_t instanceof Exception) {
-        return false;
-      } else {
-        throw Exceptions.sneakyThrow(_t);
-      }
-    }
-  }
-  
-  public static boolean tryParseFloat(final String value) {
-    try {
-      Float.parseFloat(value);
-      return true;
-    } catch (final Throwable _t) {
-      if (_t instanceof Exception) {
-        return false;
-      } else {
-        throw Exceptions.sneakyThrow(_t);
-      }
-    }
-  }
-  
-  public static boolean tryParseLong(final String value) {
-    try {
-      Long.parseLong(value);
-      return true;
-    } catch (final Throwable _t) {
-      if (_t instanceof Exception) {
-        return false;
-      } else {
-        throw Exceptions.sneakyThrow(_t);
-      }
-    }
-  }
   
   public static Object deepCopy(final Object object) {
     try {
@@ -268,5 +114,134 @@ public class HelperClass {
       }
     }
     return existingVariables;
+  }
+  
+  public static boolean removeAnnotationFromSchema(final TypeDef typeDef, final Annotation annotationToRemove) {
+    boolean _xblockexpression = false;
+    {
+      final List<Annotation> found = new ArrayList<Annotation>();
+      EList<Annotation> _annotations = typeDef.getAnnotations();
+      for (final Annotation annotation : _annotations) {
+        boolean _equals = annotation.getName().equals(annotationToRemove.getName());
+        if (_equals) {
+          found.add(annotation);
+        }
+      }
+      _xblockexpression = typeDef.getAnnotations().removeAll(found);
+    }
+    return _xblockexpression;
+  }
+  
+  public static boolean removeAnnotationFromField(final Field field, final Annotation annotationToRemove) {
+    boolean _xblockexpression = false;
+    {
+      final List<Annotation> found = new ArrayList<Annotation>();
+      EList<Annotation> _annotations = field.getAnnotations();
+      for (final Annotation annotation : _annotations) {
+        boolean _equals = annotation.getName().equals(annotationToRemove.getName());
+        if (_equals) {
+          found.add(annotation);
+        }
+      }
+      _xblockexpression = field.getAnnotations().removeAll(found);
+    }
+    return _xblockexpression;
+  }
+  
+  public static boolean removeNameAnnotationFromField(final Field field, final Annotation annotationToRemove) {
+    boolean _xblockexpression = false;
+    {
+      final List<Annotation> found = new ArrayList<Annotation>();
+      EList<Annotation> _nameAnnotations = field.getNameAnnotations();
+      for (final Annotation annotation : _nameAnnotations) {
+        boolean _equals = annotation.getName().equals(annotationToRemove.getName());
+        if (_equals) {
+          found.add(annotation);
+        }
+      }
+      _xblockexpression = field.getNameAnnotations().removeAll(found);
+    }
+    return _xblockexpression;
+  }
+  
+  public static Field getField(final String protocolName, final String schemaName, final String fieldName, final Map<String, AvroIDLFile> avdlFiles) {
+    final List<TypeDef> typeDefs = IterableExtensions.<TypeDef>toList(Iterables.<TypeDef>filter(avdlFiles.get(protocolName).getElements(), TypeDef.class));
+    for (final TypeDef typeDef : typeDefs) {
+      {
+        final Type schema = typeDef.getType();
+        if ((schema instanceof RecordType)) {
+          boolean _equals = ((RecordType)schema).getName().equals(schemaName);
+          if (_equals) {
+            EList<Field> _fields = ((RecordType)schema).getFields();
+            for (final Field field : _fields) {
+              boolean _equals_1 = field.getName().equals(fieldName);
+              if (_equals_1) {
+                return field;
+              }
+            }
+          }
+        } else {
+          if ((schema instanceof ErrorType)) {
+            boolean _equals_2 = ((ErrorType)schema).getName().equals(schemaName);
+            if (_equals_2) {
+              EList<Field> _fields_1 = ((ErrorType)schema).getFields();
+              for (final Field field_1 : _fields_1) {
+                boolean _equals_3 = field_1.getName().equals(fieldName);
+                if (_equals_3) {
+                  return field_1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+  
+  public static Field getFieldFromSchema(final Type schema, final String fieldName) {
+    if ((schema instanceof RecordType)) {
+      EList<Field> _fields = ((RecordType)schema).getFields();
+      for (final Field field : _fields) {
+        boolean _equals = field.getName().equals(fieldName);
+        if (_equals) {
+          return field;
+        }
+      }
+    } else {
+      if ((schema instanceof ErrorType)) {
+        EList<Field> _fields_1 = ((ErrorType)schema).getFields();
+        for (final Field field_1 : _fields_1) {
+          boolean _equals_1 = field_1.getName().equals(fieldName);
+          if (_equals_1) {
+            return field_1;
+          }
+        }
+      }
+    }
+    return null;
+  }
+  
+  public static Type getSchema(final String protocolName, final String schemaName, final Map<String, AvroIDLFile> avdlFiles) {
+    final List<TypeDef> typeDefs = IterableExtensions.<TypeDef>toList(Iterables.<TypeDef>filter(avdlFiles.get(protocolName).getElements(), TypeDef.class));
+    for (final TypeDef typeDef : typeDefs) {
+      {
+        final Type schema = typeDef.getType();
+        if ((schema instanceof RecordType)) {
+          boolean _equals = ((RecordType)schema).getName().equals(schemaName);
+          if (_equals) {
+            return schema;
+          }
+        } else {
+          if ((schema instanceof ErrorType)) {
+            boolean _equals_1 = ((ErrorType)schema).getName().equals(schemaName);
+            if (_equals_1) {
+              return schema;
+            }
+          }
+        }
+      }
+    }
+    return null;
   }
 }

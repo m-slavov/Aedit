@@ -122,10 +122,66 @@ public class AeditSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AeditPackage.ARRAY_EDIT_RULES:
+      {
+        ArrayEditRules arrayEditRules = (ArrayEditRules)theEObject;
+        T result = caseArrayEditRules(arrayEditRules);
+        if (result == null) result = caseSchemaRule(arrayEditRules);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AeditPackage.ENUM_RULE:
       {
         EnumRule enumRule = (EnumRule)theEObject;
         T result = caseEnumRule(enumRule);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ADD_ANNOTATION_TO_SCHEMA:
+      {
+        AddAnnotationToSchema addAnnotationToSchema = (AddAnnotationToSchema)theEObject;
+        T result = caseAddAnnotationToSchema(addAnnotationToSchema);
+        if (result == null) result = caseGenericRule(addAnnotationToSchema);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ADD_ANNOTATION_TO_FIELD:
+      {
+        AddAnnotationToField addAnnotationToField = (AddAnnotationToField)theEObject;
+        T result = caseAddAnnotationToField(addAnnotationToField);
+        if (result == null) result = caseSchemaRule(addAnnotationToField);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ADD_NAME_ANNOTATION_TO_FIELD:
+      {
+        AddNameAnnotationToField addNameAnnotationToField = (AddNameAnnotationToField)theEObject;
+        T result = caseAddNameAnnotationToField(addNameAnnotationToField);
+        if (result == null) result = caseSchemaRule(addNameAnnotationToField);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.REMOVE_ANNOTATION_FROM_SCHEMA:
+      {
+        RemoveAnnotationFromSchema removeAnnotationFromSchema = (RemoveAnnotationFromSchema)theEObject;
+        T result = caseRemoveAnnotationFromSchema(removeAnnotationFromSchema);
+        if (result == null) result = caseGenericRule(removeAnnotationFromSchema);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.REMOVE_ANNOTATION_FROM_FIELD:
+      {
+        RemoveAnnotationFromField removeAnnotationFromField = (RemoveAnnotationFromField)theEObject;
+        T result = caseRemoveAnnotationFromField(removeAnnotationFromField);
+        if (result == null) result = caseSchemaRule(removeAnnotationFromField);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.REMOVE_NAME_ANNOTATION_FROM_FIELD:
+      {
+        RemoveNameAnnotationFromField removeNameAnnotationFromField = (RemoveNameAnnotationFromField)theEObject;
+        T result = caseRemoveNameAnnotationFromField(removeNameAnnotationFromField);
+        if (result == null) result = caseSchemaRule(removeNameAnnotationFromField);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -159,6 +215,15 @@ public class AeditSwitch<T> extends Switch<T>
         T result = caseAddRecord(addRecord);
         if (result == null) result = caseAdd(addRecord);
         if (result == null) result = caseGenericRule(addRecord);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ADD_ERROR:
+      {
+        AddError addError = (AddError)theEObject;
+        T result = caseAddError(addError);
+        if (result == null) result = caseAdd(addError);
+        if (result == null) result = caseGenericRule(addError);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -251,6 +316,33 @@ public class AeditSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AeditPackage.REMOVE_ARRAY_VALUE:
+      {
+        RemoveArrayValue removeArrayValue = (RemoveArrayValue)theEObject;
+        T result = caseRemoveArrayValue(removeArrayValue);
+        if (result == null) result = caseArrayEditRules(removeArrayValue);
+        if (result == null) result = caseSchemaRule(removeArrayValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX:
+      {
+        RemoveArrayValueAtIndex removeArrayValueAtIndex = (RemoveArrayValueAtIndex)theEObject;
+        T result = caseRemoveArrayValueAtIndex(removeArrayValueAtIndex);
+        if (result == null) result = caseArrayEditRules(removeArrayValueAtIndex);
+        if (result == null) result = caseSchemaRule(removeArrayValueAtIndex);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ADD_VALUE_TO_ARRAY:
+      {
+        AddValueToArray addValueToArray = (AddValueToArray)theEObject;
+        T result = caseAddValueToArray(addValueToArray);
+        if (result == null) result = caseArrayEditRules(addValueToArray);
+        if (result == null) result = caseSchemaRule(addValueToArray);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AeditPackage.FIELD:
       {
         Field field = (Field)theEObject;
@@ -262,7 +354,6 @@ public class AeditSwitch<T> extends Switch<T>
       {
         CustomTypeField customTypeField = (CustomTypeField)theEObject;
         T result = caseCustomTypeField(customTypeField);
-        if (result == null) result = caseField(customTypeField);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -270,7 +361,72 @@ public class AeditSwitch<T> extends Switch<T>
       {
         PrimitiveTypeField primitiveTypeField = (PrimitiveTypeField)theEObject;
         T result = casePrimitiveTypeField(primitiveTypeField);
-        if (result == null) result = caseField(primitiveTypeField);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.COMPLEX_TYPE_FIELD:
+      {
+        ComplexTypeField complexTypeField = (ComplexTypeField)theEObject;
+        T result = caseComplexTypeField(complexTypeField);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ARRAY_TYPE_FIELD:
+      {
+        ArrayTypeField arrayTypeField = (ArrayTypeField)theEObject;
+        T result = caseArrayTypeField(arrayTypeField);
+        if (result == null) result = caseTypes(arrayTypeField);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ANNOTATED_TYPES:
+      {
+        AnnotatedTypes annotatedTypes = (AnnotatedTypes)theEObject;
+        T result = caseAnnotatedTypes(annotatedTypes);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.TYPES:
+      {
+        Types types = (Types)theEObject;
+        T result = caseTypes(types);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.CUSTOM_TYPE:
+      {
+        CustomType customType = (CustomType)theEObject;
+        T result = caseCustomType(customType);
+        if (result == null) result = caseTypes(customType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.PRIMITIVE_TYPE:
+      {
+        PrimitiveType primitiveType = (PrimitiveType)theEObject;
+        T result = casePrimitiveType(primitiveType);
+        if (result == null) result = caseTypes(primitiveType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ANNOTATION:
+      {
+        Annotation annotation = (Annotation)theEObject;
+        T result = caseAnnotation(annotation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.VALUES:
+      {
+        Values values = (Values)theEObject;
+        T result = caseValues(values);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AeditPackage.ARRAY:
+      {
+        Array array = (Array)theEObject;
+        T result = caseArray(array);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -438,6 +594,22 @@ public class AeditSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Array Edit Rules</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array Edit Rules</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArrayEditRules(ArrayEditRules object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Enum Rule</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -449,6 +621,102 @@ public class AeditSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEnumRule(EnumRule object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Add Annotation To Schema</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Add Annotation To Schema</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAddAnnotationToSchema(AddAnnotationToSchema object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Add Annotation To Field</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Add Annotation To Field</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAddAnnotationToField(AddAnnotationToField object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Add Name Annotation To Field</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Add Name Annotation To Field</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAddNameAnnotationToField(AddNameAnnotationToField object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Remove Annotation From Schema</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Remove Annotation From Schema</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRemoveAnnotationFromSchema(RemoveAnnotationFromSchema object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Remove Annotation From Field</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Remove Annotation From Field</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRemoveAnnotationFromField(RemoveAnnotationFromField object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Remove Name Annotation From Field</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Remove Name Annotation From Field</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRemoveNameAnnotationFromField(RemoveNameAnnotationFromField object)
   {
     return null;
   }
@@ -513,6 +781,22 @@ public class AeditSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAddRecord(AddRecord object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Add Error</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Add Error</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAddError(AddError object)
   {
     return null;
   }
@@ -694,6 +978,54 @@ public class AeditSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Remove Array Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Remove Array Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRemoveArrayValue(RemoveArrayValue object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Remove Array Value At Index</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Remove Array Value At Index</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRemoveArrayValueAtIndex(RemoveArrayValueAtIndex object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Add Value To Array</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Add Value To Array</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAddValueToArray(AddValueToArray object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Field</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -737,6 +1069,150 @@ public class AeditSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePrimitiveTypeField(PrimitiveTypeField object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Complex Type Field</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Complex Type Field</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseComplexTypeField(ComplexTypeField object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Array Type Field</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array Type Field</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArrayTypeField(ArrayTypeField object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Annotated Types</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Annotated Types</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotatedTypes(AnnotatedTypes object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Types</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Types</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTypes(Types object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Custom Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Custom Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCustomType(CustomType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Primitive Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Primitive Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePrimitiveType(PrimitiveType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Annotation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Annotation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotation(Annotation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Values</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Values</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValues(Values object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Array</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArray(Array object)
   {
     return null;
   }

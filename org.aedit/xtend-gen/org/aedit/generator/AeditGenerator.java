@@ -4,35 +4,47 @@
 package org.aedit.generator;
 
 import HelperClass.HelperClass;
+import avroclipse.avroIDL.AnnotatedTypeLink;
+import avroclipse.avroIDL.ArrayFieldType;
 import avroclipse.avroIDL.AvroIDLFactory;
 import avroclipse.avroIDL.AvroIDLFile;
+import avroclipse.avroIDL.CustomTypeLink;
 import avroclipse.avroIDL.EnumType;
+import avroclipse.avroIDL.ErrorType;
 import avroclipse.avroIDL.PrimativeTypeLink;
 import avroclipse.avroIDL.ProtocolElement;
 import avroclipse.avroIDL.RecordType;
-import avroclipse.avroIDL.StringValue;
 import avroclipse.avroIDL.Type;
 import avroclipse.avroIDL.TypeDef;
+import avroclipse.avroIDL.TypeLink;
+import avroclipse.avroIDL.Values;
 import com.google.common.collect.Iterables;
-import java.io.File;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import org.aedit.aedit.Add;
+import org.aedit.aedit.AddAnnotationToField;
+import org.aedit.aedit.AddAnnotationToSchema;
 import org.aedit.aedit.AddEnum;
 import org.aedit.aedit.AddEnumeration;
+import org.aedit.aedit.AddError;
+import org.aedit.aedit.AddNameAnnotationToField;
 import org.aedit.aedit.AddRecord;
 import org.aedit.aedit.AddVariable;
+import org.aedit.aedit.AnnotatedTypes;
+import org.aedit.aedit.Annotation;
+import org.aedit.aedit.Array;
+import org.aedit.aedit.ArrayTypeField;
 import org.aedit.aedit.BooleanValue;
 import org.aedit.aedit.ChangeDefValue;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
 import org.aedit.aedit.ChangeType;
+import org.aedit.aedit.ComplexTypeField;
+import org.aedit.aedit.CustomType;
+import org.aedit.aedit.CustomTypeField;
 import org.aedit.aedit.EnumRule;
 import org.aedit.aedit.Feature;
 import org.aedit.aedit.FeatureMap;
@@ -40,7 +52,13 @@ import org.aedit.aedit.Field;
 import org.aedit.aedit.FloatValue;
 import org.aedit.aedit.GenericRule;
 import org.aedit.aedit.IntValue;
+import org.aedit.aedit.Null;
+import org.aedit.aedit.PrimitiveType;
+import org.aedit.aedit.PrimitiveTypeField;
+import org.aedit.aedit.RemoveAnnotationFromField;
+import org.aedit.aedit.RemoveAnnotationFromSchema;
 import org.aedit.aedit.RemoveEnum;
+import org.aedit.aedit.RemoveNameAnnotationFromField;
 import org.aedit.aedit.RemoveSchema;
 import org.aedit.aedit.RemoveVariable;
 import org.aedit.aedit.RenameEnum;
@@ -49,6 +67,8 @@ import org.aedit.aedit.RenameVariable;
 import org.aedit.aedit.RuleDeclaration;
 import org.aedit.aedit.RuleMap;
 import org.aedit.aedit.SchemaRule;
+import org.aedit.aedit.StringValue;
+import org.aedit.aedit.Types;
 import org.aedit.aedit.Value;
 import org.aedit.generator.Singleton;
 import org.eclipse.emf.common.util.EList;
@@ -61,7 +81,6 @@ import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -120,40 +139,6 @@ public class AeditGenerator extends AbstractGenerator {
       rs.save(null);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  public void myavdl2avdl() {
-    try {
-      final String path = "D:\\School\\runtime-EclipseXtext\\Testbench\\src-gen\\m2m-gen\\";
-      final File dir = new File(path);
-      final File[] directoryListing = dir.listFiles();
-      for (final File file : directoryListing) {
-        {
-          final String newFileName = file.getName().replace("myavdl", "avdl");
-          final File newFile = new File(("D:\\School\\runtime-EclipseXtext\\Testbench\\src-gen\\avdl-gen\\" + newFileName));
-          newFile.createNewFile();
-          String _absolutePath = newFile.getAbsolutePath();
-          final PrintWriter prw = new PrintWriter(_absolutePath);
-          byte[] _readAllBytes = Files.readAllBytes(Paths.get(file.getPath()));
-          String _string = new String(_readAllBytes);
-          prw.println(_string);
-          prw.close();
-        }
-      }
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  public void deleteDir(final File dir) {
-    File[] _listFiles = dir.listFiles();
-    for (final File file : _listFiles) {
-      boolean _isDirectory = file.isDirectory();
-      boolean _not = (!_isDirectory);
-      if (_not) {
-        file.delete();
-      }
     }
   }
   
@@ -218,6 +203,18 @@ public class AeditGenerator extends AbstractGenerator {
         this.compile(((ChangeEnum)genRule));
       }
     }
+    if (!_matched) {
+      if (genRule instanceof AddAnnotationToSchema) {
+        _matched=true;
+        this.compile(((AddAnnotationToSchema)genRule));
+      }
+    }
+    if (!_matched) {
+      if (genRule instanceof RemoveAnnotationFromSchema) {
+        _matched=true;
+        this.compile(((RemoveAnnotationFromSchema)genRule));
+      }
+    }
     return _switchResult;
   }
   
@@ -244,6 +241,16 @@ public class AeditGenerator extends AbstractGenerator {
           if (_equals_1) {
             Type _type_5 = typeDef.getType();
             ((EnumType) _type_5).setName(renameSchema.getNewSchName());
+          }
+        } else {
+          Type _type_6 = typeDef.getType();
+          if ((_type_6 instanceof ErrorType)) {
+            Type _type_7 = typeDef.getType();
+            boolean _equals_2 = ((ErrorType) _type_7).getName().equals(schemaName);
+            if (_equals_2) {
+              Type _type_8 = typeDef.getType();
+              ((ErrorType) _type_8).setName(renameSchema.getNewSchName());
+            }
           }
         }
       }
@@ -275,6 +282,15 @@ public class AeditGenerator extends AbstractGenerator {
             if (_equals_1) {
               this.index = this.protocols.get(protocolName).getElements().indexOf(typeDef);
             }
+          } else {
+            Type _type_4 = typeDef.getType();
+            if ((_type_4 instanceof ErrorType)) {
+              Type _type_5 = typeDef.getType();
+              boolean _equals_2 = ((ErrorType) _type_5).getName().equals(schemaName);
+              if (_equals_2) {
+                this.index = this.protocols.get(protocolName).getElements().indexOf(typeDef);
+              }
+            }
           }
         }
       };
@@ -296,6 +312,12 @@ public class AeditGenerator extends AbstractGenerator {
         this.compile(((AddEnumeration)add));
       }
     }
+    if (!_matched) {
+      if (add instanceof AddError) {
+        _matched=true;
+        this.compile(((AddError)add));
+      }
+    }
   }
   
   public void compile(final AddRecord addRecord) {
@@ -306,13 +328,30 @@ public class AeditGenerator extends AbstractGenerator {
     final Procedure1<RecordType> _function = (RecordType it) -> {
       it.setName(schemaName);
       final Consumer<Field> _function_1 = (Field field) -> {
-        it.getFields().add(HelperClass.createField(field));
+        it.getFields().add(this.createField(field));
       };
       addRecord.getFields().forEach(_function_1);
     };
     RecordType _doubleArrow = ObjectExtensions.<RecordType>operator_doubleArrow(_createRecordType, _function);
     newTypeDef.setType(_doubleArrow);
     this.protocols.get(protocolName).getElements().add(addRecord.getIndex(), newTypeDef);
+  }
+  
+  public void compile(final AddError addError) {
+    final String schemaName = addError.getErrorName();
+    final String protocolName = addError.getNamespace().getName();
+    final TypeDef newTypeDef = AvroIDLFactory.eINSTANCE.createTypeDef();
+    ErrorType _createErrorType = AvroIDLFactory.eINSTANCE.createErrorType();
+    final Procedure1<ErrorType> _function = (ErrorType it) -> {
+      it.setName(schemaName);
+      final Consumer<Field> _function_1 = (Field field) -> {
+        it.getFields().add(this.createField(field));
+      };
+      addError.getFields().forEach(_function_1);
+    };
+    ErrorType _doubleArrow = ObjectExtensions.<ErrorType>operator_doubleArrow(_createErrorType, _function);
+    newTypeDef.setType(_doubleArrow);
+    this.protocols.get(protocolName).getElements().add(addError.getIndex(), newTypeDef);
   }
   
   public void compile(final AddEnumeration addEnumeration) {
@@ -344,11 +383,12 @@ public class AeditGenerator extends AbstractGenerator {
     }
   }
   
-  public void compile(final SchemaRule schemaRule) {
+  public Boolean compile(final SchemaRule schemaRule) {
+    boolean _switchResult = false;
     boolean _matched = false;
     if (schemaRule instanceof RemoveVariable) {
       _matched=true;
-      this.compile(((RemoveVariable)schemaRule));
+      _switchResult = this.compile(((RemoveVariable)schemaRule));
     }
     if (!_matched) {
       if (schemaRule instanceof RenameVariable) {
@@ -374,162 +414,222 @@ public class AeditGenerator extends AbstractGenerator {
         this.compile(((ChangeType)schemaRule));
       }
     }
+    if (!_matched) {
+      if (schemaRule instanceof AddAnnotationToField) {
+        _matched=true;
+        _switchResult = this.execute(((AddAnnotationToField)schemaRule));
+      }
+    }
+    if (!_matched) {
+      if (schemaRule instanceof AddNameAnnotationToField) {
+        _matched=true;
+        _switchResult = this.compile(((AddNameAnnotationToField)schemaRule));
+      }
+    }
+    if (!_matched) {
+      if (schemaRule instanceof RemoveAnnotationFromField) {
+        _matched=true;
+        _switchResult = this.execute(((RemoveAnnotationFromField)schemaRule));
+      }
+    }
+    if (!_matched) {
+      if (schemaRule instanceof RemoveNameAnnotationFromField) {
+        _matched=true;
+        _switchResult = this.compile(((RemoveNameAnnotationFromField)schemaRule));
+      }
+    }
+    return Boolean.valueOf(_switchResult);
   }
   
-  public void compile(final RemoveVariable removeVariable) {
-    final Consumer<TypeDef> _function = (TypeDef typeDef) -> {
-      Type _type = typeDef.getType();
-      if ((_type instanceof RecordType)) {
-        Type _type_1 = typeDef.getType();
-        boolean _equals = ((RecordType) _type_1).getName().equals(this.currentSchema);
-        if (_equals) {
-          Type _type_2 = typeDef.getType();
-          final Predicate<avroclipse.avroIDL.Field> _function_1 = (avroclipse.avroIDL.Field it) -> {
-            return it.getName().equals(removeVariable.getVariable().getName());
-          };
-          ((RecordType) _type_2).getFields().removeIf(_function_1);
+  public boolean compile(final RemoveVariable removeVariable) {
+    boolean _xblockexpression = false;
+    {
+      final Type schema = HelperClass.getSchema(this.currentProtocol, this.currentSchema, this.protocols);
+      final avroclipse.avroIDL.Field field = HelperClass.getFieldFromSchema(schema, removeVariable.getVariable().getName());
+      boolean _switchResult = false;
+      boolean _matched = false;
+      if (schema instanceof RecordType) {
+        _matched=true;
+        _switchResult = ((RecordType)schema).getFields().remove(field);
+      }
+      if (!_matched) {
+        if (schema instanceof ErrorType) {
+          _matched=true;
+          _switchResult = ((ErrorType)schema).getFields().remove(field);
         }
       }
-    };
-    Iterables.<TypeDef>filter(this.protocols.get(this.currentProtocol).getElements(), TypeDef.class).forEach(_function);
+      _xblockexpression = _switchResult;
+    }
+    return _xblockexpression;
   }
   
   public void compile(final RenameVariable renameVariable) {
-    final Consumer<TypeDef> _function = (TypeDef typeDef) -> {
-      Type _type = typeDef.getType();
-      if ((_type instanceof RecordType)) {
-        Type _type_1 = typeDef.getType();
-        boolean _equals = ((RecordType) _type_1).getName().equals(this.currentSchema);
-        if (_equals) {
-          Type _type_2 = typeDef.getType();
-          final Function1<avroclipse.avroIDL.Field, Boolean> _function_1 = (avroclipse.avroIDL.Field it) -> {
-            return Boolean.valueOf(it.getName().equals(renameVariable.getVariable().getName()));
-          };
-          final Consumer<avroclipse.avroIDL.Field> _function_2 = (avroclipse.avroIDL.Field field) -> {
-            field.setName(renameVariable.getNewVarName());
-          };
-          IterableExtensions.<avroclipse.avroIDL.Field>filter(((RecordType) _type_2).getFields(), _function_1).forEach(_function_2);
-        }
-      }
-    };
-    Iterables.<TypeDef>filter(this.protocols.get(this.currentProtocol).getElements(), TypeDef.class).forEach(_function);
+    final Type schema = HelperClass.getSchema(this.currentProtocol, this.currentSchema, this.protocols);
+    final avroclipse.avroIDL.Field field = HelperClass.getFieldFromSchema(schema, renameVariable.getVariable().getName());
+    field.setName(renameVariable.getNewVarName());
   }
   
   public void compile(final AddVariable addVariable) {
-    final Consumer<TypeDef> _function = (TypeDef typeDef) -> {
-      Type _type = typeDef.getType();
-      if ((_type instanceof RecordType)) {
-        boolean _equals = typeDef.getType().getName().equals(this.currentSchema);
-        if (_equals) {
-          Type _type_1 = typeDef.getType();
-          ((RecordType) _type_1).getFields().add(addVariable.getIndex(), 
-            HelperClass.createField(addVariable.getNewVar()));
+    final Type schema = HelperClass.getSchema(this.currentProtocol, this.currentSchema, this.protocols);
+    boolean _matched = false;
+    if (schema instanceof RecordType) {
+      _matched=true;
+      ((RecordType)schema).getFields().add(addVariable.getIndex(), this.createField(addVariable.getNewVar()));
+    }
+    if (!_matched) {
+      if (schema instanceof ErrorType) {
+        _matched=true;
+        ((ErrorType)schema).getFields().add(addVariable.getIndex(), this.createField(addVariable.getNewVar()));
+      }
+    }
+  }
+  
+  public avroclipse.avroIDL.Field createField(final Field field) {
+    final EObject fieldType = field.getFieldType();
+    avroclipse.avroIDL.Field newField = null;
+    if ((fieldType instanceof PrimitiveTypeField)) {
+      newField = this.compile(((PrimitiveTypeField)fieldType));
+    } else {
+      if ((fieldType instanceof CustomTypeField)) {
+        newField = this.compile(((CustomTypeField)fieldType));
+      } else {
+        if ((fieldType instanceof ComplexTypeField)) {
+          newField = this.compile(((ComplexTypeField)fieldType));
         }
       }
+    }
+    EList<Annotation> _annotations = field.getAnnotations();
+    for (final Annotation annotation : _annotations) {
+      newField.getAnnotations().add(this.createAnnotation(annotation));
+    }
+    return newField;
+  }
+  
+  public avroclipse.avroIDL.Field compile(final PrimitiveTypeField primitiveTypeField) {
+    avroclipse.avroIDL.Field _createField = AvroIDLFactory.eINSTANCE.createField();
+    final Procedure1<avroclipse.avroIDL.Field> _function = (avroclipse.avroIDL.Field it) -> {
+      it.setName(primitiveTypeField.getVarName());
+      it.setType(this.compile(primitiveTypeField.getType()));
+      Value _value = primitiveTypeField.getValue();
+      boolean _tripleNotEquals = (_value != null);
+      if (_tripleNotEquals) {
+        it.setDefault(this.compile(primitiveTypeField.getValue()));
+      }
     };
-    Iterables.<TypeDef>filter(this.protocols.get(this.currentProtocol).getElements(), TypeDef.class).forEach(_function);
+    avroclipse.avroIDL.Field newField = ObjectExtensions.<avroclipse.avroIDL.Field>operator_doubleArrow(_createField, _function);
+    EList<Annotation> _nameAnnotations = primitiveTypeField.getNameAnnotations();
+    for (final Annotation nameAnnotation : _nameAnnotations) {
+      newField.getNameAnnotations().add(this.createAnnotation(nameAnnotation));
+    }
+    return newField;
+  }
+  
+  public avroclipse.avroIDL.Field compile(final CustomTypeField customTypeField) {
+    avroclipse.avroIDL.Field _createField = AvroIDLFactory.eINSTANCE.createField();
+    final Procedure1<avroclipse.avroIDL.Field> _function = (avroclipse.avroIDL.Field it) -> {
+      it.setName(customTypeField.getVarName());
+      it.setType(this.compile(customTypeField.getType()));
+    };
+    avroclipse.avroIDL.Field newField = ObjectExtensions.<avroclipse.avroIDL.Field>operator_doubleArrow(_createField, _function);
+    EList<Annotation> _nameAnnotations = customTypeField.getNameAnnotations();
+    for (final Annotation nameAnnotation : _nameAnnotations) {
+      newField.getNameAnnotations().add(this.createAnnotation(nameAnnotation));
+    }
+    return newField;
+  }
+  
+  public avroclipse.avroIDL.Field compile(final ComplexTypeField complexTypeField) {
+    avroclipse.avroIDL.Field newField = AvroIDLFactory.eINSTANCE.createField();
+    ArrayTypeField fieldType = complexTypeField.getType();
+    newField.setName(complexTypeField.getVarName());
+    if ((fieldType instanceof ArrayTypeField)) {
+      newField.setType(this.compile(fieldType));
+    }
+    Array _value = complexTypeField.getValue();
+    boolean _tripleNotEquals = (_value != null);
+    if (_tripleNotEquals) {
+      newField.setDefault(this.compile(complexTypeField.getValue()));
+    }
+    return newField;
+  }
+  
+  public ArrayFieldType compile(final ArrayTypeField arrayTypeField) {
+    ArrayFieldType _createArrayFieldType = AvroIDLFactory.eINSTANCE.createArrayFieldType();
+    final Procedure1<ArrayFieldType> _function = (ArrayFieldType it) -> {
+      it.setType(this.compile(arrayTypeField.getType()));
+    };
+    ArrayFieldType type = ObjectExtensions.<ArrayFieldType>operator_doubleArrow(_createArrayFieldType, _function);
+    return type;
+  }
+  
+  public AnnotatedTypeLink compile(final AnnotatedTypes annotatedTypes) {
+    AnnotatedTypeLink _createAnnotatedTypeLink = AvroIDLFactory.eINSTANCE.createAnnotatedTypeLink();
+    final Procedure1<AnnotatedTypeLink> _function = (AnnotatedTypeLink it) -> {
+      it.setType(this.compile(annotatedTypes.getType()));
+    };
+    AnnotatedTypeLink newAnnotatedTypeLink = ObjectExtensions.<AnnotatedTypeLink>operator_doubleArrow(_createAnnotatedTypeLink, _function);
+    EList<Annotation> _annotataions = annotatedTypes.getAnnotataions();
+    for (final Annotation annotation : _annotataions) {
+      newAnnotatedTypeLink.getAnnotations().add(this.createAnnotation(annotation));
+    }
+    return newAnnotatedTypeLink;
+  }
+  
+  public TypeLink compile(final Types types) {
+    boolean _matched = false;
+    if (types instanceof CustomType) {
+      _matched=true;
+      return this.compile(((CustomType)types));
+    }
+    if (!_matched) {
+      if (types instanceof PrimitiveType) {
+        _matched=true;
+        return this.compile(((PrimitiveType)types));
+      }
+    }
+    if (!_matched) {
+      if (types instanceof ArrayTypeField) {
+        _matched=true;
+        Object _compile = this.compile(((ArrayTypeField)types));
+        return ((ArrayFieldType) _compile);
+      }
+    }
+    return null;
+  }
+  
+  public CustomTypeLink compile(final CustomType customType) {
+    CustomTypeLink _createCustomTypeLink = AvroIDLFactory.eINSTANCE.createCustomTypeLink();
+    final Procedure1<CustomTypeLink> _function = (CustomTypeLink it) -> {
+      it.setTarget(customType.getTarget());
+    };
+    CustomTypeLink type = ObjectExtensions.<CustomTypeLink>operator_doubleArrow(_createCustomTypeLink, _function);
+    return type;
+  }
+  
+  public PrimativeTypeLink compile(final PrimitiveType primitiveType) {
+    PrimativeTypeLink _createPrimativeTypeLink = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink();
+    final Procedure1<PrimativeTypeLink> _function = (PrimativeTypeLink it) -> {
+      it.setTarget(primitiveType.getTarget());
+    };
+    PrimativeTypeLink type = ObjectExtensions.<PrimativeTypeLink>operator_doubleArrow(_createPrimativeTypeLink, _function);
+    return type;
   }
   
   public void compile(final ChangeDefValue changeDefValue) {
-    final Function1<TypeDef, Boolean> _function = (TypeDef it) -> {
-      Type _type = it.getType();
-      return Boolean.valueOf((_type instanceof RecordType));
-    };
-    final Consumer<TypeDef> _function_1 = (TypeDef typeDef) -> {
-      Type _type = typeDef.getType();
-      boolean _equals = ((RecordType) _type).getName().equals(this.currentSchema);
-      if (_equals) {
-        Type _type_1 = typeDef.getType();
-        final Function1<avroclipse.avroIDL.Field, Boolean> _function_2 = (avroclipse.avroIDL.Field it) -> {
-          return Boolean.valueOf(it.getName().equals(changeDefValue.getField().getName()));
-        };
-        final Consumer<avroclipse.avroIDL.Field> _function_3 = (avroclipse.avroIDL.Field field) -> {
-          final Value newVal = changeDefValue.getNewVal();
-          avroclipse.avroIDL.Value newDefValue = null;
-          boolean _matched = false;
-          if ((newVal instanceof IntValue)) {
-            _matched=true;
-            avroclipse.avroIDL.IntValue _createIntValue = AvroIDLFactory.eINSTANCE.createIntValue();
-            final Procedure1<avroclipse.avroIDL.IntValue> _function_4 = (avroclipse.avroIDL.IntValue it) -> {
-              it.setVal(((IntValue) newVal).getVal());
-            };
-            avroclipse.avroIDL.IntValue _doubleArrow = ObjectExtensions.<avroclipse.avroIDL.IntValue>operator_doubleArrow(_createIntValue, _function_4);
-            newDefValue = _doubleArrow;
-          }
-          if (!_matched) {
-            if ((newVal instanceof FloatValue)) {
-              _matched=true;
-              avroclipse.avroIDL.FloatValue _createFloatValue = AvroIDLFactory.eINSTANCE.createFloatValue();
-              final Procedure1<avroclipse.avroIDL.FloatValue> _function_5 = (avroclipse.avroIDL.FloatValue it) -> {
-                it.setVal(((FloatValue) newVal).getVal());
-              };
-              avroclipse.avroIDL.FloatValue _doubleArrow_1 = ObjectExtensions.<avroclipse.avroIDL.FloatValue>operator_doubleArrow(_createFloatValue, _function_5);
-              newDefValue = _doubleArrow_1;
-            }
-          }
-          if (!_matched) {
-            if ((newVal instanceof IntValue)) {
-              _matched=true;
-              avroclipse.avroIDL.IntValue _createIntValue_1 = AvroIDLFactory.eINSTANCE.createIntValue();
-              final Procedure1<avroclipse.avroIDL.IntValue> _function_6 = (avroclipse.avroIDL.IntValue it) -> {
-                it.setVal(((IntValue) newVal).getVal());
-              };
-              avroclipse.avroIDL.IntValue _doubleArrow_2 = ObjectExtensions.<avroclipse.avroIDL.IntValue>operator_doubleArrow(_createIntValue_1, _function_6);
-              newDefValue = _doubleArrow_2;
-            }
-          }
-          if (!_matched) {
-            if ((newVal instanceof BooleanValue)) {
-              _matched=true;
-              avroclipse.avroIDL.BooleanValue _createBooleanValue = AvroIDLFactory.eINSTANCE.createBooleanValue();
-              final Procedure1<avroclipse.avroIDL.BooleanValue> _function_7 = (avroclipse.avroIDL.BooleanValue it) -> {
-                it.setVal(((BooleanValue) newVal).isVal());
-              };
-              avroclipse.avroIDL.BooleanValue _doubleArrow_3 = ObjectExtensions.<avroclipse.avroIDL.BooleanValue>operator_doubleArrow(_createBooleanValue, _function_7);
-              newDefValue = _doubleArrow_3;
-            }
-          }
-          if (!_matched) {
-            StringValue _createStringValue = AvroIDLFactory.eINSTANCE.createStringValue();
-            final Procedure1<StringValue> _function_8 = (StringValue it) -> {
-              it.setVal(((org.aedit.aedit.StringValue) newVal).getVal());
-            };
-            StringValue _doubleArrow_4 = ObjectExtensions.<StringValue>operator_doubleArrow(_createStringValue, _function_8);
-            newDefValue = _doubleArrow_4;
-          }
-          field.setDefault(newDefValue);
-        };
-        IterableExtensions.<avroclipse.avroIDL.Field>filter(((RecordType) _type_1).getFields(), _function_2).forEach(_function_3);
-      }
-    };
-    IterableExtensions.<TypeDef>filter(Iterables.<TypeDef>filter(this.protocols.get(this.currentProtocol).getElements(), TypeDef.class), _function).forEach(_function_1);
+    final Type schema = HelperClass.getSchema(this.currentProtocol, this.currentSchema, this.protocols);
+    final avroclipse.avroIDL.Field field = HelperClass.getFieldFromSchema(schema, changeDefValue.getField().getName());
+    field.setDefault(this.compile(changeDefValue.getNewVal()));
   }
   
   public void compile(final ChangeType changeType) {
-    final Function1<TypeDef, Boolean> _function = (TypeDef it) -> {
-      Type _type = it.getType();
-      return Boolean.valueOf((_type instanceof RecordType));
+    final Type schema = HelperClass.getSchema(this.currentProtocol, this.currentSchema, this.protocols);
+    final avroclipse.avroIDL.Field field = HelperClass.getFieldFromSchema(schema, changeType.getField().getName());
+    PrimativeTypeLink _createPrimativeTypeLink = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink();
+    final Procedure1<PrimativeTypeLink> _function = (PrimativeTypeLink it) -> {
+      it.setTarget(changeType.getNewType());
     };
-    final Consumer<TypeDef> _function_1 = (TypeDef typeDef) -> {
-      Type _type = typeDef.getType();
-      boolean _equals = ((RecordType) _type).getName().equals(this.currentSchema);
-      if (_equals) {
-        Type _type_1 = typeDef.getType();
-        final Function1<avroclipse.avroIDL.Field, Boolean> _function_2 = (avroclipse.avroIDL.Field it) -> {
-          return Boolean.valueOf(it.getName().equals(changeType.getField().getName()));
-        };
-        final Consumer<avroclipse.avroIDL.Field> _function_3 = (avroclipse.avroIDL.Field field) -> {
-          PrimativeTypeLink _createPrimativeTypeLink = AvroIDLFactory.eINSTANCE.createPrimativeTypeLink();
-          final Procedure1<PrimativeTypeLink> _function_4 = (PrimativeTypeLink it) -> {
-            it.setTarget(changeType.getNewType());
-          };
-          PrimativeTypeLink _doubleArrow = ObjectExtensions.<PrimativeTypeLink>operator_doubleArrow(_createPrimativeTypeLink, _function_4);
-          field.setType(_doubleArrow);
-        };
-        IterableExtensions.<avroclipse.avroIDL.Field>filter(((RecordType) _type_1).getFields(), _function_2).forEach(_function_3);
-      }
-    };
-    IterableExtensions.<TypeDef>filter(Iterables.<TypeDef>filter(this.protocols.get(this.currentProtocol).getElements(), TypeDef.class), _function).forEach(_function_1);
+    PrimativeTypeLink _doubleArrow = ObjectExtensions.<PrimativeTypeLink>operator_doubleArrow(_createPrimativeTypeLink, _function);
+    field.setType(_doubleArrow);
   }
   
   public void compile(final ChangeEnum changeEnum) {
@@ -611,5 +711,227 @@ public class AeditGenerator extends AbstractGenerator {
       }
     };
     Iterables.<TypeDef>filter(this.protocols.get(this.currentProtocol).getElements(), TypeDef.class).forEach(_function);
+  }
+  
+  public void compile(final AddAnnotationToSchema annotationToSchema) {
+    final String schemaName = annotationToSchema.getSchema().getName();
+    EObject _eContainer = annotationToSchema.getSchema().eContainer();
+    TypeDef schemaContainer = ((TypeDef) _eContainer);
+    EObject _eContainer_1 = schemaContainer.eContainer();
+    final String protocolName = ((AvroIDLFile) _eContainer_1).getName();
+    final Consumer<TypeDef> _function = (TypeDef typeDef) -> {
+      Type _type = typeDef.getType();
+      if ((_type instanceof RecordType)) {
+        Type _type_1 = typeDef.getType();
+        boolean _equals = ((RecordType) _type_1).getName().equals(schemaName);
+        if (_equals) {
+          typeDef.getAnnotations().add(this.createAnnotation(annotationToSchema.getAnnotation()));
+        }
+      } else {
+        Type _type_2 = typeDef.getType();
+        if ((_type_2 instanceof EnumType)) {
+          Type _type_3 = typeDef.getType();
+          boolean _equals_1 = ((EnumType) _type_3).getName().equals(schemaName);
+          if (_equals_1) {
+            typeDef.getAnnotations().add(this.createAnnotation(annotationToSchema.getAnnotation()));
+          }
+        } else {
+          Type _type_4 = typeDef.getType();
+          if ((_type_4 instanceof ErrorType)) {
+            Type _type_5 = typeDef.getType();
+            boolean _equals_2 = ((ErrorType) _type_5).getName().equals(schemaName);
+            if (_equals_2) {
+              typeDef.getAnnotations().add(this.createAnnotation(annotationToSchema.getAnnotation()));
+            }
+          }
+        }
+      }
+    };
+    Iterables.<TypeDef>filter(this.protocols.get(protocolName).getElements(), TypeDef.class).forEach(_function);
+  }
+  
+  public void compile(final RemoveAnnotationFromSchema removeAnnotationFromSchema) {
+    final String schemaName = removeAnnotationFromSchema.getSchema().getName();
+    EObject _eContainer = removeAnnotationFromSchema.getSchema().eContainer();
+    TypeDef schemaContainer = ((TypeDef) _eContainer);
+    EObject _eContainer_1 = schemaContainer.eContainer();
+    final String protocolName = ((AvroIDLFile) _eContainer_1).getName();
+    final Consumer<TypeDef> _function = (TypeDef typeDef) -> {
+      Type _type = typeDef.getType();
+      if ((_type instanceof RecordType)) {
+        Type _type_1 = typeDef.getType();
+        boolean _equals = ((RecordType) _type_1).getName().equals(schemaName);
+        if (_equals) {
+          HelperClass.removeAnnotationFromSchema(typeDef, removeAnnotationFromSchema.getAnnotationToRemove());
+        }
+      } else {
+        Type _type_2 = typeDef.getType();
+        if ((_type_2 instanceof EnumType)) {
+          Type _type_3 = typeDef.getType();
+          boolean _equals_1 = ((EnumType) _type_3).getName().equals(schemaName);
+          if (_equals_1) {
+            HelperClass.removeAnnotationFromSchema(typeDef, removeAnnotationFromSchema.getAnnotationToRemove());
+          }
+        } else {
+          Type _type_4 = typeDef.getType();
+          if ((_type_4 instanceof ErrorType)) {
+            Type _type_5 = typeDef.getType();
+            boolean _equals_2 = ((ErrorType) _type_5).getName().equals(schemaName);
+            if (_equals_2) {
+              HelperClass.removeAnnotationFromSchema(typeDef, removeAnnotationFromSchema.getAnnotationToRemove());
+            }
+          }
+        }
+      }
+    };
+    Iterables.<TypeDef>filter(this.protocols.get(protocolName).getElements(), TypeDef.class).forEach(_function);
+  }
+  
+  public boolean execute(final AddAnnotationToField addAnnotationToField) {
+    boolean _xblockexpression = false;
+    {
+      final avroclipse.avroIDL.Field field = HelperClass.getField(this.currentProtocol, this.currentSchema, addAnnotationToField.getVariable().getName(), this.protocols);
+      _xblockexpression = field.getAnnotations().add(this.createAnnotation(addAnnotationToField.getAnnotation()));
+    }
+    return _xblockexpression;
+  }
+  
+  public boolean compile(final AddNameAnnotationToField addNameAnnotationToField) {
+    boolean _xblockexpression = false;
+    {
+      final avroclipse.avroIDL.Field field = HelperClass.getField(this.currentProtocol, this.currentSchema, addNameAnnotationToField.getVariable().getName(), 
+        this.protocols);
+      _xblockexpression = field.getNameAnnotations().add(this.createAnnotation(addNameAnnotationToField.getAnnotation()));
+    }
+    return _xblockexpression;
+  }
+  
+  public boolean execute(final RemoveAnnotationFromField removeAnnotationFromField) {
+    boolean _xblockexpression = false;
+    {
+      final avroclipse.avroIDL.Field field = HelperClass.getField(this.currentProtocol, this.currentSchema, removeAnnotationFromField.getVariable().getName(), 
+        this.protocols);
+      _xblockexpression = HelperClass.removeAnnotationFromField(field, removeAnnotationFromField.getAnnotationToRemove());
+    }
+    return _xblockexpression;
+  }
+  
+  public boolean compile(final RemoveNameAnnotationFromField removeNameAnnotationFromField) {
+    boolean _xblockexpression = false;
+    {
+      final avroclipse.avroIDL.Field field = HelperClass.getField(this.currentProtocol, this.currentSchema, removeNameAnnotationFromField.getVariable().getName(), 
+        this.protocols);
+      _xblockexpression = HelperClass.removeNameAnnotationFromField(field, removeNameAnnotationFromField.getAnnotationToRemove());
+    }
+    return _xblockexpression;
+  }
+  
+  public Values compile(final org.aedit.aedit.Values values) {
+    final Values newAvroclipseValues = AvroIDLFactory.eINSTANCE.createValues();
+    EList<EObject> _value = values.getValue();
+    for (final EObject value : _value) {
+      if ((value instanceof Array)) {
+        Object _compile = this.compile(((Array)value));
+        newAvroclipseValues.getValue().add(((avroclipse.avroIDL.Value) _compile));
+      } else {
+        if ((value instanceof Value)) {
+          avroclipse.avroIDL.Value _compile_1 = this.compile(((Value)value));
+          newAvroclipseValues.getValue().add(((avroclipse.avroIDL.Value) _compile_1));
+        }
+      }
+    }
+    return newAvroclipseValues;
+  }
+  
+  public avroclipse.avroIDL.Array compile(final Array array) {
+    avroclipse.avroIDL.Array newArray = AvroIDLFactory.eINSTANCE.createArray();
+    Values _compile = this.compile(array.getValues());
+    newArray.setValues(((Values) _compile));
+    return newArray;
+  }
+  
+  public avroclipse.avroIDL.Value compile(final Value value) {
+    boolean _matched = false;
+    if (value instanceof FloatValue) {
+      _matched=true;
+      return this.compile(((FloatValue)value));
+    }
+    if (!_matched) {
+      if (value instanceof IntValue) {
+        _matched=true;
+        return this.compile(((IntValue)value));
+      }
+    }
+    if (!_matched) {
+      if (value instanceof StringValue) {
+        _matched=true;
+        return this.compile(((StringValue)value));
+      }
+    }
+    if (!_matched) {
+      if (value instanceof BooleanValue) {
+        _matched=true;
+        return this.compile(((BooleanValue)value));
+      }
+    }
+    if (!_matched) {
+      if (value instanceof Null) {
+        _matched=true;
+        return this.compile(((Null)value));
+      }
+    }
+    return null;
+  }
+  
+  public avroclipse.avroIDL.FloatValue compile(final FloatValue floatValue) {
+    avroclipse.avroIDL.FloatValue _createFloatValue = AvroIDLFactory.eINSTANCE.createFloatValue();
+    final Procedure1<avroclipse.avroIDL.FloatValue> _function = (avroclipse.avroIDL.FloatValue it) -> {
+      it.setVal(floatValue.getVal());
+    };
+    final avroclipse.avroIDL.FloatValue newAvroclipseFloatVal = ObjectExtensions.<avroclipse.avroIDL.FloatValue>operator_doubleArrow(_createFloatValue, _function);
+    return newAvroclipseFloatVal;
+  }
+  
+  public avroclipse.avroIDL.IntValue compile(final IntValue intValue) {
+    avroclipse.avroIDL.IntValue _createIntValue = AvroIDLFactory.eINSTANCE.createIntValue();
+    final Procedure1<avroclipse.avroIDL.IntValue> _function = (avroclipse.avroIDL.IntValue it) -> {
+      it.setVal(intValue.getVal());
+    };
+    final avroclipse.avroIDL.IntValue newAvroclipseIntVal = ObjectExtensions.<avroclipse.avroIDL.IntValue>operator_doubleArrow(_createIntValue, _function);
+    return newAvroclipseIntVal;
+  }
+  
+  public avroclipse.avroIDL.StringValue compile(final StringValue stringValue) {
+    avroclipse.avroIDL.StringValue _createStringValue = AvroIDLFactory.eINSTANCE.createStringValue();
+    final Procedure1<avroclipse.avroIDL.StringValue> _function = (avroclipse.avroIDL.StringValue it) -> {
+      it.setVal(stringValue.getVal());
+    };
+    final avroclipse.avroIDL.StringValue newAvroclipseStringVal = ObjectExtensions.<avroclipse.avroIDL.StringValue>operator_doubleArrow(_createStringValue, _function);
+    return newAvroclipseStringVal;
+  }
+  
+  public avroclipse.avroIDL.BooleanValue compile(final BooleanValue booleanValue) {
+    avroclipse.avroIDL.BooleanValue _createBooleanValue = AvroIDLFactory.eINSTANCE.createBooleanValue();
+    final Procedure1<avroclipse.avroIDL.BooleanValue> _function = (avroclipse.avroIDL.BooleanValue it) -> {
+      it.setVal(booleanValue.isVal());
+    };
+    final avroclipse.avroIDL.BooleanValue newAvroclipseBoolVal = ObjectExtensions.<avroclipse.avroIDL.BooleanValue>operator_doubleArrow(_createBooleanValue, _function);
+    return newAvroclipseBoolVal;
+  }
+  
+  public avroclipse.avroIDL.Null compile(final Null nullValue) {
+    final avroclipse.avroIDL.Null newAvroclipseNullVal = AvroIDLFactory.eINSTANCE.createNull();
+    return newAvroclipseNullVal;
+  }
+  
+  public avroclipse.avroIDL.Annotation createAnnotation(final Annotation annotation) {
+    avroclipse.avroIDL.Annotation _createAnnotation = AvroIDLFactory.eINSTANCE.createAnnotation();
+    final Procedure1<avroclipse.avroIDL.Annotation> _function = (avroclipse.avroIDL.Annotation it) -> {
+      it.setName(annotation.getName());
+      Values _compile = this.compile(annotation.getValues());
+      it.setValues(((Values) _compile));
+    };
+    final avroclipse.avroIDL.Annotation newAvroclipseAnnotation = ObjectExtensions.<avroclipse.avroIDL.Annotation>operator_doubleArrow(_createAnnotation, _function);
+    return newAvroclipseAnnotation;
   }
 }

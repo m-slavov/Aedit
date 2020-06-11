@@ -299,6 +299,34 @@ public interface AeditPackage extends EPackage
   int SCHEMA_RULE_FEATURE_COUNT = 0;
 
   /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.ArrayEditRulesImpl <em>Array Edit Rules</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.ArrayEditRulesImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getArrayEditRules()
+   * @generated
+   */
+  int ARRAY_EDIT_RULES = 7;
+
+  /**
+   * The feature id for the '<em><b>Array</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_EDIT_RULES__ARRAY = SCHEMA_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Array Edit Rules</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_EDIT_RULES_FEATURE_COUNT = SCHEMA_RULE_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.aedit.aedit.impl.EnumRuleImpl <em>Enum Rule</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -306,7 +334,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getEnumRule()
    * @generated
    */
-  int ENUM_RULE = 7;
+  int ENUM_RULE = 8;
 
   /**
    * The number of structural features of the '<em>Enum Rule</em>' class.
@@ -318,14 +346,23 @@ public interface AeditPackage extends EPackage
   int ENUM_RULE_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link org.aedit.aedit.impl.ChangeSchemaImpl <em>Change Schema</em>}' class.
+   * The meta object id for the '{@link org.aedit.aedit.impl.AddAnnotationToSchemaImpl <em>Add Annotation To Schema</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.aedit.aedit.impl.ChangeSchemaImpl
-   * @see org.aedit.aedit.impl.AeditPackageImpl#getChangeSchema()
+   * @see org.aedit.aedit.impl.AddAnnotationToSchemaImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getAddAnnotationToSchema()
    * @generated
    */
-  int CHANGE_SCHEMA = 8;
+  int ADD_ANNOTATION_TO_SCHEMA = 9;
+
+  /**
+   * The feature id for the '<em><b>Schema Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ANNOTATION_TO_SCHEMA__SCHEMA_TYPE = GENERIC_RULE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Schema</b></em>' reference.
@@ -334,7 +371,247 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CHANGE_SCHEMA__SCHEMA = GENERIC_RULE_FEATURE_COUNT + 0;
+  int ADD_ANNOTATION_TO_SCHEMA__SCHEMA = GENERIC_RULE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Annotation</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ANNOTATION_TO_SCHEMA__ANNOTATION = GENERIC_RULE_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Add Annotation To Schema</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ANNOTATION_TO_SCHEMA_FEATURE_COUNT = GENERIC_RULE_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.AddAnnotationToFieldImpl <em>Add Annotation To Field</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.AddAnnotationToFieldImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getAddAnnotationToField()
+   * @generated
+   */
+  int ADD_ANNOTATION_TO_FIELD = 10;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ANNOTATION_TO_FIELD__VARIABLE = SCHEMA_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Annotation</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ANNOTATION_TO_FIELD__ANNOTATION = SCHEMA_RULE_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Add Annotation To Field</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ANNOTATION_TO_FIELD_FEATURE_COUNT = SCHEMA_RULE_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.AddNameAnnotationToFieldImpl <em>Add Name Annotation To Field</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.AddNameAnnotationToFieldImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getAddNameAnnotationToField()
+   * @generated
+   */
+  int ADD_NAME_ANNOTATION_TO_FIELD = 11;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE = SCHEMA_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Annotation</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION = SCHEMA_RULE_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Add Name Annotation To Field</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_NAME_ANNOTATION_TO_FIELD_FEATURE_COUNT = SCHEMA_RULE_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.RemoveAnnotationFromSchemaImpl <em>Remove Annotation From Schema</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.RemoveAnnotationFromSchemaImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveAnnotationFromSchema()
+   * @generated
+   */
+  int REMOVE_ANNOTATION_FROM_SCHEMA = 12;
+
+  /**
+   * The feature id for the '<em><b>Schema Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE = GENERIC_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Schema</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA = GENERIC_RULE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Annotation To Remove</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE = GENERIC_RULE_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Remove Annotation From Schema</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ANNOTATION_FROM_SCHEMA_FEATURE_COUNT = GENERIC_RULE_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.RemoveAnnotationFromFieldImpl <em>Remove Annotation From Field</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.RemoveAnnotationFromFieldImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveAnnotationFromField()
+   * @generated
+   */
+  int REMOVE_ANNOTATION_FROM_FIELD = 13;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ANNOTATION_FROM_FIELD__VARIABLE = SCHEMA_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Annotation To Remove</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE = SCHEMA_RULE_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Remove Annotation From Field</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ANNOTATION_FROM_FIELD_FEATURE_COUNT = SCHEMA_RULE_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.RemoveNameAnnotationFromFieldImpl <em>Remove Name Annotation From Field</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.RemoveNameAnnotationFromFieldImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveNameAnnotationFromField()
+   * @generated
+   */
+  int REMOVE_NAME_ANNOTATION_FROM_FIELD = 14;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE = SCHEMA_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Annotation To Remove</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE = SCHEMA_RULE_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Remove Name Annotation From Field</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_NAME_ANNOTATION_FROM_FIELD_FEATURE_COUNT = SCHEMA_RULE_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.ChangeSchemaImpl <em>Change Schema</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.ChangeSchemaImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getChangeSchema()
+   * @generated
+   */
+  int CHANGE_SCHEMA = 15;
+
+  /**
+   * The feature id for the '<em><b>Schema Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHANGE_SCHEMA__SCHEMA_TYPE = GENERIC_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Schema</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHANGE_SCHEMA__SCHEMA = GENERIC_RULE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Rules</b></em>' containment reference list.
@@ -343,7 +620,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CHANGE_SCHEMA__RULES = GENERIC_RULE_FEATURE_COUNT + 1;
+  int CHANGE_SCHEMA__RULES = GENERIC_RULE_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Change Schema</em>' class.
@@ -352,7 +629,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CHANGE_SCHEMA_FEATURE_COUNT = GENERIC_RULE_FEATURE_COUNT + 2;
+  int CHANGE_SCHEMA_FEATURE_COUNT = GENERIC_RULE_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.ChangeEnumImpl <em>Change Enum</em>}' class.
@@ -362,7 +639,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getChangeEnum()
    * @generated
    */
-  int CHANGE_ENUM = 9;
+  int CHANGE_ENUM = 16;
 
   /**
    * The feature id for the '<em><b>Schema</b></em>' reference.
@@ -399,7 +676,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getAdd()
    * @generated
    */
-  int ADD = 10;
+  int ADD = 17;
 
   /**
    * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -436,7 +713,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getAddRecord()
    * @generated
    */
-  int ADD_RECORD = 11;
+  int ADD_RECORD = 18;
 
   /**
    * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -484,6 +761,61 @@ public interface AeditPackage extends EPackage
   int ADD_RECORD_FEATURE_COUNT = ADD_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.AddErrorImpl <em>Add Error</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.AddErrorImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getAddError()
+   * @generated
+   */
+  int ADD_ERROR = 19;
+
+  /**
+   * The feature id for the '<em><b>Index</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ERROR__INDEX = ADD__INDEX;
+
+  /**
+   * The feature id for the '<em><b>Namespace</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ERROR__NAMESPACE = ADD__NAMESPACE;
+
+  /**
+   * The feature id for the '<em><b>Error Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ERROR__ERROR_NAME = ADD_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Fields</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ERROR__FIELDS = ADD_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Add Error</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_ERROR_FEATURE_COUNT = ADD_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link org.aedit.aedit.impl.AddEnumerationImpl <em>Add Enumeration</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -491,7 +823,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getAddEnumeration()
    * @generated
    */
-  int ADD_ENUMERATION = 12;
+  int ADD_ENUMERATION = 20;
 
   /**
    * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -546,7 +878,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getAddVariable()
    * @generated
    */
-  int ADD_VARIABLE = 13;
+  int ADD_VARIABLE = 21;
 
   /**
    * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -583,7 +915,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getAddEnum()
    * @generated
    */
-  int ADD_ENUM = 14;
+  int ADD_ENUM = 22;
 
   /**
    * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -620,7 +952,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveSchema()
    * @generated
    */
-  int REMOVE_SCHEMA = 15;
+  int REMOVE_SCHEMA = 23;
 
   /**
    * The feature id for the '<em><b>Schema Type</b></em>' attribute.
@@ -657,7 +989,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveVariable()
    * @generated
    */
-  int REMOVE_VARIABLE = 16;
+  int REMOVE_VARIABLE = 24;
 
   /**
    * The feature id for the '<em><b>Variable</b></em>' reference.
@@ -685,7 +1017,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveEnum()
    * @generated
    */
-  int REMOVE_ENUM = 17;
+  int REMOVE_ENUM = 25;
 
   /**
    * The feature id for the '<em><b>Var Name</b></em>' attribute.
@@ -713,7 +1045,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getRenameSchema()
    * @generated
    */
-  int RENAME_SCHEMA = 18;
+  int RENAME_SCHEMA = 26;
 
   /**
    * The feature id for the '<em><b>Schema Type</b></em>' attribute.
@@ -759,7 +1091,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getRenameVariable()
    * @generated
    */
-  int RENAME_VARIABLE = 19;
+  int RENAME_VARIABLE = 27;
 
   /**
    * The feature id for the '<em><b>Variable</b></em>' reference.
@@ -796,7 +1128,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getRenameEnum()
    * @generated
    */
-  int RENAME_ENUM = 20;
+  int RENAME_ENUM = 28;
 
   /**
    * The feature id for the '<em><b>Old Name</b></em>' attribute.
@@ -833,7 +1165,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getChangeDefValue()
    * @generated
    */
-  int CHANGE_DEF_VALUE = 21;
+  int CHANGE_DEF_VALUE = 29;
 
   /**
    * The feature id for the '<em><b>Field</b></em>' reference.
@@ -870,7 +1202,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getChangeType()
    * @generated
    */
-  int CHANGE_TYPE = 22;
+  int CHANGE_TYPE = 30;
 
   /**
    * The feature id for the '<em><b>Field</b></em>' reference.
@@ -900,6 +1232,117 @@ public interface AeditPackage extends EPackage
   int CHANGE_TYPE_FEATURE_COUNT = SCHEMA_RULE_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.RemoveArrayValueImpl <em>Remove Array Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.RemoveArrayValueImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveArrayValue()
+   * @generated
+   */
+  int REMOVE_ARRAY_VALUE = 31;
+
+  /**
+   * The feature id for the '<em><b>Array</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ARRAY_VALUE__ARRAY = ARRAY_EDIT_RULES__ARRAY;
+
+  /**
+   * The feature id for the '<em><b>Value To Remove</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE = ARRAY_EDIT_RULES_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Remove Array Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ARRAY_VALUE_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.RemoveArrayValueAtIndexImpl <em>Remove Array Value At Index</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.RemoveArrayValueAtIndexImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveArrayValueAtIndex()
+   * @generated
+   */
+  int REMOVE_ARRAY_VALUE_AT_INDEX = 32;
+
+  /**
+   * The feature id for the '<em><b>Array</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY = ARRAY_EDIT_RULES__ARRAY;
+
+  /**
+   * The feature id for the '<em><b>Index</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ARRAY_VALUE_AT_INDEX__INDEX = ARRAY_EDIT_RULES_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Remove Array Value At Index</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ARRAY_VALUE_AT_INDEX_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.AddValueToArrayImpl <em>Add Value To Array</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.AddValueToArrayImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getAddValueToArray()
+   * @generated
+   */
+  int ADD_VALUE_TO_ARRAY = 33;
+
+  /**
+   * The feature id for the '<em><b>Array</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_VALUE_TO_ARRAY__ARRAY = ARRAY_EDIT_RULES__ARRAY;
+
+  /**
+   * The feature id for the '<em><b>Index</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_VALUE_TO_ARRAY__INDEX = ARRAY_EDIT_RULES_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Add Value To Array</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_VALUE_TO_ARRAY_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.aedit.aedit.impl.FieldImpl <em>Field</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -907,16 +1350,25 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getField()
    * @generated
    */
-  int FIELD = 23;
+  int FIELD = 34;
 
   /**
-   * The feature id for the '<em><b>Var Name</b></em>' attribute.
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FIELD__VAR_NAME = 0;
+  int FIELD__ANNOTATIONS = 0;
+
+  /**
+   * The feature id for the '<em><b>Field Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIELD__FIELD_TYPE = 1;
 
   /**
    * The number of structural features of the '<em>Field</em>' class.
@@ -925,7 +1377,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FIELD_FEATURE_COUNT = 1;
+  int FIELD_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.CustomTypeFieldImpl <em>Custom Type Field</em>}' class.
@@ -935,7 +1387,25 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getCustomTypeField()
    * @generated
    */
-  int CUSTOM_TYPE_FIELD = 24;
+  int CUSTOM_TYPE_FIELD = 35;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CUSTOM_TYPE_FIELD__TYPE = 0;
+
+  /**
+   * The feature id for the '<em><b>Name Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS = 1;
 
   /**
    * The feature id for the '<em><b>Var Name</b></em>' attribute.
@@ -944,16 +1414,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CUSTOM_TYPE_FIELD__VAR_NAME = FIELD__VAR_NAME;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CUSTOM_TYPE_FIELD__TYPE = FIELD_FEATURE_COUNT + 0;
+  int CUSTOM_TYPE_FIELD__VAR_NAME = 2;
 
   /**
    * The number of structural features of the '<em>Custom Type Field</em>' class.
@@ -962,7 +1423,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CUSTOM_TYPE_FIELD_FEATURE_COUNT = FIELD_FEATURE_COUNT + 1;
+  int CUSTOM_TYPE_FIELD_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.PrimitiveTypeFieldImpl <em>Primitive Type Field</em>}' class.
@@ -972,7 +1433,25 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getPrimitiveTypeField()
    * @generated
    */
-  int PRIMITIVE_TYPE_FIELD = 25;
+  int PRIMITIVE_TYPE_FIELD = 36;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_TYPE_FIELD__TYPE = 0;
+
+  /**
+   * The feature id for the '<em><b>Name Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS = 1;
 
   /**
    * The feature id for the '<em><b>Var Name</b></em>' attribute.
@@ -981,16 +1460,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRIMITIVE_TYPE_FIELD__VAR_NAME = FIELD__VAR_NAME;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIMITIVE_TYPE_FIELD__TYPE = FIELD_FEATURE_COUNT + 0;
+  int PRIMITIVE_TYPE_FIELD__VAR_NAME = 2;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -999,7 +1469,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRIMITIVE_TYPE_FIELD__VALUE = FIELD_FEATURE_COUNT + 1;
+  int PRIMITIVE_TYPE_FIELD__VALUE = 3;
 
   /**
    * The number of structural features of the '<em>Primitive Type Field</em>' class.
@@ -1008,7 +1478,295 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRIMITIVE_TYPE_FIELD_FEATURE_COUNT = FIELD_FEATURE_COUNT + 2;
+  int PRIMITIVE_TYPE_FIELD_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.ComplexTypeFieldImpl <em>Complex Type Field</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.ComplexTypeFieldImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getComplexTypeField()
+   * @generated
+   */
+  int COMPLEX_TYPE_FIELD = 37;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPLEX_TYPE_FIELD__TYPE = 0;
+
+  /**
+   * The feature id for the '<em><b>Name Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPLEX_TYPE_FIELD__NAME_ANNOTATIONS = 1;
+
+  /**
+   * The feature id for the '<em><b>Var Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPLEX_TYPE_FIELD__VAR_NAME = 2;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPLEX_TYPE_FIELD__VALUE = 3;
+
+  /**
+   * The number of structural features of the '<em>Complex Type Field</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPLEX_TYPE_FIELD_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.TypesImpl <em>Types</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.TypesImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getTypes()
+   * @generated
+   */
+  int TYPES = 40;
+
+  /**
+   * The number of structural features of the '<em>Types</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPES_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.ArrayTypeFieldImpl <em>Array Type Field</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.ArrayTypeFieldImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getArrayTypeField()
+   * @generated
+   */
+  int ARRAY_TYPE_FIELD = 38;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_TYPE_FIELD__TYPE = TYPES_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Array Type Field</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_TYPE_FIELD_FEATURE_COUNT = TYPES_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.AnnotatedTypesImpl <em>Annotated Types</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.AnnotatedTypesImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getAnnotatedTypes()
+   * @generated
+   */
+  int ANNOTATED_TYPES = 39;
+
+  /**
+   * The feature id for the '<em><b>Annotataions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATED_TYPES__ANNOTATAIONS = 0;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATED_TYPES__TYPE = 1;
+
+  /**
+   * The number of structural features of the '<em>Annotated Types</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATED_TYPES_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.CustomTypeImpl <em>Custom Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.CustomTypeImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getCustomType()
+   * @generated
+   */
+  int CUSTOM_TYPE = 41;
+
+  /**
+   * The feature id for the '<em><b>Target</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CUSTOM_TYPE__TARGET = TYPES_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Custom Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CUSTOM_TYPE_FEATURE_COUNT = TYPES_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.PrimitiveTypeImpl <em>Primitive Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.PrimitiveTypeImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getPrimitiveType()
+   * @generated
+   */
+  int PRIMITIVE_TYPE = 42;
+
+  /**
+   * The feature id for the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_TYPE__TARGET = TYPES_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Primitive Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_TYPE_FEATURE_COUNT = TYPES_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.AnnotationImpl <em>Annotation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.AnnotationImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getAnnotation()
+   * @generated
+   */
+  int ANNOTATION = 43;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Values</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__VALUES = 1;
+
+  /**
+   * The number of structural features of the '<em>Annotation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.ValuesImpl <em>Values</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.ValuesImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getValues()
+   * @generated
+   */
+  int VALUES = 44;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUES__VALUE = 0;
+
+  /**
+   * The number of structural features of the '<em>Values</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUES_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.aedit.aedit.impl.ArrayImpl <em>Array</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.aedit.aedit.impl.ArrayImpl
+   * @see org.aedit.aedit.impl.AeditPackageImpl#getArray()
+   * @generated
+   */
+  int ARRAY = 45;
+
+  /**
+   * The feature id for the '<em><b>Values</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY__VALUES = 0;
+
+  /**
+   * The number of structural features of the '<em>Array</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.ValueImpl <em>Value</em>}' class.
@@ -1018,7 +1776,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getValue()
    * @generated
    */
-  int VALUE = 26;
+  int VALUE = 46;
 
   /**
    * The number of structural features of the '<em>Value</em>' class.
@@ -1037,7 +1795,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getFloatValue()
    * @generated
    */
-  int FLOAT_VALUE = 27;
+  int FLOAT_VALUE = 47;
 
   /**
    * The feature id for the '<em><b>Val</b></em>' attribute.
@@ -1065,7 +1823,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getStringValue()
    * @generated
    */
-  int STRING_VALUE = 28;
+  int STRING_VALUE = 48;
 
   /**
    * The feature id for the '<em><b>Val</b></em>' attribute.
@@ -1093,7 +1851,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getIntValue()
    * @generated
    */
-  int INT_VALUE = 29;
+  int INT_VALUE = 49;
 
   /**
    * The feature id for the '<em><b>Val</b></em>' attribute.
@@ -1121,7 +1879,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getNull()
    * @generated
    */
-  int NULL = 30;
+  int NULL = 50;
 
   /**
    * The feature id for the '<em><b>Val</b></em>' attribute.
@@ -1149,7 +1907,7 @@ public interface AeditPackage extends EPackage
    * @see org.aedit.aedit.impl.AeditPackageImpl#getBooleanValue()
    * @generated
    */
-  int BOOLEAN_VALUE = 31;
+  int BOOLEAN_VALUE = 51;
 
   /**
    * The feature id for the '<em><b>Val</b></em>' attribute.
@@ -1373,6 +2131,27 @@ public interface AeditPackage extends EPackage
   EClass getSchemaRule();
 
   /**
+   * Returns the meta object for class '{@link org.aedit.aedit.ArrayEditRules <em>Array Edit Rules</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Array Edit Rules</em>'.
+   * @see org.aedit.aedit.ArrayEditRules
+   * @generated
+   */
+  EClass getArrayEditRules();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.ArrayEditRules#getArray <em>Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Array</em>'.
+   * @see org.aedit.aedit.ArrayEditRules#getArray()
+   * @see #getArrayEditRules()
+   * @generated
+   */
+  EReference getArrayEditRules_Array();
+
+  /**
    * Returns the meta object for class '{@link org.aedit.aedit.EnumRule <em>Enum Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1383,6 +2162,220 @@ public interface AeditPackage extends EPackage
   EClass getEnumRule();
 
   /**
+   * Returns the meta object for class '{@link org.aedit.aedit.AddAnnotationToSchema <em>Add Annotation To Schema</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Add Annotation To Schema</em>'.
+   * @see org.aedit.aedit.AddAnnotationToSchema
+   * @generated
+   */
+  EClass getAddAnnotationToSchema();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.AddAnnotationToSchema#getSchemaType <em>Schema Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Schema Type</em>'.
+   * @see org.aedit.aedit.AddAnnotationToSchema#getSchemaType()
+   * @see #getAddAnnotationToSchema()
+   * @generated
+   */
+  EAttribute getAddAnnotationToSchema_SchemaType();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.AddAnnotationToSchema#getSchema <em>Schema</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Schema</em>'.
+   * @see org.aedit.aedit.AddAnnotationToSchema#getSchema()
+   * @see #getAddAnnotationToSchema()
+   * @generated
+   */
+  EReference getAddAnnotationToSchema_Schema();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.AddAnnotationToSchema#getAnnotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Annotation</em>'.
+   * @see org.aedit.aedit.AddAnnotationToSchema#getAnnotation()
+   * @see #getAddAnnotationToSchema()
+   * @generated
+   */
+  EReference getAddAnnotationToSchema_Annotation();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.AddAnnotationToField <em>Add Annotation To Field</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Add Annotation To Field</em>'.
+   * @see org.aedit.aedit.AddAnnotationToField
+   * @generated
+   */
+  EClass getAddAnnotationToField();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.AddAnnotationToField#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Variable</em>'.
+   * @see org.aedit.aedit.AddAnnotationToField#getVariable()
+   * @see #getAddAnnotationToField()
+   * @generated
+   */
+  EReference getAddAnnotationToField_Variable();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.AddAnnotationToField#getAnnotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Annotation</em>'.
+   * @see org.aedit.aedit.AddAnnotationToField#getAnnotation()
+   * @see #getAddAnnotationToField()
+   * @generated
+   */
+  EReference getAddAnnotationToField_Annotation();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.AddNameAnnotationToField <em>Add Name Annotation To Field</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Add Name Annotation To Field</em>'.
+   * @see org.aedit.aedit.AddNameAnnotationToField
+   * @generated
+   */
+  EClass getAddNameAnnotationToField();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.AddNameAnnotationToField#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Variable</em>'.
+   * @see org.aedit.aedit.AddNameAnnotationToField#getVariable()
+   * @see #getAddNameAnnotationToField()
+   * @generated
+   */
+  EReference getAddNameAnnotationToField_Variable();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.AddNameAnnotationToField#getAnnotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Annotation</em>'.
+   * @see org.aedit.aedit.AddNameAnnotationToField#getAnnotation()
+   * @see #getAddNameAnnotationToField()
+   * @generated
+   */
+  EReference getAddNameAnnotationToField_Annotation();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.RemoveAnnotationFromSchema <em>Remove Annotation From Schema</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Remove Annotation From Schema</em>'.
+   * @see org.aedit.aedit.RemoveAnnotationFromSchema
+   * @generated
+   */
+  EClass getRemoveAnnotationFromSchema();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.RemoveAnnotationFromSchema#getSchemaType <em>Schema Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Schema Type</em>'.
+   * @see org.aedit.aedit.RemoveAnnotationFromSchema#getSchemaType()
+   * @see #getRemoveAnnotationFromSchema()
+   * @generated
+   */
+  EAttribute getRemoveAnnotationFromSchema_SchemaType();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.RemoveAnnotationFromSchema#getSchema <em>Schema</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Schema</em>'.
+   * @see org.aedit.aedit.RemoveAnnotationFromSchema#getSchema()
+   * @see #getRemoveAnnotationFromSchema()
+   * @generated
+   */
+  EReference getRemoveAnnotationFromSchema_Schema();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.RemoveAnnotationFromSchema#getAnnotationToRemove <em>Annotation To Remove</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Annotation To Remove</em>'.
+   * @see org.aedit.aedit.RemoveAnnotationFromSchema#getAnnotationToRemove()
+   * @see #getRemoveAnnotationFromSchema()
+   * @generated
+   */
+  EReference getRemoveAnnotationFromSchema_AnnotationToRemove();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.RemoveAnnotationFromField <em>Remove Annotation From Field</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Remove Annotation From Field</em>'.
+   * @see org.aedit.aedit.RemoveAnnotationFromField
+   * @generated
+   */
+  EClass getRemoveAnnotationFromField();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.RemoveAnnotationFromField#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Variable</em>'.
+   * @see org.aedit.aedit.RemoveAnnotationFromField#getVariable()
+   * @see #getRemoveAnnotationFromField()
+   * @generated
+   */
+  EReference getRemoveAnnotationFromField_Variable();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.RemoveAnnotationFromField#getAnnotationToRemove <em>Annotation To Remove</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Annotation To Remove</em>'.
+   * @see org.aedit.aedit.RemoveAnnotationFromField#getAnnotationToRemove()
+   * @see #getRemoveAnnotationFromField()
+   * @generated
+   */
+  EReference getRemoveAnnotationFromField_AnnotationToRemove();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.RemoveNameAnnotationFromField <em>Remove Name Annotation From Field</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Remove Name Annotation From Field</em>'.
+   * @see org.aedit.aedit.RemoveNameAnnotationFromField
+   * @generated
+   */
+  EClass getRemoveNameAnnotationFromField();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.RemoveNameAnnotationFromField#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Variable</em>'.
+   * @see org.aedit.aedit.RemoveNameAnnotationFromField#getVariable()
+   * @see #getRemoveNameAnnotationFromField()
+   * @generated
+   */
+  EReference getRemoveNameAnnotationFromField_Variable();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.RemoveNameAnnotationFromField#getAnnotationToRemove <em>Annotation To Remove</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Annotation To Remove</em>'.
+   * @see org.aedit.aedit.RemoveNameAnnotationFromField#getAnnotationToRemove()
+   * @see #getRemoveNameAnnotationFromField()
+   * @generated
+   */
+  EReference getRemoveNameAnnotationFromField_AnnotationToRemove();
+
+  /**
    * Returns the meta object for class '{@link org.aedit.aedit.ChangeSchema <em>Change Schema</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1391,6 +2384,17 @@ public interface AeditPackage extends EPackage
    * @generated
    */
   EClass getChangeSchema();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.ChangeSchema#getSchemaType <em>Schema Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Schema Type</em>'.
+   * @see org.aedit.aedit.ChangeSchema#getSchemaType()
+   * @see #getChangeSchema()
+   * @generated
+   */
+  EAttribute getChangeSchema_SchemaType();
 
   /**
    * Returns the meta object for the reference '{@link org.aedit.aedit.ChangeSchema#getSchema <em>Schema</em>}'.
@@ -1509,6 +2513,38 @@ public interface AeditPackage extends EPackage
    * @generated
    */
   EReference getAddRecord_Fields();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.AddError <em>Add Error</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Add Error</em>'.
+   * @see org.aedit.aedit.AddError
+   * @generated
+   */
+  EClass getAddError();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.AddError#getErrorName <em>Error Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Error Name</em>'.
+   * @see org.aedit.aedit.AddError#getErrorName()
+   * @see #getAddError()
+   * @generated
+   */
+  EAttribute getAddError_ErrorName();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.aedit.aedit.AddError#getFields <em>Fields</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Fields</em>'.
+   * @see org.aedit.aedit.AddError#getFields()
+   * @see #getAddError()
+   * @generated
+   */
+  EReference getAddError_Fields();
 
   /**
    * Returns the meta object for class '{@link org.aedit.aedit.AddEnumeration <em>Add Enumeration</em>}'.
@@ -1852,6 +2888,69 @@ public interface AeditPackage extends EPackage
   EAttribute getChangeType_NewType();
 
   /**
+   * Returns the meta object for class '{@link org.aedit.aedit.RemoveArrayValue <em>Remove Array Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Remove Array Value</em>'.
+   * @see org.aedit.aedit.RemoveArrayValue
+   * @generated
+   */
+  EClass getRemoveArrayValue();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.RemoveArrayValue#getValueToRemove <em>Value To Remove</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value To Remove</em>'.
+   * @see org.aedit.aedit.RemoveArrayValue#getValueToRemove()
+   * @see #getRemoveArrayValue()
+   * @generated
+   */
+  EReference getRemoveArrayValue_ValueToRemove();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.RemoveArrayValueAtIndex <em>Remove Array Value At Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Remove Array Value At Index</em>'.
+   * @see org.aedit.aedit.RemoveArrayValueAtIndex
+   * @generated
+   */
+  EClass getRemoveArrayValueAtIndex();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.RemoveArrayValueAtIndex#getIndex <em>Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Index</em>'.
+   * @see org.aedit.aedit.RemoveArrayValueAtIndex#getIndex()
+   * @see #getRemoveArrayValueAtIndex()
+   * @generated
+   */
+  EAttribute getRemoveArrayValueAtIndex_Index();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.AddValueToArray <em>Add Value To Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Add Value To Array</em>'.
+   * @see org.aedit.aedit.AddValueToArray
+   * @generated
+   */
+  EClass getAddValueToArray();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.AddValueToArray#getIndex <em>Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Index</em>'.
+   * @see org.aedit.aedit.AddValueToArray#getIndex()
+   * @see #getAddValueToArray()
+   * @generated
+   */
+  EAttribute getAddValueToArray_Index();
+
+  /**
    * Returns the meta object for class '{@link org.aedit.aedit.Field <em>Field</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1862,15 +2961,26 @@ public interface AeditPackage extends EPackage
   EClass getField();
 
   /**
-   * Returns the meta object for the attribute '{@link org.aedit.aedit.Field#getVarName <em>Var Name</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.aedit.aedit.Field#getAnnotations <em>Annotations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Var Name</em>'.
-   * @see org.aedit.aedit.Field#getVarName()
+   * @return the meta object for the containment reference list '<em>Annotations</em>'.
+   * @see org.aedit.aedit.Field#getAnnotations()
    * @see #getField()
    * @generated
    */
-  EAttribute getField_VarName();
+  EReference getField_Annotations();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.Field#getFieldType <em>Field Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Field Type</em>'.
+   * @see org.aedit.aedit.Field#getFieldType()
+   * @see #getField()
+   * @generated
+   */
+  EReference getField_FieldType();
 
   /**
    * Returns the meta object for class '{@link org.aedit.aedit.CustomTypeField <em>Custom Type Field</em>}'.
@@ -1883,15 +2993,37 @@ public interface AeditPackage extends EPackage
   EClass getCustomTypeField();
 
   /**
-   * Returns the meta object for the reference '{@link org.aedit.aedit.CustomTypeField#getType <em>Type</em>}'.
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.CustomTypeField#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Type</em>'.
+   * @return the meta object for the containment reference '<em>Type</em>'.
    * @see org.aedit.aedit.CustomTypeField#getType()
    * @see #getCustomTypeField()
    * @generated
    */
   EReference getCustomTypeField_Type();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.aedit.aedit.CustomTypeField#getNameAnnotations <em>Name Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Name Annotations</em>'.
+   * @see org.aedit.aedit.CustomTypeField#getNameAnnotations()
+   * @see #getCustomTypeField()
+   * @generated
+   */
+  EReference getCustomTypeField_NameAnnotations();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.CustomTypeField#getVarName <em>Var Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Var Name</em>'.
+   * @see org.aedit.aedit.CustomTypeField#getVarName()
+   * @see #getCustomTypeField()
+   * @generated
+   */
+  EAttribute getCustomTypeField_VarName();
 
   /**
    * Returns the meta object for class '{@link org.aedit.aedit.PrimitiveTypeField <em>Primitive Type Field</em>}'.
@@ -1904,15 +3036,37 @@ public interface AeditPackage extends EPackage
   EClass getPrimitiveTypeField();
 
   /**
-   * Returns the meta object for the attribute '{@link org.aedit.aedit.PrimitiveTypeField#getType <em>Type</em>}'.
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.PrimitiveTypeField#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
+   * @return the meta object for the containment reference '<em>Type</em>'.
    * @see org.aedit.aedit.PrimitiveTypeField#getType()
    * @see #getPrimitiveTypeField()
    * @generated
    */
-  EAttribute getPrimitiveTypeField_Type();
+  EReference getPrimitiveTypeField_Type();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.aedit.aedit.PrimitiveTypeField#getNameAnnotations <em>Name Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Name Annotations</em>'.
+   * @see org.aedit.aedit.PrimitiveTypeField#getNameAnnotations()
+   * @see #getPrimitiveTypeField()
+   * @generated
+   */
+  EReference getPrimitiveTypeField_NameAnnotations();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.PrimitiveTypeField#getVarName <em>Var Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Var Name</em>'.
+   * @see org.aedit.aedit.PrimitiveTypeField#getVarName()
+   * @see #getPrimitiveTypeField()
+   * @generated
+   */
+  EAttribute getPrimitiveTypeField_VarName();
 
   /**
    * Returns the meta object for the containment reference '{@link org.aedit.aedit.PrimitiveTypeField#getValue <em>Value</em>}'.
@@ -1924,6 +3078,239 @@ public interface AeditPackage extends EPackage
    * @generated
    */
   EReference getPrimitiveTypeField_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.ComplexTypeField <em>Complex Type Field</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Complex Type Field</em>'.
+   * @see org.aedit.aedit.ComplexTypeField
+   * @generated
+   */
+  EClass getComplexTypeField();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.ComplexTypeField#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Type</em>'.
+   * @see org.aedit.aedit.ComplexTypeField#getType()
+   * @see #getComplexTypeField()
+   * @generated
+   */
+  EReference getComplexTypeField_Type();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.aedit.aedit.ComplexTypeField#getNameAnnotations <em>Name Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Name Annotations</em>'.
+   * @see org.aedit.aedit.ComplexTypeField#getNameAnnotations()
+   * @see #getComplexTypeField()
+   * @generated
+   */
+  EReference getComplexTypeField_NameAnnotations();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.ComplexTypeField#getVarName <em>Var Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Var Name</em>'.
+   * @see org.aedit.aedit.ComplexTypeField#getVarName()
+   * @see #getComplexTypeField()
+   * @generated
+   */
+  EAttribute getComplexTypeField_VarName();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.ComplexTypeField#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see org.aedit.aedit.ComplexTypeField#getValue()
+   * @see #getComplexTypeField()
+   * @generated
+   */
+  EReference getComplexTypeField_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.ArrayTypeField <em>Array Type Field</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Array Type Field</em>'.
+   * @see org.aedit.aedit.ArrayTypeField
+   * @generated
+   */
+  EClass getArrayTypeField();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.ArrayTypeField#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Type</em>'.
+   * @see org.aedit.aedit.ArrayTypeField#getType()
+   * @see #getArrayTypeField()
+   * @generated
+   */
+  EReference getArrayTypeField_Type();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.AnnotatedTypes <em>Annotated Types</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Annotated Types</em>'.
+   * @see org.aedit.aedit.AnnotatedTypes
+   * @generated
+   */
+  EClass getAnnotatedTypes();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.aedit.aedit.AnnotatedTypes#getAnnotataions <em>Annotataions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Annotataions</em>'.
+   * @see org.aedit.aedit.AnnotatedTypes#getAnnotataions()
+   * @see #getAnnotatedTypes()
+   * @generated
+   */
+  EReference getAnnotatedTypes_Annotataions();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.AnnotatedTypes#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Type</em>'.
+   * @see org.aedit.aedit.AnnotatedTypes#getType()
+   * @see #getAnnotatedTypes()
+   * @generated
+   */
+  EReference getAnnotatedTypes_Type();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.Types <em>Types</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Types</em>'.
+   * @see org.aedit.aedit.Types
+   * @generated
+   */
+  EClass getTypes();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.CustomType <em>Custom Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Custom Type</em>'.
+   * @see org.aedit.aedit.CustomType
+   * @generated
+   */
+  EClass getCustomType();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.CustomType#getTarget <em>Target</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Target</em>'.
+   * @see org.aedit.aedit.CustomType#getTarget()
+   * @see #getCustomType()
+   * @generated
+   */
+  EReference getCustomType_Target();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.PrimitiveType <em>Primitive Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Primitive Type</em>'.
+   * @see org.aedit.aedit.PrimitiveType
+   * @generated
+   */
+  EClass getPrimitiveType();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.PrimitiveType#getTarget <em>Target</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Target</em>'.
+   * @see org.aedit.aedit.PrimitiveType#getTarget()
+   * @see #getPrimitiveType()
+   * @generated
+   */
+  EAttribute getPrimitiveType_Target();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.Annotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Annotation</em>'.
+   * @see org.aedit.aedit.Annotation
+   * @generated
+   */
+  EClass getAnnotation();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.aedit.aedit.Annotation#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.aedit.aedit.Annotation#getName()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EAttribute getAnnotation_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.Annotation#getValues <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Values</em>'.
+   * @see org.aedit.aedit.Annotation#getValues()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EReference getAnnotation_Values();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.Values <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Values</em>'.
+   * @see org.aedit.aedit.Values
+   * @generated
+   */
+  EClass getValues();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.aedit.aedit.Values#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Value</em>'.
+   * @see org.aedit.aedit.Values#getValue()
+   * @see #getValues()
+   * @generated
+   */
+  EReference getValues_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.aedit.aedit.Array <em>Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Array</em>'.
+   * @see org.aedit.aedit.Array
+   * @generated
+   */
+  EClass getArray();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.Array#getValues <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Values</em>'.
+   * @see org.aedit.aedit.Array#getValues()
+   * @see #getArray()
+   * @generated
+   */
+  EReference getArray_Values();
 
   /**
    * Returns the meta object for class '{@link org.aedit.aedit.Value <em>Value</em>}'.
@@ -2230,6 +3617,24 @@ public interface AeditPackage extends EPackage
     EClass SCHEMA_RULE = eINSTANCE.getSchemaRule();
 
     /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.ArrayEditRulesImpl <em>Array Edit Rules</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.ArrayEditRulesImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getArrayEditRules()
+     * @generated
+     */
+    EClass ARRAY_EDIT_RULES = eINSTANCE.getArrayEditRules();
+
+    /**
+     * The meta object literal for the '<em><b>Array</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ARRAY_EDIT_RULES__ARRAY = eINSTANCE.getArrayEditRules_Array();
+
+    /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.EnumRuleImpl <em>Enum Rule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2240,6 +3645,178 @@ public interface AeditPackage extends EPackage
     EClass ENUM_RULE = eINSTANCE.getEnumRule();
 
     /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.AddAnnotationToSchemaImpl <em>Add Annotation To Schema</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.AddAnnotationToSchemaImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getAddAnnotationToSchema()
+     * @generated
+     */
+    EClass ADD_ANNOTATION_TO_SCHEMA = eINSTANCE.getAddAnnotationToSchema();
+
+    /**
+     * The meta object literal for the '<em><b>Schema Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ADD_ANNOTATION_TO_SCHEMA__SCHEMA_TYPE = eINSTANCE.getAddAnnotationToSchema_SchemaType();
+
+    /**
+     * The meta object literal for the '<em><b>Schema</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_ANNOTATION_TO_SCHEMA__SCHEMA = eINSTANCE.getAddAnnotationToSchema_Schema();
+
+    /**
+     * The meta object literal for the '<em><b>Annotation</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_ANNOTATION_TO_SCHEMA__ANNOTATION = eINSTANCE.getAddAnnotationToSchema_Annotation();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.AddAnnotationToFieldImpl <em>Add Annotation To Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.AddAnnotationToFieldImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getAddAnnotationToField()
+     * @generated
+     */
+    EClass ADD_ANNOTATION_TO_FIELD = eINSTANCE.getAddAnnotationToField();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_ANNOTATION_TO_FIELD__VARIABLE = eINSTANCE.getAddAnnotationToField_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Annotation</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_ANNOTATION_TO_FIELD__ANNOTATION = eINSTANCE.getAddAnnotationToField_Annotation();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.AddNameAnnotationToFieldImpl <em>Add Name Annotation To Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.AddNameAnnotationToFieldImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getAddNameAnnotationToField()
+     * @generated
+     */
+    EClass ADD_NAME_ANNOTATION_TO_FIELD = eINSTANCE.getAddNameAnnotationToField();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE = eINSTANCE.getAddNameAnnotationToField_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Annotation</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION = eINSTANCE.getAddNameAnnotationToField_Annotation();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.RemoveAnnotationFromSchemaImpl <em>Remove Annotation From Schema</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.RemoveAnnotationFromSchemaImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveAnnotationFromSchema()
+     * @generated
+     */
+    EClass REMOVE_ANNOTATION_FROM_SCHEMA = eINSTANCE.getRemoveAnnotationFromSchema();
+
+    /**
+     * The meta object literal for the '<em><b>Schema Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE = eINSTANCE.getRemoveAnnotationFromSchema_SchemaType();
+
+    /**
+     * The meta object literal for the '<em><b>Schema</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA = eINSTANCE.getRemoveAnnotationFromSchema_Schema();
+
+    /**
+     * The meta object literal for the '<em><b>Annotation To Remove</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE = eINSTANCE.getRemoveAnnotationFromSchema_AnnotationToRemove();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.RemoveAnnotationFromFieldImpl <em>Remove Annotation From Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.RemoveAnnotationFromFieldImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveAnnotationFromField()
+     * @generated
+     */
+    EClass REMOVE_ANNOTATION_FROM_FIELD = eINSTANCE.getRemoveAnnotationFromField();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_ANNOTATION_FROM_FIELD__VARIABLE = eINSTANCE.getRemoveAnnotationFromField_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Annotation To Remove</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE = eINSTANCE.getRemoveAnnotationFromField_AnnotationToRemove();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.RemoveNameAnnotationFromFieldImpl <em>Remove Name Annotation From Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.RemoveNameAnnotationFromFieldImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveNameAnnotationFromField()
+     * @generated
+     */
+    EClass REMOVE_NAME_ANNOTATION_FROM_FIELD = eINSTANCE.getRemoveNameAnnotationFromField();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE = eINSTANCE.getRemoveNameAnnotationFromField_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Annotation To Remove</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE = eINSTANCE.getRemoveNameAnnotationFromField_AnnotationToRemove();
+
+    /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.ChangeSchemaImpl <em>Change Schema</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2248,6 +3825,14 @@ public interface AeditPackage extends EPackage
      * @generated
      */
     EClass CHANGE_SCHEMA = eINSTANCE.getChangeSchema();
+
+    /**
+     * The meta object literal for the '<em><b>Schema Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CHANGE_SCHEMA__SCHEMA_TYPE = eINSTANCE.getChangeSchema_SchemaType();
 
     /**
      * The meta object literal for the '<em><b>Schema</b></em>' reference feature.
@@ -2342,6 +3927,32 @@ public interface AeditPackage extends EPackage
      * @generated
      */
     EReference ADD_RECORD__FIELDS = eINSTANCE.getAddRecord_Fields();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.AddErrorImpl <em>Add Error</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.AddErrorImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getAddError()
+     * @generated
+     */
+    EClass ADD_ERROR = eINSTANCE.getAddError();
+
+    /**
+     * The meta object literal for the '<em><b>Error Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ADD_ERROR__ERROR_NAME = eINSTANCE.getAddError_ErrorName();
+
+    /**
+     * The meta object literal for the '<em><b>Fields</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_ERROR__FIELDS = eINSTANCE.getAddError_Fields();
 
     /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.AddEnumerationImpl <em>Add Enumeration</em>}' class.
@@ -2622,6 +4233,60 @@ public interface AeditPackage extends EPackage
     EAttribute CHANGE_TYPE__NEW_TYPE = eINSTANCE.getChangeType_NewType();
 
     /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.RemoveArrayValueImpl <em>Remove Array Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.RemoveArrayValueImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveArrayValue()
+     * @generated
+     */
+    EClass REMOVE_ARRAY_VALUE = eINSTANCE.getRemoveArrayValue();
+
+    /**
+     * The meta object literal for the '<em><b>Value To Remove</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE = eINSTANCE.getRemoveArrayValue_ValueToRemove();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.RemoveArrayValueAtIndexImpl <em>Remove Array Value At Index</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.RemoveArrayValueAtIndexImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getRemoveArrayValueAtIndex()
+     * @generated
+     */
+    EClass REMOVE_ARRAY_VALUE_AT_INDEX = eINSTANCE.getRemoveArrayValueAtIndex();
+
+    /**
+     * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute REMOVE_ARRAY_VALUE_AT_INDEX__INDEX = eINSTANCE.getRemoveArrayValueAtIndex_Index();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.AddValueToArrayImpl <em>Add Value To Array</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.AddValueToArrayImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getAddValueToArray()
+     * @generated
+     */
+    EClass ADD_VALUE_TO_ARRAY = eINSTANCE.getAddValueToArray();
+
+    /**
+     * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ADD_VALUE_TO_ARRAY__INDEX = eINSTANCE.getAddValueToArray_Index();
+
+    /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.FieldImpl <em>Field</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2632,12 +4297,20 @@ public interface AeditPackage extends EPackage
     EClass FIELD = eINSTANCE.getField();
 
     /**
-     * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute FIELD__VAR_NAME = eINSTANCE.getField_VarName();
+    EReference FIELD__ANNOTATIONS = eINSTANCE.getField_Annotations();
+
+    /**
+     * The meta object literal for the '<em><b>Field Type</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FIELD__FIELD_TYPE = eINSTANCE.getField_FieldType();
 
     /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.CustomTypeFieldImpl <em>Custom Type Field</em>}' class.
@@ -2650,12 +4323,28 @@ public interface AeditPackage extends EPackage
     EClass CUSTOM_TYPE_FIELD = eINSTANCE.getCustomTypeField();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference CUSTOM_TYPE_FIELD__TYPE = eINSTANCE.getCustomTypeField_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Name Annotations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS = eINSTANCE.getCustomTypeField_NameAnnotations();
+
+    /**
+     * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CUSTOM_TYPE_FIELD__VAR_NAME = eINSTANCE.getCustomTypeField_VarName();
 
     /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.PrimitiveTypeFieldImpl <em>Primitive Type Field</em>}' class.
@@ -2668,12 +4357,28 @@ public interface AeditPackage extends EPackage
     EClass PRIMITIVE_TYPE_FIELD = eINSTANCE.getPrimitiveTypeField();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PRIMITIVE_TYPE_FIELD__TYPE = eINSTANCE.getPrimitiveTypeField_Type();
+    EReference PRIMITIVE_TYPE_FIELD__TYPE = eINSTANCE.getPrimitiveTypeField_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Name Annotations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PRIMITIVE_TYPE_FIELD__NAME_ANNOTATIONS = eINSTANCE.getPrimitiveTypeField_NameAnnotations();
+
+    /**
+     * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRIMITIVE_TYPE_FIELD__VAR_NAME = eINSTANCE.getPrimitiveTypeField_VarName();
 
     /**
      * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
@@ -2682,6 +4387,200 @@ public interface AeditPackage extends EPackage
      * @generated
      */
     EReference PRIMITIVE_TYPE_FIELD__VALUE = eINSTANCE.getPrimitiveTypeField_Value();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.ComplexTypeFieldImpl <em>Complex Type Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.ComplexTypeFieldImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getComplexTypeField()
+     * @generated
+     */
+    EClass COMPLEX_TYPE_FIELD = eINSTANCE.getComplexTypeField();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPLEX_TYPE_FIELD__TYPE = eINSTANCE.getComplexTypeField_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Name Annotations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPLEX_TYPE_FIELD__NAME_ANNOTATIONS = eINSTANCE.getComplexTypeField_NameAnnotations();
+
+    /**
+     * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPLEX_TYPE_FIELD__VAR_NAME = eINSTANCE.getComplexTypeField_VarName();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPLEX_TYPE_FIELD__VALUE = eINSTANCE.getComplexTypeField_Value();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.ArrayTypeFieldImpl <em>Array Type Field</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.ArrayTypeFieldImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getArrayTypeField()
+     * @generated
+     */
+    EClass ARRAY_TYPE_FIELD = eINSTANCE.getArrayTypeField();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ARRAY_TYPE_FIELD__TYPE = eINSTANCE.getArrayTypeField_Type();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.AnnotatedTypesImpl <em>Annotated Types</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.AnnotatedTypesImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getAnnotatedTypes()
+     * @generated
+     */
+    EClass ANNOTATED_TYPES = eINSTANCE.getAnnotatedTypes();
+
+    /**
+     * The meta object literal for the '<em><b>Annotataions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ANNOTATED_TYPES__ANNOTATAIONS = eINSTANCE.getAnnotatedTypes_Annotataions();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ANNOTATED_TYPES__TYPE = eINSTANCE.getAnnotatedTypes_Type();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.TypesImpl <em>Types</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.TypesImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getTypes()
+     * @generated
+     */
+    EClass TYPES = eINSTANCE.getTypes();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.CustomTypeImpl <em>Custom Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.CustomTypeImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getCustomType()
+     * @generated
+     */
+    EClass CUSTOM_TYPE = eINSTANCE.getCustomType();
+
+    /**
+     * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CUSTOM_TYPE__TARGET = eINSTANCE.getCustomType_Target();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.PrimitiveTypeImpl <em>Primitive Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.PrimitiveTypeImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getPrimitiveType()
+     * @generated
+     */
+    EClass PRIMITIVE_TYPE = eINSTANCE.getPrimitiveType();
+
+    /**
+     * The meta object literal for the '<em><b>Target</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRIMITIVE_TYPE__TARGET = eINSTANCE.getPrimitiveType_Target();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.AnnotationImpl <em>Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.AnnotationImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getAnnotation()
+     * @generated
+     */
+    EClass ANNOTATION = eINSTANCE.getAnnotation();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ANNOTATION__NAME = eINSTANCE.getAnnotation_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Values</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ANNOTATION__VALUES = eINSTANCE.getAnnotation_Values();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.ValuesImpl <em>Values</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.ValuesImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getValues()
+     * @generated
+     */
+    EClass VALUES = eINSTANCE.getValues();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VALUES__VALUE = eINSTANCE.getValues_Value();
+
+    /**
+     * The meta object literal for the '{@link org.aedit.aedit.impl.ArrayImpl <em>Array</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.aedit.aedit.impl.ArrayImpl
+     * @see org.aedit.aedit.impl.AeditPackageImpl#getArray()
+     * @generated
+     */
+    EClass ARRAY = eINSTANCE.getArray();
+
+    /**
+     * The meta object literal for the '<em><b>Values</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ARRAY__VALUES = eINSTANCE.getArray_Values();
 
     /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.ValueImpl <em>Value</em>}' class.

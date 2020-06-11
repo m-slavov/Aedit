@@ -5,6 +5,7 @@ package org.aedit.validation;
 
 import HelperClass.HelperClass;
 import avroclipse.avroIDL.AvroIDLFile;
+import avroclipse.avroIDL.Field;
 import avroclipse.avroIDL.FieldType;
 import avroclipse.avroIDL.PrimativeTypeLink;
 import avroclipse.avroIDL.RecordType;
@@ -19,14 +20,11 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import org.aedit.aedit.AddEnum;
 import org.aedit.aedit.AddEnumeration;
-import org.aedit.aedit.AddRecord;
-import org.aedit.aedit.AddVariable;
 import org.aedit.aedit.AeditPackage;
 import org.aedit.aedit.ChangeDefValue;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
 import org.aedit.aedit.ChangeType;
-import org.aedit.aedit.Field;
 import org.aedit.aedit.FloatValue;
 import org.aedit.aedit.GenericRule;
 import org.aedit.aedit.IntValue;
@@ -485,35 +483,6 @@ public class AeditValidator extends AbstractAeditValidator {
   }
   
   @Check
-  public void checkAddRecord(final AddRecord addRecord) {
-    String _name = addRecord.getNamespace().getName();
-    String _plus = (_name + ".");
-    String _recordName = addRecord.getRecordName();
-    String recordName = (_plus + _recordName);
-    boolean _contains = this.existingVariables.contains(recordName);
-    if (_contains) {
-      this.error("Record with this name already exists in this namespace!", 
-        AeditPackage.Literals.ADD_RECORD__RECORD_NAME, AeditValidator.DUPLICATE_FIELD, recordName);
-    } else {
-      this.newVariables.add(recordName);
-      EList<Field> _fields = addRecord.getFields();
-      for (final Field field : _fields) {
-        {
-          String _varName = field.getVarName();
-          String varName = ((recordName + ".") + _varName);
-          boolean _contains_1 = this.newVariables.contains(varName);
-          if (_contains_1) {
-            this.error("Variable with this name already exists!", AeditPackage.Literals.ADD_RECORD__FIELDS, 
-              addRecord.getFields().indexOf(field));
-          } else {
-            this.newVariables.add(varName);
-          }
-        }
-      }
-    }
-  }
-  
-  @Check
   public void checkAddEnumeration(final AddEnumeration addEnumeration) {
     String _name = addEnumeration.getNamespace().getName();
     String _plus = (_name + ".");
@@ -549,25 +518,6 @@ public class AeditValidator extends AbstractAeditValidator {
     if (_contains) {
       this.error("Field with this name already exists!", AeditPackage.Literals.ADD_ENUM__VAR_NAME, AeditValidator.DUPLICATE_FIELD, fullName);
     }
-  }
-  
-  @Check
-  public Boolean checkAddVariable(final AddVariable addVariable) {
-    boolean _xblockexpression = false;
-    {
-      String _varName = addVariable.getNewVar().getVarName();
-      String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _varName);
-      boolean _xifexpression = false;
-      boolean _isUnique = this.isUnique(fullName);
-      boolean _not = (!_isUnique);
-      if (_not) {
-        _xifexpression = this.newVariables.add(fullName);
-      } else {
-        this.error("Field with this name already exists!", AeditPackage.Literals.ADD_VARIABLE__NEW_VAR, AeditValidator.DUPLICATE_FIELD, fullName);
-      }
-      _xblockexpression = _xifexpression;
-    }
-    return Boolean.valueOf(_xblockexpression);
   }
   
   @Check
@@ -709,16 +659,16 @@ public class AeditValidator extends AbstractAeditValidator {
     }
   }
   
-  public avroclipse.avroIDL.Field getVariable(final String currentProtocol, final String currentSchema, final String fieldName) {
-    final Function1<avroclipse.avroIDL.Field, Boolean> _function = (avroclipse.avroIDL.Field it) -> {
+  public Field getVariable(final String currentProtocol, final String currentSchema, final String fieldName) {
+    final Function1<Field, Boolean> _function = (Field it) -> {
       return Boolean.valueOf(it.getName().equals(fieldName));
     };
-    List<avroclipse.avroIDL.Field> field = IteratorExtensions.<avroclipse.avroIDL.Field>toList(IteratorExtensions.<avroclipse.avroIDL.Field>filter(Iterators.<avroclipse.avroIDL.Field>filter(AeditValidator.protocols.get(currentProtocol).eAllContents(), avroclipse.avroIDL.Field.class), _function));
-    final Function1<avroclipse.avroIDL.Field, Boolean> _function_1 = (avroclipse.avroIDL.Field it) -> {
+    List<Field> field = IteratorExtensions.<Field>toList(IteratorExtensions.<Field>filter(Iterators.<Field>filter(AeditValidator.protocols.get(currentProtocol).eAllContents(), Field.class), _function));
+    final Function1<Field, Boolean> _function_1 = (Field it) -> {
       EObject _eContainer = it.eContainer();
       return Boolean.valueOf(((RecordType) _eContainer).getName().equals(currentSchema));
     };
-    return IterableExtensions.<avroclipse.avroIDL.Field>toList(IterableExtensions.<avroclipse.avroIDL.Field>filter(field, _function_1)).get(0);
+    return IterableExtensions.<Field>toList(IterableExtensions.<Field>filter(field, _function_1)).get(0);
   }
   
   public boolean isUnique(final String fullName) {

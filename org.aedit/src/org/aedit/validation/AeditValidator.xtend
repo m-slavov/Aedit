@@ -338,28 +338,28 @@ class AeditValidator extends AbstractAeditValidator {
 
 	}
 
-	@Check
-	def checkAddRecord(AddRecord addRecord) {
-		var recordName = addRecord.namespace.name + '.' + addRecord.recordName
-
-		if (existingVariables.contains(recordName)) {
-			error("Record with this name already exists in this namespace!",
-				AeditPackage.Literals.ADD_RECORD__RECORD_NAME, DUPLICATE_FIELD, recordName)
-		} else {
-			newVariables.add(recordName)
-
-			for (field : addRecord.fields) {
-				var varName = recordName + '.' + field.varName
-				if (newVariables.contains(varName)) {
-					error("Variable with this name already exists!", AeditPackage.Literals.ADD_RECORD__FIELDS,
-						addRecord.fields.indexOf(field))
-				} else {
-					newVariables.add(varName)
-				}
-			}
-		}
-
-	}
+//	@Check
+//	def checkAddRecord(AddRecord addRecord) {
+//		var recordName = addRecord.namespace.name + '.' + addRecord.recordName
+//
+//		if (existingVariables.contains(recordName)) {
+//			error("Record with this name already exists in this namespace!",
+//				AeditPackage.Literals.ADD_RECORD__RECORD_NAME, DUPLICATE_FIELD, recordName)
+//		} else {
+//			newVariables.add(recordName)
+//
+//			for (field : addRecord.fields) {
+//				var varName = recordName + '.' + field.fieldType.varName
+//				if (newVariables.contains(varName)) {
+//					error("Variable with this name already exists!", AeditPackage.Literals.ADD_RECORD__FIELDS,
+//						addRecord.fields.indexOf(field))
+//				} else {
+//					newVariables.add(varName)
+//				}
+//			}
+//		}
+//
+//	}
 
 	@Check
 	def checkAddEnumeration(AddEnumeration addEnumeration) {
@@ -396,16 +396,16 @@ class AeditValidator extends AbstractAeditValidator {
 
 	}
 
-	@Check
-	def checkAddVariable(AddVariable addVariable) {
-		var fullName = currentProtocol + '.' + currentSchema + '.' + addVariable.newVar.varName
-		if (!isUnique(fullName)) {
-			newVariables.add(fullName)
-		} else {
-			error("Field with this name already exists!", AeditPackage.Literals.ADD_VARIABLE__NEW_VAR, DUPLICATE_FIELD,
-				fullName)
-		}
-	}
+//	@Check
+//	def checkAddVariable(AddVariable addVariable) {
+//		var fullName = currentProtocol + '.' + currentSchema + '.' + addVariable.newVar.varName
+//		if (!isUnique(fullName)) {
+//			newVariables.add(fullName)
+//		} else {
+//			error("Field with this name already exists!", AeditPackage.Literals.ADD_VARIABLE__NEW_VAR, DUPLICATE_FIELD,
+//				fullName)
+//		}
+//	}
 
 	@Check
 	def checkField(PrimitiveTypeField field) {

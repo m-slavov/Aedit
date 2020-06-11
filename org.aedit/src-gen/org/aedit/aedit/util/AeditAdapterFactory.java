@@ -111,9 +111,44 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
         return createSchemaRuleAdapter();
       }
       @Override
+      public Adapter caseArrayEditRules(ArrayEditRules object)
+      {
+        return createArrayEditRulesAdapter();
+      }
+      @Override
       public Adapter caseEnumRule(EnumRule object)
       {
         return createEnumRuleAdapter();
+      }
+      @Override
+      public Adapter caseAddAnnotationToSchema(AddAnnotationToSchema object)
+      {
+        return createAddAnnotationToSchemaAdapter();
+      }
+      @Override
+      public Adapter caseAddAnnotationToField(AddAnnotationToField object)
+      {
+        return createAddAnnotationToFieldAdapter();
+      }
+      @Override
+      public Adapter caseAddNameAnnotationToField(AddNameAnnotationToField object)
+      {
+        return createAddNameAnnotationToFieldAdapter();
+      }
+      @Override
+      public Adapter caseRemoveAnnotationFromSchema(RemoveAnnotationFromSchema object)
+      {
+        return createRemoveAnnotationFromSchemaAdapter();
+      }
+      @Override
+      public Adapter caseRemoveAnnotationFromField(RemoveAnnotationFromField object)
+      {
+        return createRemoveAnnotationFromFieldAdapter();
+      }
+      @Override
+      public Adapter caseRemoveNameAnnotationFromField(RemoveNameAnnotationFromField object)
+      {
+        return createRemoveNameAnnotationFromFieldAdapter();
       }
       @Override
       public Adapter caseChangeSchema(ChangeSchema object)
@@ -134,6 +169,11 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAddRecord(AddRecord object)
       {
         return createAddRecordAdapter();
+      }
+      @Override
+      public Adapter caseAddError(AddError object)
+      {
+        return createAddErrorAdapter();
       }
       @Override
       public Adapter caseAddEnumeration(AddEnumeration object)
@@ -191,6 +231,21 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
         return createChangeTypeAdapter();
       }
       @Override
+      public Adapter caseRemoveArrayValue(RemoveArrayValue object)
+      {
+        return createRemoveArrayValueAdapter();
+      }
+      @Override
+      public Adapter caseRemoveArrayValueAtIndex(RemoveArrayValueAtIndex object)
+      {
+        return createRemoveArrayValueAtIndexAdapter();
+      }
+      @Override
+      public Adapter caseAddValueToArray(AddValueToArray object)
+      {
+        return createAddValueToArrayAdapter();
+      }
+      @Override
       public Adapter caseField(Field object)
       {
         return createFieldAdapter();
@@ -204,6 +259,51 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
       public Adapter casePrimitiveTypeField(PrimitiveTypeField object)
       {
         return createPrimitiveTypeFieldAdapter();
+      }
+      @Override
+      public Adapter caseComplexTypeField(ComplexTypeField object)
+      {
+        return createComplexTypeFieldAdapter();
+      }
+      @Override
+      public Adapter caseArrayTypeField(ArrayTypeField object)
+      {
+        return createArrayTypeFieldAdapter();
+      }
+      @Override
+      public Adapter caseAnnotatedTypes(AnnotatedTypes object)
+      {
+        return createAnnotatedTypesAdapter();
+      }
+      @Override
+      public Adapter caseTypes(Types object)
+      {
+        return createTypesAdapter();
+      }
+      @Override
+      public Adapter caseCustomType(CustomType object)
+      {
+        return createCustomTypeAdapter();
+      }
+      @Override
+      public Adapter casePrimitiveType(PrimitiveType object)
+      {
+        return createPrimitiveTypeAdapter();
+      }
+      @Override
+      public Adapter caseAnnotation(Annotation object)
+      {
+        return createAnnotationAdapter();
+      }
+      @Override
+      public Adapter caseValues(Values object)
+      {
+        return createValuesAdapter();
+      }
+      @Override
+      public Adapter caseArray(Array object)
+      {
+        return createArrayAdapter();
       }
       @Override
       public Adapter caseValue(Value object)
@@ -363,6 +463,21 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.ArrayEditRules <em>Array Edit Rules</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.ArrayEditRules
+   * @generated
+   */
+  public Adapter createArrayEditRulesAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.aedit.aedit.EnumRule <em>Enum Rule</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -373,6 +488,96 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEnumRuleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.AddAnnotationToSchema <em>Add Annotation To Schema</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.AddAnnotationToSchema
+   * @generated
+   */
+  public Adapter createAddAnnotationToSchemaAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.AddAnnotationToField <em>Add Annotation To Field</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.AddAnnotationToField
+   * @generated
+   */
+  public Adapter createAddAnnotationToFieldAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.AddNameAnnotationToField <em>Add Name Annotation To Field</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.AddNameAnnotationToField
+   * @generated
+   */
+  public Adapter createAddNameAnnotationToFieldAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.RemoveAnnotationFromSchema <em>Remove Annotation From Schema</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.RemoveAnnotationFromSchema
+   * @generated
+   */
+  public Adapter createRemoveAnnotationFromSchemaAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.RemoveAnnotationFromField <em>Remove Annotation From Field</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.RemoveAnnotationFromField
+   * @generated
+   */
+  public Adapter createRemoveAnnotationFromFieldAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.RemoveNameAnnotationFromField <em>Remove Name Annotation From Field</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.RemoveNameAnnotationFromField
+   * @generated
+   */
+  public Adapter createRemoveNameAnnotationFromFieldAdapter()
   {
     return null;
   }
@@ -433,6 +638,21 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAddRecordAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.AddError <em>Add Error</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.AddError
+   * @generated
+   */
+  public Adapter createAddErrorAdapter()
   {
     return null;
   }
@@ -603,6 +823,51 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.RemoveArrayValue <em>Remove Array Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.RemoveArrayValue
+   * @generated
+   */
+  public Adapter createRemoveArrayValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.RemoveArrayValueAtIndex <em>Remove Array Value At Index</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.RemoveArrayValueAtIndex
+   * @generated
+   */
+  public Adapter createRemoveArrayValueAtIndexAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.AddValueToArray <em>Add Value To Array</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.AddValueToArray
+   * @generated
+   */
+  public Adapter createAddValueToArrayAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.aedit.aedit.Field <em>Field</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -643,6 +908,141 @@ public class AeditAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPrimitiveTypeFieldAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.ComplexTypeField <em>Complex Type Field</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.ComplexTypeField
+   * @generated
+   */
+  public Adapter createComplexTypeFieldAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.ArrayTypeField <em>Array Type Field</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.ArrayTypeField
+   * @generated
+   */
+  public Adapter createArrayTypeFieldAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.AnnotatedTypes <em>Annotated Types</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.AnnotatedTypes
+   * @generated
+   */
+  public Adapter createAnnotatedTypesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.Types <em>Types</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.Types
+   * @generated
+   */
+  public Adapter createTypesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.CustomType <em>Custom Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.CustomType
+   * @generated
+   */
+  public Adapter createCustomTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.PrimitiveType <em>Primitive Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.PrimitiveType
+   * @generated
+   */
+  public Adapter createPrimitiveTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.Annotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.Annotation
+   * @generated
+   */
+  public Adapter createAnnotationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.Values <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.Values
+   * @generated
+   */
+  public Adapter createValuesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.aedit.aedit.Array <em>Array</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.aedit.aedit.Array
+   * @generated
+   */
+  public Adapter createArrayAdapter()
   {
     return null;
   }

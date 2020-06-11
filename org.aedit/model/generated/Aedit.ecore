@@ -32,8 +32,41 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GenericRule"/>
   <eClassifiers xsi:type="ecore:EClass" name="SchemaRule"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ArrayEditRules" eSuperTypes="#//SchemaRule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="array" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Field"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EnumRule"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AddAnnotationToSchema" eSuperTypes="#//GenericRule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="schemaType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotation" eType="#//Annotation"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AddAnnotationToField" eSuperTypes="#//SchemaRule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Field"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotation" eType="#//Annotation"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AddNameAnnotationToField" eSuperTypes="#//SchemaRule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Field"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotation" eType="#//Annotation"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RemoveAnnotationFromSchema" eSuperTypes="#//GenericRule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="schemaType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotationToRemove" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Annotation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RemoveAnnotationFromField" eSuperTypes="#//SchemaRule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Field"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotationToRemove" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Annotation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RemoveNameAnnotationFromField" eSuperTypes="#//SchemaRule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Field"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotationToRemove" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Annotation"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ChangeSchema" eSuperTypes="#//GenericRule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="schemaType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//SchemaRule" containment="true"/>
@@ -49,6 +82,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AddRecord" eSuperTypes="#//Add">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
+        eType="#//Field" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AddError" eSuperTypes="#//Add">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="errorName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
         eType="#//Field" containment="true"/>
   </eClassifiers>
@@ -98,15 +136,75 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="field" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Field"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RemoveArrayValue" eSuperTypes="#//ArrayEditRules">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueToRemove" eType="#//Value"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RemoveArrayValueAtIndex" eSuperTypes="#//ArrayEditRules">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AddValueToArray" eSuperTypes="#//ArrayEditRules">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Field">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
+        eType="#//Annotation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fieldType" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomTypeField">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//CustomType"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nameAnnotations" upperBound="-1"
+        eType="#//Annotation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CustomTypeField" eSuperTypes="#//Field">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Type"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveTypeField" eSuperTypes="#//Field">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveTypeField">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//PrimitiveType"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nameAnnotations" upperBound="-1"
+        eType="#//Annotation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Value"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComplexTypeField">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//ArrayTypeField"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nameAnnotations" upperBound="-1"
+        eType="#//Annotation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Array"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArrayTypeField" eSuperTypes="#//Types">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//AnnotatedTypes"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AnnotatedTypes">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotataions" upperBound="-1"
+        eType="#//Annotation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Types"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Types"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomType" eSuperTypes="#//Types">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass platform:/resource/avroclipse/model/generated/AvroIDL.ecore#//Type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveType" eSuperTypes="#//Types">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="target" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Annotation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" eType="#//Values"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Values">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Array">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" eType="#//Values"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Value"/>

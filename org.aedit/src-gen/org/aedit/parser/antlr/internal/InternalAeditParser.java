@@ -17,12 +17,14 @@ import org.antlr.runtime.*;
 import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.Map;
+import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalAeditParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'feature'", "':'", "'{'", "'}'", "'use'", "';'", "'ruleset'", "'rule'", "'change'", "'record'", "'error'", "'enum'", "'add.at'", "'('", "')'", "'.'", "','", "'remove'", "'rename'", "'=>'", "'set_val'", "'set_type'", "'='", "'null'", "'-'", "'true'", "'false'", "'int'", "'double'", "'string'", "'long'", "'boolean'", "'float'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'feature'", "':'", "'{'", "'}'", "'use'", "';'", "'ruleset'", "'rule'", "'add.annot'", "'=>'", "'add.name_annot'", "'remove.annot'", "'remove.name_annot'", "'change'", "'record'", "'error'", "'enum'", "'add.at'", "'('", "')'", "'.'", "','", "'remove'", "'rename'", "'set_val'", "'set_type'", "'remove.at'", "'='", "'array'", "'<'", "'>'", "'['", "']'", "'null'", "'-'", "'true'", "'false'", "'int'", "'double'", "'string'", "'long'", "'boolean'", "'float'", "'@'"
     };
+    public static final int T__50=50;
     public static final int T__19=19;
     public static final int T__15=15;
     public static final int T__16=16;
@@ -32,6 +34,10 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     public static final int T__12=12;
     public static final int T__13=13;
     public static final int T__14=14;
+    public static final int T__51=51;
+    public static final int T__52=52;
+    public static final int T__53=53;
+    public static final int T__54=54;
     public static final int RULE_ID=4;
     public static final int T__26=26;
     public static final int T__27=27;
@@ -60,6 +66,12 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     public static final int T__32=32;
     public static final int RULE_WS=9;
     public static final int RULE_ANY_OTHER=10;
+    public static final int T__48=48;
+    public static final int T__49=49;
+    public static final int T__44=44;
+    public static final int T__45=45;
+    public static final int T__46=46;
+    public static final int T__47=47;
     public static final int T__40=40;
     public static final int T__41=41;
     public static final int T__42=42;
@@ -116,14 +128,18 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:64:46: (iv_ruleModel= ruleModel EOF )
             // InternalAedit.g:65:2: iv_ruleModel= ruleModel EOF
             {
-             newCompositeNode(grammarAccess.getModelRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getModelRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleModel=ruleModel();
 
             state._fsp--;
-
-             current =iv_ruleModel; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleModel; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -182,25 +198,29 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    // InternalAedit.g:80:4: (lv_ruleDeclarations_0_0= ruleRuleDeclaration )
             	    // InternalAedit.g:81:5: lv_ruleDeclarations_0_0= ruleRuleDeclaration
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					newCompositeNode(grammarAccess.getModelAccess().getRuleDeclarationsRuleDeclarationParserRuleCall_0_0());
-            	    				
+            	      					newCompositeNode(grammarAccess.getModelAccess().getRuleDeclarationsRuleDeclarationParserRuleCall_0_0());
+            	      				
+            	    }
             	    pushFollow(FOLLOW_3);
             	    lv_ruleDeclarations_0_0=ruleRuleDeclaration();
 
             	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-
-            	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getModelRule());
-            	    					}
-            	    					add(
-            	    						current,
-            	    						"ruleDeclarations",
-            	    						lv_ruleDeclarations_0_0,
-            	    						"org.aedit.Aedit.RuleDeclaration");
-            	    					afterParserOrEnumRuleCall();
-            	    				
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getModelRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"ruleDeclarations",
+            	      						lv_ruleDeclarations_0_0,
+            	      						"org.aedit.Aedit.RuleDeclaration");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
 
             	    }
 
@@ -231,25 +251,29 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    // InternalAedit.g:99:4: (lv_ruleMaps_1_0= ruleRuleMap )
             	    // InternalAedit.g:100:5: lv_ruleMaps_1_0= ruleRuleMap
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					newCompositeNode(grammarAccess.getModelAccess().getRuleMapsRuleMapParserRuleCall_1_0());
-            	    				
+            	      					newCompositeNode(grammarAccess.getModelAccess().getRuleMapsRuleMapParserRuleCall_1_0());
+            	      				
+            	    }
             	    pushFollow(FOLLOW_4);
             	    lv_ruleMaps_1_0=ruleRuleMap();
 
             	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-
-            	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getModelRule());
-            	    					}
-            	    					add(
-            	    						current,
-            	    						"ruleMaps",
-            	    						lv_ruleMaps_1_0,
-            	    						"org.aedit.Aedit.RuleMap");
-            	    					afterParserOrEnumRuleCall();
-            	    				
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getModelRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"ruleMaps",
+            	      						lv_ruleMaps_1_0,
+            	      						"org.aedit.Aedit.RuleMap");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
 
             	    }
 
@@ -280,25 +304,29 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    // InternalAedit.g:118:4: (lv_features_2_0= ruleFeature )
             	    // InternalAedit.g:119:5: lv_features_2_0= ruleFeature
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					newCompositeNode(grammarAccess.getModelAccess().getFeaturesFeatureParserRuleCall_2_0());
-            	    				
+            	      					newCompositeNode(grammarAccess.getModelAccess().getFeaturesFeatureParserRuleCall_2_0());
+            	      				
+            	    }
             	    pushFollow(FOLLOW_5);
             	    lv_features_2_0=ruleFeature();
 
             	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-
-            	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getModelRule());
-            	    					}
-            	    					add(
-            	    						current,
-            	    						"features",
-            	    						lv_features_2_0,
-            	    						"org.aedit.Aedit.Feature");
-            	    					afterParserOrEnumRuleCall();
-            	    				
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getModelRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"features",
+            	      						lv_features_2_0,
+            	      						"org.aedit.Aedit.Feature");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
 
             	    }
 
@@ -329,25 +357,29 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    // InternalAedit.g:137:4: (lv_featureMaps_3_0= ruleFeatureMap )
             	    // InternalAedit.g:138:5: lv_featureMaps_3_0= ruleFeatureMap
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					newCompositeNode(grammarAccess.getModelAccess().getFeatureMapsFeatureMapParserRuleCall_3_0());
-            	    				
+            	      					newCompositeNode(grammarAccess.getModelAccess().getFeatureMapsFeatureMapParserRuleCall_3_0());
+            	      				
+            	    }
             	    pushFollow(FOLLOW_6);
             	    lv_featureMaps_3_0=ruleFeatureMap();
 
             	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-
-            	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getModelRule());
-            	    					}
-            	    					add(
-            	    						current,
-            	    						"featureMaps",
-            	    						lv_featureMaps_3_0,
-            	    						"org.aedit.Aedit.FeatureMap");
-            	    					afterParserOrEnumRuleCall();
-            	    				
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getModelRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"featureMaps",
+            	      						lv_featureMaps_3_0,
+            	      						"org.aedit.Aedit.FeatureMap");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
 
             	    }
 
@@ -366,9 +398,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -394,14 +428,18 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:159:48: (iv_ruleFeature= ruleFeature EOF )
             // InternalAedit.g:160:2: iv_ruleFeature= ruleFeature EOF
             {
-             newCompositeNode(grammarAccess.getFeatureRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getFeatureRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleFeature=ruleFeature();
 
             state._fsp--;
-
-             current =iv_ruleFeature; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleFeature; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -441,30 +479,36 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:173:2: (otherlv_0= 'feature' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= ':' ( (otherlv_3= RULE_ID ) ) )? otherlv_4= '{' ( (otherlv_5= RULE_ID ) )* otherlv_6= '}' )
             // InternalAedit.g:174:3: otherlv_0= 'feature' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= ':' ( (otherlv_3= RULE_ID ) ) )? otherlv_4= '{' ( (otherlv_5= RULE_ID ) )* otherlv_6= '}'
             {
-            otherlv_0=(Token)match(input,11,FOLLOW_7); 
+            otherlv_0=(Token)match(input,11,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getFeatureAccess().getFeatureKeyword_0());
-            		
+              			newLeafNode(otherlv_0, grammarAccess.getFeatureAccess().getFeatureKeyword_0());
+              		
+            }
             // InternalAedit.g:178:3: ( (lv_name_1_0= RULE_ID ) )
             // InternalAedit.g:179:4: (lv_name_1_0= RULE_ID )
             {
             // InternalAedit.g:179:4: (lv_name_1_0= RULE_ID )
             // InternalAedit.g:180:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_8); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_8); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_name_1_0, grammarAccess.getFeatureAccess().getNameIDTerminalRuleCall_1_0());
-            				
+              					newLeafNode(lv_name_1_0, grammarAccess.getFeatureAccess().getNameIDTerminalRuleCall_1_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getFeatureRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"name",
-            						lv_name_1_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getFeatureRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"name",
+              						lv_name_1_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
@@ -482,25 +526,31 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalAedit.g:197:4: otherlv_2= ':' ( (otherlv_3= RULE_ID ) )
                     {
-                    otherlv_2=(Token)match(input,12,FOLLOW_7); 
+                    otherlv_2=(Token)match(input,12,FOLLOW_7); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    				newLeafNode(otherlv_2, grammarAccess.getFeatureAccess().getColonKeyword_2_0());
-                    			
+                      				newLeafNode(otherlv_2, grammarAccess.getFeatureAccess().getColonKeyword_2_0());
+                      			
+                    }
                     // InternalAedit.g:201:4: ( (otherlv_3= RULE_ID ) )
                     // InternalAedit.g:202:5: (otherlv_3= RULE_ID )
                     {
                     // InternalAedit.g:202:5: (otherlv_3= RULE_ID )
                     // InternalAedit.g:203:6: otherlv_3= RULE_ID
                     {
+                    if ( state.backtracking==0 ) {
 
-                    						if (current==null) {
-                    							current = createModelElement(grammarAccess.getFeatureRule());
-                    						}
-                    					
-                    otherlv_3=(Token)match(input,RULE_ID,FOLLOW_9); 
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getFeatureRule());
+                      						}
+                      					
+                    }
+                    otherlv_3=(Token)match(input,RULE_ID,FOLLOW_9); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    						newLeafNode(otherlv_3, grammarAccess.getFeatureAccess().getExtendFeatureCrossReference_2_1_0());
-                    					
+                      						newLeafNode(otherlv_3, grammarAccess.getFeatureAccess().getExtendFeatureCrossReference_2_1_0());
+                      					
+                    }
 
                     }
 
@@ -513,10 +563,12 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,13,FOLLOW_10); 
+            otherlv_4=(Token)match(input,13,FOLLOW_10); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getFeatureAccess().getLeftCurlyBracketKeyword_3());
-            		
+              			newLeafNode(otherlv_4, grammarAccess.getFeatureAccess().getLeftCurlyBracketKeyword_3());
+              		
+            }
             // InternalAedit.g:219:3: ( (otherlv_5= RULE_ID ) )*
             loop6:
             do {
@@ -535,15 +587,19 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    // InternalAedit.g:220:4: (otherlv_5= RULE_ID )
             	    // InternalAedit.g:221:5: otherlv_5= RULE_ID
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					if (current==null) {
-            	    						current = createModelElement(grammarAccess.getFeatureRule());
-            	    					}
-            	    				
-            	    otherlv_5=(Token)match(input,RULE_ID,FOLLOW_10); 
+            	      					if (current==null) {
+            	      						current = createModelElement(grammarAccess.getFeatureRule());
+            	      					}
+            	      				
+            	    }
+            	    otherlv_5=(Token)match(input,RULE_ID,FOLLOW_10); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-            	    					newLeafNode(otherlv_5, grammarAccess.getFeatureAccess().getRuleMapsRuleMapCrossReference_4_0());
-            	    				
+            	      					newLeafNode(otherlv_5, grammarAccess.getFeatureAccess().getRuleMapsRuleMapCrossReference_4_0());
+            	      				
+            	    }
 
             	    }
 
@@ -556,19 +612,23 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_6=(Token)match(input,14,FOLLOW_2); 
+            otherlv_6=(Token)match(input,14,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_6, grammarAccess.getFeatureAccess().getRightCurlyBracketKeyword_5());
-            		
+              			newLeafNode(otherlv_6, grammarAccess.getFeatureAccess().getRightCurlyBracketKeyword_5());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -594,14 +654,18 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:240:51: (iv_ruleFeatureMap= ruleFeatureMap EOF )
             // InternalAedit.g:241:2: iv_ruleFeatureMap= ruleFeatureMap EOF
             {
-             newCompositeNode(grammarAccess.getFeatureMapRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getFeatureMapRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleFeatureMap=ruleFeatureMap();
 
             state._fsp--;
-
-             current =iv_ruleFeatureMap; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleFeatureMap; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -637,44 +701,54 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:254:2: (otherlv_0= 'use' ( (otherlv_1= RULE_ID ) ) otherlv_2= ';' )
             // InternalAedit.g:255:3: otherlv_0= 'use' ( (otherlv_1= RULE_ID ) ) otherlv_2= ';'
             {
-            otherlv_0=(Token)match(input,15,FOLLOW_7); 
+            otherlv_0=(Token)match(input,15,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getFeatureMapAccess().getUseKeyword_0());
-            		
+              			newLeafNode(otherlv_0, grammarAccess.getFeatureMapAccess().getUseKeyword_0());
+              		
+            }
             // InternalAedit.g:259:3: ( (otherlv_1= RULE_ID ) )
             // InternalAedit.g:260:4: (otherlv_1= RULE_ID )
             {
             // InternalAedit.g:260:4: (otherlv_1= RULE_ID )
             // InternalAedit.g:261:5: otherlv_1= RULE_ID
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getFeatureMapRule());
-            					}
-            				
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_11); 
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getFeatureMapRule());
+              					}
+              				
+            }
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(otherlv_1, grammarAccess.getFeatureMapAccess().getNameFeatureCrossReference_1_0());
-            				
+              					newLeafNode(otherlv_1, grammarAccess.getFeatureMapAccess().getNameFeatureCrossReference_1_0());
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getFeatureMapAccess().getSemicolonKeyword_2());
-            		
+              			newLeafNode(otherlv_2, grammarAccess.getFeatureMapAccess().getSemicolonKeyword_2());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -700,14 +774,18 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:280:48: (iv_ruleRuleMap= ruleRuleMap EOF )
             // InternalAedit.g:281:2: iv_ruleRuleMap= ruleRuleMap EOF
             {
-             newCompositeNode(grammarAccess.getRuleMapRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRuleMapRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleRuleMap=ruleRuleMap();
 
             state._fsp--;
-
-             current =iv_ruleRuleMap; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRuleMap; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -745,40 +823,48 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:294:2: (otherlv_0= 'ruleset' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (otherlv_3= RULE_ID ) )* otherlv_4= '}' )
             // InternalAedit.g:295:3: otherlv_0= 'ruleset' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (otherlv_3= RULE_ID ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,17,FOLLOW_7); 
+            otherlv_0=(Token)match(input,17,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getRuleMapAccess().getRulesetKeyword_0());
-            		
+              			newLeafNode(otherlv_0, grammarAccess.getRuleMapAccess().getRulesetKeyword_0());
+              		
+            }
             // InternalAedit.g:299:3: ( (lv_name_1_0= RULE_ID ) )
             // InternalAedit.g:300:4: (lv_name_1_0= RULE_ID )
             {
             // InternalAedit.g:300:4: (lv_name_1_0= RULE_ID )
             // InternalAedit.g:301:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_9); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_9); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_name_1_0, grammarAccess.getRuleMapAccess().getNameIDTerminalRuleCall_1_0());
-            				
+              					newLeafNode(lv_name_1_0, grammarAccess.getRuleMapAccess().getNameIDTerminalRuleCall_1_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRuleMapRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"name",
-            						lv_name_1_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRuleMapRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"name",
+              						lv_name_1_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,13,FOLLOW_10); 
+            otherlv_2=(Token)match(input,13,FOLLOW_10); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getRuleMapAccess().getLeftCurlyBracketKeyword_2());
-            		
+              			newLeafNode(otherlv_2, grammarAccess.getRuleMapAccess().getLeftCurlyBracketKeyword_2());
+              		
+            }
             // InternalAedit.g:321:3: ( (otherlv_3= RULE_ID ) )*
             loop7:
             do {
@@ -797,15 +883,19 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    // InternalAedit.g:322:4: (otherlv_3= RULE_ID )
             	    // InternalAedit.g:323:5: otherlv_3= RULE_ID
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					if (current==null) {
-            	    						current = createModelElement(grammarAccess.getRuleMapRule());
-            	    					}
-            	    				
-            	    otherlv_3=(Token)match(input,RULE_ID,FOLLOW_10); 
+            	      					if (current==null) {
+            	      						current = createModelElement(grammarAccess.getRuleMapRule());
+            	      					}
+            	      				
+            	    }
+            	    otherlv_3=(Token)match(input,RULE_ID,FOLLOW_10); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-            	    					newLeafNode(otherlv_3, grammarAccess.getRuleMapAccess().getRulesRuleDeclarationCrossReference_3_0());
-            	    				
+            	      					newLeafNode(otherlv_3, grammarAccess.getRuleMapAccess().getRulesRuleDeclarationCrossReference_3_0());
+            	      				
+            	    }
 
             	    }
 
@@ -818,19 +908,23 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,14,FOLLOW_2); 
+            otherlv_4=(Token)match(input,14,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getRuleMapAccess().getRightCurlyBracketKeyword_4());
-            		
+              			newLeafNode(otherlv_4, grammarAccess.getRuleMapAccess().getRightCurlyBracketKeyword_4());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -856,14 +950,18 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:342:56: (iv_ruleRuleDeclaration= ruleRuleDeclaration EOF )
             // InternalAedit.g:343:2: iv_ruleRuleDeclaration= ruleRuleDeclaration EOF
             {
-             newCompositeNode(grammarAccess.getRuleDeclarationRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRuleDeclarationRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleRuleDeclaration=ruleRuleDeclaration();
 
             state._fsp--;
-
-             current =iv_ruleRuleDeclaration; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRuleDeclaration; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -902,47 +1000,55 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:356:2: (otherlv_0= 'rule' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_rules_3_0= ruleGenericRule ) )* otherlv_4= '}' )
             // InternalAedit.g:357:3: otherlv_0= 'rule' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_rules_3_0= ruleGenericRule ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,18,FOLLOW_7); 
+            otherlv_0=(Token)match(input,18,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getRuleDeclarationAccess().getRuleKeyword_0());
-            		
+              			newLeafNode(otherlv_0, grammarAccess.getRuleDeclarationAccess().getRuleKeyword_0());
+              		
+            }
             // InternalAedit.g:361:3: ( (lv_name_1_0= RULE_ID ) )
             // InternalAedit.g:362:4: (lv_name_1_0= RULE_ID )
             {
             // InternalAedit.g:362:4: (lv_name_1_0= RULE_ID )
             // InternalAedit.g:363:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_9); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_9); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_name_1_0, grammarAccess.getRuleDeclarationAccess().getNameIDTerminalRuleCall_1_0());
-            				
+              					newLeafNode(lv_name_1_0, grammarAccess.getRuleDeclarationAccess().getNameIDTerminalRuleCall_1_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRuleDeclarationRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"name",
-            						lv_name_1_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRuleDeclarationRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"name",
+              						lv_name_1_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,13,FOLLOW_12); 
+            otherlv_2=(Token)match(input,13,FOLLOW_12); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getRuleDeclarationAccess().getLeftCurlyBracketKeyword_2());
-            		
+              			newLeafNode(otherlv_2, grammarAccess.getRuleDeclarationAccess().getLeftCurlyBracketKeyword_2());
+              		
+            }
             // InternalAedit.g:383:3: ( (lv_rules_3_0= ruleGenericRule ) )*
             loop8:
             do {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==19||LA8_0==23||(LA8_0>=28 && LA8_0<=29)) ) {
+                if ( (LA8_0==19||LA8_0==22||LA8_0==24||LA8_0==28||(LA8_0>=33 && LA8_0<=34)) ) {
                     alt8=1;
                 }
 
@@ -954,25 +1060,29 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    // InternalAedit.g:384:4: (lv_rules_3_0= ruleGenericRule )
             	    // InternalAedit.g:385:5: lv_rules_3_0= ruleGenericRule
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					newCompositeNode(grammarAccess.getRuleDeclarationAccess().getRulesGenericRuleParserRuleCall_3_0());
-            	    				
+            	      					newCompositeNode(grammarAccess.getRuleDeclarationAccess().getRulesGenericRuleParserRuleCall_3_0());
+            	      				
+            	    }
             	    pushFollow(FOLLOW_12);
             	    lv_rules_3_0=ruleGenericRule();
 
             	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-
-            	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getRuleDeclarationRule());
-            	    					}
-            	    					add(
-            	    						current,
-            	    						"rules",
-            	    						lv_rules_3_0,
-            	    						"org.aedit.Aedit.GenericRule");
-            	    					afterParserOrEnumRuleCall();
-            	    				
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getRuleDeclarationRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"rules",
+            	      						lv_rules_3_0,
+            	      						"org.aedit.Aedit.GenericRule");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
 
             	    }
 
@@ -985,19 +1095,23 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,14,FOLLOW_2); 
+            otherlv_4=(Token)match(input,14,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getRuleDeclarationAccess().getRightCurlyBracketKeyword_4());
-            		
+              			newLeafNode(otherlv_4, grammarAccess.getRuleDeclarationAccess().getRightCurlyBracketKeyword_4());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -1023,14 +1137,18 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             // InternalAedit.g:410:52: (iv_ruleGenericRule= ruleGenericRule EOF )
             // InternalAedit.g:411:2: iv_ruleGenericRule= ruleGenericRule EOF
             {
-             newCompositeNode(grammarAccess.getGenericRuleRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getGenericRuleRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleGenericRule=ruleGenericRule();
 
             state._fsp--;
-
-             current =iv_ruleGenericRule; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleGenericRule; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -1048,7 +1166,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGenericRule"
-    // InternalAedit.g:417:1: ruleGenericRule returns [EObject current=null] : (this_RenameSchema_0= ruleRenameSchema | this_RemoveSchema_1= ruleRemoveSchema | this_Add_2= ruleAdd | this_ChangeSchema_3= ruleChangeSchema | this_ChangeEnum_4= ruleChangeEnum ) ;
+    // InternalAedit.g:417:1: ruleGenericRule returns [EObject current=null] : (this_RenameSchema_0= ruleRenameSchema | this_RemoveSchema_1= ruleRemoveSchema | this_Add_2= ruleAdd | this_ChangeSchema_3= ruleChangeSchema | this_ChangeEnum_4= ruleChangeEnum | this_AddAnnotationToSchema_5= ruleAddAnnotationToSchema | this_RemoveAnnotationFromSchema_6= ruleRemoveAnnotationFromSchema ) ;
     public final EObject ruleGenericRule() throws RecognitionException {
         EObject current = null;
 
@@ -1062,43 +1180,48 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
         EObject this_ChangeEnum_4 = null;
 
+        EObject this_AddAnnotationToSchema_5 = null;
+
+        EObject this_RemoveAnnotationFromSchema_6 = null;
+
 
 
         	enterRule();
 
         try {
-            // InternalAedit.g:423:2: ( (this_RenameSchema_0= ruleRenameSchema | this_RemoveSchema_1= ruleRemoveSchema | this_Add_2= ruleAdd | this_ChangeSchema_3= ruleChangeSchema | this_ChangeEnum_4= ruleChangeEnum ) )
-            // InternalAedit.g:424:2: (this_RenameSchema_0= ruleRenameSchema | this_RemoveSchema_1= ruleRemoveSchema | this_Add_2= ruleAdd | this_ChangeSchema_3= ruleChangeSchema | this_ChangeEnum_4= ruleChangeEnum )
+            // InternalAedit.g:423:2: ( (this_RenameSchema_0= ruleRenameSchema | this_RemoveSchema_1= ruleRemoveSchema | this_Add_2= ruleAdd | this_ChangeSchema_3= ruleChangeSchema | this_ChangeEnum_4= ruleChangeEnum | this_AddAnnotationToSchema_5= ruleAddAnnotationToSchema | this_RemoveAnnotationFromSchema_6= ruleRemoveAnnotationFromSchema ) )
+            // InternalAedit.g:424:2: (this_RenameSchema_0= ruleRenameSchema | this_RemoveSchema_1= ruleRemoveSchema | this_Add_2= ruleAdd | this_ChangeSchema_3= ruleChangeSchema | this_ChangeEnum_4= ruleChangeEnum | this_AddAnnotationToSchema_5= ruleAddAnnotationToSchema | this_RemoveAnnotationFromSchema_6= ruleRemoveAnnotationFromSchema )
             {
-            // InternalAedit.g:424:2: (this_RenameSchema_0= ruleRenameSchema | this_RemoveSchema_1= ruleRemoveSchema | this_Add_2= ruleAdd | this_ChangeSchema_3= ruleChangeSchema | this_ChangeEnum_4= ruleChangeEnum )
-            int alt9=5;
+            // InternalAedit.g:424:2: (this_RenameSchema_0= ruleRenameSchema | this_RemoveSchema_1= ruleRemoveSchema | this_Add_2= ruleAdd | this_ChangeSchema_3= ruleChangeSchema | this_ChangeEnum_4= ruleChangeEnum | this_AddAnnotationToSchema_5= ruleAddAnnotationToSchema | this_RemoveAnnotationFromSchema_6= ruleRemoveAnnotationFromSchema )
+            int alt9=7;
             switch ( input.LA(1) ) {
-            case 29:
+            case 34:
                 {
                 alt9=1;
                 }
                 break;
-            case 28:
+            case 33:
                 {
                 alt9=2;
                 }
                 break;
-            case 23:
+            case 28:
                 {
                 alt9=3;
                 }
                 break;
-            case 19:
+            case 24:
                 {
                 int LA9_4 = input.LA(2);
 
-                if ( ((LA9_4>=20 && LA9_4<=21)) ) {
+                if ( ((LA9_4>=25 && LA9_4<=26)) ) {
                     alt9=4;
                 }
-                else if ( (LA9_4==22) ) {
+                else if ( (LA9_4==27) ) {
                     alt9=5;
                 }
                 else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
                         new NoViableAltException("", 9, 4, input);
 
@@ -1106,7 +1229,18 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
+            case 19:
+                {
+                alt9=6;
+                }
+                break;
+            case 22:
+                {
+                alt9=7;
+                }
+                break;
             default:
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 9, 0, input);
 
@@ -1117,90 +1251,154 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalAedit.g:425:3: this_RenameSchema_0= ruleRenameSchema
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getGenericRuleAccess().getRenameSchemaParserRuleCall_0());
-                    		
+                      			newCompositeNode(grammarAccess.getGenericRuleAccess().getRenameSchemaParserRuleCall_0());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_RenameSchema_0=ruleRenameSchema();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_RenameSchema_0;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_RenameSchema_0;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 2 :
                     // InternalAedit.g:434:3: this_RemoveSchema_1= ruleRemoveSchema
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getGenericRuleAccess().getRemoveSchemaParserRuleCall_1());
-                    		
+                      			newCompositeNode(grammarAccess.getGenericRuleAccess().getRemoveSchemaParserRuleCall_1());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_RemoveSchema_1=ruleRemoveSchema();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_RemoveSchema_1;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_RemoveSchema_1;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 3 :
                     // InternalAedit.g:443:3: this_Add_2= ruleAdd
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getGenericRuleAccess().getAddParserRuleCall_2());
-                    		
+                      			newCompositeNode(grammarAccess.getGenericRuleAccess().getAddParserRuleCall_2());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_Add_2=ruleAdd();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_Add_2;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_Add_2;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 4 :
                     // InternalAedit.g:452:3: this_ChangeSchema_3= ruleChangeSchema
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getGenericRuleAccess().getChangeSchemaParserRuleCall_3());
-                    		
+                      			newCompositeNode(grammarAccess.getGenericRuleAccess().getChangeSchemaParserRuleCall_3());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_ChangeSchema_3=ruleChangeSchema();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_ChangeSchema_3;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_ChangeSchema_3;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 5 :
                     // InternalAedit.g:461:3: this_ChangeEnum_4= ruleChangeEnum
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getGenericRuleAccess().getChangeEnumParserRuleCall_4());
-                    		
+                      			newCompositeNode(grammarAccess.getGenericRuleAccess().getChangeEnumParserRuleCall_4());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_ChangeEnum_4=ruleChangeEnum();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
+                      			current = this_ChangeEnum_4;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
-                    			current = this_ChangeEnum_4;
-                    			afterParserOrEnumRuleCall();
-                    		
+                    }
+                    break;
+                case 6 :
+                    // InternalAedit.g:470:3: this_AddAnnotationToSchema_5= ruleAddAnnotationToSchema
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getGenericRuleAccess().getAddAnnotationToSchemaParserRuleCall_5());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_AddAnnotationToSchema_5=ruleAddAnnotationToSchema();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_AddAnnotationToSchema_5;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 7 :
+                    // InternalAedit.g:479:3: this_RemoveAnnotationFromSchema_6= ruleRemoveAnnotationFromSchema
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getGenericRuleAccess().getRemoveAnnotationFromSchemaParserRuleCall_6());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_RemoveAnnotationFromSchema_6=ruleRemoveAnnotationFromSchema();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_RemoveAnnotationFromSchema_6;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
@@ -1210,9 +1408,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -1227,7 +1427,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSchemaRule"
-    // InternalAedit.g:473:1: entryRuleSchemaRule returns [EObject current=null] : iv_ruleSchemaRule= ruleSchemaRule EOF ;
+    // InternalAedit.g:491:1: entryRuleSchemaRule returns [EObject current=null] : iv_ruleSchemaRule= ruleSchemaRule EOF ;
     public final EObject entryRuleSchemaRule() throws RecognitionException {
         EObject current = null;
 
@@ -1235,17 +1435,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:473:51: (iv_ruleSchemaRule= ruleSchemaRule EOF )
-            // InternalAedit.g:474:2: iv_ruleSchemaRule= ruleSchemaRule EOF
+            // InternalAedit.g:491:51: (iv_ruleSchemaRule= ruleSchemaRule EOF )
+            // InternalAedit.g:492:2: iv_ruleSchemaRule= ruleSchemaRule EOF
             {
-             newCompositeNode(grammarAccess.getSchemaRuleRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getSchemaRuleRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleSchemaRule=ruleSchemaRule();
 
             state._fsp--;
-
-             current =iv_ruleSchemaRule; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleSchemaRule; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -1263,7 +1467,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSchemaRule"
-    // InternalAedit.g:480:1: ruleSchemaRule returns [EObject current=null] : (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType ) ;
+    // InternalAedit.g:498:1: ruleSchemaRule returns [EObject current=null] : (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType | this_AddAnnotationToField_5= ruleAddAnnotationToField | this_AddNameAnnotationToField_6= ruleAddNameAnnotationToField | this_RemoveAnnotationFromField_7= ruleRemoveAnnotationFromField | this_RemoveNameAnnotationFromField_8= ruleRemoveNameAnnotationFromField | this_ArrayEditRules_9= ruleArrayEditRules ) ;
     public final EObject ruleSchemaRule() throws RecognitionException {
         EObject current = null;
 
@@ -1277,137 +1481,245 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
         EObject this_ChangeType_4 = null;
 
+        EObject this_AddAnnotationToField_5 = null;
+
+        EObject this_AddNameAnnotationToField_6 = null;
+
+        EObject this_RemoveAnnotationFromField_7 = null;
+
+        EObject this_RemoveNameAnnotationFromField_8 = null;
+
+        EObject this_ArrayEditRules_9 = null;
+
 
 
         	enterRule();
 
         try {
-            // InternalAedit.g:486:2: ( (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType ) )
-            // InternalAedit.g:487:2: (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType )
+            // InternalAedit.g:504:2: ( (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType | this_AddAnnotationToField_5= ruleAddAnnotationToField | this_AddNameAnnotationToField_6= ruleAddNameAnnotationToField | this_RemoveAnnotationFromField_7= ruleRemoveAnnotationFromField | this_RemoveNameAnnotationFromField_8= ruleRemoveNameAnnotationFromField | this_ArrayEditRules_9= ruleArrayEditRules ) )
+            // InternalAedit.g:505:2: (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType | this_AddAnnotationToField_5= ruleAddAnnotationToField | this_AddNameAnnotationToField_6= ruleAddNameAnnotationToField | this_RemoveAnnotationFromField_7= ruleRemoveAnnotationFromField | this_RemoveNameAnnotationFromField_8= ruleRemoveNameAnnotationFromField | this_ArrayEditRules_9= ruleArrayEditRules )
             {
-            // InternalAedit.g:487:2: (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType )
-            int alt10=5;
-            switch ( input.LA(1) ) {
-            case 28:
-                {
-                alt10=1;
-                }
-                break;
-            case 29:
-                {
-                alt10=2;
-                }
-                break;
-            case 23:
-                {
-                alt10=3;
-                }
-                break;
-            case 31:
-                {
-                alt10=4;
-                }
-                break;
-            case 32:
-                {
-                alt10=5;
-                }
-                break;
-            default:
-                NoViableAltException nvae =
-                    new NoViableAltException("", 10, 0, input);
-
-                throw nvae;
-            }
-
+            // InternalAedit.g:505:2: (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType | this_AddAnnotationToField_5= ruleAddAnnotationToField | this_AddNameAnnotationToField_6= ruleAddNameAnnotationToField | this_RemoveAnnotationFromField_7= ruleRemoveAnnotationFromField | this_RemoveNameAnnotationFromField_8= ruleRemoveNameAnnotationFromField | this_ArrayEditRules_9= ruleArrayEditRules )
+            int alt10=10;
+            alt10 = dfa10.predict(input);
             switch (alt10) {
                 case 1 :
-                    // InternalAedit.g:488:3: this_RemoveVariable_0= ruleRemoveVariable
+                    // InternalAedit.g:506:3: this_RemoveVariable_0= ruleRemoveVariable
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getSchemaRuleAccess().getRemoveVariableParserRuleCall_0());
-                    		
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getRemoveVariableParserRuleCall_0());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_RemoveVariable_0=ruleRemoveVariable();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_RemoveVariable_0;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_RemoveVariable_0;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:497:3: this_RenameVariable_1= ruleRenameVariable
+                    // InternalAedit.g:515:3: this_RenameVariable_1= ruleRenameVariable
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getSchemaRuleAccess().getRenameVariableParserRuleCall_1());
-                    		
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getRenameVariableParserRuleCall_1());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_RenameVariable_1=ruleRenameVariable();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_RenameVariable_1;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_RenameVariable_1;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 3 :
-                    // InternalAedit.g:506:3: this_AddVariable_2= ruleAddVariable
+                    // InternalAedit.g:524:3: this_AddVariable_2= ruleAddVariable
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getSchemaRuleAccess().getAddVariableParserRuleCall_2());
-                    		
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getAddVariableParserRuleCall_2());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_AddVariable_2=ruleAddVariable();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_AddVariable_2;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_AddVariable_2;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 4 :
-                    // InternalAedit.g:515:3: this_ChangeDefValue_3= ruleChangeDefValue
+                    // InternalAedit.g:533:3: this_ChangeDefValue_3= ruleChangeDefValue
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getSchemaRuleAccess().getChangeDefValueParserRuleCall_3());
-                    		
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getChangeDefValueParserRuleCall_3());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_ChangeDefValue_3=ruleChangeDefValue();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_ChangeDefValue_3;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_ChangeDefValue_3;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 5 :
-                    // InternalAedit.g:524:3: this_ChangeType_4= ruleChangeType
+                    // InternalAedit.g:542:3: this_ChangeType_4= ruleChangeType
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getSchemaRuleAccess().getChangeTypeParserRuleCall_4());
-                    		
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getChangeTypeParserRuleCall_4());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_ChangeType_4=ruleChangeType();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
+                      			current = this_ChangeType_4;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
-                    			current = this_ChangeType_4;
-                    			afterParserOrEnumRuleCall();
-                    		
+                    }
+                    break;
+                case 6 :
+                    // InternalAedit.g:551:3: this_AddAnnotationToField_5= ruleAddAnnotationToField
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getAddAnnotationToFieldParserRuleCall_5());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_AddAnnotationToField_5=ruleAddAnnotationToField();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_AddAnnotationToField_5;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 7 :
+                    // InternalAedit.g:560:3: this_AddNameAnnotationToField_6= ruleAddNameAnnotationToField
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getAddNameAnnotationToFieldParserRuleCall_6());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_AddNameAnnotationToField_6=ruleAddNameAnnotationToField();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_AddNameAnnotationToField_6;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 8 :
+                    // InternalAedit.g:569:3: this_RemoveAnnotationFromField_7= ruleRemoveAnnotationFromField
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getRemoveAnnotationFromFieldParserRuleCall_7());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_RemoveAnnotationFromField_7=ruleRemoveAnnotationFromField();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_RemoveAnnotationFromField_7;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 9 :
+                    // InternalAedit.g:578:3: this_RemoveNameAnnotationFromField_8= ruleRemoveNameAnnotationFromField
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getRemoveNameAnnotationFromFieldParserRuleCall_8());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_RemoveNameAnnotationFromField_8=ruleRemoveNameAnnotationFromField();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_RemoveNameAnnotationFromField_8;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 10 :
+                    // InternalAedit.g:587:3: this_ArrayEditRules_9= ruleArrayEditRules
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getSchemaRuleAccess().getArrayEditRulesParserRuleCall_9());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_ArrayEditRules_9=ruleArrayEditRules();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_ArrayEditRules_9;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
@@ -1417,9 +1729,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -1433,8 +1747,184 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleSchemaRule"
 
 
+    // $ANTLR start "entryRuleArrayEditRules"
+    // InternalAedit.g:599:1: entryRuleArrayEditRules returns [EObject current=null] : iv_ruleArrayEditRules= ruleArrayEditRules EOF ;
+    public final EObject entryRuleArrayEditRules() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleArrayEditRules = null;
+
+
+        try {
+            // InternalAedit.g:599:55: (iv_ruleArrayEditRules= ruleArrayEditRules EOF )
+            // InternalAedit.g:600:2: iv_ruleArrayEditRules= ruleArrayEditRules EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getArrayEditRulesRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleArrayEditRules=ruleArrayEditRules();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleArrayEditRules; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleArrayEditRules"
+
+
+    // $ANTLR start "ruleArrayEditRules"
+    // InternalAedit.g:606:1: ruleArrayEditRules returns [EObject current=null] : (this_RemoveArrayValue_0= ruleRemoveArrayValue | this_RemoveArrayValueAtIndex_1= ruleRemoveArrayValueAtIndex | this_AddValueToArray_2= ruleAddValueToArray ) ;
+    public final EObject ruleArrayEditRules() throws RecognitionException {
+        EObject current = null;
+
+        EObject this_RemoveArrayValue_0 = null;
+
+        EObject this_RemoveArrayValueAtIndex_1 = null;
+
+        EObject this_AddValueToArray_2 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:612:2: ( (this_RemoveArrayValue_0= ruleRemoveArrayValue | this_RemoveArrayValueAtIndex_1= ruleRemoveArrayValueAtIndex | this_AddValueToArray_2= ruleAddValueToArray ) )
+            // InternalAedit.g:613:2: (this_RemoveArrayValue_0= ruleRemoveArrayValue | this_RemoveArrayValueAtIndex_1= ruleRemoveArrayValueAtIndex | this_AddValueToArray_2= ruleAddValueToArray )
+            {
+            // InternalAedit.g:613:2: (this_RemoveArrayValue_0= ruleRemoveArrayValue | this_RemoveArrayValueAtIndex_1= ruleRemoveArrayValueAtIndex | this_AddValueToArray_2= ruleAddValueToArray )
+            int alt11=3;
+            switch ( input.LA(1) ) {
+            case 33:
+                {
+                alt11=1;
+                }
+                break;
+            case 37:
+                {
+                alt11=2;
+                }
+                break;
+            case 28:
+                {
+                alt11=3;
+                }
+                break;
+            default:
+                if (state.backtracking>0) {state.failed=true; return current;}
+                NoViableAltException nvae =
+                    new NoViableAltException("", 11, 0, input);
+
+                throw nvae;
+            }
+
+            switch (alt11) {
+                case 1 :
+                    // InternalAedit.g:614:3: this_RemoveArrayValue_0= ruleRemoveArrayValue
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getArrayEditRulesAccess().getRemoveArrayValueParserRuleCall_0());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_RemoveArrayValue_0=ruleRemoveArrayValue();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_RemoveArrayValue_0;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 2 :
+                    // InternalAedit.g:623:3: this_RemoveArrayValueAtIndex_1= ruleRemoveArrayValueAtIndex
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getArrayEditRulesAccess().getRemoveArrayValueAtIndexParserRuleCall_1());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_RemoveArrayValueAtIndex_1=ruleRemoveArrayValueAtIndex();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_RemoveArrayValueAtIndex_1;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 3 :
+                    // InternalAedit.g:632:3: this_AddValueToArray_2= ruleAddValueToArray
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getArrayEditRulesAccess().getAddValueToArrayParserRuleCall_2());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_AddValueToArray_2=ruleAddValueToArray();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_AddValueToArray_2;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleArrayEditRules"
+
+
     // $ANTLR start "entryRuleEnumRule"
-    // InternalAedit.g:536:1: entryRuleEnumRule returns [EObject current=null] : iv_ruleEnumRule= ruleEnumRule EOF ;
+    // InternalAedit.g:644:1: entryRuleEnumRule returns [EObject current=null] : iv_ruleEnumRule= ruleEnumRule EOF ;
     public final EObject entryRuleEnumRule() throws RecognitionException {
         EObject current = null;
 
@@ -1442,17 +1932,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:536:49: (iv_ruleEnumRule= ruleEnumRule EOF )
-            // InternalAedit.g:537:2: iv_ruleEnumRule= ruleEnumRule EOF
+            // InternalAedit.g:644:49: (iv_ruleEnumRule= ruleEnumRule EOF )
+            // InternalAedit.g:645:2: iv_ruleEnumRule= ruleEnumRule EOF
             {
-             newCompositeNode(grammarAccess.getEnumRuleRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getEnumRuleRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleEnumRule=ruleEnumRule();
 
             state._fsp--;
-
-             current =iv_ruleEnumRule; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleEnumRule; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -1470,7 +1964,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumRule"
-    // InternalAedit.g:543:1: ruleEnumRule returns [EObject current=null] : (this_RemoveEnum_0= ruleRemoveEnum | this_RenameEnum_1= ruleRenameEnum | this_AddEnum_2= ruleAddEnum ) ;
+    // InternalAedit.g:651:1: ruleEnumRule returns [EObject current=null] : (this_RemoveEnum_0= ruleRemoveEnum | this_RenameEnum_1= ruleRenameEnum | this_AddEnum_2= ruleAddEnum ) ;
     public final EObject ruleEnumRule() throws RecognitionException {
         EObject current = null;
 
@@ -1485,86 +1979,99 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:549:2: ( (this_RemoveEnum_0= ruleRemoveEnum | this_RenameEnum_1= ruleRenameEnum | this_AddEnum_2= ruleAddEnum ) )
-            // InternalAedit.g:550:2: (this_RemoveEnum_0= ruleRemoveEnum | this_RenameEnum_1= ruleRenameEnum | this_AddEnum_2= ruleAddEnum )
+            // InternalAedit.g:657:2: ( (this_RemoveEnum_0= ruleRemoveEnum | this_RenameEnum_1= ruleRenameEnum | this_AddEnum_2= ruleAddEnum ) )
+            // InternalAedit.g:658:2: (this_RemoveEnum_0= ruleRemoveEnum | this_RenameEnum_1= ruleRenameEnum | this_AddEnum_2= ruleAddEnum )
             {
-            // InternalAedit.g:550:2: (this_RemoveEnum_0= ruleRemoveEnum | this_RenameEnum_1= ruleRenameEnum | this_AddEnum_2= ruleAddEnum )
-            int alt11=3;
+            // InternalAedit.g:658:2: (this_RemoveEnum_0= ruleRemoveEnum | this_RenameEnum_1= ruleRenameEnum | this_AddEnum_2= ruleAddEnum )
+            int alt12=3;
             switch ( input.LA(1) ) {
+            case 33:
+                {
+                alt12=1;
+                }
+                break;
+            case 34:
+                {
+                alt12=2;
+                }
+                break;
             case 28:
                 {
-                alt11=1;
-                }
-                break;
-            case 29:
-                {
-                alt11=2;
-                }
-                break;
-            case 23:
-                {
-                alt11=3;
+                alt12=3;
                 }
                 break;
             default:
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 11, 0, input);
+                    new NoViableAltException("", 12, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt11) {
+            switch (alt12) {
                 case 1 :
-                    // InternalAedit.g:551:3: this_RemoveEnum_0= ruleRemoveEnum
+                    // InternalAedit.g:659:3: this_RemoveEnum_0= ruleRemoveEnum
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getEnumRuleAccess().getRemoveEnumParserRuleCall_0());
-                    		
+                      			newCompositeNode(grammarAccess.getEnumRuleAccess().getRemoveEnumParserRuleCall_0());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_RemoveEnum_0=ruleRemoveEnum();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_RemoveEnum_0;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_RemoveEnum_0;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:560:3: this_RenameEnum_1= ruleRenameEnum
+                    // InternalAedit.g:668:3: this_RenameEnum_1= ruleRenameEnum
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getEnumRuleAccess().getRenameEnumParserRuleCall_1());
-                    		
+                      			newCompositeNode(grammarAccess.getEnumRuleAccess().getRenameEnumParserRuleCall_1());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_RenameEnum_1=ruleRenameEnum();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_RenameEnum_1;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_RenameEnum_1;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 3 :
-                    // InternalAedit.g:569:3: this_AddEnum_2= ruleAddEnum
+                    // InternalAedit.g:677:3: this_AddEnum_2= ruleAddEnum
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getEnumRuleAccess().getAddEnumParserRuleCall_2());
-                    		
+                      			newCompositeNode(grammarAccess.getEnumRuleAccess().getAddEnumParserRuleCall_2());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_AddEnum_2=ruleAddEnum();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_AddEnum_2;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_AddEnum_2;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
@@ -1574,9 +2081,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -1590,8 +2099,1105 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleEnumRule"
 
 
+    // $ANTLR start "entryRuleAddAnnotationToSchema"
+    // InternalAedit.g:689:1: entryRuleAddAnnotationToSchema returns [EObject current=null] : iv_ruleAddAnnotationToSchema= ruleAddAnnotationToSchema EOF ;
+    public final EObject entryRuleAddAnnotationToSchema() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleAddAnnotationToSchema = null;
+
+
+        try {
+            // InternalAedit.g:689:62: (iv_ruleAddAnnotationToSchema= ruleAddAnnotationToSchema EOF )
+            // InternalAedit.g:690:2: iv_ruleAddAnnotationToSchema= ruleAddAnnotationToSchema EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddAnnotationToSchemaRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleAddAnnotationToSchema=ruleAddAnnotationToSchema();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddAnnotationToSchema; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAddAnnotationToSchema"
+
+
+    // $ANTLR start "ruleAddAnnotationToSchema"
+    // InternalAedit.g:696:1: ruleAddAnnotationToSchema returns [EObject current=null] : (otherlv_0= 'add.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_annotation_4_0= ruleAnnotation ) ) otherlv_5= ';' ) ;
+    public final EObject ruleAddAnnotationToSchema() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_3=null;
+        Token otherlv_5=null;
+        AntlrDatatypeRuleToken lv_schemaType_1_0 = null;
+
+        EObject lv_annotation_4_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:702:2: ( (otherlv_0= 'add.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_annotation_4_0= ruleAnnotation ) ) otherlv_5= ';' ) )
+            // InternalAedit.g:703:2: (otherlv_0= 'add.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_annotation_4_0= ruleAnnotation ) ) otherlv_5= ';' )
+            {
+            // InternalAedit.g:703:2: (otherlv_0= 'add.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_annotation_4_0= ruleAnnotation ) ) otherlv_5= ';' )
+            // InternalAedit.g:704:3: otherlv_0= 'add.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_annotation_4_0= ruleAnnotation ) ) otherlv_5= ';'
+            {
+            otherlv_0=(Token)match(input,19,FOLLOW_13); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getAddAnnotationToSchemaAccess().getAddAnnotKeyword_0());
+              		
+            }
+            // InternalAedit.g:708:3: ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) )
+            // InternalAedit.g:709:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
+            {
+            // InternalAedit.g:709:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
+            // InternalAedit.g:710:5: lv_schemaType_1_0= ruleSCHEMA_TYPE
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAddAnnotationToSchemaAccess().getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0());
+              				
+            }
+            pushFollow(FOLLOW_7);
+            lv_schemaType_1_0=ruleSCHEMA_TYPE();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getAddAnnotationToSchemaRule());
+              					}
+              					set(
+              						current,
+              						"schemaType",
+              						lv_schemaType_1_0,
+              						"org.aedit.Aedit.SCHEMA_TYPE");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalAedit.g:727:3: ( ( ruleQN ) )
+            // InternalAedit.g:728:4: ( ruleQN )
+            {
+            // InternalAedit.g:728:4: ( ruleQN )
+            // InternalAedit.g:729:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddAnnotationToSchemaRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAddAnnotationToSchemaAccess().getSchemaTypeCrossReference_2_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_3=(Token)match(input,20,FOLLOW_15); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_3, grammarAccess.getAddAnnotationToSchemaAccess().getEqualsSignGreaterThanSignKeyword_3());
+              		
+            }
+            // InternalAedit.g:747:3: ( (lv_annotation_4_0= ruleAnnotation ) )
+            // InternalAedit.g:748:4: (lv_annotation_4_0= ruleAnnotation )
+            {
+            // InternalAedit.g:748:4: (lv_annotation_4_0= ruleAnnotation )
+            // InternalAedit.g:749:5: lv_annotation_4_0= ruleAnnotation
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAddAnnotationToSchemaAccess().getAnnotationAnnotationParserRuleCall_4_0());
+              				
+            }
+            pushFollow(FOLLOW_11);
+            lv_annotation_4_0=ruleAnnotation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getAddAnnotationToSchemaRule());
+              					}
+              					set(
+              						current,
+              						"annotation",
+              						lv_annotation_4_0,
+              						"org.aedit.Aedit.Annotation");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_5=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_5, grammarAccess.getAddAnnotationToSchemaAccess().getSemicolonKeyword_5());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAddAnnotationToSchema"
+
+
+    // $ANTLR start "entryRuleAddAnnotationToField"
+    // InternalAedit.g:774:1: entryRuleAddAnnotationToField returns [EObject current=null] : iv_ruleAddAnnotationToField= ruleAddAnnotationToField EOF ;
+    public final EObject entryRuleAddAnnotationToField() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleAddAnnotationToField = null;
+
+
+        try {
+            // InternalAedit.g:774:61: (iv_ruleAddAnnotationToField= ruleAddAnnotationToField EOF )
+            // InternalAedit.g:775:2: iv_ruleAddAnnotationToField= ruleAddAnnotationToField EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddAnnotationToFieldRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleAddAnnotationToField=ruleAddAnnotationToField();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddAnnotationToField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAddAnnotationToField"
+
+
+    // $ANTLR start "ruleAddAnnotationToField"
+    // InternalAedit.g:781:1: ruleAddAnnotationToField returns [EObject current=null] : (otherlv_0= 'add.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';' ) ;
+    public final EObject ruleAddAnnotationToField() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+        EObject lv_annotation_3_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:787:2: ( (otherlv_0= 'add.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';' ) )
+            // InternalAedit.g:788:2: (otherlv_0= 'add.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';' )
+            {
+            // InternalAedit.g:788:2: (otherlv_0= 'add.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';' )
+            // InternalAedit.g:789:3: otherlv_0= 'add.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';'
+            {
+            otherlv_0=(Token)match(input,19,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getAddAnnotationToFieldAccess().getAddAnnotKeyword_0());
+              		
+            }
+            // InternalAedit.g:793:3: ( ( ruleQN ) )
+            // InternalAedit.g:794:4: ( ruleQN )
+            {
+            // InternalAedit.g:794:4: ( ruleQN )
+            // InternalAedit.g:795:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddAnnotationToFieldRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAddAnnotationToFieldAccess().getVariableFieldCrossReference_1_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,20,FOLLOW_15); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_2, grammarAccess.getAddAnnotationToFieldAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:813:3: ( (lv_annotation_3_0= ruleAnnotation ) )
+            // InternalAedit.g:814:4: (lv_annotation_3_0= ruleAnnotation )
+            {
+            // InternalAedit.g:814:4: (lv_annotation_3_0= ruleAnnotation )
+            // InternalAedit.g:815:5: lv_annotation_3_0= ruleAnnotation
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAddAnnotationToFieldAccess().getAnnotationAnnotationParserRuleCall_3_0());
+              				
+            }
+            pushFollow(FOLLOW_11);
+            lv_annotation_3_0=ruleAnnotation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getAddAnnotationToFieldRule());
+              					}
+              					set(
+              						current,
+              						"annotation",
+              						lv_annotation_3_0,
+              						"org.aedit.Aedit.Annotation");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_4=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_4, grammarAccess.getAddAnnotationToFieldAccess().getSemicolonKeyword_4());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAddAnnotationToField"
+
+
+    // $ANTLR start "entryRuleAddNameAnnotationToField"
+    // InternalAedit.g:840:1: entryRuleAddNameAnnotationToField returns [EObject current=null] : iv_ruleAddNameAnnotationToField= ruleAddNameAnnotationToField EOF ;
+    public final EObject entryRuleAddNameAnnotationToField() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleAddNameAnnotationToField = null;
+
+
+        try {
+            // InternalAedit.g:840:65: (iv_ruleAddNameAnnotationToField= ruleAddNameAnnotationToField EOF )
+            // InternalAedit.g:841:2: iv_ruleAddNameAnnotationToField= ruleAddNameAnnotationToField EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddNameAnnotationToFieldRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleAddNameAnnotationToField=ruleAddNameAnnotationToField();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddNameAnnotationToField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAddNameAnnotationToField"
+
+
+    // $ANTLR start "ruleAddNameAnnotationToField"
+    // InternalAedit.g:847:1: ruleAddNameAnnotationToField returns [EObject current=null] : (otherlv_0= 'add.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';' ) ;
+    public final EObject ruleAddNameAnnotationToField() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+        EObject lv_annotation_3_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:853:2: ( (otherlv_0= 'add.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';' ) )
+            // InternalAedit.g:854:2: (otherlv_0= 'add.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';' )
+            {
+            // InternalAedit.g:854:2: (otherlv_0= 'add.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';' )
+            // InternalAedit.g:855:3: otherlv_0= 'add.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_annotation_3_0= ruleAnnotation ) ) otherlv_4= ';'
+            {
+            otherlv_0=(Token)match(input,21,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getAddNameAnnotationToFieldAccess().getAddName_annotKeyword_0());
+              		
+            }
+            // InternalAedit.g:859:3: ( ( ruleQN ) )
+            // InternalAedit.g:860:4: ( ruleQN )
+            {
+            // InternalAedit.g:860:4: ( ruleQN )
+            // InternalAedit.g:861:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddNameAnnotationToFieldRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAddNameAnnotationToFieldAccess().getVariableFieldCrossReference_1_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,20,FOLLOW_15); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_2, grammarAccess.getAddNameAnnotationToFieldAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:879:3: ( (lv_annotation_3_0= ruleAnnotation ) )
+            // InternalAedit.g:880:4: (lv_annotation_3_0= ruleAnnotation )
+            {
+            // InternalAedit.g:880:4: (lv_annotation_3_0= ruleAnnotation )
+            // InternalAedit.g:881:5: lv_annotation_3_0= ruleAnnotation
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAddNameAnnotationToFieldAccess().getAnnotationAnnotationParserRuleCall_3_0());
+              				
+            }
+            pushFollow(FOLLOW_11);
+            lv_annotation_3_0=ruleAnnotation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getAddNameAnnotationToFieldRule());
+              					}
+              					set(
+              						current,
+              						"annotation",
+              						lv_annotation_3_0,
+              						"org.aedit.Aedit.Annotation");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_4=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_4, grammarAccess.getAddNameAnnotationToFieldAccess().getSemicolonKeyword_4());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAddNameAnnotationToField"
+
+
+    // $ANTLR start "entryRuleRemoveAnnotationFromSchema"
+    // InternalAedit.g:906:1: entryRuleRemoveAnnotationFromSchema returns [EObject current=null] : iv_ruleRemoveAnnotationFromSchema= ruleRemoveAnnotationFromSchema EOF ;
+    public final EObject entryRuleRemoveAnnotationFromSchema() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleRemoveAnnotationFromSchema = null;
+
+
+        try {
+            // InternalAedit.g:906:67: (iv_ruleRemoveAnnotationFromSchema= ruleRemoveAnnotationFromSchema EOF )
+            // InternalAedit.g:907:2: iv_ruleRemoveAnnotationFromSchema= ruleRemoveAnnotationFromSchema EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRemoveAnnotationFromSchemaRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleRemoveAnnotationFromSchema=ruleRemoveAnnotationFromSchema();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRemoveAnnotationFromSchema; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleRemoveAnnotationFromSchema"
+
+
+    // $ANTLR start "ruleRemoveAnnotationFromSchema"
+    // InternalAedit.g:913:1: ruleRemoveAnnotationFromSchema returns [EObject current=null] : (otherlv_0= 'remove.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( ( ruleQN ) ) otherlv_5= ';' ) ;
+    public final EObject ruleRemoveAnnotationFromSchema() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_3=null;
+        Token otherlv_5=null;
+        AntlrDatatypeRuleToken lv_schemaType_1_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:919:2: ( (otherlv_0= 'remove.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( ( ruleQN ) ) otherlv_5= ';' ) )
+            // InternalAedit.g:920:2: (otherlv_0= 'remove.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( ( ruleQN ) ) otherlv_5= ';' )
+            {
+            // InternalAedit.g:920:2: (otherlv_0= 'remove.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( ( ruleQN ) ) otherlv_5= ';' )
+            // InternalAedit.g:921:3: otherlv_0= 'remove.annot' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( ( ruleQN ) ) otherlv_5= ';'
+            {
+            otherlv_0=(Token)match(input,22,FOLLOW_13); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getRemoveAnnotationFromSchemaAccess().getRemoveAnnotKeyword_0());
+              		
+            }
+            // InternalAedit.g:925:3: ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) )
+            // InternalAedit.g:926:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
+            {
+            // InternalAedit.g:926:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
+            // InternalAedit.g:927:5: lv_schemaType_1_0= ruleSCHEMA_TYPE
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRemoveAnnotationFromSchemaAccess().getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0());
+              				
+            }
+            pushFollow(FOLLOW_7);
+            lv_schemaType_1_0=ruleSCHEMA_TYPE();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getRemoveAnnotationFromSchemaRule());
+              					}
+              					set(
+              						current,
+              						"schemaType",
+              						lv_schemaType_1_0,
+              						"org.aedit.Aedit.SCHEMA_TYPE");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalAedit.g:944:3: ( ( ruleQN ) )
+            // InternalAedit.g:945:4: ( ruleQN )
+            {
+            // InternalAedit.g:945:4: ( ruleQN )
+            // InternalAedit.g:946:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveAnnotationFromSchemaRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRemoveAnnotationFromSchemaAccess().getSchemaTypeCrossReference_2_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_3=(Token)match(input,20,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_3, grammarAccess.getRemoveAnnotationFromSchemaAccess().getEqualsSignGreaterThanSignKeyword_3());
+              		
+            }
+            // InternalAedit.g:964:3: ( ( ruleQN ) )
+            // InternalAedit.g:965:4: ( ruleQN )
+            {
+            // InternalAedit.g:965:4: ( ruleQN )
+            // InternalAedit.g:966:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveAnnotationFromSchemaRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRemoveAnnotationFromSchemaAccess().getAnnotationToRemoveAnnotationCrossReference_4_0());
+              				
+            }
+            pushFollow(FOLLOW_11);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_5=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_5, grammarAccess.getRemoveAnnotationFromSchemaAccess().getSemicolonKeyword_5());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleRemoveAnnotationFromSchema"
+
+
+    // $ANTLR start "entryRuleRemoveAnnotationFromField"
+    // InternalAedit.g:988:1: entryRuleRemoveAnnotationFromField returns [EObject current=null] : iv_ruleRemoveAnnotationFromField= ruleRemoveAnnotationFromField EOF ;
+    public final EObject entryRuleRemoveAnnotationFromField() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleRemoveAnnotationFromField = null;
+
+
+        try {
+            // InternalAedit.g:988:66: (iv_ruleRemoveAnnotationFromField= ruleRemoveAnnotationFromField EOF )
+            // InternalAedit.g:989:2: iv_ruleRemoveAnnotationFromField= ruleRemoveAnnotationFromField EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRemoveAnnotationFromFieldRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleRemoveAnnotationFromField=ruleRemoveAnnotationFromField();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRemoveAnnotationFromField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleRemoveAnnotationFromField"
+
+
+    // $ANTLR start "ruleRemoveAnnotationFromField"
+    // InternalAedit.g:995:1: ruleRemoveAnnotationFromField returns [EObject current=null] : (otherlv_0= 'remove.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';' ) ;
+    public final EObject ruleRemoveAnnotationFromField() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:1001:2: ( (otherlv_0= 'remove.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';' ) )
+            // InternalAedit.g:1002:2: (otherlv_0= 'remove.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';' )
+            {
+            // InternalAedit.g:1002:2: (otherlv_0= 'remove.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';' )
+            // InternalAedit.g:1003:3: otherlv_0= 'remove.annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';'
+            {
+            otherlv_0=(Token)match(input,22,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getRemoveAnnotationFromFieldAccess().getRemoveAnnotKeyword_0());
+              		
+            }
+            // InternalAedit.g:1007:3: ( ( ruleQN ) )
+            // InternalAedit.g:1008:4: ( ruleQN )
+            {
+            // InternalAedit.g:1008:4: ( ruleQN )
+            // InternalAedit.g:1009:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveAnnotationFromFieldRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRemoveAnnotationFromFieldAccess().getVariableFieldCrossReference_1_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,20,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_2, grammarAccess.getRemoveAnnotationFromFieldAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:1027:3: ( ( ruleQN ) )
+            // InternalAedit.g:1028:4: ( ruleQN )
+            {
+            // InternalAedit.g:1028:4: ( ruleQN )
+            // InternalAedit.g:1029:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveAnnotationFromFieldRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRemoveAnnotationFromFieldAccess().getAnnotationToRemoveAnnotationCrossReference_3_0());
+              				
+            }
+            pushFollow(FOLLOW_11);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_4=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_4, grammarAccess.getRemoveAnnotationFromFieldAccess().getSemicolonKeyword_4());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleRemoveAnnotationFromField"
+
+
+    // $ANTLR start "entryRuleRemoveNameAnnotationFromField"
+    // InternalAedit.g:1051:1: entryRuleRemoveNameAnnotationFromField returns [EObject current=null] : iv_ruleRemoveNameAnnotationFromField= ruleRemoveNameAnnotationFromField EOF ;
+    public final EObject entryRuleRemoveNameAnnotationFromField() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleRemoveNameAnnotationFromField = null;
+
+
+        try {
+            // InternalAedit.g:1051:70: (iv_ruleRemoveNameAnnotationFromField= ruleRemoveNameAnnotationFromField EOF )
+            // InternalAedit.g:1052:2: iv_ruleRemoveNameAnnotationFromField= ruleRemoveNameAnnotationFromField EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRemoveNameAnnotationFromFieldRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleRemoveNameAnnotationFromField=ruleRemoveNameAnnotationFromField();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRemoveNameAnnotationFromField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleRemoveNameAnnotationFromField"
+
+
+    // $ANTLR start "ruleRemoveNameAnnotationFromField"
+    // InternalAedit.g:1058:1: ruleRemoveNameAnnotationFromField returns [EObject current=null] : (otherlv_0= 'remove.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';' ) ;
+    public final EObject ruleRemoveNameAnnotationFromField() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:1064:2: ( (otherlv_0= 'remove.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';' ) )
+            // InternalAedit.g:1065:2: (otherlv_0= 'remove.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';' )
+            {
+            // InternalAedit.g:1065:2: (otherlv_0= 'remove.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';' )
+            // InternalAedit.g:1066:3: otherlv_0= 'remove.name_annot' ( ( ruleQN ) ) otherlv_2= '=>' ( ( ruleQN ) ) otherlv_4= ';'
+            {
+            otherlv_0=(Token)match(input,23,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getRemoveNameAnnotationFromFieldAccess().getRemoveName_annotKeyword_0());
+              		
+            }
+            // InternalAedit.g:1070:3: ( ( ruleQN ) )
+            // InternalAedit.g:1071:4: ( ruleQN )
+            {
+            // InternalAedit.g:1071:4: ( ruleQN )
+            // InternalAedit.g:1072:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveNameAnnotationFromFieldRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRemoveNameAnnotationFromFieldAccess().getVariableFieldCrossReference_1_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,20,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_2, grammarAccess.getRemoveNameAnnotationFromFieldAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:1090:3: ( ( ruleQN ) )
+            // InternalAedit.g:1091:4: ( ruleQN )
+            {
+            // InternalAedit.g:1091:4: ( ruleQN )
+            // InternalAedit.g:1092:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveNameAnnotationFromFieldRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRemoveNameAnnotationFromFieldAccess().getAnnotationToRemoveAnnotationCrossReference_3_0());
+              				
+            }
+            pushFollow(FOLLOW_11);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_4=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_4, grammarAccess.getRemoveNameAnnotationFromFieldAccess().getSemicolonKeyword_4());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleRemoveNameAnnotationFromField"
+
+
     // $ANTLR start "entryRuleChangeSchema"
-    // InternalAedit.g:581:1: entryRuleChangeSchema returns [EObject current=null] : iv_ruleChangeSchema= ruleChangeSchema EOF ;
+    // InternalAedit.g:1114:1: entryRuleChangeSchema returns [EObject current=null] : iv_ruleChangeSchema= ruleChangeSchema EOF ;
     public final EObject entryRuleChangeSchema() throws RecognitionException {
         EObject current = null;
 
@@ -1599,17 +3205,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:581:53: (iv_ruleChangeSchema= ruleChangeSchema EOF )
-            // InternalAedit.g:582:2: iv_ruleChangeSchema= ruleChangeSchema EOF
+            // InternalAedit.g:1114:53: (iv_ruleChangeSchema= ruleChangeSchema EOF )
+            // InternalAedit.g:1115:2: iv_ruleChangeSchema= ruleChangeSchema EOF
             {
-             newCompositeNode(grammarAccess.getChangeSchemaRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getChangeSchemaRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleChangeSchema=ruleChangeSchema();
 
             state._fsp--;
-
-             current =iv_ruleChangeSchema; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleChangeSchema; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -1627,141 +3237,188 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleChangeSchema"
-    // InternalAedit.g:588:1: ruleChangeSchema returns [EObject current=null] : (otherlv_0= 'change' (otherlv_1= 'record' | otherlv_2= 'error' ) ( ( ruleQN ) ) otherlv_4= '{' ( (lv_rules_5_0= ruleSchemaRule ) )* otherlv_6= '}' ) ;
+    // InternalAedit.g:1121:1: ruleChangeSchema returns [EObject current=null] : (otherlv_0= 'change' ( ( (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' ) ) ) ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleSchemaRule ) )* otherlv_5= '}' ) ;
     public final EObject ruleChangeSchema() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token otherlv_1=null;
-        Token otherlv_2=null;
-        Token otherlv_4=null;
-        Token otherlv_6=null;
-        EObject lv_rules_5_0 = null;
+        Token lv_schemaType_1_1=null;
+        Token lv_schemaType_1_2=null;
+        Token otherlv_3=null;
+        Token otherlv_5=null;
+        EObject lv_rules_4_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalAedit.g:594:2: ( (otherlv_0= 'change' (otherlv_1= 'record' | otherlv_2= 'error' ) ( ( ruleQN ) ) otherlv_4= '{' ( (lv_rules_5_0= ruleSchemaRule ) )* otherlv_6= '}' ) )
-            // InternalAedit.g:595:2: (otherlv_0= 'change' (otherlv_1= 'record' | otherlv_2= 'error' ) ( ( ruleQN ) ) otherlv_4= '{' ( (lv_rules_5_0= ruleSchemaRule ) )* otherlv_6= '}' )
+            // InternalAedit.g:1127:2: ( (otherlv_0= 'change' ( ( (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' ) ) ) ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleSchemaRule ) )* otherlv_5= '}' ) )
+            // InternalAedit.g:1128:2: (otherlv_0= 'change' ( ( (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' ) ) ) ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleSchemaRule ) )* otherlv_5= '}' )
             {
-            // InternalAedit.g:595:2: (otherlv_0= 'change' (otherlv_1= 'record' | otherlv_2= 'error' ) ( ( ruleQN ) ) otherlv_4= '{' ( (lv_rules_5_0= ruleSchemaRule ) )* otherlv_6= '}' )
-            // InternalAedit.g:596:3: otherlv_0= 'change' (otherlv_1= 'record' | otherlv_2= 'error' ) ( ( ruleQN ) ) otherlv_4= '{' ( (lv_rules_5_0= ruleSchemaRule ) )* otherlv_6= '}'
+            // InternalAedit.g:1128:2: (otherlv_0= 'change' ( ( (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' ) ) ) ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleSchemaRule ) )* otherlv_5= '}' )
+            // InternalAedit.g:1129:3: otherlv_0= 'change' ( ( (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' ) ) ) ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleSchemaRule ) )* otherlv_5= '}'
             {
-            otherlv_0=(Token)match(input,19,FOLLOW_13); 
+            otherlv_0=(Token)match(input,24,FOLLOW_16); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getChangeSchemaAccess().getChangeKeyword_0());
-            		
-            // InternalAedit.g:600:3: (otherlv_1= 'record' | otherlv_2= 'error' )
-            int alt12=2;
-            int LA12_0 = input.LA(1);
-
-            if ( (LA12_0==20) ) {
-                alt12=1;
+              			newLeafNode(otherlv_0, grammarAccess.getChangeSchemaAccess().getChangeKeyword_0());
+              		
             }
-            else if ( (LA12_0==21) ) {
-                alt12=2;
+            // InternalAedit.g:1133:3: ( ( (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' ) ) )
+            // InternalAedit.g:1134:4: ( (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' ) )
+            {
+            // InternalAedit.g:1134:4: ( (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' ) )
+            // InternalAedit.g:1135:5: (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' )
+            {
+            // InternalAedit.g:1135:5: (lv_schemaType_1_1= 'record' | lv_schemaType_1_2= 'error' )
+            int alt13=2;
+            int LA13_0 = input.LA(1);
+
+            if ( (LA13_0==25) ) {
+                alt13=1;
+            }
+            else if ( (LA13_0==26) ) {
+                alt13=2;
             }
             else {
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 12, 0, input);
+                    new NoViableAltException("", 13, 0, input);
 
                 throw nvae;
             }
-            switch (alt12) {
+            switch (alt13) {
                 case 1 :
-                    // InternalAedit.g:601:4: otherlv_1= 'record'
+                    // InternalAedit.g:1136:6: lv_schemaType_1_1= 'record'
                     {
-                    otherlv_1=(Token)match(input,20,FOLLOW_7); 
+                    lv_schemaType_1_1=(Token)match(input,25,FOLLOW_7); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    				newLeafNode(otherlv_1, grammarAccess.getChangeSchemaAccess().getRecordKeyword_1_0());
-                    			
+                      						newLeafNode(lv_schemaType_1_1, grammarAccess.getChangeSchemaAccess().getSchemaTypeRecordKeyword_1_0_0());
+                      					
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getChangeSchemaRule());
+                      						}
+                      						setWithLastConsumed(current, "schemaType", lv_schemaType_1_1, null);
+                      					
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:606:4: otherlv_2= 'error'
+                    // InternalAedit.g:1147:6: lv_schemaType_1_2= 'error'
                     {
-                    otherlv_2=(Token)match(input,21,FOLLOW_7); 
+                    lv_schemaType_1_2=(Token)match(input,26,FOLLOW_7); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    				newLeafNode(otherlv_2, grammarAccess.getChangeSchemaAccess().getErrorKeyword_1_1());
-                    			
+                      						newLeafNode(lv_schemaType_1_2, grammarAccess.getChangeSchemaAccess().getSchemaTypeErrorKeyword_1_0_1());
+                      					
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getChangeSchemaRule());
+                      						}
+                      						setWithLastConsumed(current, "schemaType", lv_schemaType_1_2, null);
+                      					
+                    }
 
                     }
                     break;
 
             }
 
-            // InternalAedit.g:611:3: ( ( ruleQN ) )
-            // InternalAedit.g:612:4: ( ruleQN )
-            {
-            // InternalAedit.g:612:4: ( ruleQN )
-            // InternalAedit.g:613:5: ruleQN
-            {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getChangeSchemaRule());
-            					}
-            				
+            }
 
-            					newCompositeNode(grammarAccess.getChangeSchemaAccess().getSchemaTypeCrossReference_2_0());
-            				
+
+            }
+
+            // InternalAedit.g:1160:3: ( ( ruleQN ) )
+            // InternalAedit.g:1161:4: ( ruleQN )
+            {
+            // InternalAedit.g:1161:4: ( ruleQN )
+            // InternalAedit.g:1162:5: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getChangeSchemaRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getChangeSchemaAccess().getSchemaTypeCrossReference_2_0());
+              				
+            }
             pushFollow(FOLLOW_9);
             ruleQN();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_4=(Token)match(input,13,FOLLOW_14); 
+            otherlv_3=(Token)match(input,13,FOLLOW_17); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getChangeSchemaAccess().getLeftCurlyBracketKeyword_3());
-            		
-            // InternalAedit.g:631:3: ( (lv_rules_5_0= ruleSchemaRule ) )*
-            loop13:
+              			newLeafNode(otherlv_3, grammarAccess.getChangeSchemaAccess().getLeftCurlyBracketKeyword_3());
+              		
+            }
+            // InternalAedit.g:1180:3: ( (lv_rules_4_0= ruleSchemaRule ) )*
+            loop14:
             do {
-                int alt13=2;
-                int LA13_0 = input.LA(1);
+                int alt14=2;
+                int LA14_0 = input.LA(1);
 
-                if ( (LA13_0==23||(LA13_0>=28 && LA13_0<=29)||(LA13_0>=31 && LA13_0<=32)) ) {
-                    alt13=1;
+                if ( (LA14_0==19||(LA14_0>=21 && LA14_0<=23)||LA14_0==28||(LA14_0>=33 && LA14_0<=37)) ) {
+                    alt14=1;
                 }
 
 
-                switch (alt13) {
+                switch (alt14) {
             	case 1 :
-            	    // InternalAedit.g:632:4: (lv_rules_5_0= ruleSchemaRule )
+            	    // InternalAedit.g:1181:4: (lv_rules_4_0= ruleSchemaRule )
             	    {
-            	    // InternalAedit.g:632:4: (lv_rules_5_0= ruleSchemaRule )
-            	    // InternalAedit.g:633:5: lv_rules_5_0= ruleSchemaRule
+            	    // InternalAedit.g:1181:4: (lv_rules_4_0= ruleSchemaRule )
+            	    // InternalAedit.g:1182:5: lv_rules_4_0= ruleSchemaRule
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					newCompositeNode(grammarAccess.getChangeSchemaAccess().getRulesSchemaRuleParserRuleCall_4_0());
-            	    				
-            	    pushFollow(FOLLOW_14);
-            	    lv_rules_5_0=ruleSchemaRule();
+            	      					newCompositeNode(grammarAccess.getChangeSchemaAccess().getRulesSchemaRuleParserRuleCall_4_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_17);
+            	    lv_rules_4_0=ruleSchemaRule();
 
             	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-
-            	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getChangeSchemaRule());
-            	    					}
-            	    					add(
-            	    						current,
-            	    						"rules",
-            	    						lv_rules_5_0,
-            	    						"org.aedit.Aedit.SchemaRule");
-            	    					afterParserOrEnumRuleCall();
-            	    				
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getChangeSchemaRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"rules",
+            	      						lv_rules_4_0,
+            	      						"org.aedit.Aedit.SchemaRule");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
 
             	    }
 
@@ -1770,23 +3427,27 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop13;
+            	    break loop14;
                 }
             } while (true);
 
-            otherlv_6=(Token)match(input,14,FOLLOW_2); 
+            otherlv_5=(Token)match(input,14,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_6, grammarAccess.getChangeSchemaAccess().getRightCurlyBracketKeyword_5());
-            		
+              			newLeafNode(otherlv_5, grammarAccess.getChangeSchemaAccess().getRightCurlyBracketKeyword_5());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -1801,7 +3462,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleChangeEnum"
-    // InternalAedit.g:658:1: entryRuleChangeEnum returns [EObject current=null] : iv_ruleChangeEnum= ruleChangeEnum EOF ;
+    // InternalAedit.g:1207:1: entryRuleChangeEnum returns [EObject current=null] : iv_ruleChangeEnum= ruleChangeEnum EOF ;
     public final EObject entryRuleChangeEnum() throws RecognitionException {
         EObject current = null;
 
@@ -1809,17 +3470,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:658:51: (iv_ruleChangeEnum= ruleChangeEnum EOF )
-            // InternalAedit.g:659:2: iv_ruleChangeEnum= ruleChangeEnum EOF
+            // InternalAedit.g:1207:51: (iv_ruleChangeEnum= ruleChangeEnum EOF )
+            // InternalAedit.g:1208:2: iv_ruleChangeEnum= ruleChangeEnum EOF
             {
-             newCompositeNode(grammarAccess.getChangeEnumRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getChangeEnumRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleChangeEnum=ruleChangeEnum();
 
             state._fsp--;
-
-             current =iv_ruleChangeEnum; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleChangeEnum; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -1837,7 +3502,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleChangeEnum"
-    // InternalAedit.g:665:1: ruleChangeEnum returns [EObject current=null] : (otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}' ) ;
+    // InternalAedit.g:1214:1: ruleChangeEnum returns [EObject current=null] : (otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}' ) ;
     public final EObject ruleChangeEnum() throws RecognitionException {
         EObject current = null;
 
@@ -1852,89 +3517,105 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:671:2: ( (otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}' ) )
-            // InternalAedit.g:672:2: (otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}' )
+            // InternalAedit.g:1220:2: ( (otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}' ) )
+            // InternalAedit.g:1221:2: (otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}' )
             {
-            // InternalAedit.g:672:2: (otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}' )
-            // InternalAedit.g:673:3: otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}'
+            // InternalAedit.g:1221:2: (otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}' )
+            // InternalAedit.g:1222:3: otherlv_0= 'change' otherlv_1= 'enum' ( ( ruleQN ) ) otherlv_3= '{' ( (lv_rules_4_0= ruleEnumRule ) )* otherlv_5= '}'
             {
-            otherlv_0=(Token)match(input,19,FOLLOW_15); 
+            otherlv_0=(Token)match(input,24,FOLLOW_18); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getChangeEnumAccess().getChangeKeyword_0());
-            		
-            otherlv_1=(Token)match(input,22,FOLLOW_7); 
+              			newLeafNode(otherlv_0, grammarAccess.getChangeEnumAccess().getChangeKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,27,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_1, grammarAccess.getChangeEnumAccess().getEnumKeyword_1());
-            		
-            // InternalAedit.g:681:3: ( ( ruleQN ) )
-            // InternalAedit.g:682:4: ( ruleQN )
+              			newLeafNode(otherlv_1, grammarAccess.getChangeEnumAccess().getEnumKeyword_1());
+              		
+            }
+            // InternalAedit.g:1230:3: ( ( ruleQN ) )
+            // InternalAedit.g:1231:4: ( ruleQN )
             {
-            // InternalAedit.g:682:4: ( ruleQN )
-            // InternalAedit.g:683:5: ruleQN
+            // InternalAedit.g:1231:4: ( ruleQN )
+            // InternalAedit.g:1232:5: ruleQN
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getChangeEnumRule());
-            					}
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getChangeEnumRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getChangeEnumAccess().getSchemaEnumTypeCrossReference_2_0());
-            				
+              					newCompositeNode(grammarAccess.getChangeEnumAccess().getSchemaEnumTypeCrossReference_2_0());
+              				
+            }
             pushFollow(FOLLOW_9);
             ruleQN();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,13,FOLLOW_16); 
+            otherlv_3=(Token)match(input,13,FOLLOW_19); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_3, grammarAccess.getChangeEnumAccess().getLeftCurlyBracketKeyword_3());
-            		
-            // InternalAedit.g:701:3: ( (lv_rules_4_0= ruleEnumRule ) )*
-            loop14:
+              			newLeafNode(otherlv_3, grammarAccess.getChangeEnumAccess().getLeftCurlyBracketKeyword_3());
+              		
+            }
+            // InternalAedit.g:1250:3: ( (lv_rules_4_0= ruleEnumRule ) )*
+            loop15:
             do {
-                int alt14=2;
-                int LA14_0 = input.LA(1);
+                int alt15=2;
+                int LA15_0 = input.LA(1);
 
-                if ( (LA14_0==23||(LA14_0>=28 && LA14_0<=29)) ) {
-                    alt14=1;
+                if ( (LA15_0==28||(LA15_0>=33 && LA15_0<=34)) ) {
+                    alt15=1;
                 }
 
 
-                switch (alt14) {
+                switch (alt15) {
             	case 1 :
-            	    // InternalAedit.g:702:4: (lv_rules_4_0= ruleEnumRule )
+            	    // InternalAedit.g:1251:4: (lv_rules_4_0= ruleEnumRule )
             	    {
-            	    // InternalAedit.g:702:4: (lv_rules_4_0= ruleEnumRule )
-            	    // InternalAedit.g:703:5: lv_rules_4_0= ruleEnumRule
+            	    // InternalAedit.g:1251:4: (lv_rules_4_0= ruleEnumRule )
+            	    // InternalAedit.g:1252:5: lv_rules_4_0= ruleEnumRule
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					newCompositeNode(grammarAccess.getChangeEnumAccess().getRulesEnumRuleParserRuleCall_4_0());
-            	    				
-            	    pushFollow(FOLLOW_16);
+            	      					newCompositeNode(grammarAccess.getChangeEnumAccess().getRulesEnumRuleParserRuleCall_4_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_19);
             	    lv_rules_4_0=ruleEnumRule();
 
             	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-
-            	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getChangeEnumRule());
-            	    					}
-            	    					add(
-            	    						current,
-            	    						"rules",
-            	    						lv_rules_4_0,
-            	    						"org.aedit.Aedit.EnumRule");
-            	    					afterParserOrEnumRuleCall();
-            	    				
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getChangeEnumRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"rules",
+            	      						lv_rules_4_0,
+            	      						"org.aedit.Aedit.EnumRule");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
 
             	    }
 
@@ -1943,23 +3624,27 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop14;
+            	    break loop15;
                 }
             } while (true);
 
-            otherlv_5=(Token)match(input,14,FOLLOW_2); 
+            otherlv_5=(Token)match(input,14,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_5, grammarAccess.getChangeEnumAccess().getRightCurlyBracketKeyword_5());
-            		
+              			newLeafNode(otherlv_5, grammarAccess.getChangeEnumAccess().getRightCurlyBracketKeyword_5());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -1974,7 +3659,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAdd"
-    // InternalAedit.g:728:1: entryRuleAdd returns [EObject current=null] : iv_ruleAdd= ruleAdd EOF ;
+    // InternalAedit.g:1277:1: entryRuleAdd returns [EObject current=null] : iv_ruleAdd= ruleAdd EOF ;
     public final EObject entryRuleAdd() throws RecognitionException {
         EObject current = null;
 
@@ -1982,17 +3667,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:728:44: (iv_ruleAdd= ruleAdd EOF )
-            // InternalAedit.g:729:2: iv_ruleAdd= ruleAdd EOF
+            // InternalAedit.g:1277:44: (iv_ruleAdd= ruleAdd EOF )
+            // InternalAedit.g:1278:2: iv_ruleAdd= ruleAdd EOF
             {
-             newCompositeNode(grammarAccess.getAddRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleAdd=ruleAdd();
 
             state._fsp--;
-
-             current =iv_ruleAdd; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAdd; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -2010,112 +3699,158 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAdd"
-    // InternalAedit.g:735:1: ruleAdd returns [EObject current=null] : (this_AddRecord_0= ruleAddRecord | this_AddEnumeration_1= ruleAddEnumeration ) ;
+    // InternalAedit.g:1284:1: ruleAdd returns [EObject current=null] : (this_AddRecord_0= ruleAddRecord | this_AddError_1= ruleAddError | this_AddEnumeration_2= ruleAddEnumeration ) ;
     public final EObject ruleAdd() throws RecognitionException {
         EObject current = null;
 
         EObject this_AddRecord_0 = null;
 
-        EObject this_AddEnumeration_1 = null;
+        EObject this_AddError_1 = null;
+
+        EObject this_AddEnumeration_2 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalAedit.g:741:2: ( (this_AddRecord_0= ruleAddRecord | this_AddEnumeration_1= ruleAddEnumeration ) )
-            // InternalAedit.g:742:2: (this_AddRecord_0= ruleAddRecord | this_AddEnumeration_1= ruleAddEnumeration )
+            // InternalAedit.g:1290:2: ( (this_AddRecord_0= ruleAddRecord | this_AddError_1= ruleAddError | this_AddEnumeration_2= ruleAddEnumeration ) )
+            // InternalAedit.g:1291:2: (this_AddRecord_0= ruleAddRecord | this_AddError_1= ruleAddError | this_AddEnumeration_2= ruleAddEnumeration )
             {
-            // InternalAedit.g:742:2: (this_AddRecord_0= ruleAddRecord | this_AddEnumeration_1= ruleAddEnumeration )
-            int alt15=2;
-            int LA15_0 = input.LA(1);
+            // InternalAedit.g:1291:2: (this_AddRecord_0= ruleAddRecord | this_AddError_1= ruleAddError | this_AddEnumeration_2= ruleAddEnumeration )
+            int alt16=3;
+            int LA16_0 = input.LA(1);
 
-            if ( (LA15_0==23) ) {
-                int LA15_1 = input.LA(2);
+            if ( (LA16_0==28) ) {
+                int LA16_1 = input.LA(2);
 
-                if ( (LA15_1==24) ) {
-                    int LA15_2 = input.LA(3);
+                if ( (LA16_1==29) ) {
+                    int LA16_2 = input.LA(3);
 
-                    if ( (LA15_2==RULE_INT) ) {
-                        int LA15_3 = input.LA(4);
+                    if ( (LA16_2==RULE_INT) ) {
+                        int LA16_3 = input.LA(4);
 
-                        if ( (LA15_3==25) ) {
-                            int LA15_4 = input.LA(5);
-
-                            if ( (LA15_4==20) ) {
-                                alt15=1;
-                            }
-                            else if ( (LA15_4==22) ) {
-                                alt15=2;
-                            }
-                            else {
+                        if ( (LA16_3==30) ) {
+                            switch ( input.LA(5) ) {
+                            case 25:
+                                {
+                                alt16=1;
+                                }
+                                break;
+                            case 26:
+                                {
+                                alt16=2;
+                                }
+                                break;
+                            case 27:
+                                {
+                                alt16=3;
+                                }
+                                break;
+                            default:
+                                if (state.backtracking>0) {state.failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("", 15, 4, input);
+                                    new NoViableAltException("", 16, 4, input);
 
                                 throw nvae;
                             }
+
                         }
                         else {
+                            if (state.backtracking>0) {state.failed=true; return current;}
                             NoViableAltException nvae =
-                                new NoViableAltException("", 15, 3, input);
+                                new NoViableAltException("", 16, 3, input);
 
                             throw nvae;
                         }
                     }
                     else {
+                        if (state.backtracking>0) {state.failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("", 15, 2, input);
+                            new NoViableAltException("", 16, 2, input);
 
                         throw nvae;
                     }
                 }
                 else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 15, 1, input);
+                        new NoViableAltException("", 16, 1, input);
 
                     throw nvae;
                 }
             }
             else {
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 15, 0, input);
+                    new NoViableAltException("", 16, 0, input);
 
                 throw nvae;
             }
-            switch (alt15) {
+            switch (alt16) {
                 case 1 :
-                    // InternalAedit.g:743:3: this_AddRecord_0= ruleAddRecord
+                    // InternalAedit.g:1292:3: this_AddRecord_0= ruleAddRecord
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getAddAccess().getAddRecordParserRuleCall_0());
-                    		
+                      			newCompositeNode(grammarAccess.getAddAccess().getAddRecordParserRuleCall_0());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_AddRecord_0=ruleAddRecord();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_AddRecord_0;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_AddRecord_0;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:752:3: this_AddEnumeration_1= ruleAddEnumeration
+                    // InternalAedit.g:1301:3: this_AddError_1= ruleAddError
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getAddAccess().getAddEnumerationParserRuleCall_1());
-                    		
+                      			newCompositeNode(grammarAccess.getAddAccess().getAddErrorParserRuleCall_1());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
-                    this_AddEnumeration_1=ruleAddEnumeration();
+                    this_AddError_1=ruleAddError();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
+                      			current = this_AddError_1;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
-                    			current = this_AddEnumeration_1;
-                    			afterParserOrEnumRuleCall();
-                    		
+                    }
+                    break;
+                case 3 :
+                    // InternalAedit.g:1310:3: this_AddEnumeration_2= ruleAddEnumeration
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getAddAccess().getAddEnumerationParserRuleCall_2());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_AddEnumeration_2=ruleAddEnumeration();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_AddEnumeration_2;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
@@ -2125,9 +3860,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -2142,7 +3879,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAddRecord"
-    // InternalAedit.g:764:1: entryRuleAddRecord returns [EObject current=null] : iv_ruleAddRecord= ruleAddRecord EOF ;
+    // InternalAedit.g:1322:1: entryRuleAddRecord returns [EObject current=null] : iv_ruleAddRecord= ruleAddRecord EOF ;
     public final EObject entryRuleAddRecord() throws RecognitionException {
         EObject current = null;
 
@@ -2150,17 +3887,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:764:50: (iv_ruleAddRecord= ruleAddRecord EOF )
-            // InternalAedit.g:765:2: iv_ruleAddRecord= ruleAddRecord EOF
+            // InternalAedit.g:1322:50: (iv_ruleAddRecord= ruleAddRecord EOF )
+            // InternalAedit.g:1323:2: iv_ruleAddRecord= ruleAddRecord EOF
             {
-             newCompositeNode(grammarAccess.getAddRecordRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddRecordRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleAddRecord=ruleAddRecord();
 
             state._fsp--;
-
-             current =iv_ruleAddRecord; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddRecord; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -2178,7 +3919,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddRecord"
-    // InternalAedit.g:771:1: ruleAddRecord returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' ) ;
+    // InternalAedit.g:1329:1: ruleAddRecord returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' ) ;
     public final EObject ruleAddRecord() throws RecognitionException {
         EObject current = null;
 
@@ -2199,146 +3940,174 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:777:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' ) )
-            // InternalAedit.g:778:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' )
+            // InternalAedit.g:1335:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' ) )
+            // InternalAedit.g:1336:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' )
             {
-            // InternalAedit.g:778:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' )
-            // InternalAedit.g:779:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}'
+            // InternalAedit.g:1336:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' )
+            // InternalAedit.g:1337:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'record' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_recordName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}'
             {
-            otherlv_0=(Token)match(input,23,FOLLOW_17); 
+            otherlv_0=(Token)match(input,28,FOLLOW_20); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getAddRecordAccess().getAddAtKeyword_0());
-            		
-            otherlv_1=(Token)match(input,24,FOLLOW_18); 
+              			newLeafNode(otherlv_0, grammarAccess.getAddRecordAccess().getAddAtKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,29,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_1, grammarAccess.getAddRecordAccess().getLeftParenthesisKeyword_1());
-            		
-            // InternalAedit.g:787:3: ( (lv_index_2_0= RULE_INT ) )
-            // InternalAedit.g:788:4: (lv_index_2_0= RULE_INT )
+              			newLeafNode(otherlv_1, grammarAccess.getAddRecordAccess().getLeftParenthesisKeyword_1());
+              		
+            }
+            // InternalAedit.g:1345:3: ( (lv_index_2_0= RULE_INT ) )
+            // InternalAedit.g:1346:4: (lv_index_2_0= RULE_INT )
             {
-            // InternalAedit.g:788:4: (lv_index_2_0= RULE_INT )
-            // InternalAedit.g:789:5: lv_index_2_0= RULE_INT
+            // InternalAedit.g:1346:4: (lv_index_2_0= RULE_INT )
+            // InternalAedit.g:1347:5: lv_index_2_0= RULE_INT
             {
-            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_19); 
+            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_index_2_0, grammarAccess.getAddRecordAccess().getIndexINTTerminalRuleCall_2_0());
-            				
+              					newLeafNode(lv_index_2_0, grammarAccess.getAddRecordAccess().getIndexINTTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddRecordRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"index",
-            						lv_index_2_0,
-            						"org.eclipse.xtext.common.Terminals.INT");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddRecordRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"index",
+              						lv_index_2_0,
+              						"org.eclipse.xtext.common.Terminals.INT");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,25,FOLLOW_20); 
+            otherlv_3=(Token)match(input,30,FOLLOW_23); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_3, grammarAccess.getAddRecordAccess().getRightParenthesisKeyword_3());
-            		
-            otherlv_4=(Token)match(input,20,FOLLOW_7); 
+              			newLeafNode(otherlv_3, grammarAccess.getAddRecordAccess().getRightParenthesisKeyword_3());
+              		
+            }
+            otherlv_4=(Token)match(input,25,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getAddRecordAccess().getRecordKeyword_4());
-            		
-            // InternalAedit.g:813:3: ( (otherlv_5= RULE_ID ) )
-            // InternalAedit.g:814:4: (otherlv_5= RULE_ID )
+              			newLeafNode(otherlv_4, grammarAccess.getAddRecordAccess().getRecordKeyword_4());
+              		
+            }
+            // InternalAedit.g:1371:3: ( (otherlv_5= RULE_ID ) )
+            // InternalAedit.g:1372:4: (otherlv_5= RULE_ID )
             {
-            // InternalAedit.g:814:4: (otherlv_5= RULE_ID )
-            // InternalAedit.g:815:5: otherlv_5= RULE_ID
+            // InternalAedit.g:1372:4: (otherlv_5= RULE_ID )
+            // InternalAedit.g:1373:5: otherlv_5= RULE_ID
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddRecordRule());
-            					}
-            				
-            otherlv_5=(Token)match(input,RULE_ID,FOLLOW_21); 
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddRecordRule());
+              					}
+              				
+            }
+            otherlv_5=(Token)match(input,RULE_ID,FOLLOW_24); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(otherlv_5, grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileCrossReference_5_0());
-            				
+              					newLeafNode(otherlv_5, grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileCrossReference_5_0());
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_6=(Token)match(input,26,FOLLOW_7); 
+            otherlv_6=(Token)match(input,31,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_6, grammarAccess.getAddRecordAccess().getFullStopKeyword_6());
-            		
-            // InternalAedit.g:830:3: ( (lv_recordName_7_0= RULE_ID ) )
-            // InternalAedit.g:831:4: (lv_recordName_7_0= RULE_ID )
+              			newLeafNode(otherlv_6, grammarAccess.getAddRecordAccess().getFullStopKeyword_6());
+              		
+            }
+            // InternalAedit.g:1388:3: ( (lv_recordName_7_0= RULE_ID ) )
+            // InternalAedit.g:1389:4: (lv_recordName_7_0= RULE_ID )
             {
-            // InternalAedit.g:831:4: (lv_recordName_7_0= RULE_ID )
-            // InternalAedit.g:832:5: lv_recordName_7_0= RULE_ID
+            // InternalAedit.g:1389:4: (lv_recordName_7_0= RULE_ID )
+            // InternalAedit.g:1390:5: lv_recordName_7_0= RULE_ID
             {
-            lv_recordName_7_0=(Token)match(input,RULE_ID,FOLLOW_9); 
+            lv_recordName_7_0=(Token)match(input,RULE_ID,FOLLOW_9); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_recordName_7_0, grammarAccess.getAddRecordAccess().getRecordNameIDTerminalRuleCall_7_0());
-            				
+              					newLeafNode(lv_recordName_7_0, grammarAccess.getAddRecordAccess().getRecordNameIDTerminalRuleCall_7_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddRecordRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"recordName",
-            						lv_recordName_7_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddRecordRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"recordName",
+              						lv_recordName_7_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_8=(Token)match(input,13,FOLLOW_22); 
+            otherlv_8=(Token)match(input,13,FOLLOW_25); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_8, grammarAccess.getAddRecordAccess().getLeftCurlyBracketKeyword_8());
-            		
-            // InternalAedit.g:852:3: ( (lv_fields_9_0= ruleField ) )*
-            loop16:
+              			newLeafNode(otherlv_8, grammarAccess.getAddRecordAccess().getLeftCurlyBracketKeyword_8());
+              		
+            }
+            // InternalAedit.g:1410:3: ( (lv_fields_9_0= ruleField ) )*
+            loop17:
             do {
-                int alt16=2;
-                int LA16_0 = input.LA(1);
+                int alt17=2;
+                int LA17_0 = input.LA(1);
 
-                if ( (LA16_0==RULE_ID||(LA16_0>=38 && LA16_0<=43)) ) {
-                    alt16=1;
+                if ( (LA17_0==RULE_ID||LA17_0==39||(LA17_0>=48 && LA17_0<=54)) ) {
+                    alt17=1;
                 }
 
 
-                switch (alt16) {
+                switch (alt17) {
             	case 1 :
-            	    // InternalAedit.g:853:4: (lv_fields_9_0= ruleField )
+            	    // InternalAedit.g:1411:4: (lv_fields_9_0= ruleField )
             	    {
-            	    // InternalAedit.g:853:4: (lv_fields_9_0= ruleField )
-            	    // InternalAedit.g:854:5: lv_fields_9_0= ruleField
+            	    // InternalAedit.g:1411:4: (lv_fields_9_0= ruleField )
+            	    // InternalAedit.g:1412:5: lv_fields_9_0= ruleField
             	    {
+            	    if ( state.backtracking==0 ) {
 
-            	    					newCompositeNode(grammarAccess.getAddRecordAccess().getFieldsFieldParserRuleCall_9_0());
-            	    				
-            	    pushFollow(FOLLOW_22);
+            	      					newCompositeNode(grammarAccess.getAddRecordAccess().getFieldsFieldParserRuleCall_9_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_25);
             	    lv_fields_9_0=ruleField();
 
             	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-
-            	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getAddRecordRule());
-            	    					}
-            	    					add(
-            	    						current,
-            	    						"fields",
-            	    						lv_fields_9_0,
-            	    						"org.aedit.Aedit.Field");
-            	    					afterParserOrEnumRuleCall();
-            	    				
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getAddRecordRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"fields",
+            	      						lv_fields_9_0,
+            	      						"org.aedit.Aedit.Field");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
 
             	    }
 
@@ -2347,23 +4116,27 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop16;
+            	    break loop17;
                 }
             } while (true);
 
-            otherlv_10=(Token)match(input,14,FOLLOW_2); 
+            otherlv_10=(Token)match(input,14,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_10, grammarAccess.getAddRecordAccess().getRightCurlyBracketKeyword_10());
-            		
+              			newLeafNode(otherlv_10, grammarAccess.getAddRecordAccess().getRightCurlyBracketKeyword_10());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -2377,8 +4150,280 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleAddRecord"
 
 
+    // $ANTLR start "entryRuleAddError"
+    // InternalAedit.g:1437:1: entryRuleAddError returns [EObject current=null] : iv_ruleAddError= ruleAddError EOF ;
+    public final EObject entryRuleAddError() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleAddError = null;
+
+
+        try {
+            // InternalAedit.g:1437:49: (iv_ruleAddError= ruleAddError EOF )
+            // InternalAedit.g:1438:2: iv_ruleAddError= ruleAddError EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddErrorRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleAddError=ruleAddError();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddError; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAddError"
+
+
+    // $ANTLR start "ruleAddError"
+    // InternalAedit.g:1444:1: ruleAddError returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'error' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_errorName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' ) ;
+    public final EObject ruleAddError() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_1=null;
+        Token lv_index_2_0=null;
+        Token otherlv_3=null;
+        Token otherlv_4=null;
+        Token otherlv_5=null;
+        Token otherlv_6=null;
+        Token lv_errorName_7_0=null;
+        Token otherlv_8=null;
+        Token otherlv_10=null;
+        EObject lv_fields_9_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:1450:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'error' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_errorName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' ) )
+            // InternalAedit.g:1451:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'error' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_errorName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' )
+            {
+            // InternalAedit.g:1451:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'error' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_errorName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}' )
+            // InternalAedit.g:1452:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'error' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_errorName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_fields_9_0= ruleField ) )* otherlv_10= '}'
+            {
+            otherlv_0=(Token)match(input,28,FOLLOW_20); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getAddErrorAccess().getAddAtKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,29,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_1, grammarAccess.getAddErrorAccess().getLeftParenthesisKeyword_1());
+              		
+            }
+            // InternalAedit.g:1460:3: ( (lv_index_2_0= RULE_INT ) )
+            // InternalAedit.g:1461:4: (lv_index_2_0= RULE_INT )
+            {
+            // InternalAedit.g:1461:4: (lv_index_2_0= RULE_INT )
+            // InternalAedit.g:1462:5: lv_index_2_0= RULE_INT
+            {
+            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(lv_index_2_0, grammarAccess.getAddErrorAccess().getIndexINTTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddErrorRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"index",
+              						lv_index_2_0,
+              						"org.eclipse.xtext.common.Terminals.INT");
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_3=(Token)match(input,30,FOLLOW_26); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_3, grammarAccess.getAddErrorAccess().getRightParenthesisKeyword_3());
+              		
+            }
+            otherlv_4=(Token)match(input,26,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_4, grammarAccess.getAddErrorAccess().getErrorKeyword_4());
+              		
+            }
+            // InternalAedit.g:1486:3: ( (otherlv_5= RULE_ID ) )
+            // InternalAedit.g:1487:4: (otherlv_5= RULE_ID )
+            {
+            // InternalAedit.g:1487:4: (otherlv_5= RULE_ID )
+            // InternalAedit.g:1488:5: otherlv_5= RULE_ID
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddErrorRule());
+              					}
+              				
+            }
+            otherlv_5=(Token)match(input,RULE_ID,FOLLOW_24); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(otherlv_5, grammarAccess.getAddErrorAccess().getNamespaceAvroIDLFileCrossReference_5_0());
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_6=(Token)match(input,31,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_6, grammarAccess.getAddErrorAccess().getFullStopKeyword_6());
+              		
+            }
+            // InternalAedit.g:1503:3: ( (lv_errorName_7_0= RULE_ID ) )
+            // InternalAedit.g:1504:4: (lv_errorName_7_0= RULE_ID )
+            {
+            // InternalAedit.g:1504:4: (lv_errorName_7_0= RULE_ID )
+            // InternalAedit.g:1505:5: lv_errorName_7_0= RULE_ID
+            {
+            lv_errorName_7_0=(Token)match(input,RULE_ID,FOLLOW_9); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(lv_errorName_7_0, grammarAccess.getAddErrorAccess().getErrorNameIDTerminalRuleCall_7_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddErrorRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"errorName",
+              						lv_errorName_7_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_8=(Token)match(input,13,FOLLOW_25); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_8, grammarAccess.getAddErrorAccess().getLeftCurlyBracketKeyword_8());
+              		
+            }
+            // InternalAedit.g:1525:3: ( (lv_fields_9_0= ruleField ) )*
+            loop18:
+            do {
+                int alt18=2;
+                int LA18_0 = input.LA(1);
+
+                if ( (LA18_0==RULE_ID||LA18_0==39||(LA18_0>=48 && LA18_0<=54)) ) {
+                    alt18=1;
+                }
+
+
+                switch (alt18) {
+            	case 1 :
+            	    // InternalAedit.g:1526:4: (lv_fields_9_0= ruleField )
+            	    {
+            	    // InternalAedit.g:1526:4: (lv_fields_9_0= ruleField )
+            	    // InternalAedit.g:1527:5: lv_fields_9_0= ruleField
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      					newCompositeNode(grammarAccess.getAddErrorAccess().getFieldsFieldParserRuleCall_9_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_25);
+            	    lv_fields_9_0=ruleField();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getAddErrorRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"fields",
+            	      						lv_fields_9_0,
+            	      						"org.aedit.Aedit.Field");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop18;
+                }
+            } while (true);
+
+            otherlv_10=(Token)match(input,14,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_10, grammarAccess.getAddErrorAccess().getRightCurlyBracketKeyword_10());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAddError"
+
+
     // $ANTLR start "entryRuleAddEnumeration"
-    // InternalAedit.g:879:1: entryRuleAddEnumeration returns [EObject current=null] : iv_ruleAddEnumeration= ruleAddEnumeration EOF ;
+    // InternalAedit.g:1552:1: entryRuleAddEnumeration returns [EObject current=null] : iv_ruleAddEnumeration= ruleAddEnumeration EOF ;
     public final EObject entryRuleAddEnumeration() throws RecognitionException {
         EObject current = null;
 
@@ -2386,17 +4431,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:879:55: (iv_ruleAddEnumeration= ruleAddEnumeration EOF )
-            // InternalAedit.g:880:2: iv_ruleAddEnumeration= ruleAddEnumeration EOF
+            // InternalAedit.g:1552:55: (iv_ruleAddEnumeration= ruleAddEnumeration EOF )
+            // InternalAedit.g:1553:2: iv_ruleAddEnumeration= ruleAddEnumeration EOF
             {
-             newCompositeNode(grammarAccess.getAddEnumerationRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddEnumerationRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleAddEnumeration=ruleAddEnumeration();
 
             state._fsp--;
-
-             current =iv_ruleAddEnumeration; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddEnumeration; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -2414,7 +4463,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddEnumeration"
-    // InternalAedit.g:886:1: ruleAddEnumeration returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}' ) ;
+    // InternalAedit.g:1559:1: ruleAddEnumeration returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}' ) ;
     public final EObject ruleAddEnumeration() throws RecognitionException {
         EObject current = null;
 
@@ -2436,174 +4485,208 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:892:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}' ) )
-            // InternalAedit.g:893:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}' )
+            // InternalAedit.g:1565:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}' ) )
+            // InternalAedit.g:1566:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}' )
             {
-            // InternalAedit.g:893:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}' )
-            // InternalAedit.g:894:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}'
+            // InternalAedit.g:1566:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}' )
+            // InternalAedit.g:1567:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= 'enum' ( (otherlv_5= RULE_ID ) ) otherlv_6= '.' ( (lv_enumName_7_0= RULE_ID ) ) otherlv_8= '{' ( (lv_symbols_9_0= RULE_ID ) ) (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )* otherlv_12= '}'
             {
-            otherlv_0=(Token)match(input,23,FOLLOW_17); 
+            otherlv_0=(Token)match(input,28,FOLLOW_20); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getAddEnumerationAccess().getAddAtKeyword_0());
-            		
-            otherlv_1=(Token)match(input,24,FOLLOW_18); 
+              			newLeafNode(otherlv_0, grammarAccess.getAddEnumerationAccess().getAddAtKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,29,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_1, grammarAccess.getAddEnumerationAccess().getLeftParenthesisKeyword_1());
-            		
-            // InternalAedit.g:902:3: ( (lv_index_2_0= RULE_INT ) )
-            // InternalAedit.g:903:4: (lv_index_2_0= RULE_INT )
+              			newLeafNode(otherlv_1, grammarAccess.getAddEnumerationAccess().getLeftParenthesisKeyword_1());
+              		
+            }
+            // InternalAedit.g:1575:3: ( (lv_index_2_0= RULE_INT ) )
+            // InternalAedit.g:1576:4: (lv_index_2_0= RULE_INT )
             {
-            // InternalAedit.g:903:4: (lv_index_2_0= RULE_INT )
-            // InternalAedit.g:904:5: lv_index_2_0= RULE_INT
+            // InternalAedit.g:1576:4: (lv_index_2_0= RULE_INT )
+            // InternalAedit.g:1577:5: lv_index_2_0= RULE_INT
             {
-            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_19); 
+            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_index_2_0, grammarAccess.getAddEnumerationAccess().getIndexINTTerminalRuleCall_2_0());
-            				
+              					newLeafNode(lv_index_2_0, grammarAccess.getAddEnumerationAccess().getIndexINTTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddEnumerationRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"index",
-            						lv_index_2_0,
-            						"org.eclipse.xtext.common.Terminals.INT");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddEnumerationRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"index",
+              						lv_index_2_0,
+              						"org.eclipse.xtext.common.Terminals.INT");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,25,FOLLOW_15); 
+            otherlv_3=(Token)match(input,30,FOLLOW_18); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_3, grammarAccess.getAddEnumerationAccess().getRightParenthesisKeyword_3());
-            		
-            otherlv_4=(Token)match(input,22,FOLLOW_7); 
+              			newLeafNode(otherlv_3, grammarAccess.getAddEnumerationAccess().getRightParenthesisKeyword_3());
+              		
+            }
+            otherlv_4=(Token)match(input,27,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getAddEnumerationAccess().getEnumKeyword_4());
-            		
-            // InternalAedit.g:928:3: ( (otherlv_5= RULE_ID ) )
-            // InternalAedit.g:929:4: (otherlv_5= RULE_ID )
+              			newLeafNode(otherlv_4, grammarAccess.getAddEnumerationAccess().getEnumKeyword_4());
+              		
+            }
+            // InternalAedit.g:1601:3: ( (otherlv_5= RULE_ID ) )
+            // InternalAedit.g:1602:4: (otherlv_5= RULE_ID )
             {
-            // InternalAedit.g:929:4: (otherlv_5= RULE_ID )
-            // InternalAedit.g:930:5: otherlv_5= RULE_ID
+            // InternalAedit.g:1602:4: (otherlv_5= RULE_ID )
+            // InternalAedit.g:1603:5: otherlv_5= RULE_ID
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddEnumerationRule());
-            					}
-            				
-            otherlv_5=(Token)match(input,RULE_ID,FOLLOW_21); 
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddEnumerationRule());
+              					}
+              				
+            }
+            otherlv_5=(Token)match(input,RULE_ID,FOLLOW_24); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(otherlv_5, grammarAccess.getAddEnumerationAccess().getNamespaceAvroIDLFileCrossReference_5_0());
-            				
+              					newLeafNode(otherlv_5, grammarAccess.getAddEnumerationAccess().getNamespaceAvroIDLFileCrossReference_5_0());
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_6=(Token)match(input,26,FOLLOW_7); 
+            otherlv_6=(Token)match(input,31,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_6, grammarAccess.getAddEnumerationAccess().getFullStopKeyword_6());
-            		
-            // InternalAedit.g:945:3: ( (lv_enumName_7_0= RULE_ID ) )
-            // InternalAedit.g:946:4: (lv_enumName_7_0= RULE_ID )
+              			newLeafNode(otherlv_6, grammarAccess.getAddEnumerationAccess().getFullStopKeyword_6());
+              		
+            }
+            // InternalAedit.g:1618:3: ( (lv_enumName_7_0= RULE_ID ) )
+            // InternalAedit.g:1619:4: (lv_enumName_7_0= RULE_ID )
             {
-            // InternalAedit.g:946:4: (lv_enumName_7_0= RULE_ID )
-            // InternalAedit.g:947:5: lv_enumName_7_0= RULE_ID
+            // InternalAedit.g:1619:4: (lv_enumName_7_0= RULE_ID )
+            // InternalAedit.g:1620:5: lv_enumName_7_0= RULE_ID
             {
-            lv_enumName_7_0=(Token)match(input,RULE_ID,FOLLOW_9); 
+            lv_enumName_7_0=(Token)match(input,RULE_ID,FOLLOW_9); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_enumName_7_0, grammarAccess.getAddEnumerationAccess().getEnumNameIDTerminalRuleCall_7_0());
-            				
+              					newLeafNode(lv_enumName_7_0, grammarAccess.getAddEnumerationAccess().getEnumNameIDTerminalRuleCall_7_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddEnumerationRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"enumName",
-            						lv_enumName_7_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddEnumerationRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"enumName",
+              						lv_enumName_7_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_8=(Token)match(input,13,FOLLOW_7); 
+            otherlv_8=(Token)match(input,13,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_8, grammarAccess.getAddEnumerationAccess().getLeftCurlyBracketKeyword_8());
-            		
-            // InternalAedit.g:967:3: ( (lv_symbols_9_0= RULE_ID ) )
-            // InternalAedit.g:968:4: (lv_symbols_9_0= RULE_ID )
+              			newLeafNode(otherlv_8, grammarAccess.getAddEnumerationAccess().getLeftCurlyBracketKeyword_8());
+              		
+            }
+            // InternalAedit.g:1640:3: ( (lv_symbols_9_0= RULE_ID ) )
+            // InternalAedit.g:1641:4: (lv_symbols_9_0= RULE_ID )
             {
-            // InternalAedit.g:968:4: (lv_symbols_9_0= RULE_ID )
-            // InternalAedit.g:969:5: lv_symbols_9_0= RULE_ID
+            // InternalAedit.g:1641:4: (lv_symbols_9_0= RULE_ID )
+            // InternalAedit.g:1642:5: lv_symbols_9_0= RULE_ID
             {
-            lv_symbols_9_0=(Token)match(input,RULE_ID,FOLLOW_23); 
+            lv_symbols_9_0=(Token)match(input,RULE_ID,FOLLOW_27); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_symbols_9_0, grammarAccess.getAddEnumerationAccess().getSymbolsIDTerminalRuleCall_9_0());
-            				
+              					newLeafNode(lv_symbols_9_0, grammarAccess.getAddEnumerationAccess().getSymbolsIDTerminalRuleCall_9_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddEnumerationRule());
-            					}
-            					addWithLastConsumed(
-            						current,
-            						"symbols",
-            						lv_symbols_9_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddEnumerationRule());
+              					}
+              					addWithLastConsumed(
+              						current,
+              						"symbols",
+              						lv_symbols_9_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            // InternalAedit.g:985:3: (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )*
-            loop17:
+            // InternalAedit.g:1658:3: (otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) ) )*
+            loop19:
             do {
-                int alt17=2;
-                int LA17_0 = input.LA(1);
+                int alt19=2;
+                int LA19_0 = input.LA(1);
 
-                if ( (LA17_0==27) ) {
-                    alt17=1;
+                if ( (LA19_0==32) ) {
+                    alt19=1;
                 }
 
 
-                switch (alt17) {
+                switch (alt19) {
             	case 1 :
-            	    // InternalAedit.g:986:4: otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) )
+            	    // InternalAedit.g:1659:4: otherlv_10= ',' ( (lv_symbols_11_0= RULE_ID ) )
             	    {
-            	    otherlv_10=(Token)match(input,27,FOLLOW_7); 
+            	    otherlv_10=(Token)match(input,32,FOLLOW_7); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-            	    				newLeafNode(otherlv_10, grammarAccess.getAddEnumerationAccess().getCommaKeyword_10_0());
-            	    			
-            	    // InternalAedit.g:990:4: ( (lv_symbols_11_0= RULE_ID ) )
-            	    // InternalAedit.g:991:5: (lv_symbols_11_0= RULE_ID )
+            	      				newLeafNode(otherlv_10, grammarAccess.getAddEnumerationAccess().getCommaKeyword_10_0());
+            	      			
+            	    }
+            	    // InternalAedit.g:1663:4: ( (lv_symbols_11_0= RULE_ID ) )
+            	    // InternalAedit.g:1664:5: (lv_symbols_11_0= RULE_ID )
             	    {
-            	    // InternalAedit.g:991:5: (lv_symbols_11_0= RULE_ID )
-            	    // InternalAedit.g:992:6: lv_symbols_11_0= RULE_ID
+            	    // InternalAedit.g:1664:5: (lv_symbols_11_0= RULE_ID )
+            	    // InternalAedit.g:1665:6: lv_symbols_11_0= RULE_ID
             	    {
-            	    lv_symbols_11_0=(Token)match(input,RULE_ID,FOLLOW_23); 
+            	    lv_symbols_11_0=(Token)match(input,RULE_ID,FOLLOW_27); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-            	    						newLeafNode(lv_symbols_11_0, grammarAccess.getAddEnumerationAccess().getSymbolsIDTerminalRuleCall_10_1_0());
-            	    					
+            	      						newLeafNode(lv_symbols_11_0, grammarAccess.getAddEnumerationAccess().getSymbolsIDTerminalRuleCall_10_1_0());
+            	      					
+            	    }
+            	    if ( state.backtracking==0 ) {
 
-            	    						if (current==null) {
-            	    							current = createModelElement(grammarAccess.getAddEnumerationRule());
-            	    						}
-            	    						addWithLastConsumed(
-            	    							current,
-            	    							"symbols",
-            	    							lv_symbols_11_0,
-            	    							"org.eclipse.xtext.common.Terminals.ID");
-            	    					
+            	      						if (current==null) {
+            	      							current = createModelElement(grammarAccess.getAddEnumerationRule());
+            	      						}
+            	      						addWithLastConsumed(
+            	      							current,
+            	      							"symbols",
+            	      							lv_symbols_11_0,
+            	      							"org.eclipse.xtext.common.Terminals.ID");
+            	      					
+            	    }
 
             	    }
 
@@ -2615,23 +4698,27 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop17;
+            	    break loop19;
                 }
             } while (true);
 
-            otherlv_12=(Token)match(input,14,FOLLOW_2); 
+            otherlv_12=(Token)match(input,14,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_12, grammarAccess.getAddEnumerationAccess().getRightCurlyBracketKeyword_11());
-            		
+              			newLeafNode(otherlv_12, grammarAccess.getAddEnumerationAccess().getRightCurlyBracketKeyword_11());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -2646,7 +4733,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAddVariable"
-    // InternalAedit.g:1017:1: entryRuleAddVariable returns [EObject current=null] : iv_ruleAddVariable= ruleAddVariable EOF ;
+    // InternalAedit.g:1690:1: entryRuleAddVariable returns [EObject current=null] : iv_ruleAddVariable= ruleAddVariable EOF ;
     public final EObject entryRuleAddVariable() throws RecognitionException {
         EObject current = null;
 
@@ -2654,17 +4741,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1017:52: (iv_ruleAddVariable= ruleAddVariable EOF )
-            // InternalAedit.g:1018:2: iv_ruleAddVariable= ruleAddVariable EOF
+            // InternalAedit.g:1690:52: (iv_ruleAddVariable= ruleAddVariable EOF )
+            // InternalAedit.g:1691:2: iv_ruleAddVariable= ruleAddVariable EOF
             {
-             newCompositeNode(grammarAccess.getAddVariableRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddVariableRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleAddVariable=ruleAddVariable();
 
             state._fsp--;
-
-             current =iv_ruleAddVariable; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddVariable; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -2682,7 +4773,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddVariable"
-    // InternalAedit.g:1024:1: ruleAddVariable returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';' ) ;
+    // InternalAedit.g:1697:1: ruleAddVariable returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';' ) ;
     public final EObject ruleAddVariable() throws RecognitionException {
         EObject current = null;
 
@@ -2698,94 +4789,112 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1030:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';' ) )
-            // InternalAedit.g:1031:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';' )
+            // InternalAedit.g:1703:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';' ) )
+            // InternalAedit.g:1704:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';' )
             {
-            // InternalAedit.g:1031:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';' )
-            // InternalAedit.g:1032:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';'
+            // InternalAedit.g:1704:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';' )
+            // InternalAedit.g:1705:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_newVar_4_0= ruleField ) ) otherlv_5= ';'
             {
-            otherlv_0=(Token)match(input,23,FOLLOW_17); 
+            otherlv_0=(Token)match(input,28,FOLLOW_20); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getAddVariableAccess().getAddAtKeyword_0());
-            		
-            otherlv_1=(Token)match(input,24,FOLLOW_18); 
+              			newLeafNode(otherlv_0, grammarAccess.getAddVariableAccess().getAddAtKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,29,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_1, grammarAccess.getAddVariableAccess().getLeftParenthesisKeyword_1());
-            		
-            // InternalAedit.g:1040:3: ( (lv_index_2_0= RULE_INT ) )
-            // InternalAedit.g:1041:4: (lv_index_2_0= RULE_INT )
+              			newLeafNode(otherlv_1, grammarAccess.getAddVariableAccess().getLeftParenthesisKeyword_1());
+              		
+            }
+            // InternalAedit.g:1713:3: ( (lv_index_2_0= RULE_INT ) )
+            // InternalAedit.g:1714:4: (lv_index_2_0= RULE_INT )
             {
-            // InternalAedit.g:1041:4: (lv_index_2_0= RULE_INT )
-            // InternalAedit.g:1042:5: lv_index_2_0= RULE_INT
+            // InternalAedit.g:1714:4: (lv_index_2_0= RULE_INT )
+            // InternalAedit.g:1715:5: lv_index_2_0= RULE_INT
             {
-            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_19); 
+            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_index_2_0, grammarAccess.getAddVariableAccess().getIndexINTTerminalRuleCall_2_0());
-            				
+              					newLeafNode(lv_index_2_0, grammarAccess.getAddVariableAccess().getIndexINTTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddVariableRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"index",
-            						lv_index_2_0,
-            						"org.eclipse.xtext.common.Terminals.INT");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddVariableRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"index",
+              						lv_index_2_0,
+              						"org.eclipse.xtext.common.Terminals.INT");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,25,FOLLOW_24); 
+            otherlv_3=(Token)match(input,30,FOLLOW_28); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_3, grammarAccess.getAddVariableAccess().getRightParenthesisKeyword_3());
-            		
-            // InternalAedit.g:1062:3: ( (lv_newVar_4_0= ruleField ) )
-            // InternalAedit.g:1063:4: (lv_newVar_4_0= ruleField )
+              			newLeafNode(otherlv_3, grammarAccess.getAddVariableAccess().getRightParenthesisKeyword_3());
+              		
+            }
+            // InternalAedit.g:1735:3: ( (lv_newVar_4_0= ruleField ) )
+            // InternalAedit.g:1736:4: (lv_newVar_4_0= ruleField )
             {
-            // InternalAedit.g:1063:4: (lv_newVar_4_0= ruleField )
-            // InternalAedit.g:1064:5: lv_newVar_4_0= ruleField
+            // InternalAedit.g:1736:4: (lv_newVar_4_0= ruleField )
+            // InternalAedit.g:1737:5: lv_newVar_4_0= ruleField
             {
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getAddVariableAccess().getNewVarFieldParserRuleCall_4_0());
-            				
+              					newCompositeNode(grammarAccess.getAddVariableAccess().getNewVarFieldParserRuleCall_4_0());
+              				
+            }
             pushFollow(FOLLOW_11);
             lv_newVar_4_0=ruleField();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getAddVariableRule());
-            					}
-            					set(
-            						current,
-            						"newVar",
-            						lv_newVar_4_0,
-            						"org.aedit.Aedit.Field");
-            					afterParserOrEnumRuleCall();
-            				
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getAddVariableRule());
+              					}
+              					set(
+              						current,
+              						"newVar",
+              						lv_newVar_4_0,
+              						"org.aedit.Aedit.Field");
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_5=(Token)match(input,16,FOLLOW_2); 
+            otherlv_5=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_5, grammarAccess.getAddVariableAccess().getSemicolonKeyword_5());
-            		
+              			newLeafNode(otherlv_5, grammarAccess.getAddVariableAccess().getSemicolonKeyword_5());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -2800,7 +4909,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAddEnum"
-    // InternalAedit.g:1089:1: entryRuleAddEnum returns [EObject current=null] : iv_ruleAddEnum= ruleAddEnum EOF ;
+    // InternalAedit.g:1762:1: entryRuleAddEnum returns [EObject current=null] : iv_ruleAddEnum= ruleAddEnum EOF ;
     public final EObject entryRuleAddEnum() throws RecognitionException {
         EObject current = null;
 
@@ -2808,17 +4917,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1089:48: (iv_ruleAddEnum= ruleAddEnum EOF )
-            // InternalAedit.g:1090:2: iv_ruleAddEnum= ruleAddEnum EOF
+            // InternalAedit.g:1762:48: (iv_ruleAddEnum= ruleAddEnum EOF )
+            // InternalAedit.g:1763:2: iv_ruleAddEnum= ruleAddEnum EOF
             {
-             newCompositeNode(grammarAccess.getAddEnumRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddEnumRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleAddEnum=ruleAddEnum();
 
             state._fsp--;
-
-             current =iv_ruleAddEnum; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddEnum; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -2836,7 +4949,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddEnum"
-    // InternalAedit.g:1096:1: ruleAddEnum returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';' ) ;
+    // InternalAedit.g:1769:1: ruleAddEnum returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';' ) ;
     public final EObject ruleAddEnum() throws RecognitionException {
         EObject current = null;
 
@@ -2851,89 +4964,107 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1102:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';' ) )
-            // InternalAedit.g:1103:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';' )
+            // InternalAedit.g:1775:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';' ) )
+            // InternalAedit.g:1776:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';' )
             {
-            // InternalAedit.g:1103:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';' )
-            // InternalAedit.g:1104:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';'
+            // InternalAedit.g:1776:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';' )
+            // InternalAedit.g:1777:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (lv_varName_4_0= RULE_ID ) ) otherlv_5= ';'
             {
-            otherlv_0=(Token)match(input,23,FOLLOW_17); 
+            otherlv_0=(Token)match(input,28,FOLLOW_20); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getAddEnumAccess().getAddAtKeyword_0());
-            		
-            otherlv_1=(Token)match(input,24,FOLLOW_18); 
+              			newLeafNode(otherlv_0, grammarAccess.getAddEnumAccess().getAddAtKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,29,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_1, grammarAccess.getAddEnumAccess().getLeftParenthesisKeyword_1());
-            		
-            // InternalAedit.g:1112:3: ( (lv_index_2_0= RULE_INT ) )
-            // InternalAedit.g:1113:4: (lv_index_2_0= RULE_INT )
+              			newLeafNode(otherlv_1, grammarAccess.getAddEnumAccess().getLeftParenthesisKeyword_1());
+              		
+            }
+            // InternalAedit.g:1785:3: ( (lv_index_2_0= RULE_INT ) )
+            // InternalAedit.g:1786:4: (lv_index_2_0= RULE_INT )
             {
-            // InternalAedit.g:1113:4: (lv_index_2_0= RULE_INT )
-            // InternalAedit.g:1114:5: lv_index_2_0= RULE_INT
+            // InternalAedit.g:1786:4: (lv_index_2_0= RULE_INT )
+            // InternalAedit.g:1787:5: lv_index_2_0= RULE_INT
             {
-            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_19); 
+            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_index_2_0, grammarAccess.getAddEnumAccess().getIndexINTTerminalRuleCall_2_0());
-            				
+              					newLeafNode(lv_index_2_0, grammarAccess.getAddEnumAccess().getIndexINTTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddEnumRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"index",
-            						lv_index_2_0,
-            						"org.eclipse.xtext.common.Terminals.INT");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddEnumRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"index",
+              						lv_index_2_0,
+              						"org.eclipse.xtext.common.Terminals.INT");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,25,FOLLOW_7); 
+            otherlv_3=(Token)match(input,30,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_3, grammarAccess.getAddEnumAccess().getRightParenthesisKeyword_3());
-            		
-            // InternalAedit.g:1134:3: ( (lv_varName_4_0= RULE_ID ) )
-            // InternalAedit.g:1135:4: (lv_varName_4_0= RULE_ID )
+              			newLeafNode(otherlv_3, grammarAccess.getAddEnumAccess().getRightParenthesisKeyword_3());
+              		
+            }
+            // InternalAedit.g:1807:3: ( (lv_varName_4_0= RULE_ID ) )
+            // InternalAedit.g:1808:4: (lv_varName_4_0= RULE_ID )
             {
-            // InternalAedit.g:1135:4: (lv_varName_4_0= RULE_ID )
-            // InternalAedit.g:1136:5: lv_varName_4_0= RULE_ID
+            // InternalAedit.g:1808:4: (lv_varName_4_0= RULE_ID )
+            // InternalAedit.g:1809:5: lv_varName_4_0= RULE_ID
             {
-            lv_varName_4_0=(Token)match(input,RULE_ID,FOLLOW_11); 
+            lv_varName_4_0=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_varName_4_0, grammarAccess.getAddEnumAccess().getVarNameIDTerminalRuleCall_4_0());
-            				
+              					newLeafNode(lv_varName_4_0, grammarAccess.getAddEnumAccess().getVarNameIDTerminalRuleCall_4_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getAddEnumRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"varName",
-            						lv_varName_4_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddEnumRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"varName",
+              						lv_varName_4_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_5=(Token)match(input,16,FOLLOW_2); 
+            otherlv_5=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_5, grammarAccess.getAddEnumAccess().getSemicolonKeyword_5());
-            		
+              			newLeafNode(otherlv_5, grammarAccess.getAddEnumAccess().getSemicolonKeyword_5());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -2948,7 +5079,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRemoveSchema"
-    // InternalAedit.g:1160:1: entryRuleRemoveSchema returns [EObject current=null] : iv_ruleRemoveSchema= ruleRemoveSchema EOF ;
+    // InternalAedit.g:1833:1: entryRuleRemoveSchema returns [EObject current=null] : iv_ruleRemoveSchema= ruleRemoveSchema EOF ;
     public final EObject entryRuleRemoveSchema() throws RecognitionException {
         EObject current = null;
 
@@ -2956,17 +5087,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1160:53: (iv_ruleRemoveSchema= ruleRemoveSchema EOF )
-            // InternalAedit.g:1161:2: iv_ruleRemoveSchema= ruleRemoveSchema EOF
+            // InternalAedit.g:1833:53: (iv_ruleRemoveSchema= ruleRemoveSchema EOF )
+            // InternalAedit.g:1834:2: iv_ruleRemoveSchema= ruleRemoveSchema EOF
             {
-             newCompositeNode(grammarAccess.getRemoveSchemaRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRemoveSchemaRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleRemoveSchema=ruleRemoveSchema();
 
             state._fsp--;
-
-             current =iv_ruleRemoveSchema; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRemoveSchema; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -2984,7 +5119,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRemoveSchema"
-    // InternalAedit.g:1167:1: ruleRemoveSchema returns [EObject current=null] : (otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';' ) ;
+    // InternalAedit.g:1840:1: ruleRemoveSchema returns [EObject current=null] : (otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';' ) ;
     public final EObject ruleRemoveSchema() throws RecognitionException {
         EObject current = null;
 
@@ -2997,88 +5132,104 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1173:2: ( (otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';' ) )
-            // InternalAedit.g:1174:2: (otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';' )
+            // InternalAedit.g:1846:2: ( (otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';' ) )
+            // InternalAedit.g:1847:2: (otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';' )
             {
-            // InternalAedit.g:1174:2: (otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';' )
-            // InternalAedit.g:1175:3: otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';'
+            // InternalAedit.g:1847:2: (otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';' )
+            // InternalAedit.g:1848:3: otherlv_0= 'remove' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= ';'
             {
-            otherlv_0=(Token)match(input,28,FOLLOW_25); 
+            otherlv_0=(Token)match(input,33,FOLLOW_13); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getRemoveSchemaAccess().getRemoveKeyword_0());
-            		
-            // InternalAedit.g:1179:3: ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) )
-            // InternalAedit.g:1180:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
+              			newLeafNode(otherlv_0, grammarAccess.getRemoveSchemaAccess().getRemoveKeyword_0());
+              		
+            }
+            // InternalAedit.g:1852:3: ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) )
+            // InternalAedit.g:1853:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
             {
-            // InternalAedit.g:1180:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
-            // InternalAedit.g:1181:5: lv_schemaType_1_0= ruleSCHEMA_TYPE
+            // InternalAedit.g:1853:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
+            // InternalAedit.g:1854:5: lv_schemaType_1_0= ruleSCHEMA_TYPE
             {
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getRemoveSchemaAccess().getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0());
-            				
+              					newCompositeNode(grammarAccess.getRemoveSchemaAccess().getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0());
+              				
+            }
             pushFollow(FOLLOW_7);
             lv_schemaType_1_0=ruleSCHEMA_TYPE();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getRemoveSchemaRule());
-            					}
-            					set(
-            						current,
-            						"schemaType",
-            						lv_schemaType_1_0,
-            						"org.aedit.Aedit.SCHEMA_TYPE");
-            					afterParserOrEnumRuleCall();
-            				
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getRemoveSchemaRule());
+              					}
+              					set(
+              						current,
+              						"schemaType",
+              						lv_schemaType_1_0,
+              						"org.aedit.Aedit.SCHEMA_TYPE");
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            // InternalAedit.g:1198:3: ( ( ruleQN ) )
-            // InternalAedit.g:1199:4: ( ruleQN )
+            // InternalAedit.g:1871:3: ( ( ruleQN ) )
+            // InternalAedit.g:1872:4: ( ruleQN )
             {
-            // InternalAedit.g:1199:4: ( ruleQN )
-            // InternalAedit.g:1200:5: ruleQN
+            // InternalAedit.g:1872:4: ( ruleQN )
+            // InternalAedit.g:1873:5: ruleQN
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRemoveSchemaRule());
-            					}
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveSchemaRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getRemoveSchemaAccess().getSchemaTypeCrossReference_2_0());
-            				
+              					newCompositeNode(grammarAccess.getRemoveSchemaAccess().getSchemaTypeCrossReference_2_0());
+              				
+            }
             pushFollow(FOLLOW_11);
             ruleQN();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,16,FOLLOW_2); 
+            otherlv_3=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_3, grammarAccess.getRemoveSchemaAccess().getSemicolonKeyword_3());
-            		
+              			newLeafNode(otherlv_3, grammarAccess.getRemoveSchemaAccess().getSemicolonKeyword_3());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -3093,7 +5244,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRemoveVariable"
-    // InternalAedit.g:1222:1: entryRuleRemoveVariable returns [EObject current=null] : iv_ruleRemoveVariable= ruleRemoveVariable EOF ;
+    // InternalAedit.g:1895:1: entryRuleRemoveVariable returns [EObject current=null] : iv_ruleRemoveVariable= ruleRemoveVariable EOF ;
     public final EObject entryRuleRemoveVariable() throws RecognitionException {
         EObject current = null;
 
@@ -3101,17 +5252,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1222:55: (iv_ruleRemoveVariable= ruleRemoveVariable EOF )
-            // InternalAedit.g:1223:2: iv_ruleRemoveVariable= ruleRemoveVariable EOF
+            // InternalAedit.g:1895:55: (iv_ruleRemoveVariable= ruleRemoveVariable EOF )
+            // InternalAedit.g:1896:2: iv_ruleRemoveVariable= ruleRemoveVariable EOF
             {
-             newCompositeNode(grammarAccess.getRemoveVariableRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRemoveVariableRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleRemoveVariable=ruleRemoveVariable();
 
             state._fsp--;
-
-             current =iv_ruleRemoveVariable; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRemoveVariable; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -3129,7 +5284,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRemoveVariable"
-    // InternalAedit.g:1229:1: ruleRemoveVariable returns [EObject current=null] : (otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';' ) ;
+    // InternalAedit.g:1902:1: ruleRemoveVariable returns [EObject current=null] : (otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';' ) ;
     public final EObject ruleRemoveVariable() throws RecognitionException {
         EObject current = null;
 
@@ -3140,57 +5295,69 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1235:2: ( (otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';' ) )
-            // InternalAedit.g:1236:2: (otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';' )
+            // InternalAedit.g:1908:2: ( (otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';' ) )
+            // InternalAedit.g:1909:2: (otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';' )
             {
-            // InternalAedit.g:1236:2: (otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';' )
-            // InternalAedit.g:1237:3: otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';'
+            // InternalAedit.g:1909:2: (otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';' )
+            // InternalAedit.g:1910:3: otherlv_0= 'remove' ( ( ruleQN ) ) otherlv_2= ';'
             {
-            otherlv_0=(Token)match(input,28,FOLLOW_7); 
+            otherlv_0=(Token)match(input,33,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getRemoveVariableAccess().getRemoveKeyword_0());
-            		
-            // InternalAedit.g:1241:3: ( ( ruleQN ) )
-            // InternalAedit.g:1242:4: ( ruleQN )
+              			newLeafNode(otherlv_0, grammarAccess.getRemoveVariableAccess().getRemoveKeyword_0());
+              		
+            }
+            // InternalAedit.g:1914:3: ( ( ruleQN ) )
+            // InternalAedit.g:1915:4: ( ruleQN )
             {
-            // InternalAedit.g:1242:4: ( ruleQN )
-            // InternalAedit.g:1243:5: ruleQN
+            // InternalAedit.g:1915:4: ( ruleQN )
+            // InternalAedit.g:1916:5: ruleQN
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRemoveVariableRule());
-            					}
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveVariableRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getRemoveVariableAccess().getVariableFieldCrossReference_1_0());
-            				
+              					newCompositeNode(grammarAccess.getRemoveVariableAccess().getVariableFieldCrossReference_1_0());
+              				
+            }
             pushFollow(FOLLOW_11);
             ruleQN();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getRemoveVariableAccess().getSemicolonKeyword_2());
-            		
+              			newLeafNode(otherlv_2, grammarAccess.getRemoveVariableAccess().getSemicolonKeyword_2());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -3205,7 +5372,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRemoveEnum"
-    // InternalAedit.g:1265:1: entryRuleRemoveEnum returns [EObject current=null] : iv_ruleRemoveEnum= ruleRemoveEnum EOF ;
+    // InternalAedit.g:1938:1: entryRuleRemoveEnum returns [EObject current=null] : iv_ruleRemoveEnum= ruleRemoveEnum EOF ;
     public final EObject entryRuleRemoveEnum() throws RecognitionException {
         EObject current = null;
 
@@ -3213,17 +5380,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1265:51: (iv_ruleRemoveEnum= ruleRemoveEnum EOF )
-            // InternalAedit.g:1266:2: iv_ruleRemoveEnum= ruleRemoveEnum EOF
+            // InternalAedit.g:1938:51: (iv_ruleRemoveEnum= ruleRemoveEnum EOF )
+            // InternalAedit.g:1939:2: iv_ruleRemoveEnum= ruleRemoveEnum EOF
             {
-             newCompositeNode(grammarAccess.getRemoveEnumRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRemoveEnumRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleRemoveEnum=ruleRemoveEnum();
 
             state._fsp--;
-
-             current =iv_ruleRemoveEnum; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRemoveEnum; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -3241,7 +5412,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRemoveEnum"
-    // InternalAedit.g:1272:1: ruleRemoveEnum returns [EObject current=null] : (otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalAedit.g:1945:1: ruleRemoveEnum returns [EObject current=null] : (otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
     public final EObject ruleRemoveEnum() throws RecognitionException {
         EObject current = null;
 
@@ -3253,55 +5424,65 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1278:2: ( (otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalAedit.g:1279:2: (otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalAedit.g:1951:2: ( (otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' ) )
+            // InternalAedit.g:1952:2: (otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' )
             {
-            // InternalAedit.g:1279:2: (otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalAedit.g:1280:3: otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalAedit.g:1952:2: (otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalAedit.g:1953:3: otherlv_0= 'remove' ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';'
             {
-            otherlv_0=(Token)match(input,28,FOLLOW_7); 
+            otherlv_0=(Token)match(input,33,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getRemoveEnumAccess().getRemoveKeyword_0());
-            		
-            // InternalAedit.g:1284:3: ( (lv_varName_1_0= RULE_ID ) )
-            // InternalAedit.g:1285:4: (lv_varName_1_0= RULE_ID )
+              			newLeafNode(otherlv_0, grammarAccess.getRemoveEnumAccess().getRemoveKeyword_0());
+              		
+            }
+            // InternalAedit.g:1957:3: ( (lv_varName_1_0= RULE_ID ) )
+            // InternalAedit.g:1958:4: (lv_varName_1_0= RULE_ID )
             {
-            // InternalAedit.g:1285:4: (lv_varName_1_0= RULE_ID )
-            // InternalAedit.g:1286:5: lv_varName_1_0= RULE_ID
+            // InternalAedit.g:1958:4: (lv_varName_1_0= RULE_ID )
+            // InternalAedit.g:1959:5: lv_varName_1_0= RULE_ID
             {
-            lv_varName_1_0=(Token)match(input,RULE_ID,FOLLOW_11); 
+            lv_varName_1_0=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_varName_1_0, grammarAccess.getRemoveEnumAccess().getVarNameIDTerminalRuleCall_1_0());
-            				
+              					newLeafNode(lv_varName_1_0, grammarAccess.getRemoveEnumAccess().getVarNameIDTerminalRuleCall_1_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRemoveEnumRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"varName",
-            						lv_varName_1_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveEnumRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"varName",
+              						lv_varName_1_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_2=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getRemoveEnumAccess().getSemicolonKeyword_2());
-            		
+              			newLeafNode(otherlv_2, grammarAccess.getRemoveEnumAccess().getSemicolonKeyword_2());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -3316,7 +5497,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRenameSchema"
-    // InternalAedit.g:1310:1: entryRuleRenameSchema returns [EObject current=null] : iv_ruleRenameSchema= ruleRenameSchema EOF ;
+    // InternalAedit.g:1983:1: entryRuleRenameSchema returns [EObject current=null] : iv_ruleRenameSchema= ruleRenameSchema EOF ;
     public final EObject entryRuleRenameSchema() throws RecognitionException {
         EObject current = null;
 
@@ -3324,17 +5505,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1310:53: (iv_ruleRenameSchema= ruleRenameSchema EOF )
-            // InternalAedit.g:1311:2: iv_ruleRenameSchema= ruleRenameSchema EOF
+            // InternalAedit.g:1983:53: (iv_ruleRenameSchema= ruleRenameSchema EOF )
+            // InternalAedit.g:1984:2: iv_ruleRenameSchema= ruleRenameSchema EOF
             {
-             newCompositeNode(grammarAccess.getRenameSchemaRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRenameSchemaRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleRenameSchema=ruleRenameSchema();
 
             state._fsp--;
-
-             current =iv_ruleRenameSchema; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRenameSchema; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -3352,7 +5537,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRenameSchema"
-    // InternalAedit.g:1317:1: ruleRenameSchema returns [EObject current=null] : (otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';' ) ;
+    // InternalAedit.g:1990:1: ruleRenameSchema returns [EObject current=null] : (otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';' ) ;
     public final EObject ruleRenameSchema() throws RecognitionException {
         EObject current = null;
 
@@ -3367,118 +5552,140 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1323:2: ( (otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';' ) )
-            // InternalAedit.g:1324:2: (otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';' )
+            // InternalAedit.g:1996:2: ( (otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';' ) )
+            // InternalAedit.g:1997:2: (otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';' )
             {
-            // InternalAedit.g:1324:2: (otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';' )
-            // InternalAedit.g:1325:3: otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';'
+            // InternalAedit.g:1997:2: (otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';' )
+            // InternalAedit.g:1998:3: otherlv_0= 'rename' ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) ) ( ( ruleQN ) ) otherlv_3= '=>' ( (lv_newSchName_4_0= RULE_ID ) ) otherlv_5= ';'
             {
-            otherlv_0=(Token)match(input,29,FOLLOW_25); 
+            otherlv_0=(Token)match(input,34,FOLLOW_13); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getRenameSchemaAccess().getRenameKeyword_0());
-            		
-            // InternalAedit.g:1329:3: ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) )
-            // InternalAedit.g:1330:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
+              			newLeafNode(otherlv_0, grammarAccess.getRenameSchemaAccess().getRenameKeyword_0());
+              		
+            }
+            // InternalAedit.g:2002:3: ( (lv_schemaType_1_0= ruleSCHEMA_TYPE ) )
+            // InternalAedit.g:2003:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
             {
-            // InternalAedit.g:1330:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
-            // InternalAedit.g:1331:5: lv_schemaType_1_0= ruleSCHEMA_TYPE
+            // InternalAedit.g:2003:4: (lv_schemaType_1_0= ruleSCHEMA_TYPE )
+            // InternalAedit.g:2004:5: lv_schemaType_1_0= ruleSCHEMA_TYPE
             {
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getRenameSchemaAccess().getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0());
-            				
+              					newCompositeNode(grammarAccess.getRenameSchemaAccess().getSchemaTypeSCHEMA_TYPEParserRuleCall_1_0());
+              				
+            }
             pushFollow(FOLLOW_7);
             lv_schemaType_1_0=ruleSCHEMA_TYPE();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getRenameSchemaRule());
-            					}
-            					set(
-            						current,
-            						"schemaType",
-            						lv_schemaType_1_0,
-            						"org.aedit.Aedit.SCHEMA_TYPE");
-            					afterParserOrEnumRuleCall();
-            				
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getRenameSchemaRule());
+              					}
+              					set(
+              						current,
+              						"schemaType",
+              						lv_schemaType_1_0,
+              						"org.aedit.Aedit.SCHEMA_TYPE");
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            // InternalAedit.g:1348:3: ( ( ruleQN ) )
-            // InternalAedit.g:1349:4: ( ruleQN )
+            // InternalAedit.g:2021:3: ( ( ruleQN ) )
+            // InternalAedit.g:2022:4: ( ruleQN )
             {
-            // InternalAedit.g:1349:4: ( ruleQN )
-            // InternalAedit.g:1350:5: ruleQN
+            // InternalAedit.g:2022:4: ( ruleQN )
+            // InternalAedit.g:2023:5: ruleQN
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRenameSchemaRule());
-            					}
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRenameSchemaRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getRenameSchemaAccess().getSchemaTypeCrossReference_2_0());
-            				
-            pushFollow(FOLLOW_26);
+              					newCompositeNode(grammarAccess.getRenameSchemaAccess().getSchemaTypeCrossReference_2_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
             ruleQN();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_3=(Token)match(input,30,FOLLOW_7); 
+            otherlv_3=(Token)match(input,20,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_3, grammarAccess.getRenameSchemaAccess().getEqualsSignGreaterThanSignKeyword_3());
-            		
-            // InternalAedit.g:1368:3: ( (lv_newSchName_4_0= RULE_ID ) )
-            // InternalAedit.g:1369:4: (lv_newSchName_4_0= RULE_ID )
+              			newLeafNode(otherlv_3, grammarAccess.getRenameSchemaAccess().getEqualsSignGreaterThanSignKeyword_3());
+              		
+            }
+            // InternalAedit.g:2041:3: ( (lv_newSchName_4_0= RULE_ID ) )
+            // InternalAedit.g:2042:4: (lv_newSchName_4_0= RULE_ID )
             {
-            // InternalAedit.g:1369:4: (lv_newSchName_4_0= RULE_ID )
-            // InternalAedit.g:1370:5: lv_newSchName_4_0= RULE_ID
+            // InternalAedit.g:2042:4: (lv_newSchName_4_0= RULE_ID )
+            // InternalAedit.g:2043:5: lv_newSchName_4_0= RULE_ID
             {
-            lv_newSchName_4_0=(Token)match(input,RULE_ID,FOLLOW_11); 
+            lv_newSchName_4_0=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_newSchName_4_0, grammarAccess.getRenameSchemaAccess().getNewSchNameIDTerminalRuleCall_4_0());
-            				
+              					newLeafNode(lv_newSchName_4_0, grammarAccess.getRenameSchemaAccess().getNewSchNameIDTerminalRuleCall_4_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRenameSchemaRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"newSchName",
-            						lv_newSchName_4_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRenameSchemaRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"newSchName",
+              						lv_newSchName_4_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_5=(Token)match(input,16,FOLLOW_2); 
+            otherlv_5=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_5, grammarAccess.getRenameSchemaAccess().getSemicolonKeyword_5());
-            		
+              			newLeafNode(otherlv_5, grammarAccess.getRenameSchemaAccess().getSemicolonKeyword_5());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -3493,7 +5700,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRenameVariable"
-    // InternalAedit.g:1394:1: entryRuleRenameVariable returns [EObject current=null] : iv_ruleRenameVariable= ruleRenameVariable EOF ;
+    // InternalAedit.g:2067:1: entryRuleRenameVariable returns [EObject current=null] : iv_ruleRenameVariable= ruleRenameVariable EOF ;
     public final EObject entryRuleRenameVariable() throws RecognitionException {
         EObject current = null;
 
@@ -3501,17 +5708,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1394:55: (iv_ruleRenameVariable= ruleRenameVariable EOF )
-            // InternalAedit.g:1395:2: iv_ruleRenameVariable= ruleRenameVariable EOF
+            // InternalAedit.g:2067:55: (iv_ruleRenameVariable= ruleRenameVariable EOF )
+            // InternalAedit.g:2068:2: iv_ruleRenameVariable= ruleRenameVariable EOF
             {
-             newCompositeNode(grammarAccess.getRenameVariableRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRenameVariableRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleRenameVariable=ruleRenameVariable();
 
             state._fsp--;
-
-             current =iv_ruleRenameVariable; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRenameVariable; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -3529,7 +5740,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRenameVariable"
-    // InternalAedit.g:1401:1: ruleRenameVariable returns [EObject current=null] : (otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';' ) ;
+    // InternalAedit.g:2074:1: ruleRenameVariable returns [EObject current=null] : (otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';' ) ;
     public final EObject ruleRenameVariable() throws RecognitionException {
         EObject current = null;
 
@@ -3542,87 +5753,105 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1407:2: ( (otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';' ) )
-            // InternalAedit.g:1408:2: (otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';' )
+            // InternalAedit.g:2080:2: ( (otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';' ) )
+            // InternalAedit.g:2081:2: (otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';' )
             {
-            // InternalAedit.g:1408:2: (otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';' )
-            // InternalAedit.g:1409:3: otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';'
+            // InternalAedit.g:2081:2: (otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';' )
+            // InternalAedit.g:2082:3: otherlv_0= 'rename' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVarName_3_0= RULE_ID ) ) otherlv_4= ';'
             {
-            otherlv_0=(Token)match(input,29,FOLLOW_7); 
+            otherlv_0=(Token)match(input,34,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getRenameVariableAccess().getRenameKeyword_0());
-            		
-            // InternalAedit.g:1413:3: ( ( ruleQN ) )
-            // InternalAedit.g:1414:4: ( ruleQN )
+              			newLeafNode(otherlv_0, grammarAccess.getRenameVariableAccess().getRenameKeyword_0());
+              		
+            }
+            // InternalAedit.g:2086:3: ( ( ruleQN ) )
+            // InternalAedit.g:2087:4: ( ruleQN )
             {
-            // InternalAedit.g:1414:4: ( ruleQN )
-            // InternalAedit.g:1415:5: ruleQN
+            // InternalAedit.g:2087:4: ( ruleQN )
+            // InternalAedit.g:2088:5: ruleQN
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRenameVariableRule());
-            					}
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRenameVariableRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getRenameVariableAccess().getVariableFieldCrossReference_1_0());
-            				
-            pushFollow(FOLLOW_26);
+              					newCompositeNode(grammarAccess.getRenameVariableAccess().getVariableFieldCrossReference_1_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
             ruleQN();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,30,FOLLOW_7); 
+            otherlv_2=(Token)match(input,20,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getRenameVariableAccess().getEqualsSignGreaterThanSignKeyword_2());
-            		
-            // InternalAedit.g:1433:3: ( (lv_newVarName_3_0= RULE_ID ) )
-            // InternalAedit.g:1434:4: (lv_newVarName_3_0= RULE_ID )
+              			newLeafNode(otherlv_2, grammarAccess.getRenameVariableAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:2106:3: ( (lv_newVarName_3_0= RULE_ID ) )
+            // InternalAedit.g:2107:4: (lv_newVarName_3_0= RULE_ID )
             {
-            // InternalAedit.g:1434:4: (lv_newVarName_3_0= RULE_ID )
-            // InternalAedit.g:1435:5: lv_newVarName_3_0= RULE_ID
+            // InternalAedit.g:2107:4: (lv_newVarName_3_0= RULE_ID )
+            // InternalAedit.g:2108:5: lv_newVarName_3_0= RULE_ID
             {
-            lv_newVarName_3_0=(Token)match(input,RULE_ID,FOLLOW_11); 
+            lv_newVarName_3_0=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_newVarName_3_0, grammarAccess.getRenameVariableAccess().getNewVarNameIDTerminalRuleCall_3_0());
-            				
+              					newLeafNode(lv_newVarName_3_0, grammarAccess.getRenameVariableAccess().getNewVarNameIDTerminalRuleCall_3_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRenameVariableRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"newVarName",
-            						lv_newVarName_3_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRenameVariableRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"newVarName",
+              						lv_newVarName_3_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_4=(Token)match(input,16,FOLLOW_2); 
+            otherlv_4=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getRenameVariableAccess().getSemicolonKeyword_4());
-            		
+              			newLeafNode(otherlv_4, grammarAccess.getRenameVariableAccess().getSemicolonKeyword_4());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -3637,7 +5866,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRenameEnum"
-    // InternalAedit.g:1459:1: entryRuleRenameEnum returns [EObject current=null] : iv_ruleRenameEnum= ruleRenameEnum EOF ;
+    // InternalAedit.g:2132:1: entryRuleRenameEnum returns [EObject current=null] : iv_ruleRenameEnum= ruleRenameEnum EOF ;
     public final EObject entryRuleRenameEnum() throws RecognitionException {
         EObject current = null;
 
@@ -3645,17 +5874,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1459:51: (iv_ruleRenameEnum= ruleRenameEnum EOF )
-            // InternalAedit.g:1460:2: iv_ruleRenameEnum= ruleRenameEnum EOF
+            // InternalAedit.g:2132:51: (iv_ruleRenameEnum= ruleRenameEnum EOF )
+            // InternalAedit.g:2133:2: iv_ruleRenameEnum= ruleRenameEnum EOF
             {
-             newCompositeNode(grammarAccess.getRenameEnumRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRenameEnumRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleRenameEnum=ruleRenameEnum();
 
             state._fsp--;
-
-             current =iv_ruleRenameEnum; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRenameEnum; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -3673,7 +5906,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRenameEnum"
-    // InternalAedit.g:1466:1: ruleRenameEnum returns [EObject current=null] : (otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';' ) ;
+    // InternalAedit.g:2139:1: ruleRenameEnum returns [EObject current=null] : (otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';' ) ;
     public final EObject ruleRenameEnum() throws RecognitionException {
         EObject current = null;
 
@@ -3687,85 +5920,101 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1472:2: ( (otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';' ) )
-            // InternalAedit.g:1473:2: (otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';' )
+            // InternalAedit.g:2145:2: ( (otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';' ) )
+            // InternalAedit.g:2146:2: (otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';' )
             {
-            // InternalAedit.g:1473:2: (otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';' )
-            // InternalAedit.g:1474:3: otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';'
+            // InternalAedit.g:2146:2: (otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';' )
+            // InternalAedit.g:2147:3: otherlv_0= 'rename' ( (lv_oldName_1_0= RULE_ID ) ) otherlv_2= '=>' ( (lv_newEnumName_3_0= RULE_ID ) ) otherlv_4= ';'
             {
-            otherlv_0=(Token)match(input,29,FOLLOW_7); 
+            otherlv_0=(Token)match(input,34,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getRenameEnumAccess().getRenameKeyword_0());
-            		
-            // InternalAedit.g:1478:3: ( (lv_oldName_1_0= RULE_ID ) )
-            // InternalAedit.g:1479:4: (lv_oldName_1_0= RULE_ID )
+              			newLeafNode(otherlv_0, grammarAccess.getRenameEnumAccess().getRenameKeyword_0());
+              		
+            }
+            // InternalAedit.g:2151:3: ( (lv_oldName_1_0= RULE_ID ) )
+            // InternalAedit.g:2152:4: (lv_oldName_1_0= RULE_ID )
             {
-            // InternalAedit.g:1479:4: (lv_oldName_1_0= RULE_ID )
-            // InternalAedit.g:1480:5: lv_oldName_1_0= RULE_ID
+            // InternalAedit.g:2152:4: (lv_oldName_1_0= RULE_ID )
+            // InternalAedit.g:2153:5: lv_oldName_1_0= RULE_ID
             {
-            lv_oldName_1_0=(Token)match(input,RULE_ID,FOLLOW_26); 
+            lv_oldName_1_0=(Token)match(input,RULE_ID,FOLLOW_14); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_oldName_1_0, grammarAccess.getRenameEnumAccess().getOldNameIDTerminalRuleCall_1_0());
-            				
+              					newLeafNode(lv_oldName_1_0, grammarAccess.getRenameEnumAccess().getOldNameIDTerminalRuleCall_1_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRenameEnumRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"oldName",
-            						lv_oldName_1_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRenameEnumRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"oldName",
+              						lv_oldName_1_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,30,FOLLOW_7); 
+            otherlv_2=(Token)match(input,20,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getRenameEnumAccess().getEqualsSignGreaterThanSignKeyword_2());
-            		
-            // InternalAedit.g:1500:3: ( (lv_newEnumName_3_0= RULE_ID ) )
-            // InternalAedit.g:1501:4: (lv_newEnumName_3_0= RULE_ID )
+              			newLeafNode(otherlv_2, grammarAccess.getRenameEnumAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:2173:3: ( (lv_newEnumName_3_0= RULE_ID ) )
+            // InternalAedit.g:2174:4: (lv_newEnumName_3_0= RULE_ID )
             {
-            // InternalAedit.g:1501:4: (lv_newEnumName_3_0= RULE_ID )
-            // InternalAedit.g:1502:5: lv_newEnumName_3_0= RULE_ID
+            // InternalAedit.g:2174:4: (lv_newEnumName_3_0= RULE_ID )
+            // InternalAedit.g:2175:5: lv_newEnumName_3_0= RULE_ID
             {
-            lv_newEnumName_3_0=(Token)match(input,RULE_ID,FOLLOW_11); 
+            lv_newEnumName_3_0=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_newEnumName_3_0, grammarAccess.getRenameEnumAccess().getNewEnumNameIDTerminalRuleCall_3_0());
-            				
+              					newLeafNode(lv_newEnumName_3_0, grammarAccess.getRenameEnumAccess().getNewEnumNameIDTerminalRuleCall_3_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getRenameEnumRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"newEnumName",
-            						lv_newEnumName_3_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRenameEnumRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"newEnumName",
+              						lv_newEnumName_3_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_4=(Token)match(input,16,FOLLOW_2); 
+            otherlv_4=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getRenameEnumAccess().getSemicolonKeyword_4());
-            		
+              			newLeafNode(otherlv_4, grammarAccess.getRenameEnumAccess().getSemicolonKeyword_4());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -3780,7 +6029,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleChangeDefValue"
-    // InternalAedit.g:1526:1: entryRuleChangeDefValue returns [EObject current=null] : iv_ruleChangeDefValue= ruleChangeDefValue EOF ;
+    // InternalAedit.g:2199:1: entryRuleChangeDefValue returns [EObject current=null] : iv_ruleChangeDefValue= ruleChangeDefValue EOF ;
     public final EObject entryRuleChangeDefValue() throws RecognitionException {
         EObject current = null;
 
@@ -3788,17 +6037,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1526:55: (iv_ruleChangeDefValue= ruleChangeDefValue EOF )
-            // InternalAedit.g:1527:2: iv_ruleChangeDefValue= ruleChangeDefValue EOF
+            // InternalAedit.g:2199:55: (iv_ruleChangeDefValue= ruleChangeDefValue EOF )
+            // InternalAedit.g:2200:2: iv_ruleChangeDefValue= ruleChangeDefValue EOF
             {
-             newCompositeNode(grammarAccess.getChangeDefValueRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getChangeDefValueRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleChangeDefValue=ruleChangeDefValue();
 
             state._fsp--;
-
-             current =iv_ruleChangeDefValue; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleChangeDefValue; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -3816,7 +6069,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleChangeDefValue"
-    // InternalAedit.g:1533:1: ruleChangeDefValue returns [EObject current=null] : (otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';' ) ;
+    // InternalAedit.g:2206:1: ruleChangeDefValue returns [EObject current=null] : (otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';' ) ;
     public final EObject ruleChangeDefValue() throws RecognitionException {
         EObject current = null;
 
@@ -3830,92 +6083,110 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1539:2: ( (otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';' ) )
-            // InternalAedit.g:1540:2: (otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';' )
+            // InternalAedit.g:2212:2: ( (otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';' ) )
+            // InternalAedit.g:2213:2: (otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';' )
             {
-            // InternalAedit.g:1540:2: (otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';' )
-            // InternalAedit.g:1541:3: otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';'
+            // InternalAedit.g:2213:2: (otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';' )
+            // InternalAedit.g:2214:3: otherlv_0= 'set_val' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newVal_3_0= ruleValue ) ) otherlv_4= ';'
             {
-            otherlv_0=(Token)match(input,31,FOLLOW_7); 
+            otherlv_0=(Token)match(input,35,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getChangeDefValueAccess().getSet_valKeyword_0());
-            		
-            // InternalAedit.g:1545:3: ( ( ruleQN ) )
-            // InternalAedit.g:1546:4: ( ruleQN )
+              			newLeafNode(otherlv_0, grammarAccess.getChangeDefValueAccess().getSet_valKeyword_0());
+              		
+            }
+            // InternalAedit.g:2218:3: ( ( ruleQN ) )
+            // InternalAedit.g:2219:4: ( ruleQN )
             {
-            // InternalAedit.g:1546:4: ( ruleQN )
-            // InternalAedit.g:1547:5: ruleQN
+            // InternalAedit.g:2219:4: ( ruleQN )
+            // InternalAedit.g:2220:5: ruleQN
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getChangeDefValueRule());
-            					}
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getChangeDefValueRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getChangeDefValueAccess().getFieldFieldCrossReference_1_0());
-            				
-            pushFollow(FOLLOW_26);
+              					newCompositeNode(grammarAccess.getChangeDefValueAccess().getFieldFieldCrossReference_1_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
             ruleQN();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,30,FOLLOW_27); 
+            otherlv_2=(Token)match(input,20,FOLLOW_29); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getChangeDefValueAccess().getEqualsSignGreaterThanSignKeyword_2());
-            		
-            // InternalAedit.g:1565:3: ( (lv_newVal_3_0= ruleValue ) )
-            // InternalAedit.g:1566:4: (lv_newVal_3_0= ruleValue )
+              			newLeafNode(otherlv_2, grammarAccess.getChangeDefValueAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:2238:3: ( (lv_newVal_3_0= ruleValue ) )
+            // InternalAedit.g:2239:4: (lv_newVal_3_0= ruleValue )
             {
-            // InternalAedit.g:1566:4: (lv_newVal_3_0= ruleValue )
-            // InternalAedit.g:1567:5: lv_newVal_3_0= ruleValue
+            // InternalAedit.g:2239:4: (lv_newVal_3_0= ruleValue )
+            // InternalAedit.g:2240:5: lv_newVal_3_0= ruleValue
             {
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getChangeDefValueAccess().getNewValValueParserRuleCall_3_0());
-            				
+              					newCompositeNode(grammarAccess.getChangeDefValueAccess().getNewValValueParserRuleCall_3_0());
+              				
+            }
             pushFollow(FOLLOW_11);
             lv_newVal_3_0=ruleValue();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getChangeDefValueRule());
-            					}
-            					set(
-            						current,
-            						"newVal",
-            						lv_newVal_3_0,
-            						"org.aedit.Aedit.Value");
-            					afterParserOrEnumRuleCall();
-            				
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getChangeDefValueRule());
+              					}
+              					set(
+              						current,
+              						"newVal",
+              						lv_newVal_3_0,
+              						"org.aedit.Aedit.Value");
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_4=(Token)match(input,16,FOLLOW_2); 
+            otherlv_4=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getChangeDefValueAccess().getSemicolonKeyword_4());
-            		
+              			newLeafNode(otherlv_4, grammarAccess.getChangeDefValueAccess().getSemicolonKeyword_4());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -3930,7 +6201,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleChangeType"
-    // InternalAedit.g:1592:1: entryRuleChangeType returns [EObject current=null] : iv_ruleChangeType= ruleChangeType EOF ;
+    // InternalAedit.g:2265:1: entryRuleChangeType returns [EObject current=null] : iv_ruleChangeType= ruleChangeType EOF ;
     public final EObject entryRuleChangeType() throws RecognitionException {
         EObject current = null;
 
@@ -3938,17 +6209,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1592:51: (iv_ruleChangeType= ruleChangeType EOF )
-            // InternalAedit.g:1593:2: iv_ruleChangeType= ruleChangeType EOF
+            // InternalAedit.g:2265:51: (iv_ruleChangeType= ruleChangeType EOF )
+            // InternalAedit.g:2266:2: iv_ruleChangeType= ruleChangeType EOF
             {
-             newCompositeNode(grammarAccess.getChangeTypeRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getChangeTypeRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleChangeType=ruleChangeType();
 
             state._fsp--;
-
-             current =iv_ruleChangeType; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleChangeType; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -3966,7 +6241,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleChangeType"
-    // InternalAedit.g:1599:1: ruleChangeType returns [EObject current=null] : (otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';' ) ;
+    // InternalAedit.g:2272:1: ruleChangeType returns [EObject current=null] : (otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';' ) ;
     public final EObject ruleChangeType() throws RecognitionException {
         EObject current = null;
 
@@ -3980,92 +6255,110 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1605:2: ( (otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';' ) )
-            // InternalAedit.g:1606:2: (otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';' )
+            // InternalAedit.g:2278:2: ( (otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';' ) )
+            // InternalAedit.g:2279:2: (otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';' )
             {
-            // InternalAedit.g:1606:2: (otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';' )
-            // InternalAedit.g:1607:3: otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';'
+            // InternalAedit.g:2279:2: (otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';' )
+            // InternalAedit.g:2280:3: otherlv_0= 'set_type' ( ( ruleQN ) ) otherlv_2= '=>' ( (lv_newType_3_0= ruleVARIABLE_TYPE ) ) otherlv_4= ';'
             {
-            otherlv_0=(Token)match(input,32,FOLLOW_7); 
+            otherlv_0=(Token)match(input,36,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_0, grammarAccess.getChangeTypeAccess().getSet_typeKeyword_0());
-            		
-            // InternalAedit.g:1611:3: ( ( ruleQN ) )
-            // InternalAedit.g:1612:4: ( ruleQN )
+              			newLeafNode(otherlv_0, grammarAccess.getChangeTypeAccess().getSet_typeKeyword_0());
+              		
+            }
+            // InternalAedit.g:2284:3: ( ( ruleQN ) )
+            // InternalAedit.g:2285:4: ( ruleQN )
             {
-            // InternalAedit.g:1612:4: ( ruleQN )
-            // InternalAedit.g:1613:5: ruleQN
+            // InternalAedit.g:2285:4: ( ruleQN )
+            // InternalAedit.g:2286:5: ruleQN
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getChangeTypeRule());
-            					}
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getChangeTypeRule());
+              					}
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getChangeTypeAccess().getFieldFieldCrossReference_1_0());
-            				
-            pushFollow(FOLLOW_26);
+              					newCompositeNode(grammarAccess.getChangeTypeAccess().getFieldFieldCrossReference_1_0());
+              				
+            }
+            pushFollow(FOLLOW_14);
             ruleQN();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,30,FOLLOW_28); 
+            otherlv_2=(Token)match(input,20,FOLLOW_30); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getChangeTypeAccess().getEqualsSignGreaterThanSignKeyword_2());
-            		
-            // InternalAedit.g:1631:3: ( (lv_newType_3_0= ruleVARIABLE_TYPE ) )
-            // InternalAedit.g:1632:4: (lv_newType_3_0= ruleVARIABLE_TYPE )
+              			newLeafNode(otherlv_2, grammarAccess.getChangeTypeAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:2304:3: ( (lv_newType_3_0= ruleVARIABLE_TYPE ) )
+            // InternalAedit.g:2305:4: (lv_newType_3_0= ruleVARIABLE_TYPE )
             {
-            // InternalAedit.g:1632:4: (lv_newType_3_0= ruleVARIABLE_TYPE )
-            // InternalAedit.g:1633:5: lv_newType_3_0= ruleVARIABLE_TYPE
+            // InternalAedit.g:2305:4: (lv_newType_3_0= ruleVARIABLE_TYPE )
+            // InternalAedit.g:2306:5: lv_newType_3_0= ruleVARIABLE_TYPE
             {
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getChangeTypeAccess().getNewTypeVARIABLE_TYPEParserRuleCall_3_0());
-            				
+              					newCompositeNode(grammarAccess.getChangeTypeAccess().getNewTypeVARIABLE_TYPEParserRuleCall_3_0());
+              				
+            }
             pushFollow(FOLLOW_11);
             lv_newType_3_0=ruleVARIABLE_TYPE();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getChangeTypeRule());
-            					}
-            					set(
-            						current,
-            						"newType",
-            						lv_newType_3_0,
-            						"org.aedit.Aedit.VARIABLE_TYPE");
-            					afterParserOrEnumRuleCall();
-            				
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getChangeTypeRule());
+              					}
+              					set(
+              						current,
+              						"newType",
+              						lv_newType_3_0,
+              						"org.aedit.Aedit.VARIABLE_TYPE");
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_4=(Token)match(input,16,FOLLOW_2); 
+            otherlv_4=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_4, grammarAccess.getChangeTypeAccess().getSemicolonKeyword_4());
-            		
+              			newLeafNode(otherlv_4, grammarAccess.getChangeTypeAccess().getSemicolonKeyword_4());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -4079,8 +6372,495 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleChangeType"
 
 
+    // $ANTLR start "entryRuleRemoveArrayValue"
+    // InternalAedit.g:2331:1: entryRuleRemoveArrayValue returns [EObject current=null] : iv_ruleRemoveArrayValue= ruleRemoveArrayValue EOF ;
+    public final EObject entryRuleRemoveArrayValue() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleRemoveArrayValue = null;
+
+
+        try {
+            // InternalAedit.g:2331:57: (iv_ruleRemoveArrayValue= ruleRemoveArrayValue EOF )
+            // InternalAedit.g:2332:2: iv_ruleRemoveArrayValue= ruleRemoveArrayValue EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRemoveArrayValueRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleRemoveArrayValue=ruleRemoveArrayValue();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRemoveArrayValue; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleRemoveArrayValue"
+
+
+    // $ANTLR start "ruleRemoveArrayValue"
+    // InternalAedit.g:2338:1: ruleRemoveArrayValue returns [EObject current=null] : (otherlv_0= 'remove' ( (otherlv_1= RULE_ID ) ) otherlv_2= '=>' ( (lv_valueToRemove_3_0= ruleValue ) ) ) ;
+    public final EObject ruleRemoveArrayValue() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_1=null;
+        Token otherlv_2=null;
+        EObject lv_valueToRemove_3_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:2344:2: ( (otherlv_0= 'remove' ( (otherlv_1= RULE_ID ) ) otherlv_2= '=>' ( (lv_valueToRemove_3_0= ruleValue ) ) ) )
+            // InternalAedit.g:2345:2: (otherlv_0= 'remove' ( (otherlv_1= RULE_ID ) ) otherlv_2= '=>' ( (lv_valueToRemove_3_0= ruleValue ) ) )
+            {
+            // InternalAedit.g:2345:2: (otherlv_0= 'remove' ( (otherlv_1= RULE_ID ) ) otherlv_2= '=>' ( (lv_valueToRemove_3_0= ruleValue ) ) )
+            // InternalAedit.g:2346:3: otherlv_0= 'remove' ( (otherlv_1= RULE_ID ) ) otherlv_2= '=>' ( (lv_valueToRemove_3_0= ruleValue ) )
+            {
+            otherlv_0=(Token)match(input,33,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getRemoveArrayValueAccess().getRemoveKeyword_0());
+              		
+            }
+            // InternalAedit.g:2350:3: ( (otherlv_1= RULE_ID ) )
+            // InternalAedit.g:2351:4: (otherlv_1= RULE_ID )
+            {
+            // InternalAedit.g:2351:4: (otherlv_1= RULE_ID )
+            // InternalAedit.g:2352:5: otherlv_1= RULE_ID
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveArrayValueRule());
+              					}
+              				
+            }
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_14); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(otherlv_1, grammarAccess.getRemoveArrayValueAccess().getArrayFieldCrossReference_1_0());
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,20,FOLLOW_29); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_2, grammarAccess.getRemoveArrayValueAccess().getEqualsSignGreaterThanSignKeyword_2());
+              		
+            }
+            // InternalAedit.g:2367:3: ( (lv_valueToRemove_3_0= ruleValue ) )
+            // InternalAedit.g:2368:4: (lv_valueToRemove_3_0= ruleValue )
+            {
+            // InternalAedit.g:2368:4: (lv_valueToRemove_3_0= ruleValue )
+            // InternalAedit.g:2369:5: lv_valueToRemove_3_0= ruleValue
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRemoveArrayValueAccess().getValueToRemoveValueParserRuleCall_3_0());
+              				
+            }
+            pushFollow(FOLLOW_2);
+            lv_valueToRemove_3_0=ruleValue();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getRemoveArrayValueRule());
+              					}
+              					set(
+              						current,
+              						"valueToRemove",
+              						lv_valueToRemove_3_0,
+              						"org.aedit.Aedit.Value");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleRemoveArrayValue"
+
+
+    // $ANTLR start "entryRuleRemoveArrayValueAtIndex"
+    // InternalAedit.g:2390:1: entryRuleRemoveArrayValueAtIndex returns [EObject current=null] : iv_ruleRemoveArrayValueAtIndex= ruleRemoveArrayValueAtIndex EOF ;
+    public final EObject entryRuleRemoveArrayValueAtIndex() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleRemoveArrayValueAtIndex = null;
+
+
+        try {
+            // InternalAedit.g:2390:64: (iv_ruleRemoveArrayValueAtIndex= ruleRemoveArrayValueAtIndex EOF )
+            // InternalAedit.g:2391:2: iv_ruleRemoveArrayValueAtIndex= ruleRemoveArrayValueAtIndex EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRemoveArrayValueAtIndexRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleRemoveArrayValueAtIndex=ruleRemoveArrayValueAtIndex();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRemoveArrayValueAtIndex; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleRemoveArrayValueAtIndex"
+
+
+    // $ANTLR start "ruleRemoveArrayValueAtIndex"
+    // InternalAedit.g:2397:1: ruleRemoveArrayValueAtIndex returns [EObject current=null] : (otherlv_0= 'remove.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) ;
+    public final EObject ruleRemoveArrayValueAtIndex() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_1=null;
+        Token lv_index_2_0=null;
+        Token otherlv_3=null;
+        Token otherlv_4=null;
+        Token otherlv_5=null;
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:2403:2: ( (otherlv_0= 'remove.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) )
+            // InternalAedit.g:2404:2: (otherlv_0= 'remove.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            {
+            // InternalAedit.g:2404:2: (otherlv_0= 'remove.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            // InternalAedit.g:2405:3: otherlv_0= 'remove.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+            {
+            otherlv_0=(Token)match(input,37,FOLLOW_20); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getRemoveArrayValueAtIndexAccess().getRemoveAtKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,29,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_1, grammarAccess.getRemoveArrayValueAtIndexAccess().getLeftParenthesisKeyword_1());
+              		
+            }
+            // InternalAedit.g:2413:3: ( (lv_index_2_0= RULE_INT ) )
+            // InternalAedit.g:2414:4: (lv_index_2_0= RULE_INT )
+            {
+            // InternalAedit.g:2414:4: (lv_index_2_0= RULE_INT )
+            // InternalAedit.g:2415:5: lv_index_2_0= RULE_INT
+            {
+            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(lv_index_2_0, grammarAccess.getRemoveArrayValueAtIndexAccess().getIndexINTTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveArrayValueAtIndexRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"index",
+              						lv_index_2_0,
+              						"org.eclipse.xtext.common.Terminals.INT");
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_3=(Token)match(input,30,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_3, grammarAccess.getRemoveArrayValueAtIndexAccess().getRightParenthesisKeyword_3());
+              		
+            }
+            // InternalAedit.g:2435:3: ( (otherlv_4= RULE_ID ) )
+            // InternalAedit.g:2436:4: (otherlv_4= RULE_ID )
+            {
+            // InternalAedit.g:2436:4: (otherlv_4= RULE_ID )
+            // InternalAedit.g:2437:5: otherlv_4= RULE_ID
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getRemoveArrayValueAtIndexRule());
+              					}
+              				
+            }
+            otherlv_4=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(otherlv_4, grammarAccess.getRemoveArrayValueAtIndexAccess().getArrayFieldCrossReference_4_0());
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_5=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_5, grammarAccess.getRemoveArrayValueAtIndexAccess().getSemicolonKeyword_5());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleRemoveArrayValueAtIndex"
+
+
+    // $ANTLR start "entryRuleAddValueToArray"
+    // InternalAedit.g:2456:1: entryRuleAddValueToArray returns [EObject current=null] : iv_ruleAddValueToArray= ruleAddValueToArray EOF ;
+    public final EObject entryRuleAddValueToArray() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleAddValueToArray = null;
+
+
+        try {
+            // InternalAedit.g:2456:56: (iv_ruleAddValueToArray= ruleAddValueToArray EOF )
+            // InternalAedit.g:2457:2: iv_ruleAddValueToArray= ruleAddValueToArray EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAddValueToArrayRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleAddValueToArray=ruleAddValueToArray();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAddValueToArray; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAddValueToArray"
+
+
+    // $ANTLR start "ruleAddValueToArray"
+    // InternalAedit.g:2463:1: ruleAddValueToArray returns [EObject current=null] : (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) ;
+    public final EObject ruleAddValueToArray() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_1=null;
+        Token lv_index_2_0=null;
+        Token otherlv_3=null;
+        Token otherlv_4=null;
+        Token otherlv_5=null;
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:2469:2: ( (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' ) )
+            // InternalAedit.g:2470:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            {
+            // InternalAedit.g:2470:2: (otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';' )
+            // InternalAedit.g:2471:3: otherlv_0= 'add.at' otherlv_1= '(' ( (lv_index_2_0= RULE_INT ) ) otherlv_3= ')' ( (otherlv_4= RULE_ID ) ) otherlv_5= ';'
+            {
+            otherlv_0=(Token)match(input,28,FOLLOW_20); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getAddValueToArrayAccess().getAddAtKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,29,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_1, grammarAccess.getAddValueToArrayAccess().getLeftParenthesisKeyword_1());
+              		
+            }
+            // InternalAedit.g:2479:3: ( (lv_index_2_0= RULE_INT ) )
+            // InternalAedit.g:2480:4: (lv_index_2_0= RULE_INT )
+            {
+            // InternalAedit.g:2480:4: (lv_index_2_0= RULE_INT )
+            // InternalAedit.g:2481:5: lv_index_2_0= RULE_INT
+            {
+            lv_index_2_0=(Token)match(input,RULE_INT,FOLLOW_22); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(lv_index_2_0, grammarAccess.getAddValueToArrayAccess().getIndexINTTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddValueToArrayRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"index",
+              						lv_index_2_0,
+              						"org.eclipse.xtext.common.Terminals.INT");
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_3=(Token)match(input,30,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_3, grammarAccess.getAddValueToArrayAccess().getRightParenthesisKeyword_3());
+              		
+            }
+            // InternalAedit.g:2501:3: ( (otherlv_4= RULE_ID ) )
+            // InternalAedit.g:2502:4: (otherlv_4= RULE_ID )
+            {
+            // InternalAedit.g:2502:4: (otherlv_4= RULE_ID )
+            // InternalAedit.g:2503:5: otherlv_4= RULE_ID
+            {
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getAddValueToArrayRule());
+              					}
+              				
+            }
+            otherlv_4=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(otherlv_4, grammarAccess.getAddValueToArrayAccess().getArrayFieldCrossReference_4_0());
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_5=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_5, grammarAccess.getAddValueToArrayAccess().getSemicolonKeyword_5());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAddValueToArray"
+
+
     // $ANTLR start "entryRuleField"
-    // InternalAedit.g:1658:1: entryRuleField returns [EObject current=null] : iv_ruleField= ruleField EOF ;
+    // InternalAedit.g:2522:1: entryRuleField returns [EObject current=null] : iv_ruleField= ruleField EOF ;
     public final EObject entryRuleField() throws RecognitionException {
         EObject current = null;
 
@@ -4088,17 +6868,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1658:46: (iv_ruleField= ruleField EOF )
-            // InternalAedit.g:1659:2: iv_ruleField= ruleField EOF
+            // InternalAedit.g:2522:46: (iv_ruleField= ruleField EOF )
+            // InternalAedit.g:2523:2: iv_ruleField= ruleField EOF
             {
-             newCompositeNode(grammarAccess.getFieldRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getFieldRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleField=ruleField();
 
             state._fsp--;
-
-             current =iv_ruleField; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -4116,72 +6900,204 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleField"
-    // InternalAedit.g:1665:1: ruleField returns [EObject current=null] : (this_PrimitiveTypeField_0= rulePrimitiveTypeField | this_CustomTypeField_1= ruleCustomTypeField ) ;
+    // InternalAedit.g:2529:1: ruleField returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField ) ) ) ) ;
     public final EObject ruleField() throws RecognitionException {
         EObject current = null;
 
-        EObject this_PrimitiveTypeField_0 = null;
+        EObject lv_annotations_0_0 = null;
 
-        EObject this_CustomTypeField_1 = null;
+        EObject lv_fieldType_1_1 = null;
+
+        EObject lv_fieldType_1_2 = null;
+
+        EObject lv_fieldType_1_3 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalAedit.g:1671:2: ( (this_PrimitiveTypeField_0= rulePrimitiveTypeField | this_CustomTypeField_1= ruleCustomTypeField ) )
-            // InternalAedit.g:1672:2: (this_PrimitiveTypeField_0= rulePrimitiveTypeField | this_CustomTypeField_1= ruleCustomTypeField )
+            // InternalAedit.g:2535:2: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField ) ) ) ) )
+            // InternalAedit.g:2536:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField ) ) ) )
             {
-            // InternalAedit.g:1672:2: (this_PrimitiveTypeField_0= rulePrimitiveTypeField | this_CustomTypeField_1= ruleCustomTypeField )
-            int alt18=2;
-            int LA18_0 = input.LA(1);
+            // InternalAedit.g:2536:2: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField ) ) ) )
+            // InternalAedit.g:2537:3: ( (lv_annotations_0_0= ruleAnnotation ) )* ( ( (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField ) ) )
+            {
+            // InternalAedit.g:2537:3: ( (lv_annotations_0_0= ruleAnnotation ) )*
+            loop20:
+            do {
+                int alt20=2;
+                int LA20_0 = input.LA(1);
 
-            if ( ((LA18_0>=38 && LA18_0<=43)) ) {
-                alt18=1;
-            }
-            else if ( (LA18_0==RULE_ID) ) {
-                alt18=2;
-            }
-            else {
+                if ( (LA20_0==54) ) {
+                    alt20=1;
+                }
+
+
+                switch (alt20) {
+            	case 1 :
+            	    // InternalAedit.g:2538:4: (lv_annotations_0_0= ruleAnnotation )
+            	    {
+            	    // InternalAedit.g:2538:4: (lv_annotations_0_0= ruleAnnotation )
+            	    // InternalAedit.g:2539:5: lv_annotations_0_0= ruleAnnotation
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      					newCompositeNode(grammarAccess.getFieldAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_28);
+            	    lv_annotations_0_0=ruleAnnotation();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getFieldRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"annotations",
+            	      						lv_annotations_0_0,
+            	      						"org.aedit.Aedit.Annotation");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop20;
+                }
+            } while (true);
+
+            // InternalAedit.g:2556:3: ( ( (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField ) ) )
+            // InternalAedit.g:2557:4: ( (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField ) )
+            {
+            // InternalAedit.g:2557:4: ( (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField ) )
+            // InternalAedit.g:2558:5: (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField )
+            {
+            // InternalAedit.g:2558:5: (lv_fieldType_1_1= rulePrimitiveTypeField | lv_fieldType_1_2= ruleCustomTypeField | lv_fieldType_1_3= ruleComplexTypeField )
+            int alt21=3;
+            switch ( input.LA(1) ) {
+            case 48:
+            case 49:
+            case 50:
+            case 51:
+            case 52:
+            case 53:
+                {
+                alt21=1;
+                }
+                break;
+            case RULE_ID:
+                {
+                alt21=2;
+                }
+                break;
+            case 39:
+                {
+                alt21=3;
+                }
+                break;
+            default:
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 18, 0, input);
+                    new NoViableAltException("", 21, 0, input);
 
                 throw nvae;
             }
-            switch (alt18) {
-                case 1 :
-                    // InternalAedit.g:1673:3: this_PrimitiveTypeField_0= rulePrimitiveTypeField
-                    {
 
-                    			newCompositeNode(grammarAccess.getFieldAccess().getPrimitiveTypeFieldParserRuleCall_0());
-                    		
+            switch (alt21) {
+                case 1 :
+                    // InternalAedit.g:2559:6: lv_fieldType_1_1= rulePrimitiveTypeField
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      						newCompositeNode(grammarAccess.getFieldAccess().getFieldTypePrimitiveTypeFieldParserRuleCall_1_0_0());
+                      					
+                    }
                     pushFollow(FOLLOW_2);
-                    this_PrimitiveTypeField_0=rulePrimitiveTypeField();
+                    lv_fieldType_1_1=rulePrimitiveTypeField();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_PrimitiveTypeField_0;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getFieldRule());
+                      						}
+                      						set(
+                      							current,
+                      							"fieldType",
+                      							lv_fieldType_1_1,
+                      							"org.aedit.Aedit.PrimitiveTypeField");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:1682:3: this_CustomTypeField_1= ruleCustomTypeField
+                    // InternalAedit.g:2575:6: lv_fieldType_1_2= ruleCustomTypeField
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getFieldAccess().getCustomTypeFieldParserRuleCall_1());
-                    		
+                      						newCompositeNode(grammarAccess.getFieldAccess().getFieldTypeCustomTypeFieldParserRuleCall_1_0_1());
+                      					
+                    }
                     pushFollow(FOLLOW_2);
-                    this_CustomTypeField_1=ruleCustomTypeField();
+                    lv_fieldType_1_2=ruleCustomTypeField();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getFieldRule());
+                      						}
+                      						set(
+                      							current,
+                      							"fieldType",
+                      							lv_fieldType_1_2,
+                      							"org.aedit.Aedit.CustomTypeField");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
 
-                    			current = this_CustomTypeField_1;
-                    			afterParserOrEnumRuleCall();
-                    		
+                    }
+                    break;
+                case 3 :
+                    // InternalAedit.g:2591:6: lv_fieldType_1_3= ruleComplexTypeField
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      						newCompositeNode(grammarAccess.getFieldAccess().getFieldTypeComplexTypeFieldParserRuleCall_1_0_2());
+                      					
+                    }
+                    pushFollow(FOLLOW_2);
+                    lv_fieldType_1_3=ruleComplexTypeField();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getFieldRule());
+                      						}
+                      						set(
+                      							current,
+                      							"fieldType",
+                      							lv_fieldType_1_3,
+                      							"org.aedit.Aedit.ComplexTypeField");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
 
                     }
                     break;
@@ -4192,8 +7108,19 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             }
 
 
-            	leaveRule();
+            }
 
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
         }
 
             catch (RecognitionException re) {
@@ -4208,7 +7135,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCustomTypeField"
-    // InternalAedit.g:1694:1: entryRuleCustomTypeField returns [EObject current=null] : iv_ruleCustomTypeField= ruleCustomTypeField EOF ;
+    // InternalAedit.g:2613:1: entryRuleCustomTypeField returns [EObject current=null] : iv_ruleCustomTypeField= ruleCustomTypeField EOF ;
     public final EObject entryRuleCustomTypeField() throws RecognitionException {
         EObject current = null;
 
@@ -4216,17 +7143,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1694:56: (iv_ruleCustomTypeField= ruleCustomTypeField EOF )
-            // InternalAedit.g:1695:2: iv_ruleCustomTypeField= ruleCustomTypeField EOF
+            // InternalAedit.g:2613:56: (iv_ruleCustomTypeField= ruleCustomTypeField EOF )
+            // InternalAedit.g:2614:2: iv_ruleCustomTypeField= ruleCustomTypeField EOF
             {
-             newCompositeNode(grammarAccess.getCustomTypeFieldRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getCustomTypeFieldRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleCustomTypeField=ruleCustomTypeField();
 
             state._fsp--;
-
-             current =iv_ruleCustomTypeField; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleCustomTypeField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -4244,90 +7175,162 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCustomTypeField"
-    // InternalAedit.g:1701:1: ruleCustomTypeField returns [EObject current=null] : ( ( ( ruleQN ) ) ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' ) ;
+    // InternalAedit.g:2620:1: ruleCustomTypeField returns [EObject current=null] : ( ( (lv_type_0_0= ruleCustomType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) otherlv_3= ';' ) ;
     public final EObject ruleCustomTypeField() throws RecognitionException {
         EObject current = null;
 
-        Token lv_varName_1_0=null;
-        Token otherlv_2=null;
+        Token lv_varName_2_0=null;
+        Token otherlv_3=null;
+        EObject lv_type_0_0 = null;
+
+        EObject lv_nameAnnotations_1_0 = null;
+
 
 
         	enterRule();
 
         try {
-            // InternalAedit.g:1707:2: ( ( ( ( ruleQN ) ) ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' ) )
-            // InternalAedit.g:1708:2: ( ( ( ruleQN ) ) ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' )
+            // InternalAedit.g:2626:2: ( ( ( (lv_type_0_0= ruleCustomType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) otherlv_3= ';' ) )
+            // InternalAedit.g:2627:2: ( ( (lv_type_0_0= ruleCustomType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) otherlv_3= ';' )
             {
-            // InternalAedit.g:1708:2: ( ( ( ruleQN ) ) ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';' )
-            // InternalAedit.g:1709:3: ( ( ruleQN ) ) ( (lv_varName_1_0= RULE_ID ) ) otherlv_2= ';'
+            // InternalAedit.g:2627:2: ( ( (lv_type_0_0= ruleCustomType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) otherlv_3= ';' )
+            // InternalAedit.g:2628:3: ( (lv_type_0_0= ruleCustomType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) otherlv_3= ';'
             {
-            // InternalAedit.g:1709:3: ( ( ruleQN ) )
-            // InternalAedit.g:1710:4: ( ruleQN )
+            // InternalAedit.g:2628:3: ( (lv_type_0_0= ruleCustomType ) )
+            // InternalAedit.g:2629:4: (lv_type_0_0= ruleCustomType )
             {
-            // InternalAedit.g:1710:4: ( ruleQN )
-            // InternalAedit.g:1711:5: ruleQN
+            // InternalAedit.g:2629:4: (lv_type_0_0= ruleCustomType )
+            // InternalAedit.g:2630:5: lv_type_0_0= ruleCustomType
             {
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getCustomTypeFieldRule());
-            					}
-            				
-
-            					newCompositeNode(grammarAccess.getCustomTypeFieldAccess().getTypeTypeCrossReference_0_0());
-            				
-            pushFollow(FOLLOW_7);
-            ruleQN();
+              					newCompositeNode(grammarAccess.getCustomTypeFieldAccess().getTypeCustomTypeParserRuleCall_0_0());
+              				
+            }
+            pushFollow(FOLLOW_31);
+            lv_type_0_0=ruleCustomType();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					afterParserOrEnumRuleCall();
-            				
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getCustomTypeFieldRule());
+              					}
+              					set(
+              						current,
+              						"type",
+              						lv_type_0_0,
+              						"org.aedit.Aedit.CustomType");
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            // InternalAedit.g:1725:3: ( (lv_varName_1_0= RULE_ID ) )
-            // InternalAedit.g:1726:4: (lv_varName_1_0= RULE_ID )
+            // InternalAedit.g:2647:3: ( (lv_nameAnnotations_1_0= ruleAnnotation ) )*
+            loop22:
+            do {
+                int alt22=2;
+                int LA22_0 = input.LA(1);
+
+                if ( (LA22_0==54) ) {
+                    alt22=1;
+                }
+
+
+                switch (alt22) {
+            	case 1 :
+            	    // InternalAedit.g:2648:4: (lv_nameAnnotations_1_0= ruleAnnotation )
+            	    {
+            	    // InternalAedit.g:2648:4: (lv_nameAnnotations_1_0= ruleAnnotation )
+            	    // InternalAedit.g:2649:5: lv_nameAnnotations_1_0= ruleAnnotation
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      					newCompositeNode(grammarAccess.getCustomTypeFieldAccess().getNameAnnotationsAnnotationParserRuleCall_1_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_31);
+            	    lv_nameAnnotations_1_0=ruleAnnotation();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getCustomTypeFieldRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"nameAnnotations",
+            	      						lv_nameAnnotations_1_0,
+            	      						"org.aedit.Aedit.Annotation");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop22;
+                }
+            } while (true);
+
+            // InternalAedit.g:2666:3: ( (lv_varName_2_0= RULE_ID ) )
+            // InternalAedit.g:2667:4: (lv_varName_2_0= RULE_ID )
             {
-            // InternalAedit.g:1726:4: (lv_varName_1_0= RULE_ID )
-            // InternalAedit.g:1727:5: lv_varName_1_0= RULE_ID
+            // InternalAedit.g:2667:4: (lv_varName_2_0= RULE_ID )
+            // InternalAedit.g:2668:5: lv_varName_2_0= RULE_ID
             {
-            lv_varName_1_0=(Token)match(input,RULE_ID,FOLLOW_11); 
+            lv_varName_2_0=(Token)match(input,RULE_ID,FOLLOW_11); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_varName_1_0, grammarAccess.getCustomTypeFieldAccess().getVarNameIDTerminalRuleCall_1_0());
-            				
+              					newLeafNode(lv_varName_2_0, grammarAccess.getCustomTypeFieldAccess().getVarNameIDTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getCustomTypeFieldRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"varName",
-            						lv_varName_1_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getCustomTypeFieldRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"varName",
+              						lv_varName_2_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            otherlv_2=(Token)match(input,16,FOLLOW_2); 
+            otherlv_3=(Token)match(input,16,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(otherlv_2, grammarAccess.getCustomTypeFieldAccess().getSemicolonKeyword_2());
-            		
+              			newLeafNode(otherlv_3, grammarAccess.getCustomTypeFieldAccess().getSemicolonKeyword_3());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -4342,7 +7345,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrimitiveTypeField"
-    // InternalAedit.g:1751:1: entryRulePrimitiveTypeField returns [EObject current=null] : iv_rulePrimitiveTypeField= rulePrimitiveTypeField EOF ;
+    // InternalAedit.g:2692:1: entryRulePrimitiveTypeField returns [EObject current=null] : iv_rulePrimitiveTypeField= rulePrimitiveTypeField EOF ;
     public final EObject entryRulePrimitiveTypeField() throws RecognitionException {
         EObject current = null;
 
@@ -4350,17 +7353,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1751:59: (iv_rulePrimitiveTypeField= rulePrimitiveTypeField EOF )
-            // InternalAedit.g:1752:2: iv_rulePrimitiveTypeField= rulePrimitiveTypeField EOF
+            // InternalAedit.g:2692:59: (iv_rulePrimitiveTypeField= rulePrimitiveTypeField EOF )
+            // InternalAedit.g:2693:2: iv_rulePrimitiveTypeField= rulePrimitiveTypeField EOF
             {
-             newCompositeNode(grammarAccess.getPrimitiveTypeFieldRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getPrimitiveTypeFieldRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_rulePrimitiveTypeField=rulePrimitiveTypeField();
 
             state._fsp--;
-
-             current =iv_rulePrimitiveTypeField; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_rulePrimitiveTypeField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -4378,124 +7385,193 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrimitiveTypeField"
-    // InternalAedit.g:1758:1: rulePrimitiveTypeField returns [EObject current=null] : ( ( (lv_type_0_0= ruleVARIABLE_TYPE ) ) ( (lv_varName_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_value_3_0= ruleValue ) ) )? ) ;
+    // InternalAedit.g:2699:1: rulePrimitiveTypeField returns [EObject current=null] : ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( (lv_value_4_0= ruleValue ) ) )? ) ;
     public final EObject rulePrimitiveTypeField() throws RecognitionException {
         EObject current = null;
 
-        Token lv_varName_1_0=null;
-        Token otherlv_2=null;
-        AntlrDatatypeRuleToken lv_type_0_0 = null;
+        Token lv_varName_2_0=null;
+        Token otherlv_3=null;
+        EObject lv_type_0_0 = null;
 
-        EObject lv_value_3_0 = null;
+        EObject lv_nameAnnotations_1_0 = null;
+
+        EObject lv_value_4_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalAedit.g:1764:2: ( ( ( (lv_type_0_0= ruleVARIABLE_TYPE ) ) ( (lv_varName_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_value_3_0= ruleValue ) ) )? ) )
-            // InternalAedit.g:1765:2: ( ( (lv_type_0_0= ruleVARIABLE_TYPE ) ) ( (lv_varName_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_value_3_0= ruleValue ) ) )? )
+            // InternalAedit.g:2705:2: ( ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( (lv_value_4_0= ruleValue ) ) )? ) )
+            // InternalAedit.g:2706:2: ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( (lv_value_4_0= ruleValue ) ) )? )
             {
-            // InternalAedit.g:1765:2: ( ( (lv_type_0_0= ruleVARIABLE_TYPE ) ) ( (lv_varName_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_value_3_0= ruleValue ) ) )? )
-            // InternalAedit.g:1766:3: ( (lv_type_0_0= ruleVARIABLE_TYPE ) ) ( (lv_varName_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_value_3_0= ruleValue ) ) )?
+            // InternalAedit.g:2706:2: ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( (lv_value_4_0= ruleValue ) ) )? )
+            // InternalAedit.g:2707:3: ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( (lv_value_4_0= ruleValue ) ) )?
             {
-            // InternalAedit.g:1766:3: ( (lv_type_0_0= ruleVARIABLE_TYPE ) )
-            // InternalAedit.g:1767:4: (lv_type_0_0= ruleVARIABLE_TYPE )
+            // InternalAedit.g:2707:3: ( (lv_type_0_0= rulePrimitiveType ) )
+            // InternalAedit.g:2708:4: (lv_type_0_0= rulePrimitiveType )
             {
-            // InternalAedit.g:1767:4: (lv_type_0_0= ruleVARIABLE_TYPE )
-            // InternalAedit.g:1768:5: lv_type_0_0= ruleVARIABLE_TYPE
+            // InternalAedit.g:2708:4: (lv_type_0_0= rulePrimitiveType )
+            // InternalAedit.g:2709:5: lv_type_0_0= rulePrimitiveType
             {
+            if ( state.backtracking==0 ) {
 
-            					newCompositeNode(grammarAccess.getPrimitiveTypeFieldAccess().getTypeVARIABLE_TYPEParserRuleCall_0_0());
-            				
-            pushFollow(FOLLOW_7);
-            lv_type_0_0=ruleVARIABLE_TYPE();
+              					newCompositeNode(grammarAccess.getPrimitiveTypeFieldAccess().getTypePrimitiveTypeParserRuleCall_0_0());
+              				
+            }
+            pushFollow(FOLLOW_31);
+            lv_type_0_0=rulePrimitiveType();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getPrimitiveTypeFieldRule());
-            					}
-            					set(
-            						current,
-            						"type",
-            						lv_type_0_0,
-            						"org.aedit.Aedit.VARIABLE_TYPE");
-            					afterParserOrEnumRuleCall();
-            				
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getPrimitiveTypeFieldRule());
+              					}
+              					set(
+              						current,
+              						"type",
+              						lv_type_0_0,
+              						"org.aedit.Aedit.PrimitiveType");
+              					afterParserOrEnumRuleCall();
+              				
+            }
 
             }
 
 
             }
 
-            // InternalAedit.g:1785:3: ( (lv_varName_1_0= RULE_ID ) )
-            // InternalAedit.g:1786:4: (lv_varName_1_0= RULE_ID )
+            // InternalAedit.g:2726:3: ( (lv_nameAnnotations_1_0= ruleAnnotation ) )*
+            loop23:
+            do {
+                int alt23=2;
+                int LA23_0 = input.LA(1);
+
+                if ( (LA23_0==54) ) {
+                    alt23=1;
+                }
+
+
+                switch (alt23) {
+            	case 1 :
+            	    // InternalAedit.g:2727:4: (lv_nameAnnotations_1_0= ruleAnnotation )
+            	    {
+            	    // InternalAedit.g:2727:4: (lv_nameAnnotations_1_0= ruleAnnotation )
+            	    // InternalAedit.g:2728:5: lv_nameAnnotations_1_0= ruleAnnotation
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      					newCompositeNode(grammarAccess.getPrimitiveTypeFieldAccess().getNameAnnotationsAnnotationParserRuleCall_1_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_31);
+            	    lv_nameAnnotations_1_0=ruleAnnotation();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getPrimitiveTypeFieldRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"nameAnnotations",
+            	      						lv_nameAnnotations_1_0,
+            	      						"org.aedit.Aedit.Annotation");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop23;
+                }
+            } while (true);
+
+            // InternalAedit.g:2745:3: ( (lv_varName_2_0= RULE_ID ) )
+            // InternalAedit.g:2746:4: (lv_varName_2_0= RULE_ID )
             {
-            // InternalAedit.g:1786:4: (lv_varName_1_0= RULE_ID )
-            // InternalAedit.g:1787:5: lv_varName_1_0= RULE_ID
+            // InternalAedit.g:2746:4: (lv_varName_2_0= RULE_ID )
+            // InternalAedit.g:2747:5: lv_varName_2_0= RULE_ID
             {
-            lv_varName_1_0=(Token)match(input,RULE_ID,FOLLOW_29); 
+            lv_varName_2_0=(Token)match(input,RULE_ID,FOLLOW_32); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            					newLeafNode(lv_varName_1_0, grammarAccess.getPrimitiveTypeFieldAccess().getVarNameIDTerminalRuleCall_1_0());
-            				
+              					newLeafNode(lv_varName_2_0, grammarAccess.getPrimitiveTypeFieldAccess().getVarNameIDTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getPrimitiveTypeFieldRule());
-            					}
-            					setWithLastConsumed(
-            						current,
-            						"varName",
-            						lv_varName_1_0,
-            						"org.eclipse.xtext.common.Terminals.ID");
-            				
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getPrimitiveTypeFieldRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"varName",
+              						lv_varName_2_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
 
             }
 
 
             }
 
-            // InternalAedit.g:1803:3: (otherlv_2= '=' ( (lv_value_3_0= ruleValue ) ) )?
-            int alt19=2;
-            int LA19_0 = input.LA(1);
+            // InternalAedit.g:2763:3: (otherlv_3= '=' ( (lv_value_4_0= ruleValue ) ) )?
+            int alt24=2;
+            int LA24_0 = input.LA(1);
 
-            if ( (LA19_0==33) ) {
-                alt19=1;
+            if ( (LA24_0==38) ) {
+                alt24=1;
             }
-            switch (alt19) {
+            switch (alt24) {
                 case 1 :
-                    // InternalAedit.g:1804:4: otherlv_2= '=' ( (lv_value_3_0= ruleValue ) )
+                    // InternalAedit.g:2764:4: otherlv_3= '=' ( (lv_value_4_0= ruleValue ) )
                     {
-                    otherlv_2=(Token)match(input,33,FOLLOW_27); 
+                    otherlv_3=(Token)match(input,38,FOLLOW_29); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    				newLeafNode(otherlv_2, grammarAccess.getPrimitiveTypeFieldAccess().getEqualsSignKeyword_2_0());
-                    			
-                    // InternalAedit.g:1808:4: ( (lv_value_3_0= ruleValue ) )
-                    // InternalAedit.g:1809:5: (lv_value_3_0= ruleValue )
+                      				newLeafNode(otherlv_3, grammarAccess.getPrimitiveTypeFieldAccess().getEqualsSignKeyword_3_0());
+                      			
+                    }
+                    // InternalAedit.g:2768:4: ( (lv_value_4_0= ruleValue ) )
+                    // InternalAedit.g:2769:5: (lv_value_4_0= ruleValue )
                     {
-                    // InternalAedit.g:1809:5: (lv_value_3_0= ruleValue )
-                    // InternalAedit.g:1810:6: lv_value_3_0= ruleValue
+                    // InternalAedit.g:2769:5: (lv_value_4_0= ruleValue )
+                    // InternalAedit.g:2770:6: lv_value_4_0= ruleValue
                     {
+                    if ( state.backtracking==0 ) {
 
-                    						newCompositeNode(grammarAccess.getPrimitiveTypeFieldAccess().getValueValueParserRuleCall_2_1_0());
-                    					
+                      						newCompositeNode(grammarAccess.getPrimitiveTypeFieldAccess().getValueValueParserRuleCall_3_1_0());
+                      					
+                    }
                     pushFollow(FOLLOW_2);
-                    lv_value_3_0=ruleValue();
+                    lv_value_4_0=ruleValue();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getPrimitiveTypeFieldRule());
-                    						}
-                    						set(
-                    							current,
-                    							"value",
-                    							lv_value_3_0,
-                    							"org.aedit.Aedit.Value");
-                    						afterParserOrEnumRuleCall();
-                    					
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getPrimitiveTypeFieldRule());
+                      						}
+                      						set(
+                      							current,
+                      							"value",
+                      							lv_value_4_0,
+                      							"org.aedit.Aedit.Value");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
 
                     }
 
@@ -4514,9 +7590,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -4530,8 +7608,1577 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     // $ANTLR end "rulePrimitiveTypeField"
 
 
+    // $ANTLR start "entryRuleComplexTypeField"
+    // InternalAedit.g:2792:1: entryRuleComplexTypeField returns [EObject current=null] : iv_ruleComplexTypeField= ruleComplexTypeField EOF ;
+    public final EObject entryRuleComplexTypeField() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleComplexTypeField = null;
+
+
+        try {
+            // InternalAedit.g:2792:57: (iv_ruleComplexTypeField= ruleComplexTypeField EOF )
+            // InternalAedit.g:2793:2: iv_ruleComplexTypeField= ruleComplexTypeField EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getComplexTypeFieldRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleComplexTypeField=ruleComplexTypeField();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleComplexTypeField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleComplexTypeField"
+
+
+    // $ANTLR start "ruleComplexTypeField"
+    // InternalAedit.g:2799:1: ruleComplexTypeField returns [EObject current=null] : ( ( (lv_type_0_0= ruleArrayTypeField ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( ( '[' )=> (lv_value_4_0= ruleArray ) ) )? ) ;
+    public final EObject ruleComplexTypeField() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_varName_2_0=null;
+        Token otherlv_3=null;
+        EObject lv_type_0_0 = null;
+
+        EObject lv_nameAnnotations_1_0 = null;
+
+        EObject lv_value_4_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:2805:2: ( ( ( (lv_type_0_0= ruleArrayTypeField ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( ( '[' )=> (lv_value_4_0= ruleArray ) ) )? ) )
+            // InternalAedit.g:2806:2: ( ( (lv_type_0_0= ruleArrayTypeField ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( ( '[' )=> (lv_value_4_0= ruleArray ) ) )? )
+            {
+            // InternalAedit.g:2806:2: ( ( (lv_type_0_0= ruleArrayTypeField ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( ( '[' )=> (lv_value_4_0= ruleArray ) ) )? )
+            // InternalAedit.g:2807:3: ( (lv_type_0_0= ruleArrayTypeField ) ) ( (lv_nameAnnotations_1_0= ruleAnnotation ) )* ( (lv_varName_2_0= RULE_ID ) ) (otherlv_3= '=' ( ( '[' )=> (lv_value_4_0= ruleArray ) ) )?
+            {
+            // InternalAedit.g:2807:3: ( (lv_type_0_0= ruleArrayTypeField ) )
+            // InternalAedit.g:2808:4: (lv_type_0_0= ruleArrayTypeField )
+            {
+            // InternalAedit.g:2808:4: (lv_type_0_0= ruleArrayTypeField )
+            // InternalAedit.g:2809:5: lv_type_0_0= ruleArrayTypeField
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getComplexTypeFieldAccess().getTypeArrayTypeFieldParserRuleCall_0_0());
+              				
+            }
+            pushFollow(FOLLOW_31);
+            lv_type_0_0=ruleArrayTypeField();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getComplexTypeFieldRule());
+              					}
+              					set(
+              						current,
+              						"type",
+              						lv_type_0_0,
+              						"org.aedit.Aedit.ArrayTypeField");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalAedit.g:2826:3: ( (lv_nameAnnotations_1_0= ruleAnnotation ) )*
+            loop25:
+            do {
+                int alt25=2;
+                int LA25_0 = input.LA(1);
+
+                if ( (LA25_0==54) ) {
+                    alt25=1;
+                }
+
+
+                switch (alt25) {
+            	case 1 :
+            	    // InternalAedit.g:2827:4: (lv_nameAnnotations_1_0= ruleAnnotation )
+            	    {
+            	    // InternalAedit.g:2827:4: (lv_nameAnnotations_1_0= ruleAnnotation )
+            	    // InternalAedit.g:2828:5: lv_nameAnnotations_1_0= ruleAnnotation
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      					newCompositeNode(grammarAccess.getComplexTypeFieldAccess().getNameAnnotationsAnnotationParserRuleCall_1_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_31);
+            	    lv_nameAnnotations_1_0=ruleAnnotation();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getComplexTypeFieldRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"nameAnnotations",
+            	      						lv_nameAnnotations_1_0,
+            	      						"org.aedit.Aedit.Annotation");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop25;
+                }
+            } while (true);
+
+            // InternalAedit.g:2845:3: ( (lv_varName_2_0= RULE_ID ) )
+            // InternalAedit.g:2846:4: (lv_varName_2_0= RULE_ID )
+            {
+            // InternalAedit.g:2846:4: (lv_varName_2_0= RULE_ID )
+            // InternalAedit.g:2847:5: lv_varName_2_0= RULE_ID
+            {
+            lv_varName_2_0=(Token)match(input,RULE_ID,FOLLOW_32); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					newLeafNode(lv_varName_2_0, grammarAccess.getComplexTypeFieldAccess().getVarNameIDTerminalRuleCall_2_0());
+              				
+            }
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getComplexTypeFieldRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"varName",
+              						lv_varName_2_0,
+              						"org.eclipse.xtext.common.Terminals.ID");
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalAedit.g:2863:3: (otherlv_3= '=' ( ( '[' )=> (lv_value_4_0= ruleArray ) ) )?
+            int alt26=2;
+            int LA26_0 = input.LA(1);
+
+            if ( (LA26_0==38) ) {
+                alt26=1;
+            }
+            switch (alt26) {
+                case 1 :
+                    // InternalAedit.g:2864:4: otherlv_3= '=' ( ( '[' )=> (lv_value_4_0= ruleArray ) )
+                    {
+                    otherlv_3=(Token)match(input,38,FOLLOW_33); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      				newLeafNode(otherlv_3, grammarAccess.getComplexTypeFieldAccess().getEqualsSignKeyword_3_0());
+                      			
+                    }
+                    // InternalAedit.g:2868:4: ( ( '[' )=> (lv_value_4_0= ruleArray ) )
+                    // InternalAedit.g:2869:5: ( '[' )=> (lv_value_4_0= ruleArray )
+                    {
+                    // InternalAedit.g:2870:5: (lv_value_4_0= ruleArray )
+                    // InternalAedit.g:2871:6: lv_value_4_0= ruleArray
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      						newCompositeNode(grammarAccess.getComplexTypeFieldAccess().getValueArrayParserRuleCall_3_1_0());
+                      					
+                    }
+                    pushFollow(FOLLOW_2);
+                    lv_value_4_0=ruleArray();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getComplexTypeFieldRule());
+                      						}
+                      						set(
+                      							current,
+                      							"value",
+                      							lv_value_4_0,
+                      							"org.aedit.Aedit.Array");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleComplexTypeField"
+
+
+    // $ANTLR start "entryRuleArrayTypeField"
+    // InternalAedit.g:2893:1: entryRuleArrayTypeField returns [EObject current=null] : iv_ruleArrayTypeField= ruleArrayTypeField EOF ;
+    public final EObject entryRuleArrayTypeField() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleArrayTypeField = null;
+
+
+        try {
+            // InternalAedit.g:2893:55: (iv_ruleArrayTypeField= ruleArrayTypeField EOF )
+            // InternalAedit.g:2894:2: iv_ruleArrayTypeField= ruleArrayTypeField EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getArrayTypeFieldRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleArrayTypeField=ruleArrayTypeField();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleArrayTypeField; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleArrayTypeField"
+
+
+    // $ANTLR start "ruleArrayTypeField"
+    // InternalAedit.g:2900:1: ruleArrayTypeField returns [EObject current=null] : (otherlv_0= 'array' otherlv_1= '<' ( (lv_type_2_0= ruleAnnotatedTypes ) ) otherlv_3= '>' ) ;
+    public final EObject ruleArrayTypeField() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_1=null;
+        Token otherlv_3=null;
+        EObject lv_type_2_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:2906:2: ( (otherlv_0= 'array' otherlv_1= '<' ( (lv_type_2_0= ruleAnnotatedTypes ) ) otherlv_3= '>' ) )
+            // InternalAedit.g:2907:2: (otherlv_0= 'array' otherlv_1= '<' ( (lv_type_2_0= ruleAnnotatedTypes ) ) otherlv_3= '>' )
+            {
+            // InternalAedit.g:2907:2: (otherlv_0= 'array' otherlv_1= '<' ( (lv_type_2_0= ruleAnnotatedTypes ) ) otherlv_3= '>' )
+            // InternalAedit.g:2908:3: otherlv_0= 'array' otherlv_1= '<' ( (lv_type_2_0= ruleAnnotatedTypes ) ) otherlv_3= '>'
+            {
+            otherlv_0=(Token)match(input,39,FOLLOW_34); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getArrayTypeFieldAccess().getArrayKeyword_0());
+              		
+            }
+            otherlv_1=(Token)match(input,40,FOLLOW_28); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_1, grammarAccess.getArrayTypeFieldAccess().getLessThanSignKeyword_1());
+              		
+            }
+            // InternalAedit.g:2916:3: ( (lv_type_2_0= ruleAnnotatedTypes ) )
+            // InternalAedit.g:2917:4: (lv_type_2_0= ruleAnnotatedTypes )
+            {
+            // InternalAedit.g:2917:4: (lv_type_2_0= ruleAnnotatedTypes )
+            // InternalAedit.g:2918:5: lv_type_2_0= ruleAnnotatedTypes
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getArrayTypeFieldAccess().getTypeAnnotatedTypesParserRuleCall_2_0());
+              				
+            }
+            pushFollow(FOLLOW_35);
+            lv_type_2_0=ruleAnnotatedTypes();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getArrayTypeFieldRule());
+              					}
+              					set(
+              						current,
+              						"type",
+              						lv_type_2_0,
+              						"org.aedit.Aedit.AnnotatedTypes");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_3=(Token)match(input,41,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_3, grammarAccess.getArrayTypeFieldAccess().getGreaterThanSignKeyword_3());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleArrayTypeField"
+
+
+    // $ANTLR start "entryRuleAnnotatedTypes"
+    // InternalAedit.g:2943:1: entryRuleAnnotatedTypes returns [EObject current=null] : iv_ruleAnnotatedTypes= ruleAnnotatedTypes EOF ;
+    public final EObject entryRuleAnnotatedTypes() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleAnnotatedTypes = null;
+
+
+        try {
+            // InternalAedit.g:2943:55: (iv_ruleAnnotatedTypes= ruleAnnotatedTypes EOF )
+            // InternalAedit.g:2944:2: iv_ruleAnnotatedTypes= ruleAnnotatedTypes EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAnnotatedTypesRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleAnnotatedTypes=ruleAnnotatedTypes();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAnnotatedTypes; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAnnotatedTypes"
+
+
+    // $ANTLR start "ruleAnnotatedTypes"
+    // InternalAedit.g:2950:1: ruleAnnotatedTypes returns [EObject current=null] : ( ( (lv_annotataions_0_0= ruleAnnotation ) )* ( (lv_type_1_0= ruleTypes ) ) ) ;
+    public final EObject ruleAnnotatedTypes() throws RecognitionException {
+        EObject current = null;
+
+        EObject lv_annotataions_0_0 = null;
+
+        EObject lv_type_1_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:2956:2: ( ( ( (lv_annotataions_0_0= ruleAnnotation ) )* ( (lv_type_1_0= ruleTypes ) ) ) )
+            // InternalAedit.g:2957:2: ( ( (lv_annotataions_0_0= ruleAnnotation ) )* ( (lv_type_1_0= ruleTypes ) ) )
+            {
+            // InternalAedit.g:2957:2: ( ( (lv_annotataions_0_0= ruleAnnotation ) )* ( (lv_type_1_0= ruleTypes ) ) )
+            // InternalAedit.g:2958:3: ( (lv_annotataions_0_0= ruleAnnotation ) )* ( (lv_type_1_0= ruleTypes ) )
+            {
+            // InternalAedit.g:2958:3: ( (lv_annotataions_0_0= ruleAnnotation ) )*
+            loop27:
+            do {
+                int alt27=2;
+                int LA27_0 = input.LA(1);
+
+                if ( (LA27_0==54) ) {
+                    alt27=1;
+                }
+
+
+                switch (alt27) {
+            	case 1 :
+            	    // InternalAedit.g:2959:4: (lv_annotataions_0_0= ruleAnnotation )
+            	    {
+            	    // InternalAedit.g:2959:4: (lv_annotataions_0_0= ruleAnnotation )
+            	    // InternalAedit.g:2960:5: lv_annotataions_0_0= ruleAnnotation
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      					newCompositeNode(grammarAccess.getAnnotatedTypesAccess().getAnnotataionsAnnotationParserRuleCall_0_0());
+            	      				
+            	    }
+            	    pushFollow(FOLLOW_28);
+            	    lv_annotataions_0_0=ruleAnnotation();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getAnnotatedTypesRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"annotataions",
+            	      						lv_annotataions_0_0,
+            	      						"org.aedit.Aedit.Annotation");
+            	      					afterParserOrEnumRuleCall();
+            	      				
+            	    }
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop27;
+                }
+            } while (true);
+
+            // InternalAedit.g:2977:3: ( (lv_type_1_0= ruleTypes ) )
+            // InternalAedit.g:2978:4: (lv_type_1_0= ruleTypes )
+            {
+            // InternalAedit.g:2978:4: (lv_type_1_0= ruleTypes )
+            // InternalAedit.g:2979:5: lv_type_1_0= ruleTypes
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAnnotatedTypesAccess().getTypeTypesParserRuleCall_1_0());
+              				
+            }
+            pushFollow(FOLLOW_2);
+            lv_type_1_0=ruleTypes();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getAnnotatedTypesRule());
+              					}
+              					set(
+              						current,
+              						"type",
+              						lv_type_1_0,
+              						"org.aedit.Aedit.Types");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAnnotatedTypes"
+
+
+    // $ANTLR start "entryRuleTypes"
+    // InternalAedit.g:3000:1: entryRuleTypes returns [EObject current=null] : iv_ruleTypes= ruleTypes EOF ;
+    public final EObject entryRuleTypes() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleTypes = null;
+
+
+        try {
+            // InternalAedit.g:3000:46: (iv_ruleTypes= ruleTypes EOF )
+            // InternalAedit.g:3001:2: iv_ruleTypes= ruleTypes EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getTypesRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleTypes=ruleTypes();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleTypes; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleTypes"
+
+
+    // $ANTLR start "ruleTypes"
+    // InternalAedit.g:3007:1: ruleTypes returns [EObject current=null] : (this_CustomType_0= ruleCustomType | this_PrimitiveType_1= rulePrimitiveType | this_ArrayTypeField_2= ruleArrayTypeField ) ;
+    public final EObject ruleTypes() throws RecognitionException {
+        EObject current = null;
+
+        EObject this_CustomType_0 = null;
+
+        EObject this_PrimitiveType_1 = null;
+
+        EObject this_ArrayTypeField_2 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:3013:2: ( (this_CustomType_0= ruleCustomType | this_PrimitiveType_1= rulePrimitiveType | this_ArrayTypeField_2= ruleArrayTypeField ) )
+            // InternalAedit.g:3014:2: (this_CustomType_0= ruleCustomType | this_PrimitiveType_1= rulePrimitiveType | this_ArrayTypeField_2= ruleArrayTypeField )
+            {
+            // InternalAedit.g:3014:2: (this_CustomType_0= ruleCustomType | this_PrimitiveType_1= rulePrimitiveType | this_ArrayTypeField_2= ruleArrayTypeField )
+            int alt28=3;
+            switch ( input.LA(1) ) {
+            case RULE_ID:
+                {
+                alt28=1;
+                }
+                break;
+            case 48:
+            case 49:
+            case 50:
+            case 51:
+            case 52:
+            case 53:
+                {
+                alt28=2;
+                }
+                break;
+            case 39:
+                {
+                alt28=3;
+                }
+                break;
+            default:
+                if (state.backtracking>0) {state.failed=true; return current;}
+                NoViableAltException nvae =
+                    new NoViableAltException("", 28, 0, input);
+
+                throw nvae;
+            }
+
+            switch (alt28) {
+                case 1 :
+                    // InternalAedit.g:3015:3: this_CustomType_0= ruleCustomType
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getTypesAccess().getCustomTypeParserRuleCall_0());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_CustomType_0=ruleCustomType();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_CustomType_0;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 2 :
+                    // InternalAedit.g:3024:3: this_PrimitiveType_1= rulePrimitiveType
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getTypesAccess().getPrimitiveTypeParserRuleCall_1());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_PrimitiveType_1=rulePrimitiveType();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_PrimitiveType_1;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 3 :
+                    // InternalAedit.g:3033:3: this_ArrayTypeField_2= ruleArrayTypeField
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getTypesAccess().getArrayTypeFieldParserRuleCall_2());
+                      		
+                    }
+                    pushFollow(FOLLOW_2);
+                    this_ArrayTypeField_2=ruleArrayTypeField();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_ArrayTypeField_2;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleTypes"
+
+
+    // $ANTLR start "entryRuleCustomType"
+    // InternalAedit.g:3045:1: entryRuleCustomType returns [EObject current=null] : iv_ruleCustomType= ruleCustomType EOF ;
+    public final EObject entryRuleCustomType() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleCustomType = null;
+
+
+        try {
+            // InternalAedit.g:3045:51: (iv_ruleCustomType= ruleCustomType EOF )
+            // InternalAedit.g:3046:2: iv_ruleCustomType= ruleCustomType EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getCustomTypeRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleCustomType=ruleCustomType();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleCustomType; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleCustomType"
+
+
+    // $ANTLR start "ruleCustomType"
+    // InternalAedit.g:3052:1: ruleCustomType returns [EObject current=null] : ( ( ruleQN ) ) ;
+    public final EObject ruleCustomType() throws RecognitionException {
+        EObject current = null;
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:3058:2: ( ( ( ruleQN ) ) )
+            // InternalAedit.g:3059:2: ( ( ruleQN ) )
+            {
+            // InternalAedit.g:3059:2: ( ( ruleQN ) )
+            // InternalAedit.g:3060:3: ( ruleQN )
+            {
+            // InternalAedit.g:3060:3: ( ruleQN )
+            // InternalAedit.g:3061:4: ruleQN
+            {
+            if ( state.backtracking==0 ) {
+
+              				if (current==null) {
+              					current = createModelElement(grammarAccess.getCustomTypeRule());
+              				}
+              			
+            }
+            if ( state.backtracking==0 ) {
+
+              				newCompositeNode(grammarAccess.getCustomTypeAccess().getTargetTypeCrossReference_0());
+              			
+            }
+            pushFollow(FOLLOW_2);
+            ruleQN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              				afterParserOrEnumRuleCall();
+              			
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleCustomType"
+
+
+    // $ANTLR start "entryRulePrimitiveType"
+    // InternalAedit.g:3078:1: entryRulePrimitiveType returns [EObject current=null] : iv_rulePrimitiveType= rulePrimitiveType EOF ;
+    public final EObject entryRulePrimitiveType() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_rulePrimitiveType = null;
+
+
+        try {
+            // InternalAedit.g:3078:54: (iv_rulePrimitiveType= rulePrimitiveType EOF )
+            // InternalAedit.g:3079:2: iv_rulePrimitiveType= rulePrimitiveType EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getPrimitiveTypeRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_rulePrimitiveType=rulePrimitiveType();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_rulePrimitiveType; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRulePrimitiveType"
+
+
+    // $ANTLR start "rulePrimitiveType"
+    // InternalAedit.g:3085:1: rulePrimitiveType returns [EObject current=null] : ( (lv_target_0_0= ruleVARIABLE_TYPE ) ) ;
+    public final EObject rulePrimitiveType() throws RecognitionException {
+        EObject current = null;
+
+        AntlrDatatypeRuleToken lv_target_0_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:3091:2: ( ( (lv_target_0_0= ruleVARIABLE_TYPE ) ) )
+            // InternalAedit.g:3092:2: ( (lv_target_0_0= ruleVARIABLE_TYPE ) )
+            {
+            // InternalAedit.g:3092:2: ( (lv_target_0_0= ruleVARIABLE_TYPE ) )
+            // InternalAedit.g:3093:3: (lv_target_0_0= ruleVARIABLE_TYPE )
+            {
+            // InternalAedit.g:3093:3: (lv_target_0_0= ruleVARIABLE_TYPE )
+            // InternalAedit.g:3094:4: lv_target_0_0= ruleVARIABLE_TYPE
+            {
+            if ( state.backtracking==0 ) {
+
+              				newCompositeNode(grammarAccess.getPrimitiveTypeAccess().getTargetVARIABLE_TYPEParserRuleCall_0());
+              			
+            }
+            pushFollow(FOLLOW_2);
+            lv_target_0_0=ruleVARIABLE_TYPE();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              				if (current==null) {
+              					current = createModelElementForParent(grammarAccess.getPrimitiveTypeRule());
+              				}
+              				set(
+              					current,
+              					"target",
+              					lv_target_0_0,
+              					"org.aedit.Aedit.VARIABLE_TYPE");
+              				afterParserOrEnumRuleCall();
+              			
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "rulePrimitiveType"
+
+
+    // $ANTLR start "entryRuleAnnotation"
+    // InternalAedit.g:3114:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
+    public final EObject entryRuleAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleAnnotation = null;
+
+
+        try {
+            // InternalAedit.g:3114:51: (iv_ruleAnnotation= ruleAnnotation EOF )
+            // InternalAedit.g:3115:2: iv_ruleAnnotation= ruleAnnotation EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getAnnotationRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleAnnotation=ruleAnnotation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAnnotation; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAnnotation"
+
+
+    // $ANTLR start "ruleAnnotation"
+    // InternalAedit.g:3121:1: ruleAnnotation returns [EObject current=null] : ( ( (lv_name_0_0= ruleAN ) ) (otherlv_1= '(' ( (lv_values_2_0= ruleValues ) ) otherlv_3= ')' )? ) ;
+    public final EObject ruleAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_1=null;
+        Token otherlv_3=null;
+        AntlrDatatypeRuleToken lv_name_0_0 = null;
+
+        EObject lv_values_2_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:3127:2: ( ( ( (lv_name_0_0= ruleAN ) ) (otherlv_1= '(' ( (lv_values_2_0= ruleValues ) ) otherlv_3= ')' )? ) )
+            // InternalAedit.g:3128:2: ( ( (lv_name_0_0= ruleAN ) ) (otherlv_1= '(' ( (lv_values_2_0= ruleValues ) ) otherlv_3= ')' )? )
+            {
+            // InternalAedit.g:3128:2: ( ( (lv_name_0_0= ruleAN ) ) (otherlv_1= '(' ( (lv_values_2_0= ruleValues ) ) otherlv_3= ')' )? )
+            // InternalAedit.g:3129:3: ( (lv_name_0_0= ruleAN ) ) (otherlv_1= '(' ( (lv_values_2_0= ruleValues ) ) otherlv_3= ')' )?
+            {
+            // InternalAedit.g:3129:3: ( (lv_name_0_0= ruleAN ) )
+            // InternalAedit.g:3130:4: (lv_name_0_0= ruleAN )
+            {
+            // InternalAedit.g:3130:4: (lv_name_0_0= ruleAN )
+            // InternalAedit.g:3131:5: lv_name_0_0= ruleAN
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getAnnotationAccess().getNameANParserRuleCall_0_0());
+              				
+            }
+            pushFollow(FOLLOW_36);
+            lv_name_0_0=ruleAN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getAnnotationRule());
+              					}
+              					set(
+              						current,
+              						"name",
+              						lv_name_0_0,
+              						"org.aedit.Aedit.AN");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalAedit.g:3148:3: (otherlv_1= '(' ( (lv_values_2_0= ruleValues ) ) otherlv_3= ')' )?
+            int alt29=2;
+            int LA29_0 = input.LA(1);
+
+            if ( (LA29_0==29) ) {
+                alt29=1;
+            }
+            switch (alt29) {
+                case 1 :
+                    // InternalAedit.g:3149:4: otherlv_1= '(' ( (lv_values_2_0= ruleValues ) ) otherlv_3= ')'
+                    {
+                    otherlv_1=(Token)match(input,29,FOLLOW_37); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      				newLeafNode(otherlv_1, grammarAccess.getAnnotationAccess().getLeftParenthesisKeyword_1_0());
+                      			
+                    }
+                    // InternalAedit.g:3153:4: ( (lv_values_2_0= ruleValues ) )
+                    // InternalAedit.g:3154:5: (lv_values_2_0= ruleValues )
+                    {
+                    // InternalAedit.g:3154:5: (lv_values_2_0= ruleValues )
+                    // InternalAedit.g:3155:6: lv_values_2_0= ruleValues
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      						newCompositeNode(grammarAccess.getAnnotationAccess().getValuesValuesParserRuleCall_1_1_0());
+                      					
+                    }
+                    pushFollow(FOLLOW_22);
+                    lv_values_2_0=ruleValues();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      						if (current==null) {
+                      							current = createModelElementForParent(grammarAccess.getAnnotationRule());
+                      						}
+                      						set(
+                      							current,
+                      							"values",
+                      							lv_values_2_0,
+                      							"org.aedit.Aedit.Values");
+                      						afterParserOrEnumRuleCall();
+                      					
+                    }
+
+                    }
+
+
+                    }
+
+                    otherlv_3=(Token)match(input,30,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      				newLeafNode(otherlv_3, grammarAccess.getAnnotationAccess().getRightParenthesisKeyword_1_2());
+                      			
+                    }
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAnnotation"
+
+
+    // $ANTLR start "entryRuleValues"
+    // InternalAedit.g:3181:1: entryRuleValues returns [EObject current=null] : iv_ruleValues= ruleValues EOF ;
+    public final EObject entryRuleValues() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleValues = null;
+
+
+        try {
+            // InternalAedit.g:3181:47: (iv_ruleValues= ruleValues EOF )
+            // InternalAedit.g:3182:2: iv_ruleValues= ruleValues EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getValuesRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleValues=ruleValues();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleValues; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleValues"
+
+
+    // $ANTLR start "ruleValues"
+    // InternalAedit.g:3188:1: ruleValues returns [EObject current=null] : ( () ( ( ( '[' )=> (lv_value_1_0= ruleArray ) ) | ( ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )* ) )* ) ;
+    public final EObject ruleValues() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_3=null;
+        EObject lv_value_1_0 = null;
+
+        EObject lv_value_2_0 = null;
+
+        EObject lv_value_4_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:3194:2: ( ( () ( ( ( '[' )=> (lv_value_1_0= ruleArray ) ) | ( ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )* ) )* ) )
+            // InternalAedit.g:3195:2: ( () ( ( ( '[' )=> (lv_value_1_0= ruleArray ) ) | ( ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )* ) )* )
+            {
+            // InternalAedit.g:3195:2: ( () ( ( ( '[' )=> (lv_value_1_0= ruleArray ) ) | ( ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )* ) )* )
+            // InternalAedit.g:3196:3: () ( ( ( '[' )=> (lv_value_1_0= ruleArray ) ) | ( ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )* ) )*
+            {
+            // InternalAedit.g:3196:3: ()
+            // InternalAedit.g:3197:4: 
+            {
+            if ( state.backtracking==0 ) {
+
+              				current = forceCreateModelElement(
+              					grammarAccess.getValuesAccess().getValuesAction_0(),
+              					current);
+              			
+            }
+
+            }
+
+            // InternalAedit.g:3203:3: ( ( ( '[' )=> (lv_value_1_0= ruleArray ) ) | ( ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )* ) )*
+            loop31:
+            do {
+                int alt31=3;
+                int LA31_0 = input.LA(1);
+
+                if ( (LA31_0==42) && (synpred2_InternalAedit())) {
+                    alt31=1;
+                }
+                else if ( ((LA31_0>=RULE_ID && LA31_0<=RULE_INT)||(LA31_0>=44 && LA31_0<=47)) ) {
+                    alt31=2;
+                }
+
+
+                switch (alt31) {
+            	case 1 :
+            	    // InternalAedit.g:3204:4: ( ( '[' )=> (lv_value_1_0= ruleArray ) )
+            	    {
+            	    // InternalAedit.g:3204:4: ( ( '[' )=> (lv_value_1_0= ruleArray ) )
+            	    // InternalAedit.g:3205:5: ( '[' )=> (lv_value_1_0= ruleArray )
+            	    {
+            	    // InternalAedit.g:3206:5: (lv_value_1_0= ruleArray )
+            	    // InternalAedit.g:3207:6: lv_value_1_0= ruleArray
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      						newCompositeNode(grammarAccess.getValuesAccess().getValueArrayParserRuleCall_1_0_0());
+            	      					
+            	    }
+            	    pushFollow(FOLLOW_38);
+            	    lv_value_1_0=ruleArray();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      						if (current==null) {
+            	      							current = createModelElementForParent(grammarAccess.getValuesRule());
+            	      						}
+            	      						add(
+            	      							current,
+            	      							"value",
+            	      							lv_value_1_0,
+            	      							"org.aedit.Aedit.Array");
+            	      						afterParserOrEnumRuleCall();
+            	      					
+            	    }
+
+            	    }
+
+
+            	    }
+
+
+            	    }
+            	    break;
+            	case 2 :
+            	    // InternalAedit.g:3225:4: ( ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )* )
+            	    {
+            	    // InternalAedit.g:3225:4: ( ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )* )
+            	    // InternalAedit.g:3226:5: ( (lv_value_2_0= ruleValue ) ) (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )*
+            	    {
+            	    // InternalAedit.g:3226:5: ( (lv_value_2_0= ruleValue ) )
+            	    // InternalAedit.g:3227:6: (lv_value_2_0= ruleValue )
+            	    {
+            	    // InternalAedit.g:3227:6: (lv_value_2_0= ruleValue )
+            	    // InternalAedit.g:3228:7: lv_value_2_0= ruleValue
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      							newCompositeNode(grammarAccess.getValuesAccess().getValueValueParserRuleCall_1_1_0_0());
+            	      						
+            	    }
+            	    pushFollow(FOLLOW_39);
+            	    lv_value_2_0=ruleValue();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      							if (current==null) {
+            	      								current = createModelElementForParent(grammarAccess.getValuesRule());
+            	      							}
+            	      							add(
+            	      								current,
+            	      								"value",
+            	      								lv_value_2_0,
+            	      								"org.aedit.Aedit.Value");
+            	      							afterParserOrEnumRuleCall();
+            	      						
+            	    }
+
+            	    }
+
+
+            	    }
+
+            	    // InternalAedit.g:3245:5: (otherlv_3= ',' ( (lv_value_4_0= ruleValue ) ) )*
+            	    loop30:
+            	    do {
+            	        int alt30=2;
+            	        int LA30_0 = input.LA(1);
+
+            	        if ( (LA30_0==32) ) {
+            	            alt30=1;
+            	        }
+
+
+            	        switch (alt30) {
+            	    	case 1 :
+            	    	    // InternalAedit.g:3246:6: otherlv_3= ',' ( (lv_value_4_0= ruleValue ) )
+            	    	    {
+            	    	    otherlv_3=(Token)match(input,32,FOLLOW_29); if (state.failed) return current;
+            	    	    if ( state.backtracking==0 ) {
+
+            	    	      						newLeafNode(otherlv_3, grammarAccess.getValuesAccess().getCommaKeyword_1_1_1_0());
+            	    	      					
+            	    	    }
+            	    	    // InternalAedit.g:3250:6: ( (lv_value_4_0= ruleValue ) )
+            	    	    // InternalAedit.g:3251:7: (lv_value_4_0= ruleValue )
+            	    	    {
+            	    	    // InternalAedit.g:3251:7: (lv_value_4_0= ruleValue )
+            	    	    // InternalAedit.g:3252:8: lv_value_4_0= ruleValue
+            	    	    {
+            	    	    if ( state.backtracking==0 ) {
+
+            	    	      								newCompositeNode(grammarAccess.getValuesAccess().getValueValueParserRuleCall_1_1_1_1_0());
+            	    	      							
+            	    	    }
+            	    	    pushFollow(FOLLOW_39);
+            	    	    lv_value_4_0=ruleValue();
+
+            	    	    state._fsp--;
+            	    	    if (state.failed) return current;
+            	    	    if ( state.backtracking==0 ) {
+
+            	    	      								if (current==null) {
+            	    	      									current = createModelElementForParent(grammarAccess.getValuesRule());
+            	    	      								}
+            	    	      								add(
+            	    	      									current,
+            	    	      									"value",
+            	    	      									lv_value_4_0,
+            	    	      									"org.aedit.Aedit.Value");
+            	    	      								afterParserOrEnumRuleCall();
+            	    	      							
+            	    	    }
+
+            	    	    }
+
+
+            	    	    }
+
+
+            	    	    }
+            	    	    break;
+
+            	    	default :
+            	    	    break loop30;
+            	        }
+            	    } while (true);
+
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop31;
+                }
+            } while (true);
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleValues"
+
+
+    // $ANTLR start "entryRuleArray"
+    // InternalAedit.g:3276:1: entryRuleArray returns [EObject current=null] : iv_ruleArray= ruleArray EOF ;
+    public final EObject entryRuleArray() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleArray = null;
+
+
+        try {
+            // InternalAedit.g:3276:46: (iv_ruleArray= ruleArray EOF )
+            // InternalAedit.g:3277:2: iv_ruleArray= ruleArray EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getArrayRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleArray=ruleArray();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleArray; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleArray"
+
+
+    // $ANTLR start "ruleArray"
+    // InternalAedit.g:3283:1: ruleArray returns [EObject current=null] : ( ( ( '[' )=>otherlv_0= '[' ) ( (lv_values_1_0= ruleValues ) ) otherlv_2= ']' ) ;
+    public final EObject ruleArray() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_2=null;
+        EObject lv_values_1_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:3289:2: ( ( ( ( '[' )=>otherlv_0= '[' ) ( (lv_values_1_0= ruleValues ) ) otherlv_2= ']' ) )
+            // InternalAedit.g:3290:2: ( ( ( '[' )=>otherlv_0= '[' ) ( (lv_values_1_0= ruleValues ) ) otherlv_2= ']' )
+            {
+            // InternalAedit.g:3290:2: ( ( ( '[' )=>otherlv_0= '[' ) ( (lv_values_1_0= ruleValues ) ) otherlv_2= ']' )
+            // InternalAedit.g:3291:3: ( ( '[' )=>otherlv_0= '[' ) ( (lv_values_1_0= ruleValues ) ) otherlv_2= ']'
+            {
+            // InternalAedit.g:3291:3: ( ( '[' )=>otherlv_0= '[' )
+            // InternalAedit.g:3292:4: ( '[' )=>otherlv_0= '['
+            {
+            otherlv_0=(Token)match(input,42,FOLLOW_40); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              				newLeafNode(otherlv_0, grammarAccess.getArrayAccess().getLeftSquareBracketKeyword_0());
+              			
+            }
+
+            }
+
+            // InternalAedit.g:3298:3: ( (lv_values_1_0= ruleValues ) )
+            // InternalAedit.g:3299:4: (lv_values_1_0= ruleValues )
+            {
+            // InternalAedit.g:3299:4: (lv_values_1_0= ruleValues )
+            // InternalAedit.g:3300:5: lv_values_1_0= ruleValues
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getArrayAccess().getValuesValuesParserRuleCall_1_0());
+              				
+            }
+            pushFollow(FOLLOW_41);
+            lv_values_1_0=ruleValues();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getArrayRule());
+              					}
+              					set(
+              						current,
+              						"values",
+              						lv_values_1_0,
+              						"org.aedit.Aedit.Values");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,43,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_2, grammarAccess.getArrayAccess().getRightSquareBracketKeyword_2());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleArray"
+
+
     // $ANTLR start "entryRuleValue"
-    // InternalAedit.g:1832:1: entryRuleValue returns [EObject current=null] : iv_ruleValue= ruleValue EOF ;
+    // InternalAedit.g:3325:1: entryRuleValue returns [EObject current=null] : iv_ruleValue= ruleValue EOF ;
     public final EObject entryRuleValue() throws RecognitionException {
         EObject current = null;
 
@@ -4539,17 +9186,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1832:46: (iv_ruleValue= ruleValue EOF )
-            // InternalAedit.g:1833:2: iv_ruleValue= ruleValue EOF
+            // InternalAedit.g:3325:46: (iv_ruleValue= ruleValue EOF )
+            // InternalAedit.g:3326:2: iv_ruleValue= ruleValue EOF
             {
-             newCompositeNode(grammarAccess.getValueRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getValueRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleValue=ruleValue();
 
             state._fsp--;
-
-             current =iv_ruleValue; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleValue; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -4567,7 +9218,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValue"
-    // InternalAedit.g:1839:1: ruleValue returns [EObject current=null] : (this_FloatValue_0= ruleFloatValue | this_IntValue_1= ruleIntValue | this_StringValue_2= ruleStringValue | this_BooleanValue_3= ruleBooleanValue | this_Null_4= ruleNull ) ;
+    // InternalAedit.g:3332:1: ruleValue returns [EObject current=null] : (this_FloatValue_0= ruleFloatValue | this_IntValue_1= ruleIntValue | this_StringValue_2= ruleStringValue | this_BooleanValue_3= ruleBooleanValue | this_Null_4= ruleNull ) ;
     public final EObject ruleValue() throws RecognitionException {
         EObject current = null;
 
@@ -4586,30 +9237,56 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1845:2: ( (this_FloatValue_0= ruleFloatValue | this_IntValue_1= ruleIntValue | this_StringValue_2= ruleStringValue | this_BooleanValue_3= ruleBooleanValue | this_Null_4= ruleNull ) )
-            // InternalAedit.g:1846:2: (this_FloatValue_0= ruleFloatValue | this_IntValue_1= ruleIntValue | this_StringValue_2= ruleStringValue | this_BooleanValue_3= ruleBooleanValue | this_Null_4= ruleNull )
+            // InternalAedit.g:3338:2: ( (this_FloatValue_0= ruleFloatValue | this_IntValue_1= ruleIntValue | this_StringValue_2= ruleStringValue | this_BooleanValue_3= ruleBooleanValue | this_Null_4= ruleNull ) )
+            // InternalAedit.g:3339:2: (this_FloatValue_0= ruleFloatValue | this_IntValue_1= ruleIntValue | this_StringValue_2= ruleStringValue | this_BooleanValue_3= ruleBooleanValue | this_Null_4= ruleNull )
             {
-            // InternalAedit.g:1846:2: (this_FloatValue_0= ruleFloatValue | this_IntValue_1= ruleIntValue | this_StringValue_2= ruleStringValue | this_BooleanValue_3= ruleBooleanValue | this_Null_4= ruleNull )
-            int alt20=5;
+            // InternalAedit.g:3339:2: (this_FloatValue_0= ruleFloatValue | this_IntValue_1= ruleIntValue | this_StringValue_2= ruleStringValue | this_BooleanValue_3= ruleBooleanValue | this_Null_4= ruleNull )
+            int alt32=5;
             switch ( input.LA(1) ) {
-            case 35:
+            case 45:
                 {
-                alt20=1;
+                int LA32_1 = input.LA(2);
+
+                if ( (LA32_1==RULE_INT) ) {
+                    int LA32_6 = input.LA(3);
+
+                    if ( (LA32_6==31) ) {
+                        alt32=1;
+                    }
+                    else if ( (LA32_6==EOF||(LA32_6>=RULE_ID && LA32_6<=RULE_INT)||LA32_6==14||LA32_6==16||LA32_6==19||(LA32_6>=21 && LA32_6<=23)||LA32_6==28||LA32_6==30||(LA32_6>=32 && LA32_6<=37)||LA32_6==39||(LA32_6>=42 && LA32_6<=54)) ) {
+                        alt32=2;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 32, 6, input);
+
+                        throw nvae;
+                    }
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 32, 1, input);
+
+                    throw nvae;
+                }
                 }
                 break;
             case RULE_INT:
                 {
-                int LA20_2 = input.LA(2);
+                int LA32_2 = input.LA(2);
 
-                if ( (LA20_2==EOF||LA20_2==RULE_ID||LA20_2==14||LA20_2==16||(LA20_2>=38 && LA20_2<=43)) ) {
-                    alt20=2;
+                if ( (LA32_2==EOF||(LA32_2>=RULE_ID && LA32_2<=RULE_INT)||LA32_2==14||LA32_2==16||LA32_2==19||(LA32_2>=21 && LA32_2<=23)||LA32_2==28||LA32_2==30||(LA32_2>=32 && LA32_2<=37)||LA32_2==39||(LA32_2>=42 && LA32_2<=54)) ) {
+                    alt32=2;
                 }
-                else if ( (LA20_2==26) ) {
-                    alt20=1;
+                else if ( (LA32_2==31) ) {
+                    alt32=1;
                 }
                 else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 20, 2, input);
+                        new NoViableAltException("", 32, 2, input);
 
                     throw nvae;
                 }
@@ -4617,115 +9294,136 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
                 break;
             case RULE_ID:
                 {
-                alt20=3;
+                alt32=3;
                 }
                 break;
-            case 36:
-            case 37:
+            case 46:
+            case 47:
                 {
-                alt20=4;
+                alt32=4;
                 }
                 break;
-            case 34:
+            case 44:
                 {
-                alt20=5;
+                alt32=5;
                 }
                 break;
             default:
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 20, 0, input);
+                    new NoViableAltException("", 32, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt20) {
+            switch (alt32) {
                 case 1 :
-                    // InternalAedit.g:1847:3: this_FloatValue_0= ruleFloatValue
+                    // InternalAedit.g:3340:3: this_FloatValue_0= ruleFloatValue
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getValueAccess().getFloatValueParserRuleCall_0());
-                    		
+                      			newCompositeNode(grammarAccess.getValueAccess().getFloatValueParserRuleCall_0());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_FloatValue_0=ruleFloatValue();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_FloatValue_0;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_FloatValue_0;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:1856:3: this_IntValue_1= ruleIntValue
+                    // InternalAedit.g:3349:3: this_IntValue_1= ruleIntValue
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getValueAccess().getIntValueParserRuleCall_1());
-                    		
+                      			newCompositeNode(grammarAccess.getValueAccess().getIntValueParserRuleCall_1());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_IntValue_1=ruleIntValue();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_IntValue_1;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_IntValue_1;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 3 :
-                    // InternalAedit.g:1865:3: this_StringValue_2= ruleStringValue
+                    // InternalAedit.g:3358:3: this_StringValue_2= ruleStringValue
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getValueAccess().getStringValueParserRuleCall_2());
-                    		
+                      			newCompositeNode(grammarAccess.getValueAccess().getStringValueParserRuleCall_2());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_StringValue_2=ruleStringValue();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_StringValue_2;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_StringValue_2;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 4 :
-                    // InternalAedit.g:1874:3: this_BooleanValue_3= ruleBooleanValue
+                    // InternalAedit.g:3367:3: this_BooleanValue_3= ruleBooleanValue
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getValueAccess().getBooleanValueParserRuleCall_3());
-                    		
+                      			newCompositeNode(grammarAccess.getValueAccess().getBooleanValueParserRuleCall_3());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_BooleanValue_3=ruleBooleanValue();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_BooleanValue_3;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_BooleanValue_3;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
                 case 5 :
-                    // InternalAedit.g:1883:3: this_Null_4= ruleNull
+                    // InternalAedit.g:3376:3: this_Null_4= ruleNull
                     {
+                    if ( state.backtracking==0 ) {
 
-                    			newCompositeNode(grammarAccess.getValueAccess().getNullParserRuleCall_4());
-                    		
+                      			newCompositeNode(grammarAccess.getValueAccess().getNullParserRuleCall_4());
+                      		
+                    }
                     pushFollow(FOLLOW_2);
                     this_Null_4=ruleNull();
 
                     state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                    			current = this_Null_4;
-                    			afterParserOrEnumRuleCall();
-                    		
+                      			current = this_Null_4;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
 
                     }
                     break;
@@ -4735,9 +9433,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -4752,7 +9452,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloatValue"
-    // InternalAedit.g:1895:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
+    // InternalAedit.g:3388:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
     public final EObject entryRuleFloatValue() throws RecognitionException {
         EObject current = null;
 
@@ -4760,17 +9460,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1895:51: (iv_ruleFloatValue= ruleFloatValue EOF )
-            // InternalAedit.g:1896:2: iv_ruleFloatValue= ruleFloatValue EOF
+            // InternalAedit.g:3388:51: (iv_ruleFloatValue= ruleFloatValue EOF )
+            // InternalAedit.g:3389:2: iv_ruleFloatValue= ruleFloatValue EOF
             {
-             newCompositeNode(grammarAccess.getFloatValueRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getFloatValueRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleFloatValue=ruleFloatValue();
 
             state._fsp--;
-
-             current =iv_ruleFloatValue; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleFloatValue; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -4788,7 +9492,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloatValue"
-    // InternalAedit.g:1902:1: ruleFloatValue returns [EObject current=null] : ( (lv_val_0_0= ruleReal ) ) ;
+    // InternalAedit.g:3395:1: ruleFloatValue returns [EObject current=null] : ( (lv_val_0_0= ruleReal ) ) ;
     public final EObject ruleFloatValue() throws RecognitionException {
         EObject current = null;
 
@@ -4799,34 +9503,38 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1908:2: ( ( (lv_val_0_0= ruleReal ) ) )
-            // InternalAedit.g:1909:2: ( (lv_val_0_0= ruleReal ) )
+            // InternalAedit.g:3401:2: ( ( (lv_val_0_0= ruleReal ) ) )
+            // InternalAedit.g:3402:2: ( (lv_val_0_0= ruleReal ) )
             {
-            // InternalAedit.g:1909:2: ( (lv_val_0_0= ruleReal ) )
-            // InternalAedit.g:1910:3: (lv_val_0_0= ruleReal )
+            // InternalAedit.g:3402:2: ( (lv_val_0_0= ruleReal ) )
+            // InternalAedit.g:3403:3: (lv_val_0_0= ruleReal )
             {
-            // InternalAedit.g:1910:3: (lv_val_0_0= ruleReal )
-            // InternalAedit.g:1911:4: lv_val_0_0= ruleReal
+            // InternalAedit.g:3403:3: (lv_val_0_0= ruleReal )
+            // InternalAedit.g:3404:4: lv_val_0_0= ruleReal
             {
+            if ( state.backtracking==0 ) {
 
-            				newCompositeNode(grammarAccess.getFloatValueAccess().getValRealParserRuleCall_0());
-            			
+              				newCompositeNode(grammarAccess.getFloatValueAccess().getValRealParserRuleCall_0());
+              			
+            }
             pushFollow(FOLLOW_2);
             lv_val_0_0=ruleReal();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            				if (current==null) {
-            					current = createModelElementForParent(grammarAccess.getFloatValueRule());
-            				}
-            				set(
-            					current,
-            					"val",
-            					lv_val_0_0,
-            					"org.aedit.Aedit.Real");
-            				afterParserOrEnumRuleCall();
-            			
+              				if (current==null) {
+              					current = createModelElementForParent(grammarAccess.getFloatValueRule());
+              				}
+              				set(
+              					current,
+              					"val",
+              					lv_val_0_0,
+              					"org.aedit.Aedit.Real");
+              				afterParserOrEnumRuleCall();
+              			
+            }
 
             }
 
@@ -4836,9 +9544,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -4853,7 +9563,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringValue"
-    // InternalAedit.g:1931:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
+    // InternalAedit.g:3424:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
     public final EObject entryRuleStringValue() throws RecognitionException {
         EObject current = null;
 
@@ -4861,17 +9571,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1931:52: (iv_ruleStringValue= ruleStringValue EOF )
-            // InternalAedit.g:1932:2: iv_ruleStringValue= ruleStringValue EOF
+            // InternalAedit.g:3424:52: (iv_ruleStringValue= ruleStringValue EOF )
+            // InternalAedit.g:3425:2: iv_ruleStringValue= ruleStringValue EOF
             {
-             newCompositeNode(grammarAccess.getStringValueRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getStringValueRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleStringValue=ruleStringValue();
 
             state._fsp--;
-
-             current =iv_ruleStringValue; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleStringValue; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -4889,7 +9603,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringValue"
-    // InternalAedit.g:1938:1: ruleStringValue returns [EObject current=null] : ( (lv_val_0_0= RULE_ID ) ) ;
+    // InternalAedit.g:3431:1: ruleStringValue returns [EObject current=null] : ( (lv_val_0_0= RULE_ID ) ) ;
     public final EObject ruleStringValue() throws RecognitionException {
         EObject current = null;
 
@@ -4899,29 +9613,33 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:1944:2: ( ( (lv_val_0_0= RULE_ID ) ) )
-            // InternalAedit.g:1945:2: ( (lv_val_0_0= RULE_ID ) )
+            // InternalAedit.g:3437:2: ( ( (lv_val_0_0= RULE_ID ) ) )
+            // InternalAedit.g:3438:2: ( (lv_val_0_0= RULE_ID ) )
             {
-            // InternalAedit.g:1945:2: ( (lv_val_0_0= RULE_ID ) )
-            // InternalAedit.g:1946:3: (lv_val_0_0= RULE_ID )
+            // InternalAedit.g:3438:2: ( (lv_val_0_0= RULE_ID ) )
+            // InternalAedit.g:3439:3: (lv_val_0_0= RULE_ID )
             {
-            // InternalAedit.g:1946:3: (lv_val_0_0= RULE_ID )
-            // InternalAedit.g:1947:4: lv_val_0_0= RULE_ID
+            // InternalAedit.g:3439:3: (lv_val_0_0= RULE_ID )
+            // InternalAedit.g:3440:4: lv_val_0_0= RULE_ID
             {
-            lv_val_0_0=(Token)match(input,RULE_ID,FOLLOW_2); 
+            lv_val_0_0=(Token)match(input,RULE_ID,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            				newLeafNode(lv_val_0_0, grammarAccess.getStringValueAccess().getValIDTerminalRuleCall_0());
-            			
+              				newLeafNode(lv_val_0_0, grammarAccess.getStringValueAccess().getValIDTerminalRuleCall_0());
+              			
+            }
+            if ( state.backtracking==0 ) {
 
-            				if (current==null) {
-            					current = createModelElement(grammarAccess.getStringValueRule());
-            				}
-            				setWithLastConsumed(
-            					current,
-            					"val",
-            					lv_val_0_0,
-            					"org.eclipse.xtext.common.Terminals.ID");
-            			
+              				if (current==null) {
+              					current = createModelElement(grammarAccess.getStringValueRule());
+              				}
+              				setWithLastConsumed(
+              					current,
+              					"val",
+              					lv_val_0_0,
+              					"org.eclipse.xtext.common.Terminals.ID");
+              			
+            }
 
             }
 
@@ -4931,9 +9649,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -4948,7 +9668,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntValue"
-    // InternalAedit.g:1966:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
+    // InternalAedit.g:3459:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
     public final EObject entryRuleIntValue() throws RecognitionException {
         EObject current = null;
 
@@ -4956,17 +9676,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:1966:49: (iv_ruleIntValue= ruleIntValue EOF )
-            // InternalAedit.g:1967:2: iv_ruleIntValue= ruleIntValue EOF
+            // InternalAedit.g:3459:49: (iv_ruleIntValue= ruleIntValue EOF )
+            // InternalAedit.g:3460:2: iv_ruleIntValue= ruleIntValue EOF
             {
-             newCompositeNode(grammarAccess.getIntValueRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getIntValueRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleIntValue=ruleIntValue();
 
             state._fsp--;
-
-             current =iv_ruleIntValue; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleIntValue; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -4984,39 +9708,98 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntValue"
-    // InternalAedit.g:1973:1: ruleIntValue returns [EObject current=null] : ( (lv_val_0_0= RULE_INT ) ) ;
+    // InternalAedit.g:3466:1: ruleIntValue returns [EObject current=null] : ( ( (lv_val_0_1= RULE_INT | lv_val_0_2= ruleNegativeInt ) ) ) ;
     public final EObject ruleIntValue() throws RecognitionException {
         EObject current = null;
 
-        Token lv_val_0_0=null;
+        Token lv_val_0_1=null;
+        AntlrDatatypeRuleToken lv_val_0_2 = null;
+
 
 
         	enterRule();
 
         try {
-            // InternalAedit.g:1979:2: ( ( (lv_val_0_0= RULE_INT ) ) )
-            // InternalAedit.g:1980:2: ( (lv_val_0_0= RULE_INT ) )
+            // InternalAedit.g:3472:2: ( ( ( (lv_val_0_1= RULE_INT | lv_val_0_2= ruleNegativeInt ) ) ) )
+            // InternalAedit.g:3473:2: ( ( (lv_val_0_1= RULE_INT | lv_val_0_2= ruleNegativeInt ) ) )
             {
-            // InternalAedit.g:1980:2: ( (lv_val_0_0= RULE_INT ) )
-            // InternalAedit.g:1981:3: (lv_val_0_0= RULE_INT )
+            // InternalAedit.g:3473:2: ( ( (lv_val_0_1= RULE_INT | lv_val_0_2= ruleNegativeInt ) ) )
+            // InternalAedit.g:3474:3: ( (lv_val_0_1= RULE_INT | lv_val_0_2= ruleNegativeInt ) )
             {
-            // InternalAedit.g:1981:3: (lv_val_0_0= RULE_INT )
-            // InternalAedit.g:1982:4: lv_val_0_0= RULE_INT
+            // InternalAedit.g:3474:3: ( (lv_val_0_1= RULE_INT | lv_val_0_2= ruleNegativeInt ) )
+            // InternalAedit.g:3475:4: (lv_val_0_1= RULE_INT | lv_val_0_2= ruleNegativeInt )
             {
-            lv_val_0_0=(Token)match(input,RULE_INT,FOLLOW_2); 
+            // InternalAedit.g:3475:4: (lv_val_0_1= RULE_INT | lv_val_0_2= ruleNegativeInt )
+            int alt33=2;
+            int LA33_0 = input.LA(1);
 
-            				newLeafNode(lv_val_0_0, grammarAccess.getIntValueAccess().getValINTTerminalRuleCall_0());
-            			
+            if ( (LA33_0==RULE_INT) ) {
+                alt33=1;
+            }
+            else if ( (LA33_0==45) ) {
+                alt33=2;
+            }
+            else {
+                if (state.backtracking>0) {state.failed=true; return current;}
+                NoViableAltException nvae =
+                    new NoViableAltException("", 33, 0, input);
 
-            				if (current==null) {
-            					current = createModelElement(grammarAccess.getIntValueRule());
-            				}
-            				setWithLastConsumed(
-            					current,
-            					"val",
-            					lv_val_0_0,
-            					"org.eclipse.xtext.common.Terminals.INT");
-            			
+                throw nvae;
+            }
+            switch (alt33) {
+                case 1 :
+                    // InternalAedit.g:3476:5: lv_val_0_1= RULE_INT
+                    {
+                    lv_val_0_1=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      					newLeafNode(lv_val_0_1, grammarAccess.getIntValueAccess().getValINTTerminalRuleCall_0_0());
+                      				
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      					if (current==null) {
+                      						current = createModelElement(grammarAccess.getIntValueRule());
+                      					}
+                      					setWithLastConsumed(
+                      						current,
+                      						"val",
+                      						lv_val_0_1,
+                      						"org.eclipse.xtext.common.Terminals.INT");
+                      				
+                    }
+
+                    }
+                    break;
+                case 2 :
+                    // InternalAedit.g:3491:5: lv_val_0_2= ruleNegativeInt
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      					newCompositeNode(grammarAccess.getIntValueAccess().getValNegativeIntParserRuleCall_0_1());
+                      				
+                    }
+                    pushFollow(FOLLOW_2);
+                    lv_val_0_2=ruleNegativeInt();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      					if (current==null) {
+                      						current = createModelElementForParent(grammarAccess.getIntValueRule());
+                      					}
+                      					set(
+                      						current,
+                      						"val",
+                      						lv_val_0_2,
+                      						"org.aedit.Aedit.NegativeInt");
+                      					afterParserOrEnumRuleCall();
+                      				
+                    }
+
+                    }
+                    break;
 
             }
 
@@ -5027,8 +9810,13 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
             }
 
 
-            	leaveRule();
+            }
 
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
         }
 
             catch (RecognitionException re) {
@@ -5043,7 +9831,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNull"
-    // InternalAedit.g:2001:1: entryRuleNull returns [EObject current=null] : iv_ruleNull= ruleNull EOF ;
+    // InternalAedit.g:3512:1: entryRuleNull returns [EObject current=null] : iv_ruleNull= ruleNull EOF ;
     public final EObject entryRuleNull() throws RecognitionException {
         EObject current = null;
 
@@ -5051,17 +9839,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:2001:45: (iv_ruleNull= ruleNull EOF )
-            // InternalAedit.g:2002:2: iv_ruleNull= ruleNull EOF
+            // InternalAedit.g:3512:45: (iv_ruleNull= ruleNull EOF )
+            // InternalAedit.g:3513:2: iv_ruleNull= ruleNull EOF
             {
-             newCompositeNode(grammarAccess.getNullRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getNullRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleNull=ruleNull();
 
             state._fsp--;
-
-             current =iv_ruleNull; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleNull; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -5079,7 +9871,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNull"
-    // InternalAedit.g:2008:1: ruleNull returns [EObject current=null] : ( (lv_val_0_0= 'null' ) ) ;
+    // InternalAedit.g:3519:1: ruleNull returns [EObject current=null] : ( (lv_val_0_0= 'null' ) ) ;
     public final EObject ruleNull() throws RecognitionException {
         EObject current = null;
 
@@ -5089,25 +9881,29 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:2014:2: ( ( (lv_val_0_0= 'null' ) ) )
-            // InternalAedit.g:2015:2: ( (lv_val_0_0= 'null' ) )
+            // InternalAedit.g:3525:2: ( ( (lv_val_0_0= 'null' ) ) )
+            // InternalAedit.g:3526:2: ( (lv_val_0_0= 'null' ) )
             {
-            // InternalAedit.g:2015:2: ( (lv_val_0_0= 'null' ) )
-            // InternalAedit.g:2016:3: (lv_val_0_0= 'null' )
+            // InternalAedit.g:3526:2: ( (lv_val_0_0= 'null' ) )
+            // InternalAedit.g:3527:3: (lv_val_0_0= 'null' )
             {
-            // InternalAedit.g:2016:3: (lv_val_0_0= 'null' )
-            // InternalAedit.g:2017:4: lv_val_0_0= 'null'
+            // InternalAedit.g:3527:3: (lv_val_0_0= 'null' )
+            // InternalAedit.g:3528:4: lv_val_0_0= 'null'
             {
-            lv_val_0_0=(Token)match(input,34,FOLLOW_2); 
+            lv_val_0_0=(Token)match(input,44,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            				newLeafNode(lv_val_0_0, grammarAccess.getNullAccess().getValNullKeyword_0());
-            			
+              				newLeafNode(lv_val_0_0, grammarAccess.getNullAccess().getValNullKeyword_0());
+              			
+            }
+            if ( state.backtracking==0 ) {
 
-            				if (current==null) {
-            					current = createModelElement(grammarAccess.getNullRule());
-            				}
-            				setWithLastConsumed(current, "val", lv_val_0_0, "null");
-            			
+              				if (current==null) {
+              					current = createModelElement(grammarAccess.getNullRule());
+              				}
+              				setWithLastConsumed(current, "val", lv_val_0_0, "null");
+              			
+            }
 
             }
 
@@ -5117,9 +9913,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -5134,7 +9932,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBooleanValue"
-    // InternalAedit.g:2032:1: entryRuleBooleanValue returns [EObject current=null] : iv_ruleBooleanValue= ruleBooleanValue EOF ;
+    // InternalAedit.g:3543:1: entryRuleBooleanValue returns [EObject current=null] : iv_ruleBooleanValue= ruleBooleanValue EOF ;
     public final EObject entryRuleBooleanValue() throws RecognitionException {
         EObject current = null;
 
@@ -5142,17 +9940,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:2032:53: (iv_ruleBooleanValue= ruleBooleanValue EOF )
-            // InternalAedit.g:2033:2: iv_ruleBooleanValue= ruleBooleanValue EOF
+            // InternalAedit.g:3543:53: (iv_ruleBooleanValue= ruleBooleanValue EOF )
+            // InternalAedit.g:3544:2: iv_ruleBooleanValue= ruleBooleanValue EOF
             {
-             newCompositeNode(grammarAccess.getBooleanValueRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getBooleanValueRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleBooleanValue=ruleBooleanValue();
 
             state._fsp--;
-
-             current =iv_ruleBooleanValue; 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleBooleanValue; 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -5170,7 +9972,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBooleanValue"
-    // InternalAedit.g:2039:1: ruleBooleanValue returns [EObject current=null] : ( (lv_val_0_0= ruleBoolean ) ) ;
+    // InternalAedit.g:3550:1: ruleBooleanValue returns [EObject current=null] : ( (lv_val_0_0= ruleBoolean ) ) ;
     public final EObject ruleBooleanValue() throws RecognitionException {
         EObject current = null;
 
@@ -5181,34 +9983,38 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:2045:2: ( ( (lv_val_0_0= ruleBoolean ) ) )
-            // InternalAedit.g:2046:2: ( (lv_val_0_0= ruleBoolean ) )
+            // InternalAedit.g:3556:2: ( ( (lv_val_0_0= ruleBoolean ) ) )
+            // InternalAedit.g:3557:2: ( (lv_val_0_0= ruleBoolean ) )
             {
-            // InternalAedit.g:2046:2: ( (lv_val_0_0= ruleBoolean ) )
-            // InternalAedit.g:2047:3: (lv_val_0_0= ruleBoolean )
+            // InternalAedit.g:3557:2: ( (lv_val_0_0= ruleBoolean ) )
+            // InternalAedit.g:3558:3: (lv_val_0_0= ruleBoolean )
             {
-            // InternalAedit.g:2047:3: (lv_val_0_0= ruleBoolean )
-            // InternalAedit.g:2048:4: lv_val_0_0= ruleBoolean
+            // InternalAedit.g:3558:3: (lv_val_0_0= ruleBoolean )
+            // InternalAedit.g:3559:4: lv_val_0_0= ruleBoolean
             {
+            if ( state.backtracking==0 ) {
 
-            				newCompositeNode(grammarAccess.getBooleanValueAccess().getValBooleanParserRuleCall_0());
-            			
+              				newCompositeNode(grammarAccess.getBooleanValueAccess().getValBooleanParserRuleCall_0());
+              			
+            }
             pushFollow(FOLLOW_2);
             lv_val_0_0=ruleBoolean();
 
             state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-
-            				if (current==null) {
-            					current = createModelElementForParent(grammarAccess.getBooleanValueRule());
-            				}
-            				set(
-            					current,
-            					"val",
-            					lv_val_0_0,
-            					"org.aedit.Aedit.Boolean");
-            				afterParserOrEnumRuleCall();
-            			
+              				if (current==null) {
+              					current = createModelElementForParent(grammarAccess.getBooleanValueRule());
+              				}
+              				set(
+              					current,
+              					"val",
+              					lv_val_0_0,
+              					"org.aedit.Aedit.Boolean");
+              				afterParserOrEnumRuleCall();
+              			
+            }
 
             }
 
@@ -5218,9 +10024,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -5235,7 +10043,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleReal"
-    // InternalAedit.g:2068:1: entryRuleReal returns [String current=null] : iv_ruleReal= ruleReal EOF ;
+    // InternalAedit.g:3579:1: entryRuleReal returns [String current=null] : iv_ruleReal= ruleReal EOF ;
     public final String entryRuleReal() throws RecognitionException {
         String current = null;
 
@@ -5243,17 +10051,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:2068:44: (iv_ruleReal= ruleReal EOF )
-            // InternalAedit.g:2069:2: iv_ruleReal= ruleReal EOF
+            // InternalAedit.g:3579:44: (iv_ruleReal= ruleReal EOF )
+            // InternalAedit.g:3580:2: iv_ruleReal= ruleReal EOF
             {
-             newCompositeNode(grammarAccess.getRealRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRealRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleReal=ruleReal();
 
             state._fsp--;
-
-             current =iv_ruleReal.getText(); 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleReal.getText(); 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -5271,7 +10083,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReal"
-    // InternalAedit.g:2075:1: ruleReal returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT ) ;
+    // InternalAedit.g:3586:1: ruleReal returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleReal() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -5283,62 +10095,76 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:2081:2: ( ( (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT ) )
-            // InternalAedit.g:2082:2: ( (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT )
+            // InternalAedit.g:3592:2: ( ( (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT ) )
+            // InternalAedit.g:3593:2: ( (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT )
             {
-            // InternalAedit.g:2082:2: ( (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT )
-            // InternalAedit.g:2083:3: (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT
+            // InternalAedit.g:3593:2: ( (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT )
+            // InternalAedit.g:3594:3: (kw= '-' )? this_INT_1= RULE_INT kw= '.' this_INT_3= RULE_INT
             {
-            // InternalAedit.g:2083:3: (kw= '-' )?
-            int alt21=2;
-            int LA21_0 = input.LA(1);
+            // InternalAedit.g:3594:3: (kw= '-' )?
+            int alt34=2;
+            int LA34_0 = input.LA(1);
 
-            if ( (LA21_0==35) ) {
-                alt21=1;
+            if ( (LA34_0==45) ) {
+                alt34=1;
             }
-            switch (alt21) {
+            switch (alt34) {
                 case 1 :
-                    // InternalAedit.g:2084:4: kw= '-'
+                    // InternalAedit.g:3595:4: kw= '-'
                     {
-                    kw=(Token)match(input,35,FOLLOW_18); 
+                    kw=(Token)match(input,45,FOLLOW_21); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    				current.merge(kw);
-                    				newLeafNode(kw, grammarAccess.getRealAccess().getHyphenMinusKeyword_0());
-                    			
+                      				current.merge(kw);
+                      				newLeafNode(kw, grammarAccess.getRealAccess().getHyphenMinusKeyword_0());
+                      			
+                    }
 
                     }
                     break;
 
             }
 
-            this_INT_1=(Token)match(input,RULE_INT,FOLLOW_21); 
+            this_INT_1=(Token)match(input,RULE_INT,FOLLOW_24); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			current.merge(this_INT_1);
-            		
+              			current.merge(this_INT_1);
+              		
+            }
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(this_INT_1, grammarAccess.getRealAccess().getINTTerminalRuleCall_1());
-            		
-            kw=(Token)match(input,26,FOLLOW_18); 
+              			newLeafNode(this_INT_1, grammarAccess.getRealAccess().getINTTerminalRuleCall_1());
+              		
+            }
+            kw=(Token)match(input,31,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			current.merge(kw);
-            			newLeafNode(kw, grammarAccess.getRealAccess().getFullStopKeyword_2());
-            		
-            this_INT_3=(Token)match(input,RULE_INT,FOLLOW_2); 
+              			current.merge(kw);
+              			newLeafNode(kw, grammarAccess.getRealAccess().getFullStopKeyword_2());
+              		
+            }
+            this_INT_3=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			current.merge(this_INT_3);
-            		
+              			current.merge(this_INT_3);
+              		
+            }
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(this_INT_3, grammarAccess.getRealAccess().getINTTerminalRuleCall_3());
-            		
+              			newLeafNode(this_INT_3, grammarAccess.getRealAccess().getINTTerminalRuleCall_3());
+              		
+            }
 
             }
 
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -5353,7 +10179,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBoolean"
-    // InternalAedit.g:2113:1: entryRuleBoolean returns [String current=null] : iv_ruleBoolean= ruleBoolean EOF ;
+    // InternalAedit.g:3624:1: entryRuleBoolean returns [String current=null] : iv_ruleBoolean= ruleBoolean EOF ;
     public final String entryRuleBoolean() throws RecognitionException {
         String current = null;
 
@@ -5361,17 +10187,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:2113:47: (iv_ruleBoolean= ruleBoolean EOF )
-            // InternalAedit.g:2114:2: iv_ruleBoolean= ruleBoolean EOF
+            // InternalAedit.g:3624:47: (iv_ruleBoolean= ruleBoolean EOF )
+            // InternalAedit.g:3625:2: iv_ruleBoolean= ruleBoolean EOF
             {
-             newCompositeNode(grammarAccess.getBooleanRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getBooleanRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleBoolean=ruleBoolean();
 
             state._fsp--;
-
-             current =iv_ruleBoolean.getText(); 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleBoolean.getText(); 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -5389,7 +10219,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBoolean"
-    // InternalAedit.g:2120:1: ruleBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'true' | kw= 'false' ) ;
+    // InternalAedit.g:3631:1: ruleBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'true' | kw= 'false' ) ;
     public final AntlrDatatypeRuleToken ruleBoolean() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -5399,45 +10229,50 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:2126:2: ( (kw= 'true' | kw= 'false' ) )
-            // InternalAedit.g:2127:2: (kw= 'true' | kw= 'false' )
+            // InternalAedit.g:3637:2: ( (kw= 'true' | kw= 'false' ) )
+            // InternalAedit.g:3638:2: (kw= 'true' | kw= 'false' )
             {
-            // InternalAedit.g:2127:2: (kw= 'true' | kw= 'false' )
-            int alt22=2;
-            int LA22_0 = input.LA(1);
+            // InternalAedit.g:3638:2: (kw= 'true' | kw= 'false' )
+            int alt35=2;
+            int LA35_0 = input.LA(1);
 
-            if ( (LA22_0==36) ) {
-                alt22=1;
+            if ( (LA35_0==46) ) {
+                alt35=1;
             }
-            else if ( (LA22_0==37) ) {
-                alt22=2;
+            else if ( (LA35_0==47) ) {
+                alt35=2;
             }
             else {
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 22, 0, input);
+                    new NoViableAltException("", 35, 0, input);
 
                 throw nvae;
             }
-            switch (alt22) {
+            switch (alt35) {
                 case 1 :
-                    // InternalAedit.g:2128:3: kw= 'true'
+                    // InternalAedit.g:3639:3: kw= 'true'
                     {
-                    kw=(Token)match(input,36,FOLLOW_2); 
+                    kw=(Token)match(input,46,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getBooleanAccess().getTrueKeyword_0());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getBooleanAccess().getTrueKeyword_0());
+                      		
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:2134:3: kw= 'false'
+                    // InternalAedit.g:3645:3: kw= 'false'
                     {
-                    kw=(Token)match(input,37,FOLLOW_2); 
+                    kw=(Token)match(input,47,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getBooleanAccess().getFalseKeyword_1());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getBooleanAccess().getFalseKeyword_1());
+                      		
+                    }
 
                     }
                     break;
@@ -5447,9 +10282,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -5463,8 +10300,108 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleBoolean"
 
 
+    // $ANTLR start "entryRuleNegativeInt"
+    // InternalAedit.g:3654:1: entryRuleNegativeInt returns [String current=null] : iv_ruleNegativeInt= ruleNegativeInt EOF ;
+    public final String entryRuleNegativeInt() throws RecognitionException {
+        String current = null;
+
+        AntlrDatatypeRuleToken iv_ruleNegativeInt = null;
+
+
+        try {
+            // InternalAedit.g:3654:51: (iv_ruleNegativeInt= ruleNegativeInt EOF )
+            // InternalAedit.g:3655:2: iv_ruleNegativeInt= ruleNegativeInt EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getNegativeIntRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleNegativeInt=ruleNegativeInt();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleNegativeInt.getText(); 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleNegativeInt"
+
+
+    // $ANTLR start "ruleNegativeInt"
+    // InternalAedit.g:3661:1: ruleNegativeInt returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= '-' this_INT_1= RULE_INT ) ;
+    public final AntlrDatatypeRuleToken ruleNegativeInt() throws RecognitionException {
+        AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
+
+        Token kw=null;
+        Token this_INT_1=null;
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:3667:2: ( (kw= '-' this_INT_1= RULE_INT ) )
+            // InternalAedit.g:3668:2: (kw= '-' this_INT_1= RULE_INT )
+            {
+            // InternalAedit.g:3668:2: (kw= '-' this_INT_1= RULE_INT )
+            // InternalAedit.g:3669:3: kw= '-' this_INT_1= RULE_INT
+            {
+            kw=(Token)match(input,45,FOLLOW_21); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			current.merge(kw);
+              			newLeafNode(kw, grammarAccess.getNegativeIntAccess().getHyphenMinusKeyword_0());
+              		
+            }
+            this_INT_1=(Token)match(input,RULE_INT,FOLLOW_2); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			current.merge(this_INT_1);
+              		
+            }
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(this_INT_1, grammarAccess.getNegativeIntAccess().getINTTerminalRuleCall_1());
+              		
+            }
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleNegativeInt"
+
+
     // $ANTLR start "entryRuleSCHEMA_TYPE"
-    // InternalAedit.g:2143:1: entryRuleSCHEMA_TYPE returns [String current=null] : iv_ruleSCHEMA_TYPE= ruleSCHEMA_TYPE EOF ;
+    // InternalAedit.g:3685:1: entryRuleSCHEMA_TYPE returns [String current=null] : iv_ruleSCHEMA_TYPE= ruleSCHEMA_TYPE EOF ;
     public final String entryRuleSCHEMA_TYPE() throws RecognitionException {
         String current = null;
 
@@ -5472,17 +10409,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:2143:51: (iv_ruleSCHEMA_TYPE= ruleSCHEMA_TYPE EOF )
-            // InternalAedit.g:2144:2: iv_ruleSCHEMA_TYPE= ruleSCHEMA_TYPE EOF
+            // InternalAedit.g:3685:51: (iv_ruleSCHEMA_TYPE= ruleSCHEMA_TYPE EOF )
+            // InternalAedit.g:3686:2: iv_ruleSCHEMA_TYPE= ruleSCHEMA_TYPE EOF
             {
-             newCompositeNode(grammarAccess.getSCHEMA_TYPERule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getSCHEMA_TYPERule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleSCHEMA_TYPE=ruleSCHEMA_TYPE();
 
             state._fsp--;
-
-             current =iv_ruleSCHEMA_TYPE.getText(); 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleSCHEMA_TYPE.getText(); 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -5500,7 +10441,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSCHEMA_TYPE"
-    // InternalAedit.g:2150:1: ruleSCHEMA_TYPE returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'record' | kw= 'enum' ) ;
+    // InternalAedit.g:3692:1: ruleSCHEMA_TYPE returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'record' | kw= 'error' | kw= 'enum' ) ;
     public final AntlrDatatypeRuleToken ruleSCHEMA_TYPE() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -5510,45 +10451,72 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:2156:2: ( (kw= 'record' | kw= 'enum' ) )
-            // InternalAedit.g:2157:2: (kw= 'record' | kw= 'enum' )
+            // InternalAedit.g:3698:2: ( (kw= 'record' | kw= 'error' | kw= 'enum' ) )
+            // InternalAedit.g:3699:2: (kw= 'record' | kw= 'error' | kw= 'enum' )
             {
-            // InternalAedit.g:2157:2: (kw= 'record' | kw= 'enum' )
-            int alt23=2;
-            int LA23_0 = input.LA(1);
-
-            if ( (LA23_0==20) ) {
-                alt23=1;
-            }
-            else if ( (LA23_0==22) ) {
-                alt23=2;
-            }
-            else {
+            // InternalAedit.g:3699:2: (kw= 'record' | kw= 'error' | kw= 'enum' )
+            int alt36=3;
+            switch ( input.LA(1) ) {
+            case 25:
+                {
+                alt36=1;
+                }
+                break;
+            case 26:
+                {
+                alt36=2;
+                }
+                break;
+            case 27:
+                {
+                alt36=3;
+                }
+                break;
+            default:
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 23, 0, input);
+                    new NoViableAltException("", 36, 0, input);
 
                 throw nvae;
             }
-            switch (alt23) {
-                case 1 :
-                    // InternalAedit.g:2158:3: kw= 'record'
-                    {
-                    kw=(Token)match(input,20,FOLLOW_2); 
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSCHEMA_TYPEAccess().getRecordKeyword_0());
-                    		
+            switch (alt36) {
+                case 1 :
+                    // InternalAedit.g:3700:3: kw= 'record'
+                    {
+                    kw=(Token)match(input,25,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getSCHEMA_TYPEAccess().getRecordKeyword_0());
+                      		
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:2164:3: kw= 'enum'
+                    // InternalAedit.g:3706:3: kw= 'error'
                     {
-                    kw=(Token)match(input,22,FOLLOW_2); 
+                    kw=(Token)match(input,26,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSCHEMA_TYPEAccess().getEnumKeyword_1());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getSCHEMA_TYPEAccess().getErrorKeyword_1());
+                      		
+                    }
+
+                    }
+                    break;
+                case 3 :
+                    // InternalAedit.g:3712:3: kw= 'enum'
+                    {
+                    kw=(Token)match(input,27,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getSCHEMA_TYPEAccess().getEnumKeyword_2());
+                      		
+                    }
 
                     }
                     break;
@@ -5558,9 +10526,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -5575,7 +10545,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVARIABLE_TYPE"
-    // InternalAedit.g:2173:1: entryRuleVARIABLE_TYPE returns [String current=null] : iv_ruleVARIABLE_TYPE= ruleVARIABLE_TYPE EOF ;
+    // InternalAedit.g:3721:1: entryRuleVARIABLE_TYPE returns [String current=null] : iv_ruleVARIABLE_TYPE= ruleVARIABLE_TYPE EOF ;
     public final String entryRuleVARIABLE_TYPE() throws RecognitionException {
         String current = null;
 
@@ -5583,17 +10553,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:2173:53: (iv_ruleVARIABLE_TYPE= ruleVARIABLE_TYPE EOF )
-            // InternalAedit.g:2174:2: iv_ruleVARIABLE_TYPE= ruleVARIABLE_TYPE EOF
+            // InternalAedit.g:3721:53: (iv_ruleVARIABLE_TYPE= ruleVARIABLE_TYPE EOF )
+            // InternalAedit.g:3722:2: iv_ruleVARIABLE_TYPE= ruleVARIABLE_TYPE EOF
             {
-             newCompositeNode(grammarAccess.getVARIABLE_TYPERule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getVARIABLE_TYPERule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleVARIABLE_TYPE=ruleVARIABLE_TYPE();
 
             state._fsp--;
-
-             current =iv_ruleVARIABLE_TYPE.getText(); 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleVARIABLE_TYPE.getText(); 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -5611,7 +10585,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVARIABLE_TYPE"
-    // InternalAedit.g:2180:1: ruleVARIABLE_TYPE returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'int' | kw= 'double' | kw= 'string' | kw= 'long' | kw= 'boolean' | kw= 'float' ) ;
+    // InternalAedit.g:3728:1: ruleVARIABLE_TYPE returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'int' | kw= 'double' | kw= 'string' | kw= 'long' | kw= 'boolean' | kw= 'float' ) ;
     public final AntlrDatatypeRuleToken ruleVARIABLE_TYPE() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -5621,113 +10595,126 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:2186:2: ( (kw= 'int' | kw= 'double' | kw= 'string' | kw= 'long' | kw= 'boolean' | kw= 'float' ) )
-            // InternalAedit.g:2187:2: (kw= 'int' | kw= 'double' | kw= 'string' | kw= 'long' | kw= 'boolean' | kw= 'float' )
+            // InternalAedit.g:3734:2: ( (kw= 'int' | kw= 'double' | kw= 'string' | kw= 'long' | kw= 'boolean' | kw= 'float' ) )
+            // InternalAedit.g:3735:2: (kw= 'int' | kw= 'double' | kw= 'string' | kw= 'long' | kw= 'boolean' | kw= 'float' )
             {
-            // InternalAedit.g:2187:2: (kw= 'int' | kw= 'double' | kw= 'string' | kw= 'long' | kw= 'boolean' | kw= 'float' )
-            int alt24=6;
+            // InternalAedit.g:3735:2: (kw= 'int' | kw= 'double' | kw= 'string' | kw= 'long' | kw= 'boolean' | kw= 'float' )
+            int alt37=6;
             switch ( input.LA(1) ) {
-            case 38:
+            case 48:
                 {
-                alt24=1;
+                alt37=1;
                 }
                 break;
-            case 39:
+            case 49:
                 {
-                alt24=2;
+                alt37=2;
                 }
                 break;
-            case 40:
+            case 50:
                 {
-                alt24=3;
+                alt37=3;
                 }
                 break;
-            case 41:
+            case 51:
                 {
-                alt24=4;
+                alt37=4;
                 }
                 break;
-            case 42:
+            case 52:
                 {
-                alt24=5;
+                alt37=5;
                 }
                 break;
-            case 43:
+            case 53:
                 {
-                alt24=6;
+                alt37=6;
                 }
                 break;
             default:
+                if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 24, 0, input);
+                    new NoViableAltException("", 37, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt24) {
+            switch (alt37) {
                 case 1 :
-                    // InternalAedit.g:2188:3: kw= 'int'
+                    // InternalAedit.g:3736:3: kw= 'int'
                     {
-                    kw=(Token)match(input,38,FOLLOW_2); 
+                    kw=(Token)match(input,48,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getIntKeyword_0());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getIntKeyword_0());
+                      		
+                    }
 
                     }
                     break;
                 case 2 :
-                    // InternalAedit.g:2194:3: kw= 'double'
+                    // InternalAedit.g:3742:3: kw= 'double'
                     {
-                    kw=(Token)match(input,39,FOLLOW_2); 
+                    kw=(Token)match(input,49,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getDoubleKeyword_1());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getDoubleKeyword_1());
+                      		
+                    }
 
                     }
                     break;
                 case 3 :
-                    // InternalAedit.g:2200:3: kw= 'string'
+                    // InternalAedit.g:3748:3: kw= 'string'
                     {
-                    kw=(Token)match(input,40,FOLLOW_2); 
+                    kw=(Token)match(input,50,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getStringKeyword_2());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getStringKeyword_2());
+                      		
+                    }
 
                     }
                     break;
                 case 4 :
-                    // InternalAedit.g:2206:3: kw= 'long'
+                    // InternalAedit.g:3754:3: kw= 'long'
                     {
-                    kw=(Token)match(input,41,FOLLOW_2); 
+                    kw=(Token)match(input,51,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getLongKeyword_3());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getLongKeyword_3());
+                      		
+                    }
 
                     }
                     break;
                 case 5 :
-                    // InternalAedit.g:2212:3: kw= 'boolean'
+                    // InternalAedit.g:3760:3: kw= 'boolean'
                     {
-                    kw=(Token)match(input,42,FOLLOW_2); 
+                    kw=(Token)match(input,52,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getBooleanKeyword_4());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getBooleanKeyword_4());
+                      		
+                    }
 
                     }
                     break;
                 case 6 :
-                    // InternalAedit.g:2218:3: kw= 'float'
+                    // InternalAedit.g:3766:3: kw= 'float'
                     {
-                    kw=(Token)match(input,43,FOLLOW_2); 
+                    kw=(Token)match(input,53,FOLLOW_2); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getFloatKeyword_5());
-                    		
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getVARIABLE_TYPEAccess().getFloatKeyword_5());
+                      		
+                    }
 
                     }
                     break;
@@ -5737,9 +10724,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -5754,7 +10743,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQN"
-    // InternalAedit.g:2227:1: entryRuleQN returns [String current=null] : iv_ruleQN= ruleQN EOF ;
+    // InternalAedit.g:3775:1: entryRuleQN returns [String current=null] : iv_ruleQN= ruleQN EOF ;
     public final String entryRuleQN() throws RecognitionException {
         String current = null;
 
@@ -5762,17 +10751,21 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAedit.g:2227:42: (iv_ruleQN= ruleQN EOF )
-            // InternalAedit.g:2228:2: iv_ruleQN= ruleQN EOF
+            // InternalAedit.g:3775:42: (iv_ruleQN= ruleQN EOF )
+            // InternalAedit.g:3776:2: iv_ruleQN= ruleQN EOF
             {
-             newCompositeNode(grammarAccess.getQNRule()); 
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getQNRule()); 
+            }
             pushFollow(FOLLOW_1);
             iv_ruleQN=ruleQN();
 
             state._fsp--;
-
-             current =iv_ruleQN.getText(); 
-            match(input,EOF,FOLLOW_2); 
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleQN.getText(); 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
 
             }
 
@@ -5790,7 +10783,7 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQN"
-    // InternalAedit.g:2234:1: ruleQN returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
+    // InternalAedit.g:3782:1: ruleQN returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
     public final AntlrDatatypeRuleToken ruleQN() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -5802,52 +10795,62 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalAedit.g:2240:2: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
-            // InternalAedit.g:2241:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // InternalAedit.g:3788:2: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
+            // InternalAedit.g:3789:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
             {
-            // InternalAedit.g:2241:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
-            // InternalAedit.g:2242:3: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
+            // InternalAedit.g:3789:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // InternalAedit.g:3790:3: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
             {
-            this_ID_0=(Token)match(input,RULE_ID,FOLLOW_30); 
+            this_ID_0=(Token)match(input,RULE_ID,FOLLOW_42); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
 
-            			current.merge(this_ID_0);
-            		
+              			current.merge(this_ID_0);
+              		
+            }
+            if ( state.backtracking==0 ) {
 
-            			newLeafNode(this_ID_0, grammarAccess.getQNAccess().getIDTerminalRuleCall_0());
-            		
-            // InternalAedit.g:2249:3: (kw= '.' this_ID_2= RULE_ID )*
-            loop25:
+              			newLeafNode(this_ID_0, grammarAccess.getQNAccess().getIDTerminalRuleCall_0());
+              		
+            }
+            // InternalAedit.g:3797:3: (kw= '.' this_ID_2= RULE_ID )*
+            loop38:
             do {
-                int alt25=2;
-                int LA25_0 = input.LA(1);
+                int alt38=2;
+                int LA38_0 = input.LA(1);
 
-                if ( (LA25_0==26) ) {
-                    alt25=1;
+                if ( (LA38_0==31) ) {
+                    alt38=1;
                 }
 
 
-                switch (alt25) {
+                switch (alt38) {
             	case 1 :
-            	    // InternalAedit.g:2250:4: kw= '.' this_ID_2= RULE_ID
+            	    // InternalAedit.g:3798:4: kw= '.' this_ID_2= RULE_ID
             	    {
-            	    kw=(Token)match(input,26,FOLLOW_7); 
+            	    kw=(Token)match(input,31,FOLLOW_7); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-            	    				current.merge(kw);
-            	    				newLeafNode(kw, grammarAccess.getQNAccess().getFullStopKeyword_1_0());
-            	    			
-            	    this_ID_2=(Token)match(input,RULE_ID,FOLLOW_30); 
+            	      				current.merge(kw);
+            	      				newLeafNode(kw, grammarAccess.getQNAccess().getFullStopKeyword_1_0());
+            	      			
+            	    }
+            	    this_ID_2=(Token)match(input,RULE_ID,FOLLOW_42); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-            	    				current.merge(this_ID_2);
-            	    			
+            	      				current.merge(this_ID_2);
+            	      			
+            	    }
+            	    if ( state.backtracking==0 ) {
 
-            	    				newLeafNode(this_ID_2, grammarAccess.getQNAccess().getIDTerminalRuleCall_1_1());
-            	    			
+            	      				newLeafNode(this_ID_2, grammarAccess.getQNAccess().getIDTerminalRuleCall_1_1());
+            	      			
+            	    }
 
             	    }
             	    break;
 
             	default :
-            	    break loop25;
+            	    break loop38;
                 }
             } while (true);
 
@@ -5857,9 +10860,11 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
 
             }
 
+            if ( state.backtracking==0 ) {
 
-            	leaveRule();
+              	leaveRule();
 
+            }
         }
 
             catch (RecognitionException re) {
@@ -5872,9 +10877,229 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end "ruleQN"
 
+
+    // $ANTLR start "entryRuleAN"
+    // InternalAedit.g:3815:1: entryRuleAN returns [String current=null] : iv_ruleAN= ruleAN EOF ;
+    public final String entryRuleAN() throws RecognitionException {
+        String current = null;
+
+        AntlrDatatypeRuleToken iv_ruleAN = null;
+
+
+        try {
+            // InternalAedit.g:3815:42: (iv_ruleAN= ruleAN EOF )
+            // InternalAedit.g:3816:2: iv_ruleAN= ruleAN EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getANRule()); 
+            }
+            pushFollow(FOLLOW_1);
+            iv_ruleAN=ruleAN();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleAN.getText(); 
+            }
+            match(input,EOF,FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleAN"
+
+
+    // $ANTLR start "ruleAN"
+    // InternalAedit.g:3822:1: ruleAN returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= '@' this_ID_1= RULE_ID (kw= '-' this_ID_3= RULE_ID )* ) ;
+    public final AntlrDatatypeRuleToken ruleAN() throws RecognitionException {
+        AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
+
+        Token kw=null;
+        Token this_ID_1=null;
+        Token this_ID_3=null;
+
+
+        	enterRule();
+
+        try {
+            // InternalAedit.g:3828:2: ( (kw= '@' this_ID_1= RULE_ID (kw= '-' this_ID_3= RULE_ID )* ) )
+            // InternalAedit.g:3829:2: (kw= '@' this_ID_1= RULE_ID (kw= '-' this_ID_3= RULE_ID )* )
+            {
+            // InternalAedit.g:3829:2: (kw= '@' this_ID_1= RULE_ID (kw= '-' this_ID_3= RULE_ID )* )
+            // InternalAedit.g:3830:3: kw= '@' this_ID_1= RULE_ID (kw= '-' this_ID_3= RULE_ID )*
+            {
+            kw=(Token)match(input,54,FOLLOW_7); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			current.merge(kw);
+              			newLeafNode(kw, grammarAccess.getANAccess().getCommercialAtKeyword_0());
+              		
+            }
+            this_ID_1=(Token)match(input,RULE_ID,FOLLOW_43); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			current.merge(this_ID_1);
+              		
+            }
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(this_ID_1, grammarAccess.getANAccess().getIDTerminalRuleCall_1());
+              		
+            }
+            // InternalAedit.g:3842:3: (kw= '-' this_ID_3= RULE_ID )*
+            loop39:
+            do {
+                int alt39=2;
+                int LA39_0 = input.LA(1);
+
+                if ( (LA39_0==45) ) {
+                    alt39=1;
+                }
+
+
+                switch (alt39) {
+            	case 1 :
+            	    // InternalAedit.g:3843:4: kw= '-' this_ID_3= RULE_ID
+            	    {
+            	    kw=(Token)match(input,45,FOLLOW_7); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      				current.merge(kw);
+            	      				newLeafNode(kw, grammarAccess.getANAccess().getHyphenMinusKeyword_2_0());
+            	      			
+            	    }
+            	    this_ID_3=(Token)match(input,RULE_ID,FOLLOW_43); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      				current.merge(this_ID_3);
+            	      			
+            	    }
+            	    if ( state.backtracking==0 ) {
+
+            	      				newLeafNode(this_ID_3, grammarAccess.getANAccess().getIDTerminalRuleCall_2_1());
+            	      			
+            	    }
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop39;
+                }
+            } while (true);
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleAN"
+
+    // $ANTLR start synpred2_InternalAedit
+    public final void synpred2_InternalAedit_fragment() throws RecognitionException {   
+        // InternalAedit.g:3205:5: ( '[' )
+        // InternalAedit.g:3205:6: '['
+        {
+        match(input,42,FOLLOW_2); if (state.failed) return ;
+
+        }
+    }
+    // $ANTLR end synpred2_InternalAedit
+
     // Delegated rules
 
+    public final boolean synpred2_InternalAedit() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred2_InternalAedit_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
 
+
+    protected DFA10 dfa10 = new DFA10(this);
+    static final String dfa_1s = "\22\uffff";
+    static final String dfa_2s = "\1\23\1\4\1\uffff\1\35\7\uffff\1\20\1\5\1\uffff\1\36\1\4\1\uffff\1\4";
+    static final String dfa_3s = "\1\45\1\4\1\uffff\1\35\7\uffff\1\37\1\5\1\uffff\1\36\1\66\1\uffff\1\66";
+    static final String dfa_4s = "\2\uffff\1\2\1\uffff\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff\1\1\2\uffff\1\3\1\uffff";
+    static final String dfa_5s = "\22\uffff}>";
+    static final String[] dfa_6s = {
+            "\1\6\1\uffff\1\7\1\10\1\11\4\uffff\1\3\4\uffff\1\1\1\2\1\4\1\5\1\12",
+            "\1\13",
+            "",
+            "\1\14",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\15\3\uffff\1\12\12\uffff\1\15",
+            "\1\16",
+            "",
+            "\1\17",
+            "\1\21\42\uffff\1\20\10\uffff\7\20",
+            "",
+            "\1\20\13\uffff\1\12\16\uffff\1\20\26\uffff\1\20"
+    };
+
+    static final short[] dfa_1 = DFA.unpackEncodedString(dfa_1s);
+    static final char[] dfa_2 = DFA.unpackEncodedStringToUnsignedChars(dfa_2s);
+    static final char[] dfa_3 = DFA.unpackEncodedStringToUnsignedChars(dfa_3s);
+    static final short[] dfa_4 = DFA.unpackEncodedString(dfa_4s);
+    static final short[] dfa_5 = DFA.unpackEncodedString(dfa_5s);
+    static final short[][] dfa_6 = unpackEncodedStringArray(dfa_6s);
+
+    class DFA10 extends DFA {
+
+        public DFA10(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 10;
+            this.eot = dfa_1;
+            this.eof = dfa_1;
+            this.min = dfa_2;
+            this.max = dfa_3;
+            this.accept = dfa_4;
+            this.special = dfa_5;
+            this.transition = dfa_6;
+        }
+        public String getDescription() {
+            return "505:2: (this_RemoveVariable_0= ruleRemoveVariable | this_RenameVariable_1= ruleRenameVariable | this_AddVariable_2= ruleAddVariable | this_ChangeDefValue_3= ruleChangeDefValue | this_ChangeType_4= ruleChangeType | this_AddAnnotationToField_5= ruleAddAnnotationToField | this_AddNameAnnotationToField_6= ruleAddNameAnnotationToField | this_RemoveAnnotationFromField_7= ruleRemoveAnnotationFromField | this_RemoveNameAnnotationFromField_8= ruleRemoveNameAnnotationFromField | this_ArrayEditRules_9= ruleArrayEditRules )";
+        }
+    }
  
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
@@ -5888,24 +11113,37 @@ public class InternalAeditParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000004010L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000030884000L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000300000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x00000001B0804000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000030804000L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x00000FC000004010L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000008004000L});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x00000FC000000010L});
-    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000500000L});
-    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000003C00000030L});
-    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x00000FC000000000L});
-    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000200000002L});
-    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000000004000002L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000611484000L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x000000000E000000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0040000000000000L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000006000000L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000003E10E84000L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000610004000L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x007F008000004010L});
+    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000100004000L});
+    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x007F008000000010L});
+    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000F00000000030L});
+    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x003F000000000000L});
+    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0040000000000010L});
+    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000004000000002L});
+    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000010000000000L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000020000002L});
+    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000F40040000030L});
+    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000F40000000032L});
+    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000F40100000032L});
+    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000FC0000000030L});
+    public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000200000000002L});
 
 }

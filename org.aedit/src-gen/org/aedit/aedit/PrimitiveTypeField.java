@@ -3,6 +3,9 @@
  */
 package org.aedit.aedit;
 
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +17,8 @@ package org.aedit.aedit;
  * </p>
  * <ul>
  *   <li>{@link org.aedit.aedit.PrimitiveTypeField#getType <em>Type</em>}</li>
+ *   <li>{@link org.aedit.aedit.PrimitiveTypeField#getNameAnnotations <em>Name Annotations</em>}</li>
+ *   <li>{@link org.aedit.aedit.PrimitiveTypeField#getVarName <em>Var Name</em>}</li>
  *   <li>{@link org.aedit.aedit.PrimitiveTypeField#getValue <em>Value</em>}</li>
  * </ul>
  *
@@ -21,29 +26,63 @@ package org.aedit.aedit;
  * @model
  * @generated
  */
-public interface PrimitiveTypeField extends Field
+public interface PrimitiveTypeField extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * Returns the value of the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see #setType(String)
+   * @return the value of the '<em>Type</em>' containment reference.
+   * @see #setType(PrimitiveType)
    * @see org.aedit.aedit.AeditPackage#getPrimitiveTypeField_Type()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getType();
+  PrimitiveType getType();
 
   /**
-   * Sets the value of the '{@link org.aedit.aedit.PrimitiveTypeField#getType <em>Type</em>}' attribute.
+   * Sets the value of the '{@link org.aedit.aedit.PrimitiveTypeField#getType <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
+   * @param value the new value of the '<em>Type</em>' containment reference.
    * @see #getType()
    * @generated
    */
-  void setType(String value);
+  void setType(PrimitiveType value);
+
+  /**
+   * Returns the value of the '<em><b>Name Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link org.aedit.aedit.Annotation}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Name Annotations</em>' containment reference list.
+   * @see org.aedit.aedit.AeditPackage#getPrimitiveTypeField_NameAnnotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getNameAnnotations();
+
+  /**
+   * Returns the value of the '<em><b>Var Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Var Name</em>' attribute.
+   * @see #setVarName(String)
+   * @see org.aedit.aedit.AeditPackage#getPrimitiveTypeField_VarName()
+   * @model
+   * @generated
+   */
+  String getVarName();
+
+  /**
+   * Sets the value of the '{@link org.aedit.aedit.PrimitiveTypeField#getVarName <em>Var Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Var Name</em>' attribute.
+   * @see #getVarName()
+   * @generated
+   */
+  void setVarName(String value);
 
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.

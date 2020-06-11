@@ -3,6 +3,8 @@
  */
 package org.aedit.aedit;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,7 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.aedit.aedit.Field#getVarName <em>Var Name</em>}</li>
+ *   <li>{@link org.aedit.aedit.Field#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link org.aedit.aedit.Field#getFieldType <em>Field Type</em>}</li>
  * </ul>
  *
  * @see org.aedit.aedit.AeditPackage#getField()
@@ -24,25 +27,37 @@ import org.eclipse.emf.ecore.EObject;
 public interface Field extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Var Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link org.aedit.aedit.Annotation}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Var Name</em>' attribute.
-   * @see #setVarName(String)
-   * @see org.aedit.aedit.AeditPackage#getField_VarName()
-   * @model
+   * @return the value of the '<em>Annotations</em>' containment reference list.
+   * @see org.aedit.aedit.AeditPackage#getField_Annotations()
+   * @model containment="true"
    * @generated
    */
-  String getVarName();
+  EList<Annotation> getAnnotations();
 
   /**
-   * Sets the value of the '{@link org.aedit.aedit.Field#getVarName <em>Var Name</em>}' attribute.
+   * Returns the value of the '<em><b>Field Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Var Name</em>' attribute.
-   * @see #getVarName()
+   * @return the value of the '<em>Field Type</em>' containment reference.
+   * @see #setFieldType(EObject)
+   * @see org.aedit.aedit.AeditPackage#getField_FieldType()
+   * @model containment="true"
    * @generated
    */
-  void setVarName(String value);
+  EObject getFieldType();
+
+  /**
+   * Sets the value of the '{@link org.aedit.aedit.Field#getFieldType <em>Field Type</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Field Type</em>' containment reference.
+   * @see #getFieldType()
+   * @generated
+   */
+  void setFieldType(EObject value);
 
 } // Field

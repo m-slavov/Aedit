@@ -3,15 +3,26 @@
  */
 package org.aedit.aedit.impl;
 
+import java.util.Collection;
+
 import org.aedit.aedit.AeditPackage;
+import org.aedit.aedit.Annotation;
 import org.aedit.aedit.Field;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +32,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.aedit.aedit.impl.FieldImpl#getVarName <em>Var Name</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.FieldImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.FieldImpl#getFieldType <em>Field Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -29,24 +41,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class FieldImpl extends MinimalEObjectImpl.Container implements Field
 {
   /**
-   * The default value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVarName()
+   * @see #getAnnotations()
    * @generated
    * @ordered
    */
-  protected static final String VAR_NAME_EDEFAULT = null;
+  protected EList<Annotation> annotations;
 
   /**
-   * The cached value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
+   * The cached value of the '{@link #getFieldType() <em>Field Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVarName()
+   * @see #getFieldType()
    * @generated
    * @ordered
    */
-  protected String varName = VAR_NAME_EDEFAULT;
+  protected EObject fieldType;
 
   /**
    * <!-- begin-user-doc -->
@@ -75,9 +87,13 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * @generated
    */
   @Override
-  public String getVarName()
+  public EList<Annotation> getAnnotations()
   {
-    return varName;
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, AeditPackage.FIELD__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -86,12 +102,66 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * @generated
    */
   @Override
-  public void setVarName(String newVarName)
+  public EObject getFieldType()
   {
-    String oldVarName = varName;
-    varName = newVarName;
+    return fieldType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetFieldType(EObject newFieldType, NotificationChain msgs)
+  {
+    EObject oldFieldType = fieldType;
+    fieldType = newFieldType;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.FIELD__VAR_NAME, oldVarName, varName));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AeditPackage.FIELD__FIELD_TYPE, oldFieldType, newFieldType);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setFieldType(EObject newFieldType)
+  {
+    if (newFieldType != fieldType)
+    {
+      NotificationChain msgs = null;
+      if (fieldType != null)
+        msgs = ((InternalEObject)fieldType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AeditPackage.FIELD__FIELD_TYPE, null, msgs);
+      if (newFieldType != null)
+        msgs = ((InternalEObject)newFieldType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AeditPackage.FIELD__FIELD_TYPE, null, msgs);
+      msgs = basicSetFieldType(newFieldType, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.FIELD__FIELD_TYPE, newFieldType, newFieldType));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case AeditPackage.FIELD__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case AeditPackage.FIELD__FIELD_TYPE:
+        return basicSetFieldType(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -104,8 +174,10 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case AeditPackage.FIELD__VAR_NAME:
-        return getVarName();
+      case AeditPackage.FIELD__ANNOTATIONS:
+        return getAnnotations();
+      case AeditPackage.FIELD__FIELD_TYPE:
+        return getFieldType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -115,13 +187,18 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case AeditPackage.FIELD__VAR_NAME:
-        setVarName((String)newValue);
+      case AeditPackage.FIELD__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case AeditPackage.FIELD__FIELD_TYPE:
+        setFieldType((EObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -137,8 +214,11 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case AeditPackage.FIELD__VAR_NAME:
-        setVarName(VAR_NAME_EDEFAULT);
+      case AeditPackage.FIELD__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
+      case AeditPackage.FIELD__FIELD_TYPE:
+        setFieldType((EObject)null);
         return;
     }
     super.eUnset(featureID);
@@ -154,27 +234,12 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field
   {
     switch (featureID)
     {
-      case AeditPackage.FIELD__VAR_NAME:
-        return VAR_NAME_EDEFAULT == null ? varName != null : !VAR_NAME_EDEFAULT.equals(varName);
+      case AeditPackage.FIELD__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
+      case AeditPackage.FIELD__FIELD_TYPE:
+        return fieldType != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (varName: ");
-    result.append(varName);
-    result.append(')');
-    return result.toString();
   }
 
 } //FieldImpl

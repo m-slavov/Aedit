@@ -3,14 +3,17 @@
  */
 package org.aedit.scoping
 
+import org.aedit.aedit.AeditPackage
+import org.aedit.aedit.ChangeEnum
+import org.aedit.aedit.ChangeSchema
+import org.aedit.aedit.RemoveAnnotationFromField
+import org.aedit.aedit.RemoveAnnotationFromSchema
+import org.aedit.aedit.RemoveNameAnnotationFromField
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
-import org.aedit.aedit.ChangeSchema
-import org.aedit.aedit.ChangeEnum
-import org.aedit.aedit.AeditPackage
-import org.eclipse.xtext.resource.impl.AliasedEObjectDescription
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.resource.impl.AliasedEObjectDescription
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 /**
@@ -23,12 +26,16 @@ class AeditScopeProvider extends AbstractAeditScopeProvider {
 
 	override getScope(EObject context, EReference reference) {
 
-		if (context.eContainer instanceof ChangeSchema || context.eContainer instanceof ChangeEnum){
-			if (reference == AeditPackage.Literals.RENAME_VARIABLE__VARIABLE 
-				|| reference == AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE
-				|| reference == AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD
-				|| reference == AeditPackage.Literals.CHANGE_TYPE__FIELD
-			){
+		if (context.eContainer instanceof ChangeSchema || context.eContainer instanceof ChangeEnum) {
+			if (reference == AeditPackage.Literals.RENAME_VARIABLE__VARIABLE ||
+				reference == AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE ||
+				reference == AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD ||
+				reference == AeditPackage.Literals.CHANGE_TYPE__FIELD ||
+				reference == AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE ||
+				reference == AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE ||
+				reference == AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE ||
+				reference == AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE) {
+					
 				val scope = super.getScope(context, reference)
 				val defs = scope.allElements.map [ d |
 					if (d.name.segmentCount > 2) {
@@ -40,10 +47,41 @@ class AeditScopeProvider extends AbstractAeditScopeProvider {
 					}
 				].map([d|d as IEObjectDescription])
 				return new SimpleScope(defs)
+				
+			} else if (reference == AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE) {
+				
+				val splitRefNamesList = splitRefNames(context, reference)
+				return new SimpleScope(splitRefNamesList)
+				
+			} else if (reference == AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE) {
+				
+				val splitRefNamesList = splitRefNames(context, reference)
+				return new SimpleScope(splitRefNamesList)
+				
+			}
+		} else if (context instanceof RemoveAnnotationFromSchema) {
+			if (reference == AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE) {
+				val splitRefNamesList = splitRefNames(context, reference)
+				return new SimpleScope(splitRefNamesList)
 			}
 		}
-		
+
 		super.getScope(context, reference)
 	}
-	
+
+	def splitRefNames(EObject context, EReference reference) {
+		val scope = super.getScope(context, reference)
+		val defs = scope.allElements.map [ d |
+			if (d.name.segmentCount > 3) {
+				new AliasedEObjectDescription(QualifiedName.create(d.name.segments.get(3).replace("@", "")), d)
+			} else if (d.name.segmentCount > 2) {
+				new AliasedEObjectDescription(QualifiedName.create(d.name.segments.get(2).replace("@", "")), d)
+			} else if (d.name.segmentCount > 1) {
+				new AliasedEObjectDescription(QualifiedName.create(d.name.segments.get(1).replace("@", "")), d)
+			} else {
+				new AliasedEObjectDescription(QualifiedName.create(d.name.toString().replace("@", "")), d)
+			}
+		].map([d|d as IEObjectDescription])
+		return defs
+	}
 }

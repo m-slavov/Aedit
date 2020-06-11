@@ -72,11 +72,19 @@ public class AeditFactoryImpl extends EFactoryImpl implements AeditFactory
       case AeditPackage.RULE_DECLARATION: return createRuleDeclaration();
       case AeditPackage.GENERIC_RULE: return createGenericRule();
       case AeditPackage.SCHEMA_RULE: return createSchemaRule();
+      case AeditPackage.ARRAY_EDIT_RULES: return createArrayEditRules();
       case AeditPackage.ENUM_RULE: return createEnumRule();
+      case AeditPackage.ADD_ANNOTATION_TO_SCHEMA: return createAddAnnotationToSchema();
+      case AeditPackage.ADD_ANNOTATION_TO_FIELD: return createAddAnnotationToField();
+      case AeditPackage.ADD_NAME_ANNOTATION_TO_FIELD: return createAddNameAnnotationToField();
+      case AeditPackage.REMOVE_ANNOTATION_FROM_SCHEMA: return createRemoveAnnotationFromSchema();
+      case AeditPackage.REMOVE_ANNOTATION_FROM_FIELD: return createRemoveAnnotationFromField();
+      case AeditPackage.REMOVE_NAME_ANNOTATION_FROM_FIELD: return createRemoveNameAnnotationFromField();
       case AeditPackage.CHANGE_SCHEMA: return createChangeSchema();
       case AeditPackage.CHANGE_ENUM: return createChangeEnum();
       case AeditPackage.ADD: return createAdd();
       case AeditPackage.ADD_RECORD: return createAddRecord();
+      case AeditPackage.ADD_ERROR: return createAddError();
       case AeditPackage.ADD_ENUMERATION: return createAddEnumeration();
       case AeditPackage.ADD_VARIABLE: return createAddVariable();
       case AeditPackage.ADD_ENUM: return createAddEnum();
@@ -88,9 +96,21 @@ public class AeditFactoryImpl extends EFactoryImpl implements AeditFactory
       case AeditPackage.RENAME_ENUM: return createRenameEnum();
       case AeditPackage.CHANGE_DEF_VALUE: return createChangeDefValue();
       case AeditPackage.CHANGE_TYPE: return createChangeType();
+      case AeditPackage.REMOVE_ARRAY_VALUE: return createRemoveArrayValue();
+      case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX: return createRemoveArrayValueAtIndex();
+      case AeditPackage.ADD_VALUE_TO_ARRAY: return createAddValueToArray();
       case AeditPackage.FIELD: return createField();
       case AeditPackage.CUSTOM_TYPE_FIELD: return createCustomTypeField();
       case AeditPackage.PRIMITIVE_TYPE_FIELD: return createPrimitiveTypeField();
+      case AeditPackage.COMPLEX_TYPE_FIELD: return createComplexTypeField();
+      case AeditPackage.ARRAY_TYPE_FIELD: return createArrayTypeField();
+      case AeditPackage.ANNOTATED_TYPES: return createAnnotatedTypes();
+      case AeditPackage.TYPES: return createTypes();
+      case AeditPackage.CUSTOM_TYPE: return createCustomType();
+      case AeditPackage.PRIMITIVE_TYPE: return createPrimitiveType();
+      case AeditPackage.ANNOTATION: return createAnnotation();
+      case AeditPackage.VALUES: return createValues();
+      case AeditPackage.ARRAY: return createArray();
       case AeditPackage.VALUE: return createValue();
       case AeditPackage.FLOAT_VALUE: return createFloatValue();
       case AeditPackage.STRING_VALUE: return createStringValue();
@@ -192,10 +212,94 @@ public class AeditFactoryImpl extends EFactoryImpl implements AeditFactory
    * @generated
    */
   @Override
+  public ArrayEditRules createArrayEditRules()
+  {
+    ArrayEditRulesImpl arrayEditRules = new ArrayEditRulesImpl();
+    return arrayEditRules;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EnumRule createEnumRule()
   {
     EnumRuleImpl enumRule = new EnumRuleImpl();
     return enumRule;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AddAnnotationToSchema createAddAnnotationToSchema()
+  {
+    AddAnnotationToSchemaImpl addAnnotationToSchema = new AddAnnotationToSchemaImpl();
+    return addAnnotationToSchema;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AddAnnotationToField createAddAnnotationToField()
+  {
+    AddAnnotationToFieldImpl addAnnotationToField = new AddAnnotationToFieldImpl();
+    return addAnnotationToField;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AddNameAnnotationToField createAddNameAnnotationToField()
+  {
+    AddNameAnnotationToFieldImpl addNameAnnotationToField = new AddNameAnnotationToFieldImpl();
+    return addNameAnnotationToField;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public RemoveAnnotationFromSchema createRemoveAnnotationFromSchema()
+  {
+    RemoveAnnotationFromSchemaImpl removeAnnotationFromSchema = new RemoveAnnotationFromSchemaImpl();
+    return removeAnnotationFromSchema;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public RemoveAnnotationFromField createRemoveAnnotationFromField()
+  {
+    RemoveAnnotationFromFieldImpl removeAnnotationFromField = new RemoveAnnotationFromFieldImpl();
+    return removeAnnotationFromField;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public RemoveNameAnnotationFromField createRemoveNameAnnotationFromField()
+  {
+    RemoveNameAnnotationFromFieldImpl removeNameAnnotationFromField = new RemoveNameAnnotationFromFieldImpl();
+    return removeNameAnnotationFromField;
   }
 
   /**
@@ -244,6 +348,18 @@ public class AeditFactoryImpl extends EFactoryImpl implements AeditFactory
   {
     AddRecordImpl addRecord = new AddRecordImpl();
     return addRecord;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AddError createAddError()
+  {
+    AddErrorImpl addError = new AddErrorImpl();
+    return addError;
   }
 
   /**
@@ -384,6 +500,42 @@ public class AeditFactoryImpl extends EFactoryImpl implements AeditFactory
    * @generated
    */
   @Override
+  public RemoveArrayValue createRemoveArrayValue()
+  {
+    RemoveArrayValueImpl removeArrayValue = new RemoveArrayValueImpl();
+    return removeArrayValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public RemoveArrayValueAtIndex createRemoveArrayValueAtIndex()
+  {
+    RemoveArrayValueAtIndexImpl removeArrayValueAtIndex = new RemoveArrayValueAtIndexImpl();
+    return removeArrayValueAtIndex;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AddValueToArray createAddValueToArray()
+  {
+    AddValueToArrayImpl addValueToArray = new AddValueToArrayImpl();
+    return addValueToArray;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Field createField()
   {
     FieldImpl field = new FieldImpl();
@@ -412,6 +564,114 @@ public class AeditFactoryImpl extends EFactoryImpl implements AeditFactory
   {
     PrimitiveTypeFieldImpl primitiveTypeField = new PrimitiveTypeFieldImpl();
     return primitiveTypeField;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ComplexTypeField createComplexTypeField()
+  {
+    ComplexTypeFieldImpl complexTypeField = new ComplexTypeFieldImpl();
+    return complexTypeField;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ArrayTypeField createArrayTypeField()
+  {
+    ArrayTypeFieldImpl arrayTypeField = new ArrayTypeFieldImpl();
+    return arrayTypeField;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AnnotatedTypes createAnnotatedTypes()
+  {
+    AnnotatedTypesImpl annotatedTypes = new AnnotatedTypesImpl();
+    return annotatedTypes;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Types createTypes()
+  {
+    TypesImpl types = new TypesImpl();
+    return types;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public CustomType createCustomType()
+  {
+    CustomTypeImpl customType = new CustomTypeImpl();
+    return customType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public PrimitiveType createPrimitiveType()
+  {
+    PrimitiveTypeImpl primitiveType = new PrimitiveTypeImpl();
+    return primitiveType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Annotation createAnnotation()
+  {
+    AnnotationImpl annotation = new AnnotationImpl();
+    return annotation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Values createValues()
+  {
+    ValuesImpl values = new ValuesImpl();
+    return values;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Array createArray()
+  {
+    ArrayImpl array = new ArrayImpl();
+    return array;
   }
 
   /**

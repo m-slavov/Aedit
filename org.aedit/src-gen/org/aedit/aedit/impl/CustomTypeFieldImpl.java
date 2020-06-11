@@ -3,17 +3,26 @@
  */
 package org.aedit.aedit.impl;
 
-import avroclipse.avroIDL.Type;
+import java.util.Collection;
 
 import org.aedit.aedit.AeditPackage;
+import org.aedit.aedit.Annotation;
+import org.aedit.aedit.CustomType;
 import org.aedit.aedit.CustomTypeField;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,21 +33,53 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link org.aedit.aedit.impl.CustomTypeFieldImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.CustomTypeFieldImpl#getNameAnnotations <em>Name Annotations</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.CustomTypeFieldImpl#getVarName <em>Var Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class CustomTypeFieldImpl extends FieldImpl implements CustomTypeField
+public class CustomTypeFieldImpl extends MinimalEObjectImpl.Container implements CustomTypeField
 {
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' reference.
+   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected Type type;
+  protected CustomType type;
+
+  /**
+   * The cached value of the '{@link #getNameAnnotations() <em>Name Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getNameAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> nameAnnotations;
+
+  /**
+   * The default value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVarName()
+   * @generated
+   * @ordered
+   */
+  protected static final String VAR_NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getVarName() <em>Var Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVarName()
+   * @generated
+   * @ordered
+   */
+  protected String varName = VAR_NAME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -67,18 +108,8 @@ public class CustomTypeFieldImpl extends FieldImpl implements CustomTypeField
    * @generated
    */
   @Override
-  public Type getType()
+  public CustomType getType()
   {
-    if (type != null && type.eIsProxy())
-    {
-      InternalEObject oldType = (InternalEObject)type;
-      type = (Type)eResolveProxy(oldType);
-      if (type != oldType)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AeditPackage.CUSTOM_TYPE_FIELD__TYPE, oldType, type));
-      }
-    }
     return type;
   }
 
@@ -87,9 +118,16 @@ public class CustomTypeFieldImpl extends FieldImpl implements CustomTypeField
    * <!-- end-user-doc -->
    * @generated
    */
-  public Type basicGetType()
+  public NotificationChain basicSetType(CustomType newType, NotificationChain msgs)
   {
-    return type;
+    CustomType oldType = type;
+    type = newType;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AeditPackage.CUSTOM_TYPE_FIELD__TYPE, oldType, newType);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -98,12 +136,78 @@ public class CustomTypeFieldImpl extends FieldImpl implements CustomTypeField
    * @generated
    */
   @Override
-  public void setType(Type newType)
+  public void setType(CustomType newType)
   {
-    Type oldType = type;
-    type = newType;
+    if (newType != type)
+    {
+      NotificationChain msgs = null;
+      if (type != null)
+        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AeditPackage.CUSTOM_TYPE_FIELD__TYPE, null, msgs);
+      if (newType != null)
+        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AeditPackage.CUSTOM_TYPE_FIELD__TYPE, null, msgs);
+      msgs = basicSetType(newType, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.CUSTOM_TYPE_FIELD__TYPE, newType, newType));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<Annotation> getNameAnnotations()
+  {
+    if (nameAnnotations == null)
+    {
+      nameAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, AeditPackage.CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS);
+    }
+    return nameAnnotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getVarName()
+  {
+    return varName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setVarName(String newVarName)
+  {
+    String oldVarName = varName;
+    varName = newVarName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.CUSTOM_TYPE_FIELD__TYPE, oldType, type));
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.CUSTOM_TYPE_FIELD__VAR_NAME, oldVarName, varName));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case AeditPackage.CUSTOM_TYPE_FIELD__TYPE:
+        return basicSetType(null, msgs);
+      case AeditPackage.CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS:
+        return ((InternalEList<?>)getNameAnnotations()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -117,8 +221,11 @@ public class CustomTypeFieldImpl extends FieldImpl implements CustomTypeField
     switch (featureID)
     {
       case AeditPackage.CUSTOM_TYPE_FIELD__TYPE:
-        if (resolve) return getType();
-        return basicGetType();
+        return getType();
+      case AeditPackage.CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS:
+        return getNameAnnotations();
+      case AeditPackage.CUSTOM_TYPE_FIELD__VAR_NAME:
+        return getVarName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -128,13 +235,21 @@ public class CustomTypeFieldImpl extends FieldImpl implements CustomTypeField
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
       case AeditPackage.CUSTOM_TYPE_FIELD__TYPE:
-        setType((Type)newValue);
+        setType((CustomType)newValue);
+        return;
+      case AeditPackage.CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS:
+        getNameAnnotations().clear();
+        getNameAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case AeditPackage.CUSTOM_TYPE_FIELD__VAR_NAME:
+        setVarName((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -151,7 +266,13 @@ public class CustomTypeFieldImpl extends FieldImpl implements CustomTypeField
     switch (featureID)
     {
       case AeditPackage.CUSTOM_TYPE_FIELD__TYPE:
-        setType((Type)null);
+        setType((CustomType)null);
+        return;
+      case AeditPackage.CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS:
+        getNameAnnotations().clear();
+        return;
+      case AeditPackage.CUSTOM_TYPE_FIELD__VAR_NAME:
+        setVarName(VAR_NAME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -169,8 +290,29 @@ public class CustomTypeFieldImpl extends FieldImpl implements CustomTypeField
     {
       case AeditPackage.CUSTOM_TYPE_FIELD__TYPE:
         return type != null;
+      case AeditPackage.CUSTOM_TYPE_FIELD__NAME_ANNOTATIONS:
+        return nameAnnotations != null && !nameAnnotations.isEmpty();
+      case AeditPackage.CUSTOM_TYPE_FIELD__VAR_NAME:
+        return VAR_NAME_EDEFAULT == null ? varName != null : !VAR_NAME_EDEFAULT.equals(varName);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (varName: ");
+    result.append(varName);
+    result.append(')');
+    return result.toString();
   }
 
 } //CustomTypeFieldImpl
