@@ -67,6 +67,11 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import org.aedit.aedit.ArrayEditRules
+import org.aedit.aedit.RemoveArrayValue
+import org.aedit.aedit.RemoveArrayValueAtIndex
+import org.aedit.aedit.AddValueToArray
+import java.util.ArrayList
 
 /**
  * Generates code from your model files on save.
@@ -309,6 +314,7 @@ class AeditGenerator extends AbstractGenerator {
 			AddNameAnnotationToField: schemaRule.compile
 			RemoveAnnotationFromField: schemaRule.execute
 			RemoveNameAnnotationFromField: schemaRule.compile
+			ArrayEditRules: schemaRule.compile
 		}
 
 	}
@@ -441,8 +447,8 @@ class AeditGenerator extends AbstractGenerator {
 
 			type = annotatedTypes.type.compile
 		]
-		
-		for (annotation : annotatedTypes.annotataions){
+
+		for (annotation : annotatedTypes.annotataions) {
 			newAnnotatedTypeLink.annotations.add(annotation.createAnnotation)
 		}
 
@@ -708,5 +714,63 @@ class AeditGenerator extends AbstractGenerator {
 		]
 
 		return newAvroclipseAnnotation
+	}
+
+	def compile(ArrayEditRules arrayEditRules) {
+		switch (arrayEditRules) {
+			RemoveArrayValue: arrayEditRules.compile
+			RemoveArrayValueAtIndex: arrayEditRules.compile
+			AddValueToArray: arrayEditRules.compile
+		}
+	}
+
+	def compile(RemoveArrayValue removeArrayValue) {
+		
+		val schema = HelperClass.getSchema(currentProtocol, currentSchema, protocols)
+		val field = HelperClass.getFieldFromSchema(schema, removeArrayValue.variable.name)
+		
+		val array = field.^default as avroclipse.avroIDL.Array
+		val found = new ArrayList<Value>()
+		
+		for (value : array.values.value){
+			
+			val arrayValue = HelperClass.getValue(value)
+			val valueToRemove = HelperClass.getValue(removeArrayValue.valueToRemove.compile)
+			
+			if (arrayValue.equals(valueToRemove)){
+				found.add(value)	
+			}
+		}
+		
+		array.values.value.removeAll(found)
+
+	}
+
+	def compile(RemoveArrayValueAtIndex removeArrayValueAtIndex) {
+		
+		val schema = HelperClass.getSchema(currentProtocol, currentSchema, protocols)
+		val field = HelperClass.getFieldFromSchema(schema, removeArrayValueAtIndex.array.name)
+		
+		val array = field.^default as avroclipse.avroIDL.Array
+
+		array.values.value.remove(removeArrayValueAtIndex.index)
+
+	}
+
+	def compile(AddValueToArray addValueToArray) {
+		
+		val schema = HelperClass.getSchema(currentProtocol, currentSchema, protocols)
+		val field = HelperClass.getFieldFromSchema(schema, addValueToArray.array.name)
+		
+		val array = field.^default as avroclipse.avroIDL.Array
+
+		if (addValueToArray.valueToAdd instanceof Array) {
+			val newArray = (addValueToArray.valueToAdd as Array).compile
+			array.values.value.add(newArray)
+		} else if (addValueToArray.valueToAdd instanceof org.aedit.aedit.Value) {
+			val newValue = (addValueToArray.valueToAdd as org.aedit.aedit.Value).compile
+			array.values.value.add(newValue)
+		}
+		
 	}
 }

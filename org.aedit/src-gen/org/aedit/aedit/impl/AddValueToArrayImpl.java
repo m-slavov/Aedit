@@ -3,12 +3,17 @@
  */
 package org.aedit.aedit.impl;
 
+import avroclipse.avroIDL.Field;
+
 import org.aedit.aedit.AddValueToArray;
 import org.aedit.aedit.AeditPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -21,6 +26,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link org.aedit.aedit.impl.AddValueToArrayImpl#getIndex <em>Index</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.AddValueToArrayImpl#getArray <em>Array</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.AddValueToArrayImpl#getValueToAdd <em>Value To Add</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,6 +53,26 @@ public class AddValueToArrayImpl extends ArrayEditRulesImpl implements AddValueT
    * @ordered
    */
   protected int index = INDEX_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getArray() <em>Array</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getArray()
+   * @generated
+   * @ordered
+   */
+  protected Field array;
+
+  /**
+   * The cached value of the '{@link #getValueToAdd() <em>Value To Add</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getValueToAdd()
+   * @generated
+   * @ordered
+   */
+  protected EObject valueToAdd;
 
   /**
    * <!-- begin-user-doc -->
@@ -99,12 +126,128 @@ public class AddValueToArrayImpl extends ArrayEditRulesImpl implements AddValueT
    * @generated
    */
   @Override
+  public Field getArray()
+  {
+    if (array != null && array.eIsProxy())
+    {
+      InternalEObject oldArray = (InternalEObject)array;
+      array = (Field)eResolveProxy(oldArray);
+      if (array != oldArray)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AeditPackage.ADD_VALUE_TO_ARRAY__ARRAY, oldArray, array));
+      }
+    }
+    return array;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Field basicGetArray()
+  {
+    return array;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setArray(Field newArray)
+  {
+    Field oldArray = array;
+    array = newArray;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.ADD_VALUE_TO_ARRAY__ARRAY, oldArray, array));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EObject getValueToAdd()
+  {
+    return valueToAdd;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetValueToAdd(EObject newValueToAdd, NotificationChain msgs)
+  {
+    EObject oldValueToAdd = valueToAdd;
+    valueToAdd = newValueToAdd;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD, oldValueToAdd, newValueToAdd);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setValueToAdd(EObject newValueToAdd)
+  {
+    if (newValueToAdd != valueToAdd)
+    {
+      NotificationChain msgs = null;
+      if (valueToAdd != null)
+        msgs = ((InternalEObject)valueToAdd).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD, null, msgs);
+      if (newValueToAdd != null)
+        msgs = ((InternalEObject)newValueToAdd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD, null, msgs);
+      msgs = basicSetValueToAdd(newValueToAdd, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD, newValueToAdd, newValueToAdd));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD:
+        return basicSetValueToAdd(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
       case AeditPackage.ADD_VALUE_TO_ARRAY__INDEX:
         return getIndex();
+      case AeditPackage.ADD_VALUE_TO_ARRAY__ARRAY:
+        if (resolve) return getArray();
+        return basicGetArray();
+      case AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD:
+        return getValueToAdd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -121,6 +264,12 @@ public class AddValueToArrayImpl extends ArrayEditRulesImpl implements AddValueT
     {
       case AeditPackage.ADD_VALUE_TO_ARRAY__INDEX:
         setIndex((Integer)newValue);
+        return;
+      case AeditPackage.ADD_VALUE_TO_ARRAY__ARRAY:
+        setArray((Field)newValue);
+        return;
+      case AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD:
+        setValueToAdd((EObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -139,6 +288,12 @@ public class AddValueToArrayImpl extends ArrayEditRulesImpl implements AddValueT
       case AeditPackage.ADD_VALUE_TO_ARRAY__INDEX:
         setIndex(INDEX_EDEFAULT);
         return;
+      case AeditPackage.ADD_VALUE_TO_ARRAY__ARRAY:
+        setArray((Field)null);
+        return;
+      case AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD:
+        setValueToAdd((EObject)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -155,6 +310,10 @@ public class AddValueToArrayImpl extends ArrayEditRulesImpl implements AddValueT
     {
       case AeditPackage.ADD_VALUE_TO_ARRAY__INDEX:
         return index != INDEX_EDEFAULT;
+      case AeditPackage.ADD_VALUE_TO_ARRAY__ARRAY:
+        return array != null;
+      case AeditPackage.ADD_VALUE_TO_ARRAY__VALUE_TO_ADD:
+        return valueToAdd != null;
     }
     return super.eIsSet(featureID);
   }

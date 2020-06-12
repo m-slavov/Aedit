@@ -8,7 +8,8 @@ import javax.inject.Provider;
 import org.aedit.aedit.AeditPackage;
 import org.aedit.aedit.Model;
 import org.aedit.tests.AvroclipseProvider;
-import org.aedit.validation.AeditValidator;
+import org.aedit.validation.ErrorCodes;
+import org.aedit.validation.ErrorMessages;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,7 +43,7 @@ public class AeditValidatorTest {
   private Provider<ResourceSet> rsp;
   
   @Test
-  public void testRemoveDeletedSchema() {
+  public void testRemoveSchema__DeletedSchema() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -82,14 +83,102 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedSchema(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveSchema());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveSchema(), ErrorCodes.REMOVE_SCHEMA, ErrorMessages.DELETED_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRemoveRenamedSchema() {
+  public void testRemoveSchema__TypeMissmatchEnum() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("remove enum house.Garage;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{ }");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveSchema(), ErrorCodes.REMOVE_SCHEMA, ErrorMessages.TYPE_MISSMATCH);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRemoveSchema__TypeMissmatchError() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("remove error house.Garage;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{ }");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveSchema(), ErrorCodes.REMOVE_SCHEMA, ErrorMessages.TYPE_MISSMATCH);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRemoveSchema__RenamedSchema() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -129,14 +218,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedSchema(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveSchema());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveSchema(), ErrorCodes.REMOVE_SCHEMA, ErrorMessages.DELETED_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRenameRemovedSchema() {
+  public void testRenameSchema__RemovedSchema() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -176,14 +265,61 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedSchema(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameSchema());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameSchema(), ErrorCodes.RENAME_SCHEMA, ErrorMessages.DELETED_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRenameSchemaTwice() {
+  public void testRenameSchema__TypeMissmatch() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("rename enum house.Garage => NewGarage;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{ }");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameSchema(), ErrorCodes.RENAME_SCHEMA, ErrorMessages.TYPE_MISSMATCH);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * NOTE: Renamed objects are treated as if the object has been removed.
+   */
+  @Test
+  public void testRenameSchema__RenameTwice() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -223,14 +359,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedSchema(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameSchema());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameSchema(), ErrorCodes.RENAME_SCHEMA, ErrorMessages.DELETED_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testChangeRemovedSchema() {
+  public void testChangeSchema__RemovedSchema() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -270,14 +406,58 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedSchema(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeSchema());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeSchema(), ErrorCodes.CHANGE_SCHEMA, ErrorMessages.DELETED_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testChangeRenamedSchema() {
+  public void testChangeSchema__TypeMissmatch() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("change error house.Garage {};");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{ }");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeSchema(), ErrorCodes.CHANGE_SCHEMA, ErrorMessages.TYPE_MISSMATCH);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeSchema__RenamedSchema() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -323,14 +503,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedSchema(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeSchema());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeSchema(), ErrorCodes.CHANGE_SCHEMA, ErrorMessages.DELETED_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testDuplicateSchema() {
+  public void testAddRecord__DuplicateSchema() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -373,15 +553,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddRecord(), AeditValidator.DUPLICATE_FIELD, 
-        "Record with this name already exists in this namespace!");
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddRecord(), ErrorCodes.ADD_RECORD, ErrorMessages.DUPLICATE_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRemoveDeletedVariable() {
+  public void testRemoveVariable__DeletedVariable() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -433,14 +612,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedVariable(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveVariable());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveVariable(), ErrorCodes.REMOVE_VARIABLE, ErrorMessages.DELETED_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRemoveRenamedVariable() {
+  public void testRemoveVariable__RenamedVariable() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -492,14 +671,79 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedVariable(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveVariable());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveVariable(), ErrorCodes.REMOVE_VARIABLE, ErrorMessages.DELETED_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRenameRemovedVariable() {
+  public void testRemoveVariable__IncorrectVariable() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t\t");
+      _builder.append("remove num1;");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record SecondGarage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveVariable(), ErrorCodes.REMOVE_VARIABLE, ErrorMessages.FIELD_NOT_IN_SCHEMA);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRenameVariable__RemovedVariable() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -551,14 +795,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedVariable(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameVariable());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameVariable(), ErrorCodes.RENAME_VARIABLE, ErrorMessages.DELETED_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRenameVariableTwice() {
+  public void testRenameVariable__RenamedVariable() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -610,14 +854,138 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedVariable(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameVariable());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameVariable(), ErrorCodes.RENAME_VARIABLE, ErrorMessages.DELETED_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testChangeTypeOfRemovedVariable() {
+  public void testRenameVariable__IncorrectVariable() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t\t");
+      _builder.append("rename num1 => newNum;");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record SecondGarage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameVariable(), ErrorCodes.RENAME_VARIABLE, ErrorMessages.FIELD_NOT_IN_SCHEMA);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRenameVariable__NewNameTaken() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t\t");
+      _builder.append("rename num => foo;");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("sting foo;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameVariable(), ErrorCodes.RENAME_VARIABLE, ErrorMessages.DUPLICATE_FIELD);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__RemovedVariable() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -669,14 +1037,79 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedVariable(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.CHANGE_TYPE, ErrorMessages.DELETED_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testChangeValueOfRemovedVariable() {
+  public void testChangeType__IncorrectVariable() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t\t");
+      _builder.append("set_type num1 => long;");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record SecondGarage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.CHANGE_TYPE, ErrorMessages.FIELD_NOT_IN_SCHEMA);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue__RemovedVariable() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -728,14 +1161,79 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedVariable(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.CHANGE_DEF_VALUE, ErrorMessages.DELETED_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testDuplicateField() {
+  public void testChangeDefValue__IncorrectVariable() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t\t");
+      _builder.append("set_val num1 => 1;");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record SecondGarage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.CHANGE_DEF_VALUE, ErrorMessages.FIELD_NOT_IN_SCHEMA);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testAddVariable_DuplicateField() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -782,14 +1280,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertDuplicateField(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddVariable());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddVariable(), ErrorCodes.ADD_VARIABLE, ErrorMessages.DUPLICATE_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testDuplicateEnumConstant() {
+  public void testAddEnumConstant__DuplicateEnumConstant() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -849,14 +1347,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertDuplicateField(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddEnum());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddEnum(), ErrorCodes.ADD_ENUM_CONST, ErrorMessages.DUPLICATE_ENUM_CONST);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRemoveDeletedEnumConstant() {
+  public void testRemoveEnumConstant_RemovedEnumConstant() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -919,14 +1417,14 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedEnumConstant(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveEnum());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveEnum(), ErrorCodes.REMOVE_ENUM_CONST, ErrorMessages.REMOVED_ENUM_CONST);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   @Test
-  public void testRemoveUndefinedConstant() {
+  public void testRemoveEnumConstant__UndefinedEnumConstant() {
     try {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("rule Rule1 {");
@@ -986,34 +1484,10 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertRemovedEnumConstant(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveEnum());
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveEnum(), ErrorCodes.REMOVE_ENUM_CONST, ErrorMessages.NON_EXISTENT_ENUM_CONST);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
-  }
-  
-  private void assertRemovedSchema(final Model m, final EClass model) {
-    this._validationTestHelper.assertError(m, model, 
-      AeditValidator.REMOVE_SCHEMA, 
-      "Schema does not exist!");
-  }
-  
-  private void assertRemovedVariable(final Model m, final EClass model) {
-    this._validationTestHelper.assertError(m, model, 
-      AeditValidator.REMOVE_VARIABLE, 
-      "Variable has been deleted!");
-  }
-  
-  private void assertRemovedEnumConstant(final Model m, final EClass model) {
-    this._validationTestHelper.assertError(m, model, 
-      AeditValidator.REMOVE_ENUM_CONST, 
-      "Constant does not exist!");
-  }
-  
-  private void assertDuplicateField(final Model m, final EClass model) {
-    this._validationTestHelper.assertError(m, model, 
-      AeditValidator.DUPLICATE_FIELD, 
-      "Field with this name already exists!");
   }
   
   private void assertMethod(final Model m, final EClass model, final String code, final String message) {

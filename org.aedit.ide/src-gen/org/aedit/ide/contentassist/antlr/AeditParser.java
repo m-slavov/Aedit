@@ -37,6 +37,7 @@ public class AeditParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEnumRuleAccess().getAlternatives(), "rule__EnumRule__Alternatives");
 			builder.put(grammarAccess.getChangeSchemaAccess().getSchemaTypeAlternatives_1_0(), "rule__ChangeSchema__SchemaTypeAlternatives_1_0");
 			builder.put(grammarAccess.getAddAccess().getAlternatives(), "rule__Add__Alternatives");
+			builder.put(grammarAccess.getAddValueToArrayAccess().getValueToAddAlternatives_6_0(), "rule__AddValueToArray__ValueToAddAlternatives_6_0");
 			builder.put(grammarAccess.getFieldAccess().getFieldTypeAlternatives_1_0(), "rule__Field__FieldTypeAlternatives_1_0");
 			builder.put(grammarAccess.getTypesAccess().getAlternatives(), "rule__Types__Alternatives");
 			builder.put(grammarAccess.getValuesAccess().getAlternatives_1(), "rule__Values__Alternatives_1");
@@ -159,12 +160,13 @@ public class AeditParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getChangeDefValueAccess().getNewValAssignment_3(), "rule__ChangeDefValue__NewValAssignment_3");
 			builder.put(grammarAccess.getChangeTypeAccess().getFieldAssignment_1(), "rule__ChangeType__FieldAssignment_1");
 			builder.put(grammarAccess.getChangeTypeAccess().getNewTypeAssignment_3(), "rule__ChangeType__NewTypeAssignment_3");
-			builder.put(grammarAccess.getRemoveArrayValueAccess().getArrayAssignment_1(), "rule__RemoveArrayValue__ArrayAssignment_1");
+			builder.put(grammarAccess.getRemoveArrayValueAccess().getVariableAssignment_1(), "rule__RemoveArrayValue__VariableAssignment_1");
 			builder.put(grammarAccess.getRemoveArrayValueAccess().getValueToRemoveAssignment_3(), "rule__RemoveArrayValue__ValueToRemoveAssignment_3");
 			builder.put(grammarAccess.getRemoveArrayValueAtIndexAccess().getIndexAssignment_2(), "rule__RemoveArrayValueAtIndex__IndexAssignment_2");
 			builder.put(grammarAccess.getRemoveArrayValueAtIndexAccess().getArrayAssignment_4(), "rule__RemoveArrayValueAtIndex__ArrayAssignment_4");
 			builder.put(grammarAccess.getAddValueToArrayAccess().getIndexAssignment_2(), "rule__AddValueToArray__IndexAssignment_2");
 			builder.put(grammarAccess.getAddValueToArrayAccess().getArrayAssignment_4(), "rule__AddValueToArray__ArrayAssignment_4");
+			builder.put(grammarAccess.getAddValueToArrayAccess().getValueToAddAssignment_6(), "rule__AddValueToArray__ValueToAddAssignment_6");
 			builder.put(grammarAccess.getFieldAccess().getAnnotationsAssignment_0(), "rule__Field__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getFieldAccess().getFieldTypeAssignment_1(), "rule__Field__FieldTypeAssignment_1");
 			builder.put(grammarAccess.getCustomTypeFieldAccess().getTypeAssignment_0(), "rule__CustomTypeField__TypeAssignment_0");

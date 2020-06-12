@@ -34,7 +34,10 @@ class AeditScopeProvider extends AbstractAeditScopeProvider {
 				reference == AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE ||
 				reference == AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE ||
 				reference == AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE ||
-				reference == AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE) {
+				reference == AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE ||
+				reference == AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY ||
+				reference == AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE ||
+				reference == AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY) {
 					
 				val scope = super.getScope(context, reference)
 				val defs = scope.allElements.map [ d |

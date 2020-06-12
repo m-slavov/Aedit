@@ -3,6 +3,8 @@
  */
 package org.aedit.aedit.impl;
 
+import avroclipse.avroIDL.Field;
+
 import org.aedit.aedit.AeditPackage;
 import org.aedit.aedit.RemoveArrayValue;
 import org.aedit.aedit.Value;
@@ -23,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.aedit.aedit.impl.RemoveArrayValueImpl#getVariable <em>Variable</em>}</li>
  *   <li>{@link org.aedit.aedit.impl.RemoveArrayValueImpl#getValueToRemove <em>Value To Remove</em>}</li>
  * </ul>
  *
@@ -30,6 +33,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class RemoveArrayValueImpl extends ArrayEditRulesImpl implements RemoveArrayValue
 {
+  /**
+   * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVariable()
+   * @generated
+   * @ordered
+   */
+  protected Field variable;
+
   /**
    * The cached value of the '{@link #getValueToRemove() <em>Value To Remove</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -59,6 +72,51 @@ public class RemoveArrayValueImpl extends ArrayEditRulesImpl implements RemoveAr
   protected EClass eStaticClass()
   {
     return AeditPackage.Literals.REMOVE_ARRAY_VALUE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Field getVariable()
+  {
+    if (variable != null && variable.eIsProxy())
+    {
+      InternalEObject oldVariable = (InternalEObject)variable;
+      variable = (Field)eResolveProxy(oldVariable);
+      if (variable != oldVariable)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AeditPackage.REMOVE_ARRAY_VALUE__VARIABLE, oldVariable, variable));
+      }
+    }
+    return variable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Field basicGetVariable()
+  {
+    return variable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setVariable(Field newVariable)
+  {
+    Field oldVariable = variable;
+    variable = newVariable;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.REMOVE_ARRAY_VALUE__VARIABLE, oldVariable, variable));
   }
 
   /**
@@ -137,6 +195,9 @@ public class RemoveArrayValueImpl extends ArrayEditRulesImpl implements RemoveAr
   {
     switch (featureID)
     {
+      case AeditPackage.REMOVE_ARRAY_VALUE__VARIABLE:
+        if (resolve) return getVariable();
+        return basicGetVariable();
       case AeditPackage.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE:
         return getValueToRemove();
     }
@@ -153,6 +214,9 @@ public class RemoveArrayValueImpl extends ArrayEditRulesImpl implements RemoveAr
   {
     switch (featureID)
     {
+      case AeditPackage.REMOVE_ARRAY_VALUE__VARIABLE:
+        setVariable((Field)newValue);
+        return;
       case AeditPackage.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE:
         setValueToRemove((Value)newValue);
         return;
@@ -170,6 +234,9 @@ public class RemoveArrayValueImpl extends ArrayEditRulesImpl implements RemoveAr
   {
     switch (featureID)
     {
+      case AeditPackage.REMOVE_ARRAY_VALUE__VARIABLE:
+        setVariable((Field)null);
+        return;
       case AeditPackage.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE:
         setValueToRemove((Value)null);
         return;
@@ -187,6 +254,8 @@ public class RemoveArrayValueImpl extends ArrayEditRulesImpl implements RemoveAr
   {
     switch (featureID)
     {
+      case AeditPackage.REMOVE_ARRAY_VALUE__VARIABLE:
+        return variable != null;
       case AeditPackage.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE:
         return valueToRemove != null;
     }

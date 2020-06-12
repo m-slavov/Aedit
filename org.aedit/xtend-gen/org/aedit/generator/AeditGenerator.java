@@ -19,6 +19,7 @@ import avroclipse.avroIDL.TypeDef;
 import avroclipse.avroIDL.TypeLink;
 import avroclipse.avroIDL.Values;
 import com.google.common.collect.Iterables;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -32,10 +33,12 @@ import org.aedit.aedit.AddEnumeration;
 import org.aedit.aedit.AddError;
 import org.aedit.aedit.AddNameAnnotationToField;
 import org.aedit.aedit.AddRecord;
+import org.aedit.aedit.AddValueToArray;
 import org.aedit.aedit.AddVariable;
 import org.aedit.aedit.AnnotatedTypes;
 import org.aedit.aedit.Annotation;
 import org.aedit.aedit.Array;
+import org.aedit.aedit.ArrayEditRules;
 import org.aedit.aedit.ArrayTypeField;
 import org.aedit.aedit.BooleanValue;
 import org.aedit.aedit.ChangeDefValue;
@@ -57,6 +60,8 @@ import org.aedit.aedit.PrimitiveType;
 import org.aedit.aedit.PrimitiveTypeField;
 import org.aedit.aedit.RemoveAnnotationFromField;
 import org.aedit.aedit.RemoveAnnotationFromSchema;
+import org.aedit.aedit.RemoveArrayValue;
+import org.aedit.aedit.RemoveArrayValueAtIndex;
 import org.aedit.aedit.RemoveEnum;
 import org.aedit.aedit.RemoveNameAnnotationFromField;
 import org.aedit.aedit.RemoveSchema;
@@ -383,12 +388,12 @@ public class AeditGenerator extends AbstractGenerator {
     }
   }
   
-  public Boolean compile(final SchemaRule schemaRule) {
-    boolean _switchResult = false;
+  public Object compile(final SchemaRule schemaRule) {
+    Object _switchResult = null;
     boolean _matched = false;
     if (schemaRule instanceof RemoveVariable) {
       _matched=true;
-      _switchResult = this.compile(((RemoveVariable)schemaRule));
+      _switchResult = Boolean.valueOf(this.compile(((RemoveVariable)schemaRule)));
     }
     if (!_matched) {
       if (schemaRule instanceof RenameVariable) {
@@ -417,28 +422,34 @@ public class AeditGenerator extends AbstractGenerator {
     if (!_matched) {
       if (schemaRule instanceof AddAnnotationToField) {
         _matched=true;
-        _switchResult = this.execute(((AddAnnotationToField)schemaRule));
+        _switchResult = Boolean.valueOf(this.execute(((AddAnnotationToField)schemaRule)));
       }
     }
     if (!_matched) {
       if (schemaRule instanceof AddNameAnnotationToField) {
         _matched=true;
-        _switchResult = this.compile(((AddNameAnnotationToField)schemaRule));
+        _switchResult = Boolean.valueOf(this.compile(((AddNameAnnotationToField)schemaRule)));
       }
     }
     if (!_matched) {
       if (schemaRule instanceof RemoveAnnotationFromField) {
         _matched=true;
-        _switchResult = this.execute(((RemoveAnnotationFromField)schemaRule));
+        _switchResult = Boolean.valueOf(this.execute(((RemoveAnnotationFromField)schemaRule)));
       }
     }
     if (!_matched) {
       if (schemaRule instanceof RemoveNameAnnotationFromField) {
         _matched=true;
-        _switchResult = this.compile(((RemoveNameAnnotationFromField)schemaRule));
+        _switchResult = Boolean.valueOf(this.compile(((RemoveNameAnnotationFromField)schemaRule)));
       }
     }
-    return Boolean.valueOf(_switchResult);
+    if (!_matched) {
+      if (schemaRule instanceof ArrayEditRules) {
+        _matched=true;
+        _switchResult = this.compile(((ArrayEditRules)schemaRule));
+      }
+    }
+    return _switchResult;
   }
   
   public boolean compile(final RemoveVariable removeVariable) {
@@ -933,5 +944,99 @@ public class AeditGenerator extends AbstractGenerator {
     };
     final avroclipse.avroIDL.Annotation newAvroclipseAnnotation = ObjectExtensions.<avroclipse.avroIDL.Annotation>operator_doubleArrow(_createAnnotation, _function);
     return newAvroclipseAnnotation;
+  }
+  
+  public Object compile(final ArrayEditRules arrayEditRules) {
+    Object _switchResult = null;
+    boolean _matched = false;
+    if (arrayEditRules instanceof RemoveArrayValue) {
+      _matched=true;
+      _switchResult = Boolean.valueOf(this.compile(((RemoveArrayValue)arrayEditRules)));
+    }
+    if (!_matched) {
+      if (arrayEditRules instanceof RemoveArrayValueAtIndex) {
+        _matched=true;
+        _switchResult = this.compile(((RemoveArrayValueAtIndex)arrayEditRules));
+      }
+    }
+    if (!_matched) {
+      if (arrayEditRules instanceof AddValueToArray) {
+        _matched=true;
+        _switchResult = Boolean.valueOf(this.compile(((AddValueToArray)arrayEditRules)));
+      }
+    }
+    return _switchResult;
+  }
+  
+  public boolean compile(final RemoveArrayValue removeArrayValue) {
+    boolean _xblockexpression = false;
+    {
+      final Type schema = HelperClass.getSchema(this.currentProtocol, this.currentSchema, this.protocols);
+      final avroclipse.avroIDL.Field field = HelperClass.getFieldFromSchema(schema, removeArrayValue.getVariable().getName());
+      avroclipse.avroIDL.Value _default = field.getDefault();
+      final avroclipse.avroIDL.Array array = ((avroclipse.avroIDL.Array) _default);
+      final ArrayList<avroclipse.avroIDL.Value> found = new ArrayList<avroclipse.avroIDL.Value>();
+      EList<avroclipse.avroIDL.Value> _value = array.getValues().getValue();
+      for (final avroclipse.avroIDL.Value value : _value) {
+        {
+          final Object arrayValue = HelperClass.getValue(value);
+          final Object valueToRemove = HelperClass.getValue(this.compile(removeArrayValue.getValueToRemove()));
+          boolean _equals = arrayValue.equals(valueToRemove);
+          if (_equals) {
+            found.add(value);
+          }
+        }
+      }
+      _xblockexpression = array.getValues().getValue().removeAll(found);
+    }
+    return _xblockexpression;
+  }
+  
+  public avroclipse.avroIDL.Value compile(final RemoveArrayValueAtIndex removeArrayValueAtIndex) {
+    avroclipse.avroIDL.Value _xblockexpression = null;
+    {
+      final Type schema = HelperClass.getSchema(this.currentProtocol, this.currentSchema, this.protocols);
+      final avroclipse.avroIDL.Field field = HelperClass.getFieldFromSchema(schema, removeArrayValueAtIndex.getArray().getName());
+      avroclipse.avroIDL.Value _default = field.getDefault();
+      final avroclipse.avroIDL.Array array = ((avroclipse.avroIDL.Array) _default);
+      _xblockexpression = array.getValues().getValue().remove(removeArrayValueAtIndex.getIndex());
+    }
+    return _xblockexpression;
+  }
+  
+  public boolean compile(final AddValueToArray addValueToArray) {
+    boolean _xblockexpression = false;
+    {
+      final Type schema = HelperClass.getSchema(this.currentProtocol, this.currentSchema, this.protocols);
+      final avroclipse.avroIDL.Field field = HelperClass.getFieldFromSchema(schema, addValueToArray.getArray().getName());
+      avroclipse.avroIDL.Value _default = field.getDefault();
+      final avroclipse.avroIDL.Array array = ((avroclipse.avroIDL.Array) _default);
+      boolean _xifexpression = false;
+      EObject _valueToAdd = addValueToArray.getValueToAdd();
+      if ((_valueToAdd instanceof Array)) {
+        boolean _xblockexpression_1 = false;
+        {
+          EObject _valueToAdd_1 = addValueToArray.getValueToAdd();
+          final avroclipse.avroIDL.Array newArray = this.compile(((Array) _valueToAdd_1));
+          _xblockexpression_1 = array.getValues().getValue().add(newArray);
+        }
+        _xifexpression = _xblockexpression_1;
+      } else {
+        boolean _xifexpression_1 = false;
+        EObject _valueToAdd_1 = addValueToArray.getValueToAdd();
+        if ((_valueToAdd_1 instanceof Value)) {
+          boolean _xblockexpression_2 = false;
+          {
+            EObject _valueToAdd_2 = addValueToArray.getValueToAdd();
+            final avroclipse.avroIDL.Value newValue = this.compile(((Value) _valueToAdd_2));
+            _xblockexpression_2 = array.getValues().getValue().add(newValue);
+          }
+          _xifexpression_1 = _xblockexpression_2;
+        }
+        _xifexpression = _xifexpression_1;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
   }
 }

@@ -31,8 +31,7 @@ SchemaRule:
 	AddNameAnnotationToField | RemoveAnnotationFromField | RemoveNameAnnotationFromField | ArrayEditRules;
 
 ArrayEditRules:
-	RemoveArrayValue | RemoveArrayValueAtIndex | AddValueToArray
-;
+	RemoveArrayValue | RemoveArrayValueAtIndex | AddValueToArray;
 
 EnumRule:
 	RemoveEnum | RenameEnum | AddEnum;
@@ -105,13 +104,13 @@ ChangeType:
 	'set_type' field=[avroIDL::Field|QN] '=>' newType=VARIABLE_TYPE ';';
 
 RemoveArrayValue:
-	'remove' array=[avroIDL::Field] '=>' valueToRemove=Value;
+	'remove_value' variable=[avroIDL::Field | QN] '=>' valueToRemove=Value ';';
 
 RemoveArrayValueAtIndex:
-	'remove.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+	'remove_value.at' '(' index=INT ')' array=[avroIDL::Field | QN] ';';
 
 AddValueToArray:
-	'add.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+	'add_value.at' '(' index=INT ')' array=[avroIDL::Field | QN] '=>' valueToAdd=(Array | Value) ';';
 
 Field:
 	annotations+=Annotation* fieldType=(PrimitiveTypeField | CustomTypeField | ComplexTypeField);

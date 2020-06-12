@@ -7,7 +7,8 @@ import com.google.inject.Inject
 import javax.inject.Provider
 import org.aedit.aedit.AeditPackage
 import org.aedit.aedit.Model
-import org.aedit.validation.AeditValidator
+import org.aedit.validation.ErrorCodes
+import org.aedit.validation.ErrorMessages
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -18,7 +19,6 @@ import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.eclipse.xtext.util.StringInputStream
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.eclipse.xtext.xbase.testing.CompilationTestHelper
 
 @RunWith(XtextRunner)
 @InjectWith(AvroclipseProvider)
@@ -31,7 +31,7 @@ class AeditValidatorTest {
 	Provider<ResourceSet> rsp;
 
 	@Test
-	def void testRemoveDeletedSchema() {
+	def void testRemoveSchema__DeletedSchema() {
 
 		parse('''
 			rule Rule1 {
@@ -47,12 +47,53 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedSchema(AeditPackage.eINSTANCE.removeSchema)
+		]).assertMethod(AeditPackage.eINSTANCE.removeSchema, ErrorCodes.REMOVE_SCHEMA, ErrorMessages.DELETED_SCHEMA)
 
 	}
+	
+	@Test
+	def void testRemoveSchema__TypeMissmatchEnum() {
+
+		parse('''
+			rule Rule1 {
+						remove enum house.Garage;
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{ }
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.removeSchema, ErrorCodes.REMOVE_SCHEMA, ErrorMessages.TYPE_MISSMATCH)
+
+	}
+	
+		@Test
+	def void testRemoveSchema__TypeMissmatchError() {
+
+		parse('''
+			rule Rule1 {
+						remove error house.Garage;
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{ }
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.removeSchema, ErrorCodes.REMOVE_SCHEMA, ErrorMessages.TYPE_MISSMATCH)
+
+	}
+	
 
 	@Test
-	def void testRemoveRenamedSchema() {
+	def void testRemoveSchema__RenamedSchema() {
 		parse('''
 			rule Rule1 {
 						rename record house.Garage => NewGarage;
@@ -67,11 +108,11 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedSchema(AeditPackage.eINSTANCE.removeSchema)
+		]).assertMethod(AeditPackage.eINSTANCE.removeSchema, ErrorCodes.REMOVE_SCHEMA, ErrorMessages.DELETED_SCHEMA)
 	}
 
 	@Test
-	def testRenameRemovedSchema() {
+	def testRenameSchema__RemovedSchema() {
 		parse('''
 			rule Rule1 {
 						remove record house.Garage;
@@ -86,11 +127,32 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedSchema(AeditPackage.eINSTANCE.renameSchema)
+		]).assertMethod(AeditPackage.eINSTANCE.renameSchema, ErrorCodes.RENAME_SCHEMA, ErrorMessages.DELETED_SCHEMA)
+	}
+	
+	@Test
+	def testRenameSchema__TypeMissmatch() {
+		parse('''
+			rule Rule1 {
+						rename enum house.Garage => NewGarage;
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{ }
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.renameSchema, ErrorCodes.RENAME_SCHEMA, ErrorMessages.TYPE_MISSMATCH)
 	}
 
+	/*
+	 * NOTE: Renamed objects are treated as if the object has been removed.
+	 */
 	@Test
-	def testRenameSchemaTwice() {
+	def testRenameSchema__RenameTwice() {
 		parse('''
 			rule Rule1 {
 						rename record house.Garage => NewGarage;
@@ -105,11 +167,11 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedSchema(AeditPackage.eINSTANCE.renameSchema)
+		]).assertMethod(AeditPackage.eINSTANCE.renameSchema, ErrorCodes.RENAME_SCHEMA, ErrorMessages.DELETED_SCHEMA)
 	}
 
 	@Test
-	def testChangeRemovedSchema() {
+	def testChangeSchema__RemovedSchema() {
 		parse('''
 			rule Rule1 {
 						remove record house.Garage;
@@ -124,11 +186,29 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedSchema(AeditPackage.eINSTANCE.changeSchema)
+		]).assertMethod(AeditPackage.eINSTANCE.changeSchema, ErrorCodes.CHANGE_SCHEMA, ErrorMessages.DELETED_SCHEMA)
+	}
+	
+	@Test
+	def testChangeSchema__TypeMissmatch() {
+		parse('''
+			rule Rule1 {
+						change error house.Garage {};
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{ }
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeSchema, ErrorCodes.CHANGE_SCHEMA, ErrorMessages.TYPE_MISSMATCH)
 	}
 
 	@Test
-	def testChangeRenamedSchema() {
+	def testChangeSchema__RenamedSchema() {
 		parse('''
 			rule Rule1 {
 						rename record house.Garage => NewGarage;
@@ -145,11 +225,11 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedSchema(AeditPackage.eINSTANCE.changeSchema)
+		]).assertMethod(AeditPackage.eINSTANCE.changeSchema, ErrorCodes.CHANGE_SCHEMA, ErrorMessages.DELETED_SCHEMA)
 	}
 
 	@Test
-	def testDuplicateSchema() {
+	def testAddRecord__DuplicateSchema() {
 		parse('''
 			rule Rule1 {
 						add.at(0) record house.Garage()
@@ -164,13 +244,12 @@ class AeditValidatorTest {
 					}
 					
 				}''', "UTF-8"), null)
-			]
-		]).assertMethod(AeditPackage.eINSTANCE.addRecord, AeditValidator.DUPLICATE_FIELD,
-			"Record with this name already exists in this namespace!")
+			] 
+		]).assertMethod(AeditPackage.eINSTANCE.addRecord, ErrorCodes.ADD_RECORD, ErrorMessages.DUPLICATE_SCHEMA)
 	}
 
 	@Test
-	def testRemoveDeletedVariable() {
+	def testRemoveVariable__DeletedVariable() {
 		parse('''
 			rule Rule1 {
 						change record house.Garage {
@@ -189,11 +268,11 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedVariable(AeditPackage.eINSTANCE.removeVariable)
+		]).assertMethod(AeditPackage.eINSTANCE.removeVariable, ErrorCodes.REMOVE_VARIABLE, ErrorMessages.DELETED_FIELD)
 	}
 
 	@Test
-	def testRemoveRenamedVariable() {
+	def testRemoveVariable__RenamedVariable() {
 		parse('''
 			rule Rule1 {
 						change record house.Garage {
@@ -212,11 +291,36 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedVariable(AeditPackage.eINSTANCE.removeVariable)
+		]).assertMethod(AeditPackage.eINSTANCE.removeVariable, ErrorCodes.REMOVE_VARIABLE, ErrorMessages.DELETED_FIELD)
+	}
+	
+	@Test
+	def testRemoveVariable__IncorrectVariable(){
+		parse('''
+			rule Rule1 {
+						change record house.Garage {
+							remove num1;
+						}
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					record SecondGarage{
+						int num1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.removeVariable, ErrorCodes.REMOVE_VARIABLE, ErrorMessages.FIELD_NOT_IN_SCHEMA)
 	}
 
 	@Test
-	def testRenameRemovedVariable() {
+	def testRenameVariable__RemovedVariable() {
 		parse('''
 			rule Rule1 {
 						change record house.Garage {
@@ -235,11 +339,11 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedVariable(AeditPackage.eINSTANCE.renameVariable)
+		]).assertMethod(AeditPackage.eINSTANCE.renameVariable, ErrorCodes.RENAME_VARIABLE, ErrorMessages.DELETED_FIELD)
 	}
 
 	@Test
-	def testRenameVariableTwice() {
+	def testRenameVariable__RenamedVariable() {
 		parse('''
 			rule Rule1 {
 						change record house.Garage {
@@ -258,11 +362,60 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedVariable(AeditPackage.eINSTANCE.renameVariable)
+		]).assertMethod(AeditPackage.eINSTANCE.renameVariable, ErrorCodes.RENAME_VARIABLE, ErrorMessages.DELETED_FIELD)
 	}
+	
+	@Test
+	def testRenameVariable__IncorrectVariable() {
+		parse('''
+			rule Rule1 {
+						change record house.Garage {
+							rename num1 => newNum;
+						}
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					record SecondGarage{
+						int num1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.renameVariable, ErrorCodes.RENAME_VARIABLE, ErrorMessages.FIELD_NOT_IN_SCHEMA)
+	}
+	
+	@Test
+	def testRenameVariable__NewNameTaken() {
+		parse('''
+			rule Rule1 {
+						change record house.Garage {
+							rename num => foo;
+						}
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+						sting foo;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.renameVariable, ErrorCodes.RENAME_VARIABLE, ErrorMessages.DUPLICATE_FIELD)
+	}
+	
 
 	@Test
-	def testChangeTypeOfRemovedVariable() {
+	def testChangeType__RemovedVariable() {
 		parse('''
 			rule Rule1 {
 						change record house.Garage {
@@ -281,11 +434,36 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedVariable(AeditPackage.eINSTANCE.changeType)
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.CHANGE_TYPE, ErrorMessages.DELETED_FIELD)
+	}
+	
+	@Test
+	def testChangeType__IncorrectVariable() {
+		parse('''
+			rule Rule1 {
+						change record house.Garage {
+							set_type num1 => long;
+						}
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					record SecondGarage{
+						int num1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.CHANGE_TYPE, ErrorMessages.FIELD_NOT_IN_SCHEMA)
 	}
 
 	@Test
-	def testChangeValueOfRemovedVariable() {
+	def testChangeDefValue__RemovedVariable() {
 		parse('''
 			rule Rule1 {
 						change record house.Garage {
@@ -304,11 +482,36 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedVariable(AeditPackage.eINSTANCE.changeDefValue)
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.CHANGE_DEF_VALUE, ErrorMessages.DELETED_FIELD)
+	}
+	
+	@Test
+	def testChangeDefValue__IncorrectVariable() {
+		parse('''
+			rule Rule1 {
+						change record house.Garage {
+							set_val num1 => 1;
+						}
+					}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					record SecondGarage{
+						int num1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.CHANGE_DEF_VALUE, ErrorMessages.FIELD_NOT_IN_SCHEMA)
 	}
 
 	@Test
-	def testDuplicateField() {
+	def testAddVariable_DuplicateField() {
 		parse('''
 			rule Rule1 {
 						change record house.Garage {
@@ -325,11 +528,11 @@ class AeditValidatorTest {
 					}
 				}''', "UTF-8"), null)
 			]
-		]).assertDuplicateField(AeditPackage.eINSTANCE.addVariable)
+		]).assertMethod(AeditPackage.eINSTANCE.addVariable, ErrorCodes.ADD_VARIABLE, ErrorMessages.DUPLICATE_FIELD)
 	}
 
 	@Test
-	def testDuplicateEnumConstant() {
+	def testAddEnumConstant__DuplicateEnumConstant() {
 		parse('''
 			rule Rule1 {
 					change enum house.Colors {
@@ -351,11 +554,11 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertDuplicateField(AeditPackage.eINSTANCE.addEnum)
+		]).assertMethod(AeditPackage.eINSTANCE.addEnum, ErrorCodes.ADD_ENUM_CONST, ErrorMessages.DUPLICATE_ENUM_CONST)
 	}
 
 	@Test
-	def testRemoveDeletedEnumConstant() {
+	def testRemoveEnumConstant_RemovedEnumConstant() {
 		parse('''
 			rule Rule1 {
 					change enum house.Colors {
@@ -378,11 +581,11 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedEnumConstant(AeditPackage.eINSTANCE.removeEnum)
+		]).assertMethod(AeditPackage.eINSTANCE.removeEnum, ErrorCodes.REMOVE_ENUM_CONST, ErrorMessages.REMOVED_ENUM_CONST)
 	}
 
 	@Test
-	def testRemoveUndefinedConstant() {
+	def testRemoveEnumConstant__UndefinedEnumConstant() {
 		parse('''
 			rule Rule1 {
 					change enum house.Colors {
@@ -404,39 +607,7 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertRemovedEnumConstant(AeditPackage.eINSTANCE.removeEnum)
-	}
-
-	def private assertRemovedSchema(Model m, EClass model) {
-		m.assertError(
-			model,
-			AeditValidator.REMOVE_SCHEMA,
-			"Schema does not exist!"
-		)
-	}
-
-	def private assertRemovedVariable(Model m, EClass model) {
-		m.assertError(
-			model,
-			AeditValidator.REMOVE_VARIABLE,
-			"Variable has been deleted!"
-		)
-	}
-
-	def private assertRemovedEnumConstant(Model m, EClass model) {
-		m.assertError(
-			model,
-			AeditValidator.REMOVE_ENUM_CONST,
-			"Constant does not exist!"
-		)
-	}
-
-	def private assertDuplicateField(Model m, EClass model) {
-		m.assertError(
-			model,
-			AeditValidator.DUPLICATE_FIELD,
-			"Field with this name already exists!"
-		)
+		]).assertMethod(AeditPackage.eINSTANCE.removeEnum, ErrorCodes.REMOVE_ENUM_CONST, ErrorMessages.NON_EXISTENT_ENUM_CONST)
 	}
 
 	def private assertMethod(Model m, EClass model, String code, String message) {

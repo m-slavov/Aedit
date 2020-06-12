@@ -309,22 +309,13 @@ public interface AeditPackage extends EPackage
   int ARRAY_EDIT_RULES = 7;
 
   /**
-   * The feature id for the '<em><b>Array</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ARRAY_EDIT_RULES__ARRAY = SCHEMA_RULE_FEATURE_COUNT + 0;
-
-  /**
    * The number of structural features of the '<em>Array Edit Rules</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ARRAY_EDIT_RULES_FEATURE_COUNT = SCHEMA_RULE_FEATURE_COUNT + 1;
+  int ARRAY_EDIT_RULES_FEATURE_COUNT = SCHEMA_RULE_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.EnumRuleImpl <em>Enum Rule</em>}' class.
@@ -1242,13 +1233,13 @@ public interface AeditPackage extends EPackage
   int REMOVE_ARRAY_VALUE = 31;
 
   /**
-   * The feature id for the '<em><b>Array</b></em>' reference.
+   * The feature id for the '<em><b>Variable</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REMOVE_ARRAY_VALUE__ARRAY = ARRAY_EDIT_RULES__ARRAY;
+  int REMOVE_ARRAY_VALUE__VARIABLE = ARRAY_EDIT_RULES_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Value To Remove</b></em>' containment reference.
@@ -1257,7 +1248,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE = ARRAY_EDIT_RULES_FEATURE_COUNT + 0;
+  int REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Remove Array Value</em>' class.
@@ -1266,7 +1257,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REMOVE_ARRAY_VALUE_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
+  int REMOVE_ARRAY_VALUE_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.RemoveArrayValueAtIndexImpl <em>Remove Array Value At Index</em>}' class.
@@ -1279,15 +1270,6 @@ public interface AeditPackage extends EPackage
   int REMOVE_ARRAY_VALUE_AT_INDEX = 32;
 
   /**
-   * The feature id for the '<em><b>Array</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY = ARRAY_EDIT_RULES__ARRAY;
-
-  /**
    * The feature id for the '<em><b>Index</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1297,13 +1279,22 @@ public interface AeditPackage extends EPackage
   int REMOVE_ARRAY_VALUE_AT_INDEX__INDEX = ARRAY_EDIT_RULES_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Array</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Remove Array Value At Index</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REMOVE_ARRAY_VALUE_AT_INDEX_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
+  int REMOVE_ARRAY_VALUE_AT_INDEX_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.AddValueToArrayImpl <em>Add Value To Array</em>}' class.
@@ -1316,15 +1307,6 @@ public interface AeditPackage extends EPackage
   int ADD_VALUE_TO_ARRAY = 33;
 
   /**
-   * The feature id for the '<em><b>Array</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ADD_VALUE_TO_ARRAY__ARRAY = ARRAY_EDIT_RULES__ARRAY;
-
-  /**
    * The feature id for the '<em><b>Index</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1334,13 +1316,31 @@ public interface AeditPackage extends EPackage
   int ADD_VALUE_TO_ARRAY__INDEX = ARRAY_EDIT_RULES_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Array</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_VALUE_TO_ARRAY__ARRAY = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Value To Add</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_VALUE_TO_ARRAY__VALUE_TO_ADD = ARRAY_EDIT_RULES_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Add Value To Array</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ADD_VALUE_TO_ARRAY_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 1;
+  int ADD_VALUE_TO_ARRAY_FEATURE_COUNT = ARRAY_EDIT_RULES_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.FieldImpl <em>Field</em>}' class.
@@ -2141,17 +2141,6 @@ public interface AeditPackage extends EPackage
   EClass getArrayEditRules();
 
   /**
-   * Returns the meta object for the reference '{@link org.aedit.aedit.ArrayEditRules#getArray <em>Array</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Array</em>'.
-   * @see org.aedit.aedit.ArrayEditRules#getArray()
-   * @see #getArrayEditRules()
-   * @generated
-   */
-  EReference getArrayEditRules_Array();
-
-  /**
    * Returns the meta object for class '{@link org.aedit.aedit.EnumRule <em>Enum Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2898,6 +2887,17 @@ public interface AeditPackage extends EPackage
   EClass getRemoveArrayValue();
 
   /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.RemoveArrayValue#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Variable</em>'.
+   * @see org.aedit.aedit.RemoveArrayValue#getVariable()
+   * @see #getRemoveArrayValue()
+   * @generated
+   */
+  EReference getRemoveArrayValue_Variable();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.aedit.aedit.RemoveArrayValue#getValueToRemove <em>Value To Remove</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2930,6 +2930,17 @@ public interface AeditPackage extends EPackage
   EAttribute getRemoveArrayValueAtIndex_Index();
 
   /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.RemoveArrayValueAtIndex#getArray <em>Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Array</em>'.
+   * @see org.aedit.aedit.RemoveArrayValueAtIndex#getArray()
+   * @see #getRemoveArrayValueAtIndex()
+   * @generated
+   */
+  EReference getRemoveArrayValueAtIndex_Array();
+
+  /**
    * Returns the meta object for class '{@link org.aedit.aedit.AddValueToArray <em>Add Value To Array</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2949,6 +2960,28 @@ public interface AeditPackage extends EPackage
    * @generated
    */
   EAttribute getAddValueToArray_Index();
+
+  /**
+   * Returns the meta object for the reference '{@link org.aedit.aedit.AddValueToArray#getArray <em>Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Array</em>'.
+   * @see org.aedit.aedit.AddValueToArray#getArray()
+   * @see #getAddValueToArray()
+   * @generated
+   */
+  EReference getAddValueToArray_Array();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.aedit.aedit.AddValueToArray#getValueToAdd <em>Value To Add</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value To Add</em>'.
+   * @see org.aedit.aedit.AddValueToArray#getValueToAdd()
+   * @see #getAddValueToArray()
+   * @generated
+   */
+  EReference getAddValueToArray_ValueToAdd();
 
   /**
    * Returns the meta object for class '{@link org.aedit.aedit.Field <em>Field</em>}'.
@@ -3627,14 +3660,6 @@ public interface AeditPackage extends EPackage
     EClass ARRAY_EDIT_RULES = eINSTANCE.getArrayEditRules();
 
     /**
-     * The meta object literal for the '<em><b>Array</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ARRAY_EDIT_RULES__ARRAY = eINSTANCE.getArrayEditRules_Array();
-
-    /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.EnumRuleImpl <em>Enum Rule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4243,6 +4268,14 @@ public interface AeditPackage extends EPackage
     EClass REMOVE_ARRAY_VALUE = eINSTANCE.getRemoveArrayValue();
 
     /**
+     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_ARRAY_VALUE__VARIABLE = eINSTANCE.getRemoveArrayValue_Variable();
+
+    /**
      * The meta object literal for the '<em><b>Value To Remove</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4269,6 +4302,14 @@ public interface AeditPackage extends EPackage
     EAttribute REMOVE_ARRAY_VALUE_AT_INDEX__INDEX = eINSTANCE.getRemoveArrayValueAtIndex_Index();
 
     /**
+     * The meta object literal for the '<em><b>Array</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY = eINSTANCE.getRemoveArrayValueAtIndex_Array();
+
+    /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.AddValueToArrayImpl <em>Add Value To Array</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4285,6 +4326,22 @@ public interface AeditPackage extends EPackage
      * @generated
      */
     EAttribute ADD_VALUE_TO_ARRAY__INDEX = eINSTANCE.getAddValueToArray_Index();
+
+    /**
+     * The meta object literal for the '<em><b>Array</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_VALUE_TO_ARRAY__ARRAY = eINSTANCE.getAddValueToArray_Array();
+
+    /**
+     * The meta object literal for the '<em><b>Value To Add</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_VALUE_TO_ARRAY__VALUE_TO_ADD = eINSTANCE.getAddValueToArray_ValueToAdd();
 
     /**
      * The meta object literal for the '{@link org.aedit.aedit.impl.FieldImpl <em>Field</em>}' class.

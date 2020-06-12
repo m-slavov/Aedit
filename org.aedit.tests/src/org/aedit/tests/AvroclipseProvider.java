@@ -12,4 +12,5 @@ public class AvroclipseProvider extends AeditInjectorProvider{
 		return super.internalCreateInjector();
 		
 	}
+
 }

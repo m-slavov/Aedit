@@ -3,12 +3,15 @@
  */
 package org.aedit.aedit.impl;
 
+import avroclipse.avroIDL.Field;
+
 import org.aedit.aedit.AeditPackage;
 import org.aedit.aedit.RemoveArrayValueAtIndex;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -21,6 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link org.aedit.aedit.impl.RemoveArrayValueAtIndexImpl#getIndex <em>Index</em>}</li>
+ *   <li>{@link org.aedit.aedit.impl.RemoveArrayValueAtIndexImpl#getArray <em>Array</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,6 +50,16 @@ public class RemoveArrayValueAtIndexImpl extends ArrayEditRulesImpl implements R
    * @ordered
    */
   protected int index = INDEX_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getArray() <em>Array</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getArray()
+   * @generated
+   * @ordered
+   */
+  protected Field array;
 
   /**
    * <!-- begin-user-doc -->
@@ -99,12 +113,60 @@ public class RemoveArrayValueAtIndexImpl extends ArrayEditRulesImpl implements R
    * @generated
    */
   @Override
+  public Field getArray()
+  {
+    if (array != null && array.eIsProxy())
+    {
+      InternalEObject oldArray = (InternalEObject)array;
+      array = (Field)eResolveProxy(oldArray);
+      if (array != oldArray)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, oldArray, array));
+      }
+    }
+    return array;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Field basicGetArray()
+  {
+    return array;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setArray(Field newArray)
+  {
+    Field oldArray = array;
+    array = newArray;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, oldArray, array));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
       case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__INDEX:
         return getIndex();
+      case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY:
+        if (resolve) return getArray();
+        return basicGetArray();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -121,6 +183,9 @@ public class RemoveArrayValueAtIndexImpl extends ArrayEditRulesImpl implements R
     {
       case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__INDEX:
         setIndex((Integer)newValue);
+        return;
+      case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY:
+        setArray((Field)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -139,6 +204,9 @@ public class RemoveArrayValueAtIndexImpl extends ArrayEditRulesImpl implements R
       case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__INDEX:
         setIndex(INDEX_EDEFAULT);
         return;
+      case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY:
+        setArray((Field)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -155,6 +223,8 @@ public class RemoveArrayValueAtIndexImpl extends ArrayEditRulesImpl implements R
     {
       case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__INDEX:
         return index != INDEX_EDEFAULT;
+      case AeditPackage.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY:
+        return array != null;
     }
     return super.eIsSet(featureID);
   }

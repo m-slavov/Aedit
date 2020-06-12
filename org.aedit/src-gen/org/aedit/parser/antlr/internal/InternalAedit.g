@@ -2343,9 +2343,9 @@ ruleRemoveArrayValue returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='remove'
+		otherlv_0='remove_value'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getRemoveArrayValueAccess().getRemoveKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getRemoveArrayValueAccess().getRemove_valueKeyword_0());
 		}
 		(
 			(
@@ -2354,9 +2354,12 @@ ruleRemoveArrayValue returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getRemoveArrayValueRule());
 					}
 				}
-				otherlv_1=RULE_ID
 				{
-					newLeafNode(otherlv_1, grammarAccess.getRemoveArrayValueAccess().getArrayFieldCrossReference_1_0());
+					newCompositeNode(grammarAccess.getRemoveArrayValueAccess().getVariableFieldCrossReference_1_0());
+				}
+				ruleQN
+				{
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
@@ -2383,6 +2386,10 @@ ruleRemoveArrayValue returns [EObject current=null]
 				}
 			)
 		)
+		otherlv_4=';'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getRemoveArrayValueAccess().getSemicolonKeyword_4());
+		}
 	)
 ;
 
@@ -2402,9 +2409,9 @@ ruleRemoveArrayValueAtIndex returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='remove.at'
+		otherlv_0='remove_value.at'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getRemoveArrayValueAtIndexAccess().getRemoveAtKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getRemoveArrayValueAtIndexAccess().getRemove_valueAtKeyword_0());
 		}
 		otherlv_1='('
 		{
@@ -2439,9 +2446,12 @@ ruleRemoveArrayValueAtIndex returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getRemoveArrayValueAtIndexRule());
 					}
 				}
-				otherlv_4=RULE_ID
 				{
-					newLeafNode(otherlv_4, grammarAccess.getRemoveArrayValueAtIndexAccess().getArrayFieldCrossReference_4_0());
+					newCompositeNode(grammarAccess.getRemoveArrayValueAtIndexAccess().getArrayFieldCrossReference_4_0());
+				}
+				ruleQN
+				{
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
@@ -2468,9 +2478,9 @@ ruleAddValueToArray returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='add.at'
+		otherlv_0='add_value.at'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getAddValueToArrayAccess().getAddAtKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getAddValueToArrayAccess().getAdd_valueAtKeyword_0());
 		}
 		otherlv_1='('
 		{
@@ -2505,15 +2515,59 @@ ruleAddValueToArray returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getAddValueToArrayRule());
 					}
 				}
-				otherlv_4=RULE_ID
 				{
-					newLeafNode(otherlv_4, grammarAccess.getAddValueToArrayAccess().getArrayFieldCrossReference_4_0());
+					newCompositeNode(grammarAccess.getAddValueToArrayAccess().getArrayFieldCrossReference_4_0());
+				}
+				ruleQN
+				{
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_5=';'
+		otherlv_5='=>'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getAddValueToArrayAccess().getSemicolonKeyword_5());
+			newLeafNode(otherlv_5, grammarAccess.getAddValueToArrayAccess().getEqualsSignGreaterThanSignKeyword_5());
+		}
+		(
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getAddValueToArrayAccess().getValueToAddArrayParserRuleCall_6_0_0());
+					}
+					lv_valueToAdd_6_1=ruleArray
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getAddValueToArrayRule());
+						}
+						set(
+							$current,
+							"valueToAdd",
+							lv_valueToAdd_6_1,
+							"org.aedit.Aedit.Array");
+						afterParserOrEnumRuleCall();
+					}
+					    |
+					{
+						newCompositeNode(grammarAccess.getAddValueToArrayAccess().getValueToAddValueParserRuleCall_6_0_1());
+					}
+					lv_valueToAdd_6_2=ruleValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getAddValueToArrayRule());
+						}
+						set(
+							$current,
+							"valueToAdd",
+							lv_valueToAdd_6_2,
+							"org.aedit.Aedit.Value");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)
+		otherlv_7=';'
+		{
+			newLeafNode(otherlv_7, grammarAccess.getAddValueToArrayAccess().getSemicolonKeyword_7());
 		}
 	)
 ;

@@ -1447,32 +1447,33 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	public class RemoveArrayValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.RemoveArrayValue");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cRemoveKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cArrayAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cArrayFieldCrossReference_1_0 = (CrossReference)cArrayAssignment_1.eContents().get(0);
-		private final RuleCall cArrayFieldIDTerminalRuleCall_1_0_1 = (RuleCall)cArrayFieldCrossReference_1_0.eContents().get(1);
+		private final Keyword cRemove_valueKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cVariableFieldCrossReference_1_0 = (CrossReference)cVariableAssignment_1.eContents().get(0);
+		private final RuleCall cVariableFieldQNParserRuleCall_1_0_1 = (RuleCall)cVariableFieldCrossReference_1_0.eContents().get(1);
 		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cValueToRemoveAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cValueToRemoveValueParserRuleCall_3_0 = (RuleCall)cValueToRemoveAssignment_3.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//RemoveArrayValue:
-		//	'remove' array=[avroIDL::Field] '=>' valueToRemove=Value;
+		//	'remove_value' variable=[avroIDL::Field|QN] '=>' valueToRemove=Value ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'remove' array=[avroIDL::Field] '=>' valueToRemove=Value
+		//'remove_value' variable=[avroIDL::Field|QN] '=>' valueToRemove=Value ';'
 		public Group getGroup() { return cGroup; }
 		
-		//'remove'
-		public Keyword getRemoveKeyword_0() { return cRemoveKeyword_0; }
+		//'remove_value'
+		public Keyword getRemove_valueKeyword_0() { return cRemove_valueKeyword_0; }
 		
-		//array=[avroIDL::Field]
-		public Assignment getArrayAssignment_1() { return cArrayAssignment_1; }
+		//variable=[avroIDL::Field|QN]
+		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
 		
-		//[avroIDL::Field]
-		public CrossReference getArrayFieldCrossReference_1_0() { return cArrayFieldCrossReference_1_0; }
+		//[avroIDL::Field|QN]
+		public CrossReference getVariableFieldCrossReference_1_0() { return cVariableFieldCrossReference_1_0; }
 		
-		//ID
-		public RuleCall getArrayFieldIDTerminalRuleCall_1_0_1() { return cArrayFieldIDTerminalRuleCall_1_0_1; }
+		//QN
+		public RuleCall getVariableFieldQNParserRuleCall_1_0_1() { return cVariableFieldQNParserRuleCall_1_0_1; }
 		
 		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
@@ -1482,29 +1483,32 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Value
 		public RuleCall getValueToRemoveValueParserRuleCall_3_0() { return cValueToRemoveValueParserRuleCall_3_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 	public class RemoveArrayValueAtIndexElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.RemoveArrayValueAtIndex");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cRemoveAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cRemove_valueAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cIndexAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cIndexINTTerminalRuleCall_2_0 = (RuleCall)cIndexAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cArrayAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final CrossReference cArrayFieldCrossReference_4_0 = (CrossReference)cArrayAssignment_4.eContents().get(0);
-		private final RuleCall cArrayFieldIDTerminalRuleCall_4_0_1 = (RuleCall)cArrayFieldCrossReference_4_0.eContents().get(1);
+		private final RuleCall cArrayFieldQNParserRuleCall_4_0_1 = (RuleCall)cArrayFieldCrossReference_4_0.eContents().get(1);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//RemoveArrayValueAtIndex:
-		//	'remove.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+		//	'remove_value.at' '(' index=INT ')' array=[avroIDL::Field|QN] ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'remove.at' '(' index=INT ')' array=[avroIDL::Field] ';'
+		//'remove_value.at' '(' index=INT ')' array=[avroIDL::Field|QN] ';'
 		public Group getGroup() { return cGroup; }
 		
-		//'remove.at'
-		public Keyword getRemoveAtKeyword_0() { return cRemoveAtKeyword_0; }
+		//'remove_value.at'
+		public Keyword getRemove_valueAtKeyword_0() { return cRemove_valueAtKeyword_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
@@ -1518,14 +1522,14 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 		
-		//array=[avroIDL::Field]
+		//array=[avroIDL::Field|QN]
 		public Assignment getArrayAssignment_4() { return cArrayAssignment_4; }
 		
-		//[avroIDL::Field]
+		//[avroIDL::Field|QN]
 		public CrossReference getArrayFieldCrossReference_4_0() { return cArrayFieldCrossReference_4_0; }
 		
-		//ID
-		public RuleCall getArrayFieldIDTerminalRuleCall_4_0_1() { return cArrayFieldIDTerminalRuleCall_4_0_1; }
+		//QN
+		public RuleCall getArrayFieldQNParserRuleCall_4_0_1() { return cArrayFieldQNParserRuleCall_4_0_1; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
@@ -1533,25 +1537,30 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	public class AddValueToArrayElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AddValueToArray");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cAddAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cAdd_valueAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cIndexAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cIndexINTTerminalRuleCall_2_0 = (RuleCall)cIndexAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cArrayAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final CrossReference cArrayFieldCrossReference_4_0 = (CrossReference)cArrayAssignment_4.eContents().get(0);
-		private final RuleCall cArrayFieldIDTerminalRuleCall_4_0_1 = (RuleCall)cArrayFieldCrossReference_4_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final RuleCall cArrayFieldQNParserRuleCall_4_0_1 = (RuleCall)cArrayFieldCrossReference_4_0.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cValueToAddAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final Alternatives cValueToAddAlternatives_6_0 = (Alternatives)cValueToAddAssignment_6.eContents().get(0);
+		private final RuleCall cValueToAddArrayParserRuleCall_6_0_0 = (RuleCall)cValueToAddAlternatives_6_0.eContents().get(0);
+		private final RuleCall cValueToAddValueParserRuleCall_6_0_1 = (RuleCall)cValueToAddAlternatives_6_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//AddValueToArray:
-		//	'add.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+		//	'add_value.at' '(' index=INT ')' array=[avroIDL::Field|QN] '=>' valueToAdd=(Array | Value) ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'add.at' '(' index=INT ')' array=[avroIDL::Field] ';'
+		//'add_value.at' '(' index=INT ')' array=[avroIDL::Field|QN] '=>' valueToAdd=(Array | Value) ';'
 		public Group getGroup() { return cGroup; }
 		
-		//'add.at'
-		public Keyword getAddAtKeyword_0() { return cAddAtKeyword_0; }
+		//'add_value.at'
+		public Keyword getAdd_valueAtKeyword_0() { return cAdd_valueAtKeyword_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
@@ -1565,17 +1574,32 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 		
-		//array=[avroIDL::Field]
+		//array=[avroIDL::Field|QN]
 		public Assignment getArrayAssignment_4() { return cArrayAssignment_4; }
 		
-		//[avroIDL::Field]
+		//[avroIDL::Field|QN]
 		public CrossReference getArrayFieldCrossReference_4_0() { return cArrayFieldCrossReference_4_0; }
 		
-		//ID
-		public RuleCall getArrayFieldIDTerminalRuleCall_4_0_1() { return cArrayFieldIDTerminalRuleCall_4_0_1; }
+		//QN
+		public RuleCall getArrayFieldQNParserRuleCall_4_0_1() { return cArrayFieldQNParserRuleCall_4_0_1; }
+		
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_5() { return cEqualsSignGreaterThanSignKeyword_5; }
+		
+		//valueToAdd=(Array | Value)
+		public Assignment getValueToAddAssignment_6() { return cValueToAddAssignment_6; }
+		
+		//(Array | Value)
+		public Alternatives getValueToAddAlternatives_6_0() { return cValueToAddAlternatives_6_0; }
+		
+		//Array
+		public RuleCall getValueToAddArrayParserRuleCall_6_0_0() { return cValueToAddArrayParserRuleCall_6_0_0; }
+		
+		//Value
+		public RuleCall getValueToAddValueParserRuleCall_6_0_1() { return cValueToAddValueParserRuleCall_6_0_1; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+		public Keyword getSemicolonKeyword_7() { return cSemicolonKeyword_7; }
 	}
 	public class FieldElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.Field");
@@ -2770,7 +2794,7 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//RemoveArrayValue:
-	//	'remove' array=[avroIDL::Field] '=>' valueToRemove=Value;
+	//	'remove_value' variable=[avroIDL::Field|QN] '=>' valueToRemove=Value ';';
 	public RemoveArrayValueElements getRemoveArrayValueAccess() {
 		return pRemoveArrayValue;
 	}
@@ -2780,7 +2804,7 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//RemoveArrayValueAtIndex:
-	//	'remove.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+	//	'remove_value.at' '(' index=INT ')' array=[avroIDL::Field|QN] ';';
 	public RemoveArrayValueAtIndexElements getRemoveArrayValueAtIndexAccess() {
 		return pRemoveArrayValueAtIndex;
 	}
@@ -2790,7 +2814,7 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//AddValueToArray:
-	//	'add.at' '(' index=INT ')' array=[avroIDL::Field] ';';
+	//	'add_value.at' '(' index=INT ')' array=[avroIDL::Field|QN] '=>' valueToAdd=(Array | Value) ';';
 	public AddValueToArrayElements getAddValueToArrayAccess() {
 		return pAddValueToArray;
 	}

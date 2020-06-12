@@ -4,22 +4,42 @@
 package org.aedit.validation
 
 import HelperClass.HelperClass
+import avroclipse.avroIDL.Array
+import avroclipse.avroIDL.ArrayFieldType
+import avroclipse.avroIDL.AvroIDLFactory
+import avroclipse.avroIDL.AvroIDLFile
+import avroclipse.avroIDL.Field
+import avroclipse.avroIDL.PrimativeTypeLink
+import avroclipse.avroIDL.RecordType
+import avroclipse.avroIDL.TypeDef
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import java.util.Map
+import org.aedit.aedit.AddAnnotationToField
+import org.aedit.aedit.AddAnnotationToSchema
+import org.aedit.aedit.AddEnum
 import org.aedit.aedit.AddEnumeration
+import org.aedit.aedit.AddNameAnnotationToField
 import org.aedit.aedit.AddRecord
+import org.aedit.aedit.AddValueToArray
 import org.aedit.aedit.AddVariable
 import org.aedit.aedit.AeditPackage
 import org.aedit.aedit.ChangeDefValue
 import org.aedit.aedit.ChangeEnum
 import org.aedit.aedit.ChangeSchema
 import org.aedit.aedit.ChangeType
-import org.aedit.aedit.Field
+import org.aedit.aedit.FloatValue
 import org.aedit.aedit.GenericRule
+import org.aedit.aedit.IntValue
 import org.aedit.aedit.Model
+import org.aedit.aedit.PrimitiveTypeField
+import org.aedit.aedit.RemoveAnnotationFromField
+import org.aedit.aedit.RemoveAnnotationFromSchema
+import org.aedit.aedit.RemoveArrayValue
+import org.aedit.aedit.RemoveArrayValueAtIndex
 import org.aedit.aedit.RemoveEnum
+import org.aedit.aedit.RemoveNameAnnotationFromField
 import org.aedit.aedit.RemoveSchema
 import org.aedit.aedit.RemoveVariable
 import org.aedit.aedit.RenameEnum
@@ -27,17 +47,10 @@ import org.aedit.aedit.RenameSchema
 import org.aedit.aedit.RenameVariable
 import org.aedit.aedit.RuleDeclaration
 import org.aedit.aedit.RuleMap
-import org.eclipse.xtext.validation.Check
-import avroclipse.avroIDL.AvroIDLFile
-import avroclipse.avroIDL.EnumType
-import avroclipse.avroIDL.PrimativeTypeLink
-import avroclipse.avroIDL.RecordType
-import avroclipse.avroIDL.TypeDef
 import org.aedit.aedit.StringValue
-import org.aedit.aedit.IntValue
-import org.aedit.aedit.FloatValue
-import org.aedit.aedit.AddEnum
-import org.aedit.aedit.PrimitiveTypeField
+import org.aedit.aedit.Value
+import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
@@ -46,28 +59,36 @@ import org.aedit.aedit.PrimitiveTypeField
  */
 class AeditValidator extends AbstractAeditValidator {
 
-	private static Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
-	private List<String> removedVariables = new ArrayList<String>()
-	private List<String> newVariables = new ArrayList<String>()
-	private List<String> existingVariables = new ArrayList<String>()
+	static Map<String, AvroIDLFile> protocols = new HashMap<String, AvroIDLFile>();
 
-	protected static val ISSUE_CODE_PREFIX = "org.aedit.";
-	public static val REMOVE_SCHEMA = ISSUE_CODE_PREFIX + "RemoveSchema";
-	public static val REMOVE_VARIABLE = ISSUE_CODE_PREFIX + "RemoveVariable";
-	public static val REMOVE_ENUM_CONST = ISSUE_CODE_PREFIX + "RemoveEnumConst";
-	public static val DUPLICATE_FIELD = ISSUE_CODE_PREFIX + "DuplicateField";
+	List<String> removedVariables = new ArrayList<String>()
+	List<String> removedAnnotations = new ArrayList<String>()
+	List<String> removedNameAnnotations = new ArrayList<String>()
 
-	private String currentSchema;
-	private String currentProtocol;
+	List<String> existingVariables = new ArrayList<String>()
+	List<String> existingAnnotations = new ArrayList<String>()
+	List<String> existingNameAnnotations = new ArrayList<String>()
+
+	List<String> newVariables = new ArrayList<String>()
+	List<String> newAnnotations = new ArrayList<String>()
+	List<String> newNameAnnotations = new ArrayList<String>()
+
+	HashMap<String, Integer> arraySizes = new HashMap<String, Integer>();
+
+	String currentSchema;
+	String currentProtocol;
 
 	@Check
 	def checkModel(Model model) {
 		protocols.clear
+		existingAnnotations.clear
+		existingNameAnnotations.clear
 
 		if (protocols.empty) {
 			protocols = HelperClass.getAvroFiles(model.eResource)
 			protocols.forEach [ p1, p2 |
-				existingVariables.addAll(HelperClass.getSchemasAndFields(p2))
+				existingVariables.addAll(
+					HelperClass.getSchemasAndFields(p2, existingAnnotations, existingNameAnnotations))
 			]
 		}
 	}
@@ -75,8 +96,13 @@ class AeditValidator extends AbstractAeditValidator {
 	@Check
 	def checkRuleDeclaration(RuleDeclaration ruleDeclaration) {
 
+		arraySizes.clear
 		removedVariables.clear
 		newVariables.clear
+		newAnnotations.clear
+		newNameAnnotations.clear
+		removedAnnotations.clear
+		removedNameAnnotations.clear
 
 	}
 
@@ -90,9 +116,14 @@ class AeditValidator extends AbstractAeditValidator {
 
 		var fullName = currentProtocol + '.' + currentSchema
 
+		if (!HelperClass.checkIfTypeIsCorrect(changeSchema.schemaType, changeSchema.schema)) {
+			error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA_TYPE,
+				ErrorCodes.CHANGE_SCHEMA)
+		}
+
 		if (removedVariables.contains(fullName)) {
-			error("Schema does not exist!", AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA,
-				org.aedit.validation.AeditValidator.REMOVE_SCHEMA, fullName)
+			error(ErrorMessages.DELETED_SCHEMA, AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA, ErrorCodes.CHANGE_SCHEMA,
+				fullName)
 		}
 	}
 
@@ -107,8 +138,7 @@ class AeditValidator extends AbstractAeditValidator {
 		var fullName = currentProtocol + '.' + currentSchema
 
 		if (removedVariables.contains(fullName)) {
-			error("Schema does not exist!", AeditPackage.Literals.CHANGE_ENUM__SCHEMA,
-				org.aedit.validation.AeditValidator.REMOVE_SCHEMA, fullName)
+			error("Schema does not exist!", AeditPackage.Literals.CHANGE_ENUM__SCHEMA, ErrorCodes.CHANGE_ENUM, fullName)
 		}
 	}
 
@@ -117,9 +147,15 @@ class AeditValidator extends AbstractAeditValidator {
 
 		var fullName = currentProtocol + '.' + currentSchema + '.' + removeVariable.variable.name
 
+		if (!isFieldInSchema(removeVariable.variable, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE, ErrorCodes.REMOVE_VARIABLE)) {
+			return null
+		}
+
 		if (removedVariables.contains(fullName)) {
-			error("Variable has been deleted!", AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE, REMOVE_VARIABLE,
-				fullName)
+			error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE,
+				ErrorCodes.REMOVE_VARIABLE)
+			return null
 		} else {
 			removedVariables.add(fullName)
 		}
@@ -132,13 +168,20 @@ class AeditValidator extends AbstractAeditValidator {
 		var oldVar = currentProtocol + '.' + currentSchema + '.' + renameVariable.variable.name
 		var newVar = currentProtocol + '.' + currentSchema + '.' + renameVariable.newVarName
 
+		if (!isFieldInSchema(renameVariable.variable, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.RENAME_VARIABLE__VARIABLE, ErrorCodes.RENAME_VARIABLE)) {
+			return null
+		}
+
 		if (removedVariables.contains(oldVar)) {
-			error("Variable has been deleted!", AeditPackage.Literals.RENAME_VARIABLE__VARIABLE, REMOVE_VARIABLE,
-				oldVar)
+			error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.RENAME_VARIABLE__VARIABLE,
+				ErrorCodes.RENAME_VARIABLE)
+			return null
 		}
 
 		if (isUnique(newVar)) {
-			error("Variable with that name already exists!", AeditPackage.Literals.RENAME_VARIABLE__NEW_VAR_NAME)
+			error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.RENAME_VARIABLE__NEW_VAR_NAME,
+				ErrorCodes.RENAME_VARIABLE)
 		} else {
 			removedVariables.add(oldVar)
 		}
@@ -155,30 +198,199 @@ class AeditValidator extends AbstractAeditValidator {
 
 		var fullName = protocolName + '.' + schemaName
 
+		if (!HelperClass.checkIfTypeIsCorrect(removeSchema.schemaType, removeSchema.schema)) {
+			error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA_TYPE,
+				ErrorCodes.REMOVE_SCHEMA)
+		}
+
 		if (removedVariables.contains(fullName)) {
-			error("Schema does not exist!", AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA,
-				org.aedit.validation.AeditValidator.REMOVE_SCHEMA, fullName)
+			error(ErrorMessages.DELETED_SCHEMA, AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA, ErrorCodes.REMOVE_SCHEMA)
 		} else {
 			removedVariables.add(fullName)
 		}
 	}
 
 	@Check
-	def checkRenameSchema(RenameSchema RenameSchema) {
+	def checkRenameSchema(RenameSchema renameSchema) {
 		// Get name of the schema
-		val schemaName = RenameSchema.schema.name
+		val schemaName = renameSchema.schema.name
 		// Get name of the protocol
-		var schemaContainer = RenameSchema.schema.eContainer as TypeDef
+		var schemaContainer = renameSchema.schema.eContainer as TypeDef
 		val protocolName = (schemaContainer.eContainer as AvroIDLFile).name
 
 		var fullName = protocolName + '.' + schemaName
 
+		if (!HelperClass.checkIfTypeIsCorrect(renameSchema.schemaType, renameSchema.schema)) {
+			error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.RENAME_SCHEMA__SCHEMA_TYPE,
+				ErrorCodes.RENAME_SCHEMA)
+		}
+
 		if (removedVariables.contains(fullName)) {
-			error("Schema does not exist!", AeditPackage.Literals.RENAME_SCHEMA__SCHEMA,
-				org.aedit.validation.AeditValidator.REMOVE_SCHEMA, fullName)
+			error(ErrorMessages.DELETED_SCHEMA, AeditPackage.Literals.RENAME_SCHEMA__SCHEMA, ErrorCodes.RENAME_SCHEMA)
 		} else {
 			removedVariables.add(fullName)
 		}
+	}
+
+	@Check
+	def checkAddAnnotationToSchema(AddAnnotationToSchema addAnnotationToSchema) {
+		// Get name of the schema
+		val schemaName = addAnnotationToSchema.schema.name
+		// Get name of the protocol
+		var schemaContainer = addAnnotationToSchema.schema.eContainer as TypeDef
+		val protocolName = (schemaContainer.eContainer as AvroIDLFile).name
+
+		var fullName = protocolName + '.' + schemaName + '.' + addAnnotationToSchema.annotation.name
+
+		// Check if the specified type and the schema's type are the same
+		if (!HelperClass.checkIfTypeIsCorrect(addAnnotationToSchema.schemaType, addAnnotationToSchema.schema)) {
+			error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__SCHEMA_TYPE,
+				ErrorCodes.ADD_ANNOTATION_TO_SCHEMA, fullName)
+		}
+
+		// Check if annotation is already defined
+		if (existingAnnotations.contains(fullName) || newAnnotations.contains(fullName)) {
+			error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__ANNOTATION,
+				ErrorCodes.ADD_ANNOTATION_TO_SCHEMA, fullName)
+		} else {
+			newAnnotations.add(fullName)
+		}
+
+	}
+
+	@Check
+	def checkRemoveAnnotationFromSchema(RemoveAnnotationFromSchema removeAnnotationFromSchema) {
+		// Get name of the schema
+		val schemaName = removeAnnotationFromSchema.schema.name
+		// Get name of the protocol
+		var schemaContainer = removeAnnotationFromSchema.schema.eContainer as TypeDef
+		val protocolName = (schemaContainer.eContainer as AvroIDLFile).name
+
+		var fullName = protocolName + '.' + schemaName
+
+		// Check if the specified type and the schema's type are the same
+		if (!HelperClass.checkIfTypeIsCorrect(removeAnnotationFromSchema.schemaType,
+			removeAnnotationFromSchema.schema)) {
+			error("Incorrect type!", AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE,
+				ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, fullName)
+		}
+
+		val annotationToRemoveNamaspace = HelperClass.getAnnotationQualifiedName(
+			removeAnnotationFromSchema.annotationToRemove)
+
+		// Check if the annotation belongs to the current schema
+		if (!annotationToRemoveNamaspace.equals(fullName)) {
+			error("Schema does not have such annotation!",
+				AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE,
+				ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, fullName)
+		}
+	}
+
+	@Check
+	def checkAddAnnotationToField(AddAnnotationToField addAnnotationToField) {
+
+		if (!isFieldInSchema(addAnnotationToField.variable, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE, ErrorCodes.ADD_ANNOTATION_TO_FIELD)) {
+			return null
+		}
+
+		var annotationFullName = currentProtocol + '.' + currentSchema + '.' + addAnnotationToField.variable.name +
+			'.' + addAnnotationToField.annotation.name
+
+		if (existingAnnotations.contains(annotationFullName) || newAnnotations.contains(annotationFullName)) {
+			error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__ANNOTATION,
+				ErrorCodes.ADD_ANNOTATION_TO_FIELD, annotationFullName)
+		} else {
+			newAnnotations.add(annotationFullName)
+		}
+
+	}
+
+	@Check
+	def checkAddNameAnnotationToField(AddNameAnnotationToField addNameAnnotationToField) {
+
+		if (!isFieldInSchema(addNameAnnotationToField.variable, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE, ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD)) {
+			return null
+		}
+
+		var annotationFullName = currentProtocol + '.' + currentSchema + '.' + addNameAnnotationToField.variable.name +
+			'.' + addNameAnnotationToField.annotation.name
+
+		if (existingNameAnnotations.contains(annotationFullName) || newNameAnnotations.contains(annotationFullName)) {
+			error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION,
+				ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD, annotationFullName)
+		} else {
+			newNameAnnotations.add(annotationFullName)
+		}
+	}
+
+	@Check
+	def checkRemoveAnnotationFromField(RemoveAnnotationFromField removeAnnotationFromField) {
+
+		if (!isFieldInSchema(removeAnnotationFromField.variable, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE, ErrorCodes.REMOVE_ANNOTATION_FROM_FIELD)) {
+			return null
+		}
+
+		val annotationToRemoveNamaspace = HelperClass.getAnnotationQualifiedName(
+			removeAnnotationFromField.annotationToRemove)
+
+		val annotationToRemoveFullName = annotationToRemoveNamaspace + '.' +
+			removeAnnotationFromField.annotationToRemove.name
+
+		val currentNamespace = currentProtocol + '.' + currentSchema + '.' + removeAnnotationFromField.variable.name
+
+		// Check if the annotation belongs to the current schema
+		if (!annotationToRemoveNamaspace.equals(currentNamespace)) {
+			error(ErrorMessages.ANNOTATION_NOT_IN_FIELD,
+				AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE,
+				ErrorCodes.REMOVE_ANNOTATION_FROM_FIELD, currentNamespace)
+		}
+
+		// Check if annotation has already been deleted
+		if (removedAnnotations.contains(annotationToRemoveFullName)) {
+			error(ErrorMessages.DELETED_ANNOTATION,
+				AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE,
+				ErrorCodes.REMOVE_ANNOTATION_FROM_FIELD, currentNamespace)
+		} else {
+			removedAnnotations.add(annotationToRemoveFullName)
+		}
+	}
+
+	@Check
+	def checkRemoveNameAnnotationFromField(RemoveNameAnnotationFromField removeNameAnnotationFromField) {
+
+		if (!isFieldInSchema(removeNameAnnotationFromField.variable, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE,
+			ErrorCodes.REMOVE_NAME_ANNOTATION_FROM_FIELD)) {
+			return null
+		}
+
+		val annotationToRemoveNamaspace = HelperClass.getAnnotationQualifiedName(
+			removeNameAnnotationFromField.annotationToRemove)
+
+		val annotationToRemoveFullName = annotationToRemoveNamaspace + '.' +
+			removeNameAnnotationFromField.annotationToRemove.name
+
+		val currentNamespace = currentProtocol + '.' + currentSchema + '.' + removeNameAnnotationFromField.variable.name
+
+		// Check if the annotation belongs to the current schema
+		if (!annotationToRemoveNamaspace.equals(currentNamespace)) {
+			error(ErrorMessages.ANNOTATION_NOT_IN_FIELD,
+				AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE,
+				ErrorCodes.REMOVE_NAME_ANNOTATION_FROM_FIELD, currentNamespace)
+		}
+
+		// Check if annotation has already been deleted
+		if (removedNameAnnotations.contains(annotationToRemoveFullName)) {
+			error(ErrorMessages.DELETED_ANNOTATION,
+				AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE,
+				ErrorCodes.REMOVE_NAME_ANNOTATION_FROM_FIELD, currentNamespace)
+		} else {
+			removedNameAnnotations.add(annotationToRemoveFullName)
+		}
+
 	}
 
 	@Check
@@ -187,9 +399,9 @@ class AeditValidator extends AbstractAeditValidator {
 		var fullName = currentProtocol + '.' + currentSchema + '.' + removeEnum.varName
 
 		if (removedVariables.contains(fullName)) {
-			error("Constant does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, REMOVE_ENUM_CONST, fullName)
+			error(ErrorMessages.REMOVED_ENUM_CONST, AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, ErrorCodes.REMOVE_ENUM_CONST)
 		} else if (!existingVariables.contains(fullName)) {
-			error("Constant does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, REMOVE_ENUM_CONST, fullName)
+			error(ErrorMessages.NON_EXISTENT_ENUM_CONST, AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, ErrorCodes.REMOVE_ENUM_CONST)
 		} else {
 			removedVariables.add(fullName)
 		}
@@ -219,11 +431,20 @@ class AeditValidator extends AbstractAeditValidator {
 	@Check
 	def checkChangeType(ChangeType changeType) {
 
+		if (!isFieldInSchema(changeType.field, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.CHANGE_TYPE__FIELD, ErrorCodes.CHANGE_TYPE)) {
+			return null
+		}
+
 		var variable = getVariable(currentProtocol, currentSchema, changeType.field.name).^default
 		var fullName = currentProtocol + '.' + currentSchema + '.' + changeType.field.name
 
 		if (removedVariables.contains(fullName)) {
-			error("Variable has been deleted!", AeditPackage.Literals.CHANGE_TYPE__FIELD, REMOVE_VARIABLE, fullName)
+			error(
+				ErrorMessages.DELETED_FIELD,
+				AeditPackage.Literals.CHANGE_TYPE__FIELD,
+				ErrorCodes.CHANGE_TYPE
+			)
 		} else if (variable !== null) {
 
 			var varType = changeType.field.type
@@ -296,6 +517,11 @@ class AeditValidator extends AbstractAeditValidator {
 	@Check
 	def checkChangeDefValue(ChangeDefValue changeDefValue) {
 
+		if (!isFieldInSchema(changeDefValue.field, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD, ErrorCodes.CHANGE_DEF_VALUE)) {
+			return null
+		}
+
 		var fullName = currentProtocol + '.' + currentSchema + '.' + changeDefValue.field.name
 
 		if (!removedVariables.contains(fullName)) {
@@ -332,40 +558,42 @@ class AeditValidator extends AbstractAeditValidator {
 				}
 			}
 		} else {
-			error("Variable has been deleted!", AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD, REMOVE_VARIABLE,
-				fullName)
+			error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD,
+				ErrorCodes.CHANGE_DEF_VALUE)
 		}
 
 	}
 
-//	@Check
-//	def checkAddRecord(AddRecord addRecord) {
-//		var recordName = addRecord.namespace.name + '.' + addRecord.recordName
-//
-//		if (existingVariables.contains(recordName)) {
-//			error("Record with this name already exists in this namespace!",
-//				AeditPackage.Literals.ADD_RECORD__RECORD_NAME, DUPLICATE_FIELD, recordName)
-//		} else {
-//			newVariables.add(recordName)
-//
-//			for (field : addRecord.fields) {
-//				var varName = recordName + '.' + field.fieldType.varName
-//				if (newVariables.contains(varName)) {
-//					error("Variable with this name already exists!", AeditPackage.Literals.ADD_RECORD__FIELDS,
-//						addRecord.fields.indexOf(field))
-//				} else {
-//					newVariables.add(varName)
-//				}
-//			}
-//		}
-//
-//	}
+	@Check
+	def checkAddRecord(AddRecord addRecord) {
+		var recordName = addRecord.namespace.name + '.' + addRecord.recordName
+
+		if (existingVariables.contains(recordName) || newVariables.contains(recordName)) {
+			error(ErrorMessages.DUPLICATE_SCHEMA, AeditPackage.Literals.ADD_RECORD__RECORD_NAME, ErrorCodes.ADD_RECORD)
+		} else {
+			newVariables.add(recordName)
+
+			for (field : addRecord.fields) {
+
+				var newFieldName = HelperClass.getFieldName(field)
+				var fullFieldName = recordName + '.' + newFieldName
+
+				if (newVariables.contains(fullFieldName)) {
+					error("Variable with this name already exists!", AeditPackage.Literals.ADD_RECORD__FIELDS,
+						addRecord.fields.indexOf(field))
+				} else {
+					newVariables.add(fullFieldName)
+				}
+			}
+		}
+
+	}
 
 	@Check
 	def checkAddEnumeration(AddEnumeration addEnumeration) {
 		var enumName = addEnumeration.namespace.name + '.' + addEnumeration.enumName
 
-		if (existingVariables.contains(enumName)) {
+		if (existingVariables.contains(enumName) || newVariables.contains(enumName)) {
 			error("Enumeration with this name already exists in this namespace!",
 				AeditPackage.Literals.ADD_ENUMERATION__ENUM_NAME)
 		} else {
@@ -390,22 +618,25 @@ class AeditValidator extends AbstractAeditValidator {
 		var fullName = currentProtocol + '.' + currentSchema + '.' + addEnum.varName
 
 		if (existingVariables.contains(fullName)) {
-			error("Field with this name already exists!", AeditPackage.Literals.ADD_ENUM__VAR_NAME, DUPLICATE_FIELD,
-				fullName)
+			error(ErrorMessages.DUPLICATE_ENUM_CONST, AeditPackage.Literals.ADD_ENUM__VAR_NAME,
+				ErrorCodes.ADD_ENUM_CONST)
 		}
 
 	}
 
-//	@Check
-//	def checkAddVariable(AddVariable addVariable) {
-//		var fullName = currentProtocol + '.' + currentSchema + '.' + addVariable.newVar.varName
-//		if (!isUnique(fullName)) {
-//			newVariables.add(fullName)
-//		} else {
-//			error("Field with this name already exists!", AeditPackage.Literals.ADD_VARIABLE__NEW_VAR, DUPLICATE_FIELD,
-//				fullName)
-//		}
-//	}
+	@Check
+	def checkAddVariable(AddVariable addVariable) {
+
+		var newFieldName = HelperClass.getFieldName(addVariable.newVar)
+		var fullName = currentProtocol + '.' + currentSchema + '.' + newFieldName
+
+		if (!isUnique(fullName)) {
+			newVariables.add(fullName)
+		} else {
+			error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.ADD_VARIABLE__NEW_VAR,
+				ErrorCodes.ADD_VARIABLE)
+		}
+	}
 
 	@Check
 	def checkField(PrimitiveTypeField field) {
@@ -547,7 +778,7 @@ class AeditValidator extends AbstractAeditValidator {
 	}
 
 	def getVariable(String currentProtocol, String currentSchema, String fieldName) {
-		var field = protocols.get(currentProtocol).eAllContents.filter(avroclipse.avroIDL.Field).filter [
+		var field = protocols.get(currentProtocol).eAllContents.filter(Field).filter [
 			it.name.equals(fieldName)
 		].toList
 
@@ -741,6 +972,178 @@ class AeditValidator extends AbstractAeditValidator {
 			}
 		}
 
+	}
+
+	// Array validation
+	@Check
+	def checkRemoveArrayValue(RemoveArrayValue removeArrayValue) {
+		if (!isFieldInSchema(removeArrayValue.variable, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE, ErrorCodes.REMOVE_ARRAY_VALUE)) {
+			return null
+		}
+
+		var fullName = currentProtocol + '.' + currentSchema + '.' + removeArrayValue.variable.name
+
+		// Check if the given reference is an array
+		if (!(removeArrayValue.variable.type instanceof ArrayFieldType)) {
+			error(ErrorMessages.NOT_ARRAY, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE,
+				ErrorCodes.REMOVE_ARRAY_VALUE)
+			return null
+		}
+
+		if (removedVariables.contains(fullName)) {
+			error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE,
+				ErrorCodes.REMOVE_ARRAY_VALUE)
+			return null
+		}
+
+		val arraySize = getArraySize(removeArrayValue.variable, fullName)
+
+		if (arraySize == 0) {
+			error(ErrorMessages.EMPTY_ARRAY, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE,
+				ErrorCodes.REMOVE_ARRAY_VALUE)
+			return null
+		}
+
+		if (!arrayContains(removeArrayValue.variable, removeArrayValue.valueToRemove)) {
+			error(ErrorMessages.VALUE_DOES_NOT_EXIST_IN_ARRAY,
+				AeditPackage.Literals.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE, ErrorCodes.REMOVE_ARRAY_VALUE)
+			return null
+		}
+
+		arraySizes.put(fullName, arraySize - 1)
+	}
+
+	@Check
+	def checkRemoveArrayValueAtIndex(RemoveArrayValueAtIndex removeArrayValueAtIndex) {
+
+		if (!isFieldInSchema(removeArrayValueAtIndex.array, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX)) {
+			return null
+		}
+
+		var fullName = currentProtocol + '.' + currentSchema + '.' + removeArrayValueAtIndex.array.name
+
+		// Check if the given reference is an array
+		if (!(removeArrayValueAtIndex.array.type instanceof ArrayFieldType)) {
+			error(ErrorMessages.NOT_ARRAY, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY,
+				ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX)
+			return null
+		}
+
+		if (removedVariables.contains(fullName)) {
+			error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY,
+				ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX)
+			return null
+		}
+
+		val arraySize = getArraySize(removeArrayValueAtIndex.array, fullName)
+		val index = removeArrayValueAtIndex.index
+
+		if (arraySize == 0) {
+			error(ErrorMessages.EMPTY_ARRAY, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY,
+				ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX)
+			return null
+		}
+
+		if (index < 0 || index >= arraySize) {
+			error(ErrorMessages.INDEX_OUT_OF_RANGE, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY,
+				ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX)
+			return null
+		}
+
+		arraySizes.put(fullName, arraySize - 1)
+
+	}
+
+	@Check
+	def checkAddValueToArray(AddValueToArray addValueToArray) {
+
+		if (!isFieldInSchema(addValueToArray.array, ErrorMessages.FIELD_NOT_IN_SCHEMA,
+			AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY, ErrorCodes.ADD_ARRAY_VALUE)) {
+			return null
+		}
+
+		var fullName = currentProtocol + '.' + currentSchema + '.' + addValueToArray.array.name
+
+		// Check if the given reference is an array
+		if (!(addValueToArray.array.type instanceof ArrayFieldType)) {
+			error(ErrorMessages.NOT_ARRAY, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY, ErrorCodes.ADD_ARRAY_VALUE)
+			return null
+		}
+
+		if (removedVariables.contains(fullName)) {
+			error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY,
+				ErrorCodes.ADD_ARRAY_VALUE, fullName)
+			return null
+		}
+
+		val arraySize = getArraySize(addValueToArray.array, fullName)
+		val index = addValueToArray.index
+
+		if (index < 0 || index > arraySize) {
+			error(ErrorMessages.INDEX_OUT_OF_RANGE, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__INDEX,
+				ErrorCodes.ADD_ARRAY_VALUE)
+			return null
+		}
+
+		arraySizes.put(fullName, arraySize + 1)
+
+	}
+
+	// Helper methods
+	def isFieldInSchema(Field field, String errorMessage, EStructuralFeature feature, String code) {
+
+		if (field === null) {
+			return false
+		}
+
+		if (!HelperClass.getFieldQualifiedName(field).equals(currentProtocol + '.' + currentSchema)) {
+			error(errorMessage, feature, code)
+			return false
+		}
+
+		return true
+
+	}
+
+	def getArraySize(Field field, String fullName) {
+
+		if (arraySizes.containsKey(fullName)) {
+			return arraySizes.get(fullName)
+		}
+
+		if (field.^default !== null) {
+			val array = field.^default as Array
+			return array.values.value.size
+		}
+
+		return 0
+
+	}
+
+	def addEmptyValueToArray(Field field) {
+
+		if (field.^default !== null) {
+			val array = field.^default as Array
+			array.values.value.add(AvroIDLFactory.eINSTANCE.createStringValue => [^val = "EMPTY_VAL"])
+		}
+
+	}
+
+	def arrayContains(Field field, Value value) {
+
+		if (field.^default !== null) {
+			val array = field.^default as Array
+			for (arrayValue : array.values.value) {
+				val realVal = HelperClass.getValue(value)
+				if (HelperClass.getValue(arrayValue).equals(realVal)) {
+					return true
+				}
+			}
+		}
+
+		return false
 	}
 
 }

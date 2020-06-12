@@ -3,43 +3,20 @@
  */
 package org.aedit.aedit.impl;
 
-import avroclipse.avroIDL.Field;
-
 import org.aedit.aedit.AeditPackage;
 import org.aedit.aedit.ArrayEditRules;
 
-import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Array Edit Rules</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- *   <li>{@link org.aedit.aedit.impl.ArrayEditRulesImpl#getArray <em>Array</em>}</li>
- * </ul>
  *
  * @generated
  */
 public class ArrayEditRulesImpl extends SchemaRuleImpl implements ArrayEditRules
 {
-  /**
-   * The cached value of the '{@link #getArray() <em>Array</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getArray()
-   * @generated
-   * @ordered
-   */
-  protected Field array;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -59,118 +36,6 @@ public class ArrayEditRulesImpl extends SchemaRuleImpl implements ArrayEditRules
   protected EClass eStaticClass()
   {
     return AeditPackage.Literals.ARRAY_EDIT_RULES;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Field getArray()
-  {
-    if (array != null && array.eIsProxy())
-    {
-      InternalEObject oldArray = (InternalEObject)array;
-      array = (Field)eResolveProxy(oldArray);
-      if (array != oldArray)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, AeditPackage.ARRAY_EDIT_RULES__ARRAY, oldArray, array));
-      }
-    }
-    return array;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Field basicGetArray()
-  {
-    return array;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setArray(Field newArray)
-  {
-    Field oldArray = array;
-    array = newArray;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AeditPackage.ARRAY_EDIT_RULES__ARRAY, oldArray, array));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case AeditPackage.ARRAY_EDIT_RULES__ARRAY:
-        if (resolve) return getArray();
-        return basicGetArray();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case AeditPackage.ARRAY_EDIT_RULES__ARRAY:
-        setArray((Field)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case AeditPackage.ARRAY_EDIT_RULES__ARRAY:
-        setArray((Field)null);
-        return;
-    }
-    super.eUnset(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case AeditPackage.ARRAY_EDIT_RULES__ARRAY:
-        return array != null;
-    }
-    return super.eIsSet(featureID);
   }
 
 } //ArrayEditRulesImpl

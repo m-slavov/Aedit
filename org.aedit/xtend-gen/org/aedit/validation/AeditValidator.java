@@ -4,8 +4,10 @@
 package org.aedit.validation;
 
 import HelperClass.HelperClass;
+import avroclipse.avroIDL.Array;
+import avroclipse.avroIDL.ArrayFieldType;
+import avroclipse.avroIDL.AvroIDLFactory;
 import avroclipse.avroIDL.AvroIDLFile;
-import avroclipse.avroIDL.Field;
 import avroclipse.avroIDL.FieldType;
 import avroclipse.avroIDL.PrimativeTypeLink;
 import avroclipse.avroIDL.RecordType;
@@ -18,19 +20,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import org.aedit.aedit.AddAnnotationToField;
+import org.aedit.aedit.AddAnnotationToSchema;
 import org.aedit.aedit.AddEnum;
 import org.aedit.aedit.AddEnumeration;
+import org.aedit.aedit.AddNameAnnotationToField;
+import org.aedit.aedit.AddRecord;
+import org.aedit.aedit.AddValueToArray;
+import org.aedit.aedit.AddVariable;
 import org.aedit.aedit.AeditPackage;
 import org.aedit.aedit.ChangeDefValue;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
 import org.aedit.aedit.ChangeType;
+import org.aedit.aedit.Field;
 import org.aedit.aedit.FloatValue;
 import org.aedit.aedit.GenericRule;
 import org.aedit.aedit.IntValue;
 import org.aedit.aedit.Model;
 import org.aedit.aedit.PrimitiveTypeField;
+import org.aedit.aedit.RemoveAnnotationFromField;
+import org.aedit.aedit.RemoveAnnotationFromSchema;
+import org.aedit.aedit.RemoveArrayValue;
+import org.aedit.aedit.RemoveArrayValueAtIndex;
 import org.aedit.aedit.RemoveEnum;
+import org.aedit.aedit.RemoveNameAnnotationFromField;
 import org.aedit.aedit.RemoveSchema;
 import org.aedit.aedit.RemoveVariable;
 import org.aedit.aedit.RenameEnum;
@@ -40,13 +54,18 @@ import org.aedit.aedit.RuleDeclaration;
 import org.aedit.aedit.RuleMap;
 import org.aedit.aedit.StringValue;
 import org.aedit.validation.AbstractAeditValidator;
+import org.aedit.validation.ErrorCodes;
+import org.aedit.validation.ErrorMessages;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 /**
  * This class contains custom validation rules.
@@ -59,19 +78,23 @@ public class AeditValidator extends AbstractAeditValidator {
   
   private List<String> removedVariables = new ArrayList<String>();
   
-  private List<String> newVariables = new ArrayList<String>();
+  private List<String> removedAnnotations = new ArrayList<String>();
+  
+  private List<String> removedNameAnnotations = new ArrayList<String>();
   
   private List<String> existingVariables = new ArrayList<String>();
   
-  protected static final String ISSUE_CODE_PREFIX = "org.aedit.";
+  private List<String> existingAnnotations = new ArrayList<String>();
   
-  public static final String REMOVE_SCHEMA = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveSchema");
+  private List<String> existingNameAnnotations = new ArrayList<String>();
   
-  public static final String REMOVE_VARIABLE = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveVariable");
+  private List<String> newVariables = new ArrayList<String>();
   
-  public static final String REMOVE_ENUM_CONST = (AeditValidator.ISSUE_CODE_PREFIX + "RemoveEnumConst");
+  private List<String> newAnnotations = new ArrayList<String>();
   
-  public static final String DUPLICATE_FIELD = (AeditValidator.ISSUE_CODE_PREFIX + "DuplicateField");
+  private List<String> newNameAnnotations = new ArrayList<String>();
+  
+  private HashMap<String, Integer> arraySizes = new HashMap<String, Integer>();
   
   private String currentSchema;
   
@@ -80,11 +103,14 @@ public class AeditValidator extends AbstractAeditValidator {
   @Check
   public void checkModel(final Model model) {
     AeditValidator.protocols.clear();
+    this.existingAnnotations.clear();
+    this.existingNameAnnotations.clear();
     boolean _isEmpty = AeditValidator.protocols.isEmpty();
     if (_isEmpty) {
       AeditValidator.protocols = HelperClass.getAvroFiles(model.eResource());
       final BiConsumer<String, AvroIDLFile> _function = (String p1, AvroIDLFile p2) -> {
-        this.existingVariables.addAll(HelperClass.getSchemasAndFields(p2));
+        this.existingVariables.addAll(
+          HelperClass.getSchemasAndFields(p2, this.existingAnnotations, this.existingNameAnnotations));
       };
       AeditValidator.protocols.forEach(_function);
     }
@@ -92,8 +118,13 @@ public class AeditValidator extends AbstractAeditValidator {
   
   @Check
   public void checkRuleDeclaration(final RuleDeclaration ruleDeclaration) {
+    this.arraySizes.clear();
     this.removedVariables.clear();
     this.newVariables.clear();
+    this.newAnnotations.clear();
+    this.newNameAnnotations.clear();
+    this.removedAnnotations.clear();
+    this.removedNameAnnotations.clear();
   }
   
   @Check
@@ -104,10 +135,15 @@ public class AeditValidator extends AbstractAeditValidator {
     EObject _eContainer_1 = schemaContainer.eContainer();
     this.currentProtocol = ((AvroIDLFile) _eContainer_1).getName();
     String fullName = ((this.currentProtocol + ".") + this.currentSchema);
+    boolean _checkIfTypeIsCorrect = HelperClass.checkIfTypeIsCorrect(changeSchema.getSchemaType(), changeSchema.getSchema());
+    boolean _not = (!_checkIfTypeIsCorrect);
+    if (_not) {
+      this.error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA_TYPE, 
+        ErrorCodes.CHANGE_SCHEMA);
+    }
     boolean _contains = this.removedVariables.contains(fullName);
     if (_contains) {
-      this.error("Schema does not exist!", AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA, 
-        AeditValidator.REMOVE_SCHEMA, fullName);
+      this.error(ErrorMessages.DELETED_SCHEMA, AeditPackage.Literals.CHANGE_SCHEMA__SCHEMA, ErrorCodes.CHANGE_SCHEMA, fullName);
     }
   }
   
@@ -121,8 +157,7 @@ public class AeditValidator extends AbstractAeditValidator {
     String fullName = ((this.currentProtocol + ".") + this.currentSchema);
     boolean _contains = this.removedVariables.contains(fullName);
     if (_contains) {
-      this.error("Schema does not exist!", AeditPackage.Literals.CHANGE_ENUM__SCHEMA, 
-        AeditValidator.REMOVE_SCHEMA, fullName);
+      this.error("Schema does not exist!", AeditPackage.Literals.CHANGE_ENUM__SCHEMA, ErrorCodes.CHANGE_ENUM, fullName);
     }
   }
   
@@ -132,10 +167,18 @@ public class AeditValidator extends AbstractAeditValidator {
     {
       String _name = removeVariable.getVariable().getName();
       String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
+      boolean _isFieldInSchema = this.isFieldInSchema(removeVariable.getVariable(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE, ErrorCodes.REMOVE_VARIABLE);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
       boolean _xifexpression = false;
       boolean _contains = this.removedVariables.contains(fullName);
       if (_contains) {
-        this.error("Variable has been deleted!", AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE, AeditValidator.REMOVE_VARIABLE, fullName);
+        this.error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE, 
+          ErrorCodes.REMOVE_VARIABLE);
+        return null;
       } else {
         _xifexpression = this.removedVariables.add(fullName);
       }
@@ -152,14 +195,23 @@ public class AeditValidator extends AbstractAeditValidator {
       String oldVar = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
       String _newVarName = renameVariable.getNewVarName();
       String newVar = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _newVarName);
+      boolean _isFieldInSchema = this.isFieldInSchema(renameVariable.getVariable(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.RENAME_VARIABLE__VARIABLE, ErrorCodes.RENAME_VARIABLE);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
       boolean _contains = this.removedVariables.contains(oldVar);
       if (_contains) {
-        this.error("Variable has been deleted!", AeditPackage.Literals.RENAME_VARIABLE__VARIABLE, AeditValidator.REMOVE_VARIABLE, oldVar);
+        this.error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.RENAME_VARIABLE__VARIABLE, 
+          ErrorCodes.RENAME_VARIABLE);
+        return null;
       }
       boolean _xifexpression = false;
       boolean _isUnique = this.isUnique(newVar);
       if (_isUnique) {
-        this.error("Variable with that name already exists!", AeditPackage.Literals.RENAME_VARIABLE__NEW_VAR_NAME);
+        this.error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.RENAME_VARIABLE__NEW_VAR_NAME, 
+          ErrorCodes.RENAME_VARIABLE);
       } else {
         _xifexpression = this.removedVariables.add(oldVar);
       }
@@ -178,11 +230,16 @@ public class AeditValidator extends AbstractAeditValidator {
       EObject _eContainer_1 = schemaContainer.eContainer();
       final String protocolName = ((AvroIDLFile) _eContainer_1).getName();
       String fullName = ((protocolName + ".") + schemaName);
+      boolean _checkIfTypeIsCorrect = HelperClass.checkIfTypeIsCorrect(removeSchema.getSchemaType(), removeSchema.getSchema());
+      boolean _not = (!_checkIfTypeIsCorrect);
+      if (_not) {
+        this.error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA_TYPE, 
+          ErrorCodes.REMOVE_SCHEMA);
+      }
       boolean _xifexpression = false;
       boolean _contains = this.removedVariables.contains(fullName);
       if (_contains) {
-        this.error("Schema does not exist!", AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA, 
-          AeditValidator.REMOVE_SCHEMA, fullName);
+        this.error(ErrorMessages.DELETED_SCHEMA, AeditPackage.Literals.REMOVE_SCHEMA__SCHEMA, ErrorCodes.REMOVE_SCHEMA);
       } else {
         _xifexpression = this.removedVariables.add(fullName);
       }
@@ -192,22 +249,213 @@ public class AeditValidator extends AbstractAeditValidator {
   }
   
   @Check
-  public Boolean checkRenameSchema(final RenameSchema RenameSchema) {
+  public Boolean checkRenameSchema(final RenameSchema renameSchema) {
     boolean _xblockexpression = false;
     {
-      final String schemaName = RenameSchema.getSchema().getName();
-      EObject _eContainer = RenameSchema.getSchema().eContainer();
+      final String schemaName = renameSchema.getSchema().getName();
+      EObject _eContainer = renameSchema.getSchema().eContainer();
       TypeDef schemaContainer = ((TypeDef) _eContainer);
       EObject _eContainer_1 = schemaContainer.eContainer();
       final String protocolName = ((AvroIDLFile) _eContainer_1).getName();
       String fullName = ((protocolName + ".") + schemaName);
+      boolean _checkIfTypeIsCorrect = HelperClass.checkIfTypeIsCorrect(renameSchema.getSchemaType(), renameSchema.getSchema());
+      boolean _not = (!_checkIfTypeIsCorrect);
+      if (_not) {
+        this.error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.RENAME_SCHEMA__SCHEMA_TYPE, 
+          ErrorCodes.RENAME_SCHEMA);
+      }
       boolean _xifexpression = false;
       boolean _contains = this.removedVariables.contains(fullName);
       if (_contains) {
-        this.error("Schema does not exist!", AeditPackage.Literals.RENAME_SCHEMA__SCHEMA, 
-          AeditValidator.REMOVE_SCHEMA, fullName);
+        this.error(ErrorMessages.DELETED_SCHEMA, AeditPackage.Literals.RENAME_SCHEMA__SCHEMA, ErrorCodes.RENAME_SCHEMA);
       } else {
         _xifexpression = this.removedVariables.add(fullName);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return Boolean.valueOf(_xblockexpression);
+  }
+  
+  @Check
+  public Boolean checkAddAnnotationToSchema(final AddAnnotationToSchema addAnnotationToSchema) {
+    boolean _xblockexpression = false;
+    {
+      final String schemaName = addAnnotationToSchema.getSchema().getName();
+      EObject _eContainer = addAnnotationToSchema.getSchema().eContainer();
+      TypeDef schemaContainer = ((TypeDef) _eContainer);
+      EObject _eContainer_1 = schemaContainer.eContainer();
+      final String protocolName = ((AvroIDLFile) _eContainer_1).getName();
+      String _name = addAnnotationToSchema.getAnnotation().getName();
+      String fullName = ((((protocolName + ".") + schemaName) + ".") + _name);
+      boolean _checkIfTypeIsCorrect = HelperClass.checkIfTypeIsCorrect(addAnnotationToSchema.getSchemaType(), addAnnotationToSchema.getSchema());
+      boolean _not = (!_checkIfTypeIsCorrect);
+      if (_not) {
+        this.error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__SCHEMA_TYPE, 
+          ErrorCodes.ADD_ANNOTATION_TO_SCHEMA, fullName);
+      }
+      boolean _xifexpression = false;
+      if ((this.existingAnnotations.contains(fullName) || this.newAnnotations.contains(fullName))) {
+        this.error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__ANNOTATION, 
+          ErrorCodes.ADD_ANNOTATION_TO_SCHEMA, fullName);
+      } else {
+        _xifexpression = this.newAnnotations.add(fullName);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return Boolean.valueOf(_xblockexpression);
+  }
+  
+  @Check
+  public void checkRemoveAnnotationFromSchema(final RemoveAnnotationFromSchema removeAnnotationFromSchema) {
+    final String schemaName = removeAnnotationFromSchema.getSchema().getName();
+    EObject _eContainer = removeAnnotationFromSchema.getSchema().eContainer();
+    TypeDef schemaContainer = ((TypeDef) _eContainer);
+    EObject _eContainer_1 = schemaContainer.eContainer();
+    final String protocolName = ((AvroIDLFile) _eContainer_1).getName();
+    String fullName = ((protocolName + ".") + schemaName);
+    boolean _checkIfTypeIsCorrect = HelperClass.checkIfTypeIsCorrect(removeAnnotationFromSchema.getSchemaType(), 
+      removeAnnotationFromSchema.getSchema());
+    boolean _not = (!_checkIfTypeIsCorrect);
+    if (_not) {
+      this.error("Incorrect type!", AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE, 
+        ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, fullName);
+    }
+    final String annotationToRemoveNamaspace = HelperClass.getAnnotationQualifiedName(
+      removeAnnotationFromSchema.getAnnotationToRemove());
+    boolean _equals = annotationToRemoveNamaspace.equals(fullName);
+    boolean _not_1 = (!_equals);
+    if (_not_1) {
+      this.error("Schema does not have such annotation!", 
+        AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE, 
+        ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, fullName);
+    }
+  }
+  
+  @Check
+  public Boolean checkAddAnnotationToField(final AddAnnotationToField addAnnotationToField) {
+    boolean _xblockexpression = false;
+    {
+      boolean _isFieldInSchema = this.isFieldInSchema(addAnnotationToField.getVariable(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE, ErrorCodes.ADD_ANNOTATION_TO_FIELD);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
+      String _name = addAnnotationToField.getVariable().getName();
+      String _plus = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
+      String _plus_1 = (_plus + 
+        ".");
+      String _name_1 = addAnnotationToField.getAnnotation().getName();
+      String annotationFullName = (_plus_1 + _name_1);
+      boolean _xifexpression = false;
+      if ((this.existingAnnotations.contains(annotationFullName) || this.newAnnotations.contains(annotationFullName))) {
+        this.error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__ANNOTATION, 
+          ErrorCodes.ADD_ANNOTATION_TO_FIELD, annotationFullName);
+      } else {
+        _xifexpression = this.newAnnotations.add(annotationFullName);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return Boolean.valueOf(_xblockexpression);
+  }
+  
+  @Check
+  public Boolean checkAddNameAnnotationToField(final AddNameAnnotationToField addNameAnnotationToField) {
+    boolean _xblockexpression = false;
+    {
+      boolean _isFieldInSchema = this.isFieldInSchema(addNameAnnotationToField.getVariable(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE, ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
+      String _name = addNameAnnotationToField.getVariable().getName();
+      String _plus = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
+      String _plus_1 = (_plus + 
+        ".");
+      String _name_1 = addNameAnnotationToField.getAnnotation().getName();
+      String annotationFullName = (_plus_1 + _name_1);
+      boolean _xifexpression = false;
+      if ((this.existingNameAnnotations.contains(annotationFullName) || this.newNameAnnotations.contains(annotationFullName))) {
+        this.error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION, 
+          ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD, annotationFullName);
+      } else {
+        _xifexpression = this.newNameAnnotations.add(annotationFullName);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return Boolean.valueOf(_xblockexpression);
+  }
+  
+  @Check
+  public Boolean checkRemoveAnnotationFromField(final RemoveAnnotationFromField removeAnnotationFromField) {
+    boolean _xblockexpression = false;
+    {
+      boolean _isFieldInSchema = this.isFieldInSchema(removeAnnotationFromField.getVariable(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE, ErrorCodes.REMOVE_ANNOTATION_FROM_FIELD);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
+      final String annotationToRemoveNamaspace = HelperClass.getAnnotationQualifiedName(
+        removeAnnotationFromField.getAnnotationToRemove());
+      String _name = removeAnnotationFromField.getAnnotationToRemove().getName();
+      final String annotationToRemoveFullName = ((annotationToRemoveNamaspace + ".") + _name);
+      String _name_1 = removeAnnotationFromField.getVariable().getName();
+      final String currentNamespace = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name_1);
+      boolean _equals = annotationToRemoveNamaspace.equals(currentNamespace);
+      boolean _not_1 = (!_equals);
+      if (_not_1) {
+        this.error(ErrorMessages.ANNOTATION_NOT_IN_FIELD, 
+          AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE, 
+          ErrorCodes.REMOVE_ANNOTATION_FROM_FIELD, currentNamespace);
+      }
+      boolean _xifexpression = false;
+      boolean _contains = this.removedAnnotations.contains(annotationToRemoveFullName);
+      if (_contains) {
+        this.error(ErrorMessages.DELETED_ANNOTATION, 
+          AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE, 
+          ErrorCodes.REMOVE_ANNOTATION_FROM_FIELD, currentNamespace);
+      } else {
+        _xifexpression = this.removedAnnotations.add(annotationToRemoveFullName);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return Boolean.valueOf(_xblockexpression);
+  }
+  
+  @Check
+  public Boolean checkRemoveNameAnnotationFromField(final RemoveNameAnnotationFromField removeNameAnnotationFromField) {
+    boolean _xblockexpression = false;
+    {
+      boolean _isFieldInSchema = this.isFieldInSchema(removeNameAnnotationFromField.getVariable(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE, 
+        ErrorCodes.REMOVE_NAME_ANNOTATION_FROM_FIELD);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
+      final String annotationToRemoveNamaspace = HelperClass.getAnnotationQualifiedName(
+        removeNameAnnotationFromField.getAnnotationToRemove());
+      String _name = removeNameAnnotationFromField.getAnnotationToRemove().getName();
+      final String annotationToRemoveFullName = ((annotationToRemoveNamaspace + ".") + _name);
+      String _name_1 = removeNameAnnotationFromField.getVariable().getName();
+      final String currentNamespace = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name_1);
+      boolean _equals = annotationToRemoveNamaspace.equals(currentNamespace);
+      boolean _not_1 = (!_equals);
+      if (_not_1) {
+        this.error(ErrorMessages.ANNOTATION_NOT_IN_FIELD, 
+          AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE, 
+          ErrorCodes.REMOVE_NAME_ANNOTATION_FROM_FIELD, currentNamespace);
+      }
+      boolean _xifexpression = false;
+      boolean _contains = this.removedNameAnnotations.contains(annotationToRemoveFullName);
+      if (_contains) {
+        this.error(ErrorMessages.DELETED_ANNOTATION, 
+          AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE, 
+          ErrorCodes.REMOVE_NAME_ANNOTATION_FROM_FIELD, currentNamespace);
+      } else {
+        _xifexpression = this.removedNameAnnotations.add(annotationToRemoveFullName);
       }
       _xblockexpression = _xifexpression;
     }
@@ -223,13 +471,13 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _xifexpression = false;
       boolean _contains = this.removedVariables.contains(fullName);
       if (_contains) {
-        this.error("Constant does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, AeditValidator.REMOVE_ENUM_CONST, fullName);
+        this.error(ErrorMessages.REMOVED_ENUM_CONST, AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, ErrorCodes.REMOVE_ENUM_CONST);
       } else {
         boolean _xifexpression_1 = false;
         boolean _contains_1 = this.existingVariables.contains(fullName);
         boolean _not = (!_contains_1);
         if (_not) {
-          this.error("Constant does not exist!", AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, AeditValidator.REMOVE_ENUM_CONST, fullName);
+          this.error(ErrorMessages.NON_EXISTENT_ENUM_CONST, AeditPackage.Literals.REMOVE_ENUM__VAR_NAME, ErrorCodes.REMOVE_ENUM_CONST);
         } else {
           _xifexpression_1 = this.removedVariables.add(fullName);
         }
@@ -271,13 +519,22 @@ public class AeditValidator extends AbstractAeditValidator {
   }
   
   @Check
-  public void checkChangeType(final ChangeType changeType) {
+  public Object checkChangeType(final ChangeType changeType) {
+    boolean _isFieldInSchema = this.isFieldInSchema(changeType.getField(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+      AeditPackage.Literals.CHANGE_TYPE__FIELD, ErrorCodes.CHANGE_TYPE);
+    boolean _not = (!_isFieldInSchema);
+    if (_not) {
+      return null;
+    }
     Value variable = this.getVariable(this.currentProtocol, this.currentSchema, changeType.getField().getName()).getDefault();
     String _name = changeType.getField().getName();
     String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
     boolean _contains = this.removedVariables.contains(fullName);
     if (_contains) {
-      this.error("Variable has been deleted!", AeditPackage.Literals.CHANGE_TYPE__FIELD, AeditValidator.REMOVE_VARIABLE, fullName);
+      this.error(
+        ErrorMessages.DELETED_FIELD, 
+        AeditPackage.Literals.CHANGE_TYPE__FIELD, 
+        ErrorCodes.CHANGE_TYPE);
     } else {
       if ((variable != null)) {
         FieldType varType = changeType.getField().getType();
@@ -401,15 +658,22 @@ public class AeditValidator extends AbstractAeditValidator {
         }
       }
     }
+    return null;
   }
   
   @Check
-  public void checkChangeDefValue(final ChangeDefValue changeDefValue) {
+  public Object checkChangeDefValue(final ChangeDefValue changeDefValue) {
+    boolean _isFieldInSchema = this.isFieldInSchema(changeDefValue.getField(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+      AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD, ErrorCodes.CHANGE_DEF_VALUE);
+    boolean _not = (!_isFieldInSchema);
+    if (_not) {
+      return null;
+    }
     String _name = changeDefValue.getField().getName();
     String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
     boolean _contains = this.removedVariables.contains(fullName);
-    boolean _not = (!_contains);
-    if (_not) {
+    boolean _not_1 = (!_contains);
+    if (_not_1) {
       FieldType varType = changeDefValue.getField().getType();
       if ((varType instanceof PrimativeTypeLink)) {
         boolean _equals = ((PrimativeTypeLink)varType).getTarget().equals("int");
@@ -478,7 +742,36 @@ public class AeditValidator extends AbstractAeditValidator {
         }
       }
     } else {
-      this.error("Variable has been deleted!", AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD, AeditValidator.REMOVE_VARIABLE, fullName);
+      this.error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD, 
+        ErrorCodes.CHANGE_DEF_VALUE);
+    }
+    return null;
+  }
+  
+  @Check
+  public void checkAddRecord(final AddRecord addRecord) {
+    String _name = addRecord.getNamespace().getName();
+    String _plus = (_name + ".");
+    String _recordName = addRecord.getRecordName();
+    String recordName = (_plus + _recordName);
+    if ((this.existingVariables.contains(recordName) || this.newVariables.contains(recordName))) {
+      this.error(ErrorMessages.DUPLICATE_SCHEMA, AeditPackage.Literals.ADD_RECORD__RECORD_NAME, ErrorCodes.ADD_RECORD);
+    } else {
+      this.newVariables.add(recordName);
+      EList<Field> _fields = addRecord.getFields();
+      for (final Field field : _fields) {
+        {
+          String newFieldName = HelperClass.getFieldName(field);
+          String fullFieldName = ((recordName + ".") + newFieldName);
+          boolean _contains = this.newVariables.contains(fullFieldName);
+          if (_contains) {
+            this.error("Variable with this name already exists!", AeditPackage.Literals.ADD_RECORD__FIELDS, 
+              addRecord.getFields().indexOf(field));
+          } else {
+            this.newVariables.add(fullFieldName);
+          }
+        }
+      }
     }
   }
   
@@ -488,8 +781,7 @@ public class AeditValidator extends AbstractAeditValidator {
     String _plus = (_name + ".");
     String _enumName = addEnumeration.getEnumName();
     String enumName = (_plus + _enumName);
-    boolean _contains = this.existingVariables.contains(enumName);
-    if (_contains) {
+    if ((this.existingVariables.contains(enumName) || this.newVariables.contains(enumName))) {
       this.error("Enumeration with this name already exists in this namespace!", 
         AeditPackage.Literals.ADD_ENUMERATION__ENUM_NAME);
     } else {
@@ -498,8 +790,8 @@ public class AeditValidator extends AbstractAeditValidator {
       for (final String symbol : _symbols) {
         {
           String symbolName = (enumName + symbol);
-          boolean _contains_1 = this.newVariables.contains(symbol);
-          if (_contains_1) {
+          boolean _contains = this.newVariables.contains(symbol);
+          if (_contains) {
             this.error("Enum with this name already exists!", AeditPackage.Literals.ADD_ENUMERATION__SYMBOLS, 
               addEnumeration.getSymbols().indexOf(symbol));
           } else {
@@ -516,8 +808,29 @@ public class AeditValidator extends AbstractAeditValidator {
     String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _varName);
     boolean _contains = this.existingVariables.contains(fullName);
     if (_contains) {
-      this.error("Field with this name already exists!", AeditPackage.Literals.ADD_ENUM__VAR_NAME, AeditValidator.DUPLICATE_FIELD, fullName);
+      this.error(ErrorMessages.DUPLICATE_ENUM_CONST, AeditPackage.Literals.ADD_ENUM__VAR_NAME, 
+        ErrorCodes.ADD_ENUM_CONST);
     }
+  }
+  
+  @Check
+  public Boolean checkAddVariable(final AddVariable addVariable) {
+    boolean _xblockexpression = false;
+    {
+      String newFieldName = HelperClass.getFieldName(addVariable.getNewVar());
+      String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + newFieldName);
+      boolean _xifexpression = false;
+      boolean _isUnique = this.isUnique(fullName);
+      boolean _not = (!_isUnique);
+      if (_not) {
+        _xifexpression = this.newVariables.add(fullName);
+      } else {
+        this.error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.ADD_VARIABLE__NEW_VAR, 
+          ErrorCodes.ADD_VARIABLE);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return Boolean.valueOf(_xblockexpression);
   }
   
   @Check
@@ -659,16 +972,16 @@ public class AeditValidator extends AbstractAeditValidator {
     }
   }
   
-  public Field getVariable(final String currentProtocol, final String currentSchema, final String fieldName) {
-    final Function1<Field, Boolean> _function = (Field it) -> {
+  public avroclipse.avroIDL.Field getVariable(final String currentProtocol, final String currentSchema, final String fieldName) {
+    final Function1<avroclipse.avroIDL.Field, Boolean> _function = (avroclipse.avroIDL.Field it) -> {
       return Boolean.valueOf(it.getName().equals(fieldName));
     };
-    List<Field> field = IteratorExtensions.<Field>toList(IteratorExtensions.<Field>filter(Iterators.<Field>filter(AeditValidator.protocols.get(currentProtocol).eAllContents(), Field.class), _function));
-    final Function1<Field, Boolean> _function_1 = (Field it) -> {
+    List<avroclipse.avroIDL.Field> field = IteratorExtensions.<avroclipse.avroIDL.Field>toList(IteratorExtensions.<avroclipse.avroIDL.Field>filter(Iterators.<avroclipse.avroIDL.Field>filter(AeditValidator.protocols.get(currentProtocol).eAllContents(), avroclipse.avroIDL.Field.class), _function));
+    final Function1<avroclipse.avroIDL.Field, Boolean> _function_1 = (avroclipse.avroIDL.Field it) -> {
       EObject _eContainer = it.eContainer();
       return Boolean.valueOf(((RecordType) _eContainer).getName().equals(currentSchema));
     };
-    return IterableExtensions.<Field>toList(IterableExtensions.<Field>filter(field, _function_1)).get(0);
+    return IterableExtensions.<avroclipse.avroIDL.Field>toList(IterableExtensions.<avroclipse.avroIDL.Field>filter(field, _function_1)).get(0);
   }
   
   public boolean isUnique(final String fullName) {
@@ -809,5 +1122,196 @@ public class AeditValidator extends AbstractAeditValidator {
           String.format("CONCURRENT MODIFICATION ERROR: %s is %s in %s and %s", varName_1, errMessage, aRuleName, bRuleName), AeditPackage.Literals.RULE_MAP__RULES, this.currentRuleIndex);
       }
     }
+  }
+  
+  @Check
+  public Integer checkRemoveArrayValue(final RemoveArrayValue removeArrayValue) {
+    Integer _xblockexpression = null;
+    {
+      boolean _isFieldInSchema = this.isFieldInSchema(removeArrayValue.getVariable(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE, ErrorCodes.REMOVE_ARRAY_VALUE);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
+      String _name = removeArrayValue.getVariable().getName();
+      String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
+      FieldType _type = removeArrayValue.getVariable().getType();
+      boolean _not_1 = (!(_type instanceof ArrayFieldType));
+      if (_not_1) {
+        this.error(ErrorMessages.NOT_ARRAY, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE, 
+          ErrorCodes.REMOVE_ARRAY_VALUE);
+        return null;
+      }
+      boolean _contains = this.removedVariables.contains(fullName);
+      if (_contains) {
+        this.error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE, 
+          ErrorCodes.REMOVE_ARRAY_VALUE);
+        return null;
+      }
+      final Integer arraySize = this.getArraySize(removeArrayValue.getVariable(), fullName);
+      if (((arraySize).intValue() == 0)) {
+        this.error(ErrorMessages.EMPTY_ARRAY, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE, 
+          ErrorCodes.REMOVE_ARRAY_VALUE);
+        return null;
+      }
+      boolean _arrayContains = this.arrayContains(removeArrayValue.getVariable(), removeArrayValue.getValueToRemove());
+      boolean _not_2 = (!_arrayContains);
+      if (_not_2) {
+        this.error(ErrorMessages.VALUE_DOES_NOT_EXIST_IN_ARRAY, 
+          AeditPackage.Literals.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE, ErrorCodes.REMOVE_ARRAY_VALUE);
+        return null;
+      }
+      _xblockexpression = this.arraySizes.put(fullName, Integer.valueOf(((arraySize).intValue() - 1)));
+    }
+    return _xblockexpression;
+  }
+  
+  @Check
+  public Integer checkRemoveArrayValueAtIndex(final RemoveArrayValueAtIndex removeArrayValueAtIndex) {
+    Integer _xblockexpression = null;
+    {
+      boolean _isFieldInSchema = this.isFieldInSchema(removeArrayValueAtIndex.getArray(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
+      String _name = removeArrayValueAtIndex.getArray().getName();
+      String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
+      FieldType _type = removeArrayValueAtIndex.getArray().getType();
+      boolean _not_1 = (!(_type instanceof ArrayFieldType));
+      if (_not_1) {
+        this.error(ErrorMessages.NOT_ARRAY, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, 
+          ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX);
+        return null;
+      }
+      boolean _contains = this.removedVariables.contains(fullName);
+      if (_contains) {
+        this.error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, 
+          ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX);
+        return null;
+      }
+      final Integer arraySize = this.getArraySize(removeArrayValueAtIndex.getArray(), fullName);
+      final int index = removeArrayValueAtIndex.getIndex();
+      if (((arraySize).intValue() == 0)) {
+        this.error(ErrorMessages.EMPTY_ARRAY, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, 
+          ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX);
+        return null;
+      }
+      if (((index < 0) || (index >= (arraySize).intValue()))) {
+        this.error(ErrorMessages.INDEX_OUT_OF_RANGE, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, 
+          ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX);
+        return null;
+      }
+      _xblockexpression = this.arraySizes.put(fullName, Integer.valueOf(((arraySize).intValue() - 1)));
+    }
+    return _xblockexpression;
+  }
+  
+  @Check
+  public Integer checkAddValueToArray(final AddValueToArray addValueToArray) {
+    Integer _xblockexpression = null;
+    {
+      boolean _isFieldInSchema = this.isFieldInSchema(addValueToArray.getArray(), ErrorMessages.FIELD_NOT_IN_SCHEMA, 
+        AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY, ErrorCodes.ADD_ARRAY_VALUE);
+      boolean _not = (!_isFieldInSchema);
+      if (_not) {
+        return null;
+      }
+      String _name = addValueToArray.getArray().getName();
+      String fullName = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _name);
+      FieldType _type = addValueToArray.getArray().getType();
+      boolean _not_1 = (!(_type instanceof ArrayFieldType));
+      if (_not_1) {
+        this.error(ErrorMessages.NOT_ARRAY, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY, ErrorCodes.ADD_ARRAY_VALUE);
+        return null;
+      }
+      boolean _contains = this.removedVariables.contains(fullName);
+      if (_contains) {
+        this.error(ErrorMessages.DELETED_FIELD, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY, 
+          ErrorCodes.ADD_ARRAY_VALUE, fullName);
+        return null;
+      }
+      final Integer arraySize = this.getArraySize(addValueToArray.getArray(), fullName);
+      final int index = addValueToArray.getIndex();
+      if (((index < 0) || (index > (arraySize).intValue()))) {
+        this.error(ErrorMessages.INDEX_OUT_OF_RANGE, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__INDEX, 
+          ErrorCodes.ADD_ARRAY_VALUE);
+        return null;
+      }
+      _xblockexpression = this.arraySizes.put(fullName, Integer.valueOf(((arraySize).intValue() + 1)));
+    }
+    return _xblockexpression;
+  }
+  
+  public boolean isFieldInSchema(final avroclipse.avroIDL.Field field, final String errorMessage, final EStructuralFeature feature, final String code) {
+    if ((field == null)) {
+      return false;
+    }
+    boolean _equals = HelperClass.getFieldQualifiedName(field).equals(((this.currentProtocol + ".") + this.currentSchema));
+    boolean _not = (!_equals);
+    if (_not) {
+      this.error(errorMessage, feature, code);
+      return false;
+    }
+    return true;
+  }
+  
+  public Integer getArraySize(final avroclipse.avroIDL.Field field, final String fullName) {
+    boolean _containsKey = this.arraySizes.containsKey(fullName);
+    if (_containsKey) {
+      return this.arraySizes.get(fullName);
+    }
+    Value _default = field.getDefault();
+    boolean _tripleNotEquals = (_default != null);
+    if (_tripleNotEquals) {
+      Value _default_1 = field.getDefault();
+      final Array array = ((Array) _default_1);
+      return Integer.valueOf(array.getValues().getValue().size());
+    }
+    return Integer.valueOf(0);
+  }
+  
+  public boolean addEmptyValueToArray(final avroclipse.avroIDL.Field field) {
+    boolean _xifexpression = false;
+    Value _default = field.getDefault();
+    boolean _tripleNotEquals = (_default != null);
+    if (_tripleNotEquals) {
+      boolean _xblockexpression = false;
+      {
+        Value _default_1 = field.getDefault();
+        final Array array = ((Array) _default_1);
+        EList<Value> _value = array.getValues().getValue();
+        avroclipse.avroIDL.StringValue _createStringValue = AvroIDLFactory.eINSTANCE.createStringValue();
+        final Procedure1<avroclipse.avroIDL.StringValue> _function = (avroclipse.avroIDL.StringValue it) -> {
+          it.setVal("EMPTY_VAL");
+        };
+        avroclipse.avroIDL.StringValue _doubleArrow = ObjectExtensions.<avroclipse.avroIDL.StringValue>operator_doubleArrow(_createStringValue, _function);
+        _xblockexpression = _value.add(_doubleArrow);
+      }
+      _xifexpression = _xblockexpression;
+    }
+    return _xifexpression;
+  }
+  
+  public boolean arrayContains(final avroclipse.avroIDL.Field field, final org.aedit.aedit.Value value) {
+    Value _default = field.getDefault();
+    boolean _tripleNotEquals = (_default != null);
+    if (_tripleNotEquals) {
+      Value _default_1 = field.getDefault();
+      final Array array = ((Array) _default_1);
+      EList<Value> _value = array.getValues().getValue();
+      for (final Value arrayValue : _value) {
+        {
+          final Object realVal = HelperClass.getValue(value);
+          boolean _equals = HelperClass.getValue(arrayValue).equals(realVal);
+          if (_equals) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 }

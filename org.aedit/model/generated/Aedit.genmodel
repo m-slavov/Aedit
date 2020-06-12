@@ -30,9 +30,7 @@
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//GenericRule"/>
     <genClasses ecoreClass="Aedit.ecore#//SchemaRule"/>
-    <genClasses ecoreClass="Aedit.ecore#//ArrayEditRules">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//ArrayEditRules/array"/>
-    </genClasses>
+    <genClasses ecoreClass="Aedit.ecore#//ArrayEditRules"/>
     <genClasses ecoreClass="Aedit.ecore#//EnumRule"/>
     <genClasses ecoreClass="Aedit.ecore#//AddAnnotationToSchema">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//AddAnnotationToSchema/schemaType"/>
@@ -125,13 +123,17 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//ChangeType/newType"/>
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//RemoveArrayValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveArrayValue/variable"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveArrayValue/valueToRemove"/>
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//RemoveArrayValueAtIndex">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//RemoveArrayValueAtIndex/index"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//RemoveArrayValueAtIndex/array"/>
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//AddValueToArray">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Aedit.ecore#//AddValueToArray/index"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddValueToArray/array"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//AddValueToArray/valueToAdd"/>
     </genClasses>
     <genClasses ecoreClass="Aedit.ecore#//Field">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Aedit.ecore#//Field/annotations"/>

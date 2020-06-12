@@ -103,6 +103,36 @@ class AeditProposalProvider extends AbstractAeditProposalProvider {
 			isInScope(entry, model)
 		]
 	}
+	
+	override completeRemoveArrayValue_Variable(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		lookupCrossReference(
+			assignment.terminal as CrossReference,
+			context,
+			acceptor
+		) [ entry |
+			isInScope(entry, model)
+		]
+	}
+	
+	override completeRemoveArrayValueAtIndex_Array(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		lookupCrossReference(
+			assignment.terminal as CrossReference,
+			context,
+			acceptor
+		) [ entry |
+			isInScope(entry, model)
+		]
+	}
+	
+	override completeAddValueToArray_Array(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		lookupCrossReference(
+			assignment.terminal as CrossReference,
+			context,
+			acceptor
+		) [ entry |
+			isInScope(entry, model)
+		]
+	}
 
 	override completeRemoveEnum_VarName(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {

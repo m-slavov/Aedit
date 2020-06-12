@@ -106,6 +106,36 @@ public class AeditProposalProvider extends AbstractAeditProposalProvider {
   }
   
   @Override
+  public void completeRemoveArrayValue_Variable(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    AbstractElement _terminal = assignment.getTerminal();
+    final Predicate<IEObjectDescription> _function = (IEObjectDescription entry) -> {
+      return this.isInScope(entry, model);
+    };
+    this.lookupCrossReference(
+      ((CrossReference) _terminal), context, acceptor, _function);
+  }
+  
+  @Override
+  public void completeRemoveArrayValueAtIndex_Array(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    AbstractElement _terminal = assignment.getTerminal();
+    final Predicate<IEObjectDescription> _function = (IEObjectDescription entry) -> {
+      return this.isInScope(entry, model);
+    };
+    this.lookupCrossReference(
+      ((CrossReference) _terminal), context, acceptor, _function);
+  }
+  
+  @Override
+  public void completeAddValueToArray_Array(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    AbstractElement _terminal = assignment.getTerminal();
+    final Predicate<IEObjectDescription> _function = (IEObjectDescription entry) -> {
+      return this.isInScope(entry, model);
+    };
+    this.lookupCrossReference(
+      ((CrossReference) _terminal), context, acceptor, _function);
+  }
+  
+  @Override
   public void completeRemoveEnum_VarName(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     ChangeEnum parentContainer = null;
     if ((model instanceof ChangeEnum)) {

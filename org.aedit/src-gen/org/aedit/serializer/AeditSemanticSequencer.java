@@ -356,19 +356,10 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     AddValueToArray returns AddValueToArray
 	 *
 	 * Constraint:
-	 *     (index=INT array=[Field|ID])
+	 *     (index=INT array=[Field|QN] (valueToAdd=Array | valueToAdd=Value))
 	 */
 	protected void sequence_AddValueToArray(ISerializationContext context, AddValueToArray semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__INDEX) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__INDEX));
-			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAddValueToArrayAccess().getIndexINTTerminalRuleCall_2_0(), semanticObject.getIndex());
-		feeder.accept(grammarAccess.getAddValueToArrayAccess().getArrayFieldIDTerminalRuleCall_4_0_1(), semanticObject.eGet(AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY, false));
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -782,18 +773,18 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     RemoveArrayValueAtIndex returns RemoveArrayValueAtIndex
 	 *
 	 * Constraint:
-	 *     (index=INT array=[Field|ID])
+	 *     (index=INT array=[Field|QN])
 	 */
 	protected void sequence_RemoveArrayValueAtIndex(ISerializationContext context, RemoveArrayValueAtIndex semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__INDEX) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__INDEX));
-			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getRemoveArrayValueAtIndexAccess().getIndexINTTerminalRuleCall_2_0(), semanticObject.getIndex());
-		feeder.accept(grammarAccess.getRemoveArrayValueAtIndexAccess().getArrayFieldIDTerminalRuleCall_4_0_1(), semanticObject.eGet(AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY, false));
+		feeder.accept(grammarAccess.getRemoveArrayValueAtIndexAccess().getArrayFieldQNParserRuleCall_4_0_1(), semanticObject.eGet(AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY, false));
 		feeder.finish();
 	}
 	
@@ -805,17 +796,17 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     RemoveArrayValue returns RemoveArrayValue
 	 *
 	 * Constraint:
-	 *     (array=[Field|ID] valueToRemove=Value)
+	 *     (variable=[Field|QN] valueToRemove=Value)
 	 */
 	protected void sequence_RemoveArrayValue(ISerializationContext context, RemoveArrayValue semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY));
+			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE));
 			if (transientValues.isValueTransient(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getRemoveArrayValueAccess().getArrayFieldIDTerminalRuleCall_1_0_1(), semanticObject.eGet(AeditPackage.Literals.ARRAY_EDIT_RULES__ARRAY, false));
+		feeder.accept(grammarAccess.getRemoveArrayValueAccess().getVariableFieldQNParserRuleCall_1_0_1(), semanticObject.eGet(AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE, false));
 		feeder.accept(grammarAccess.getRemoveArrayValueAccess().getValueToRemoveValueParserRuleCall_3_0(), semanticObject.getValueToRemove());
 		feeder.finish();
 	}

@@ -1,7 +1,6 @@
 package HelperClass
 
 //import org.xtext.example.mydsl.myAvdl.AvroIDLFactory
-
 import avroclipse.avroIDL.Annotation
 import avroclipse.avroIDL.AvroIDLFile
 import avroclipse.avroIDL.EnumType
@@ -20,10 +19,21 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.EcoreUtil2
+import avroclipse.avroIDL.Value
+import avroclipse.avroIDL.StringValue
+import avroclipse.avroIDL.IntValue
+import avroclipse.avroIDL.FloatValue
+import avroclipse.avroIDL.BooleanValue
+import org.aedit.aedit.PrimitiveTypeField
+import org.aedit.aedit.CustomTypeField
+import org.aedit.aedit.ComplexTypeField
 
 class HelperClass {
 
 	final static String AVROCLIPSE_GRAMMAR_EXTENSION = "avdl"
+	final static String ENUM = 'enum'
+	final static String ERROR = 'error'
+	final static String RECORD = 'record'
 
 	def static Object deepCopy(Object object) {
 		try {
@@ -58,7 +68,7 @@ class HelperClass {
 		return protocols
 	}
 
-	def static getSchemasAndFields(AvroIDLFile file) {
+	def static getSchemasAndFields(AvroIDLFile file, List<String> annotations, List<String> nameAnnotations) {
 		val List<String> existingVariables = new ArrayList<String>()
 
 		for (typeDef : file.elements.filter(TypeDef)) {
@@ -73,6 +83,30 @@ class HelperClass {
 				existingVariables.add(file.name + '.' + currentSchema.name)
 				for (field : currentSchema.fields) {
 					existingVariables.add(file.name + '.' + currentSchema.name + '.' + field.name)
+
+					for (annotation : field.annotations) {
+						annotations.add(file.name + '.' + currentSchema.name + '.' + field.name + '.' + annotation.name)
+					}
+
+					for (nameAnnotation : field.nameAnnotations) {
+						nameAnnotations.add(file.name + '.' + currentSchema.name + '.' + field.name + '.' +
+							nameAnnotation.name)
+					}
+
+				}
+			} else if (currentSchema instanceof ErrorType) {
+				existingVariables.add(file.name + '.' + currentSchema.name)
+				for (field : currentSchema.fields) {
+					existingVariables.add(file.name + '.' + currentSchema.name + '.' + field.name)
+
+					for (annotation : field.annotations) {
+						annotations.add(file.name + '.' + currentSchema.name + '.' + field.name + '.' + annotation.name)
+					}
+
+					for (nameAnnotation : field.nameAnnotations) {
+						nameAnnotations.add(file.name + '.' + currentSchema.name + '.' + field.name + '.' +
+							nameAnnotation.name)
+					}
 				}
 			}
 
@@ -177,6 +211,102 @@ class HelperClass {
 			}
 
 		}
+	}
+
+	def static getValue(Value value) {
+		switch (value) {
+			StringValue: value.^val
+			IntValue: value.^val
+			FloatValue: value.^val
+			BooleanValue: value.^val
+			default: ""
+		}
+	}
+	
+	def static getValue(org.aedit.aedit.Value value) {
+		switch (value) {
+			org.aedit.aedit.StringValue: value.^val
+			org.aedit.aedit.IntValue: value.^val
+			org.aedit.aedit.FloatValue: value.^val
+			org.aedit.aedit.BooleanValue: value.^val
+			default: ""
+		}
+	}
+
+	def static getFieldName(org.aedit.aedit.Field field) {
+		var fieldType = field.fieldType
+		switch (fieldType) {
+			PrimitiveTypeField: return fieldType.varName
+			CustomTypeField: return fieldType.varName
+			ComplexTypeField: return fieldType.varName
+		}
+	}
+
+	def static checkIfTypeIsCorrect(String type, Type schemaType) {
+		if (type.equals(ENUM)) {
+			return schemaType instanceof EnumType
+		} else if (type.equals(ERROR)) {
+			return schemaType instanceof ErrorType
+		} else if (type.equals(RECORD)) {
+			return schemaType instanceof RecordType
+		}
+	}
+
+	def static getAnnotationQualifiedName(Annotation annotation) {
+
+		var String schemaName
+		var String protocolName
+
+		val annotationContainer = annotation.eContainer
+
+		if (annotationContainer instanceof Field) {
+			val fieldContainer = annotationContainer.eContainer
+
+			if (fieldContainer instanceof RecordType) {
+
+				schemaName = fieldContainer.name
+				val schemaContainer = fieldContainer.eContainer as TypeDef
+				protocolName = (schemaContainer.eContainer as AvroIDLFile).name
+
+				return protocolName + '.' + schemaName + '.' + annotationContainer.name
+
+			} else if (fieldContainer instanceof ErrorType) {
+
+				schemaName = fieldContainer.name
+				val schemaContainer = fieldContainer.eContainer as TypeDef
+				protocolName = (schemaContainer.eContainer as AvroIDLFile).name
+
+				return protocolName + '.' + schemaName + '.' + annotationContainer.name
+
+			}
+		} else if (annotationContainer instanceof TypeDef) {
+			protocolName = (annotationContainer.eContainer as AvroIDLFile).name
+		}
+
+		return protocolName + '.' + schemaName
+	}
+
+	def static getFieldQualifiedName(Field field) {
+		var String schemaName
+		var String protocolName
+		
+		val fieldContainer = field.eContainer
+
+		if (fieldContainer instanceof RecordType) {
+
+			schemaName = fieldContainer.name
+			val schemaContainer = fieldContainer.eContainer as TypeDef
+			protocolName = (schemaContainer.eContainer as AvroIDLFile).name
+
+		} else if (fieldContainer instanceof ErrorType) {
+
+			schemaName = fieldContainer.name
+			val schemaContainer = fieldContainer.eContainer as TypeDef
+			protocolName = (schemaContainer.eContainer as AvroIDLFile).name
+
+		}
+		
+		return protocolName + '.' + schemaName
 	}
 
 }

@@ -32,14 +32,17 @@ public class AeditScopeProvider extends AbstractAeditScopeProvider {
     IScope _xblockexpression = null;
     {
       if (((context.eContainer() instanceof ChangeSchema) || (context.eContainer() instanceof ChangeEnum))) {
-        if ((((((((Objects.equal(reference, AeditPackage.Literals.RENAME_VARIABLE__VARIABLE) || 
+        if (((((((((((Objects.equal(reference, AeditPackage.Literals.RENAME_VARIABLE__VARIABLE) || 
           Objects.equal(reference, AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE)) || 
           Objects.equal(reference, AeditPackage.Literals.CHANGE_DEF_VALUE__FIELD)) || 
           Objects.equal(reference, AeditPackage.Literals.CHANGE_TYPE__FIELD)) || 
           Objects.equal(reference, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__VARIABLE)) || 
           Objects.equal(reference, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__VARIABLE)) || 
           Objects.equal(reference, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__VARIABLE)) || 
-          Objects.equal(reference, AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE))) {
+          Objects.equal(reference, AeditPackage.Literals.REMOVE_NAME_ANNOTATION_FROM_FIELD__VARIABLE)) || 
+          Objects.equal(reference, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY)) || 
+          Objects.equal(reference, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE)) || 
+          Objects.equal(reference, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY))) {
           final IScope scope = super.getScope(context, reference);
           final Function1<IEObjectDescription, AliasedEObjectDescription> _function = (IEObjectDescription d) -> {
             AliasedEObjectDescription _xifexpression = null;

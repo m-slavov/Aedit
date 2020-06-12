@@ -731,17 +731,6 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
-  public EReference getArrayEditRules_Array()
-  {
-    return (EReference)arrayEditRulesEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getEnumRule()
   {
     return enumRuleEClass;
@@ -1512,9 +1501,20 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
-  public EReference getRemoveArrayValue_ValueToRemove()
+  public EReference getRemoveArrayValue_Variable()
   {
     return (EReference)removeArrayValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getRemoveArrayValue_ValueToRemove()
+  {
+    return (EReference)removeArrayValueEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1545,6 +1545,17 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
+  public EReference getRemoveArrayValueAtIndex_Array()
+  {
+    return (EReference)removeArrayValueAtIndexEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getAddValueToArray()
   {
     return addValueToArrayEClass;
@@ -1559,6 +1570,28 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
   public EAttribute getAddValueToArray_Index()
   {
     return (EAttribute)addValueToArrayEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddValueToArray_Array()
+  {
+    return (EReference)addValueToArrayEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAddValueToArray_ValueToAdd()
+  {
+    return (EReference)addValueToArrayEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -2114,7 +2147,6 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     schemaRuleEClass = createEClass(SCHEMA_RULE);
 
     arrayEditRulesEClass = createEClass(ARRAY_EDIT_RULES);
-    createEReference(arrayEditRulesEClass, ARRAY_EDIT_RULES__ARRAY);
 
     enumRuleEClass = createEClass(ENUM_RULE);
 
@@ -2209,13 +2241,17 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     createEAttribute(changeTypeEClass, CHANGE_TYPE__NEW_TYPE);
 
     removeArrayValueEClass = createEClass(REMOVE_ARRAY_VALUE);
+    createEReference(removeArrayValueEClass, REMOVE_ARRAY_VALUE__VARIABLE);
     createEReference(removeArrayValueEClass, REMOVE_ARRAY_VALUE__VALUE_TO_REMOVE);
 
     removeArrayValueAtIndexEClass = createEClass(REMOVE_ARRAY_VALUE_AT_INDEX);
     createEAttribute(removeArrayValueAtIndexEClass, REMOVE_ARRAY_VALUE_AT_INDEX__INDEX);
+    createEReference(removeArrayValueAtIndexEClass, REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY);
 
     addValueToArrayEClass = createEClass(ADD_VALUE_TO_ARRAY);
     createEAttribute(addValueToArrayEClass, ADD_VALUE_TO_ARRAY__INDEX);
+    createEReference(addValueToArrayEClass, ADD_VALUE_TO_ARRAY__ARRAY);
+    createEReference(addValueToArrayEClass, ADD_VALUE_TO_ARRAY__VALUE_TO_ADD);
 
     fieldEClass = createEClass(FIELD);
     createEReference(fieldEClass, FIELD__ANNOTATIONS);
@@ -2376,7 +2412,6 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     initEClass(schemaRuleEClass, SchemaRule.class, "SchemaRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(arrayEditRulesEClass, ArrayEditRules.class, "ArrayEditRules", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getArrayEditRules_Array(), theAvroIDLPackage.getField(), null, "array", null, 0, 1, ArrayEditRules.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(enumRuleEClass, EnumRule.class, "EnumRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -2471,13 +2506,17 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     initEAttribute(getChangeType_NewType(), ecorePackage.getEString(), "newType", null, 0, 1, ChangeType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(removeArrayValueEClass, RemoveArrayValue.class, "RemoveArrayValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRemoveArrayValue_Variable(), theAvroIDLPackage.getField(), null, "variable", null, 0, 1, RemoveArrayValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRemoveArrayValue_ValueToRemove(), this.getValue(), null, "valueToRemove", null, 0, 1, RemoveArrayValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(removeArrayValueAtIndexEClass, RemoveArrayValueAtIndex.class, "RemoveArrayValueAtIndex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRemoveArrayValueAtIndex_Index(), ecorePackage.getEInt(), "index", null, 0, 1, RemoveArrayValueAtIndex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRemoveArrayValueAtIndex_Array(), theAvroIDLPackage.getField(), null, "array", null, 0, 1, RemoveArrayValueAtIndex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(addValueToArrayEClass, AddValueToArray.class, "AddValueToArray", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAddValueToArray_Index(), ecorePackage.getEInt(), "index", null, 0, 1, AddValueToArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAddValueToArray_Array(), theAvroIDLPackage.getField(), null, "array", null, 0, 1, AddValueToArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAddValueToArray_ValueToAdd(), ecorePackage.getEObject(), null, "valueToAdd", null, 0, 1, AddValueToArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getField_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

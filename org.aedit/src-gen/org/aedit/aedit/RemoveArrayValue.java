@@ -3,6 +3,7 @@
  */
 package org.aedit.aedit;
 
+import avroclipse.avroIDL.Field;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,6 +14,7 @@ package org.aedit.aedit;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.aedit.aedit.RemoveArrayValue#getVariable <em>Variable</em>}</li>
  *   <li>{@link org.aedit.aedit.RemoveArrayValue#getValueToRemove <em>Value To Remove</em>}</li>
  * </ul>
  *
@@ -22,6 +24,28 @@ package org.aedit.aedit;
  */
 public interface RemoveArrayValue extends ArrayEditRules
 {
+  /**
+   * Returns the value of the '<em><b>Variable</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Variable</em>' reference.
+   * @see #setVariable(Field)
+   * @see org.aedit.aedit.AeditPackage#getRemoveArrayValue_Variable()
+   * @model
+   * @generated
+   */
+  Field getVariable();
+
+  /**
+   * Sets the value of the '{@link org.aedit.aedit.RemoveArrayValue#getVariable <em>Variable</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Variable</em>' reference.
+   * @see #getVariable()
+   * @generated
+   */
+  void setVariable(Field value);
+
   /**
    * Returns the value of the '<em><b>Value To Remove</b></em>' containment reference.
    * <!-- begin-user-doc -->
