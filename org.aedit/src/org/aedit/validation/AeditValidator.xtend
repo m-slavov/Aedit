@@ -83,6 +83,7 @@ class AeditValidator extends AbstractAeditValidator {
 		protocols.clear
 		existingAnnotations.clear
 		existingNameAnnotations.clear
+		existingVariables.clear
 
 		if (protocols.empty) {
 			protocols = HelperClass.getAvroFiles(model.eResource)
@@ -181,7 +182,7 @@ class AeditValidator extends AbstractAeditValidator {
 
 		if (isUnique(newVar)) {
 			error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.RENAME_VARIABLE__NEW_VAR_NAME,
-				ErrorCodes.RENAME_VARIABLE)
+				ErrorCodes.DUPLICATE_FIELD)
 		} else {
 			removedVariables.add(oldVar)
 		}
@@ -251,7 +252,7 @@ class AeditValidator extends AbstractAeditValidator {
 		// Check if annotation is already defined
 		if (existingAnnotations.contains(fullName) || newAnnotations.contains(fullName)) {
 			error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__ANNOTATION,
-				ErrorCodes.ADD_ANNOTATION_TO_SCHEMA, fullName)
+				ErrorCodes.DUPLICATE_ANNOTATION, fullName)
 		} else {
 			newAnnotations.add(fullName)
 		}
@@ -271,8 +272,8 @@ class AeditValidator extends AbstractAeditValidator {
 		// Check if the specified type and the schema's type are the same
 		if (!HelperClass.checkIfTypeIsCorrect(removeAnnotationFromSchema.schemaType,
 			removeAnnotationFromSchema.schema)) {
-			error("Incorrect type!", AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE,
-				ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, fullName)
+			error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE,
+				ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA)
 		}
 
 		val annotationToRemoveNamaspace = HelperClass.getAnnotationQualifiedName(
@@ -280,7 +281,7 @@ class AeditValidator extends AbstractAeditValidator {
 
 		// Check if the annotation belongs to the current schema
 		if (!annotationToRemoveNamaspace.equals(fullName)) {
-			error("Schema does not have such annotation!",
+			error(ErrorMessages.ANNOTATION_NOT_IN_SCHEMA,
 				AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE,
 				ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, fullName)
 		}
@@ -299,7 +300,7 @@ class AeditValidator extends AbstractAeditValidator {
 
 		if (existingAnnotations.contains(annotationFullName) || newAnnotations.contains(annotationFullName)) {
 			error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__ANNOTATION,
-				ErrorCodes.ADD_ANNOTATION_TO_FIELD, annotationFullName)
+				ErrorCodes.DUPLICATE_ANNOTATION, annotationFullName)
 		} else {
 			newAnnotations.add(annotationFullName)
 		}
@@ -319,7 +320,7 @@ class AeditValidator extends AbstractAeditValidator {
 
 		if (existingNameAnnotations.contains(annotationFullName) || newNameAnnotations.contains(annotationFullName)) {
 			error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION,
-				ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD, annotationFullName)
+				ErrorCodes.DUPLICATE_ANNOTATION, annotationFullName)
 		} else {
 			newNameAnnotations.add(annotationFullName)
 		}
@@ -415,13 +416,13 @@ class AeditValidator extends AbstractAeditValidator {
 		var newEnum = currentProtocol + '.' + currentSchema + '.' + renameEnum.newEnumName
 
 		if (removedVariables.contains(oldEnum)) {
-			error("Variable has been deleted!", AeditPackage.Literals.RENAME_ENUM__OLD_NAME)
+			error(ErrorMessages.REMOVED_ENUM_CONST, AeditPackage.Literals.RENAME_ENUM__OLD_NAME, ErrorCodes.RENAME_ENUM_CONSTANT)
 		} else if (!existingVariables.contains(oldEnum)) {
-			error("Variable has been deleted!", AeditPackage.Literals.RENAME_ENUM__OLD_NAME)
+			error(ErrorMessages.NON_EXISTENT_ENUM_CONST, AeditPackage.Literals.RENAME_ENUM__OLD_NAME, ErrorCodes.RENAME_ENUM_CONSTANT)
 		}
 
 		if (isUnique(newEnum)) {
-			error("Variable with that name already exists!", AeditPackage.Literals.RENAME_ENUM__NEW_ENUM_NAME)
+			error(ErrorMessages.DUPLICATE_ENUM_CONST, AeditPackage.Literals.RENAME_ENUM__NEW_ENUM_NAME, ErrorCodes.DUPLICATE_ENUM_CONST)
 		} else {
 			removedVariables.add(oldEnum)
 		}
@@ -452,29 +453,35 @@ class AeditValidator extends AbstractAeditValidator {
 				if (varType.target.equals('int')) {
 					switch (changeType.newType) {
 						case 'string':
-							error("Cannot convert from int to string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_INT_TO_STRING, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 						case 'int':
-							error("Variable is already of type int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_INT_TO_INT, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
+						case 'boolean':
+							error(ErrorMessages.CONVERT_INT_TO_BOOL, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 					}
 				} else if (varType.target.equals('long')) {
 					switch (changeType.newType) {
 						case 'string':
-							error("Cannot convert from long to string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_LONG_TO_STRING, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 						case 'int':
-							error("Cannot convert from long to int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_LONG_TO_INT, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 						case 'double':
-							error("Cannot convert from long to double!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_LONG_TO_DOUBLE, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 						case 'long':
-							error("Variable is already of type long!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_LONG_TO_LONG, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
+						case 'boolean':
+							error(ErrorMessages.CONVERT_LONG_TO_BOOL, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 					}
 				} else if (varType.target.equals('double')) {
 					switch (changeType.newType) {
 						case 'string':
-							error("Cannot convert from double to string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_DOUBLE_TO_STRING, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 						case 'int':
-							error("Cannot convert from double to int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_DOUBLE_TO_INT, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 						case 'double':
-							error("Variable is already of type double!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE)
+							error(ErrorMessages.CONVERT_DOUBLE_TO_DOUBLE, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
+						case 'boolean':
+							error(ErrorMessages.CONVERT_DOUBLE_TO_BOOL, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH)
 					}
 
 				} else if (varType.target.equals('string')) {
@@ -531,29 +538,41 @@ class AeditValidator extends AbstractAeditValidator {
 				if (varType.target.equals('int')) {
 					switch (changeDefValue.newVal) {
 						case changeDefValue.newVal instanceof StringValue:
-							error("Cannot assign string to int!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL)
+							error(ErrorMessages.STRING_TO_INT, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
+						case changeDefValue.newVal instanceof FloatValue:
+							error(ErrorMessages.FLOAT_TO_INT, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
 					}
 				} else if (varType.target.equals('long')) {
 					switch (changeDefValue.newVal) {
 						case changeDefValue.newVal instanceof StringValue:
-							error("Cannot assign string to long!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL)
+							error(ErrorMessages.STRING_TO_LONG, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
 						case changeDefValue.newVal instanceof FloatValue:
-							error("Cannot assign float to long!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL)
+							error(ErrorMessages.FLOAT_TO_LONG, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
 					}
 				} else if (varType.target.equals('double')) {
 					switch (changeDefValue.newVal) {
 						case changeDefValue.newVal instanceof StringValue:
-							error("Cannot assign string to double!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL)
-						case changeDefValue.newVal instanceof IntValue:
-							error("Cannot assign int to double!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL)
+							error(ErrorMessages.STRING_TO_DOUBLE, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
 					}
 
 				} else if (varType.target.equals('string')) {
 					switch (changeDefValue.newVal) {
 						case changeDefValue.newVal instanceof IntValue:
-							error("Cannot assign integer to string!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL)
+							error(ErrorMessages.INTEGER_TO_STRING, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
 						case changeDefValue.newVal instanceof FloatValue:
-							error("Cannot assign float to string!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL)
+							error(ErrorMessages.FLOAT_TO_STRING, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
+					}
+				} else if (varType.target.equals('float')) {
+					switch (changeDefValue.newVal) {
+						case changeDefValue.newVal instanceof StringValue:
+							error(ErrorMessages.STRING_TO_FLOAT, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
+					}
+				} else if (varType.target.equals('boolean')) {
+					switch (changeDefValue.newVal) {
+						case changeDefValue.newVal instanceof IntValue:
+							error(ErrorMessages.INTEGER_TO_BOOL, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
+						case changeDefValue.newVal instanceof FloatValue:
+							error(ErrorMessages.FLOAT_TO_BOOL, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH)
 					}
 				}
 			}
@@ -569,7 +588,7 @@ class AeditValidator extends AbstractAeditValidator {
 		var recordName = addRecord.namespace.name + '.' + addRecord.recordName
 
 		if (existingVariables.contains(recordName) || newVariables.contains(recordName)) {
-			error(ErrorMessages.DUPLICATE_SCHEMA, AeditPackage.Literals.ADD_RECORD__RECORD_NAME, ErrorCodes.ADD_RECORD)
+			error(ErrorMessages.DUPLICATE_SCHEMA, AeditPackage.Literals.ADD_RECORD__RECORD_NAME, ErrorCodes.DUPLICATE_FIELD)
 		} else {
 			newVariables.add(recordName)
 
@@ -579,8 +598,8 @@ class AeditValidator extends AbstractAeditValidator {
 				var fullFieldName = recordName + '.' + newFieldName
 
 				if (newVariables.contains(fullFieldName)) {
-					error("Variable with this name already exists!", AeditPackage.Literals.ADD_RECORD__FIELDS,
-						addRecord.fields.indexOf(field))
+					error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.ADD_RECORD__FIELDS,
+						addRecord.fields.indexOf(field), ErrorCodes.DUPLICATE_FIELD)
 				} else {
 					newVariables.add(fullFieldName)
 				}
@@ -594,8 +613,8 @@ class AeditValidator extends AbstractAeditValidator {
 		var enumName = addEnumeration.namespace.name + '.' + addEnumeration.enumName
 
 		if (existingVariables.contains(enumName) || newVariables.contains(enumName)) {
-			error("Enumeration with this name already exists in this namespace!",
-				AeditPackage.Literals.ADD_ENUMERATION__ENUM_NAME)
+			error(ErrorMessages.DUPLICATE_SCHEMA,
+				AeditPackage.Literals.ADD_ENUMERATION__ENUM_NAME, ErrorCodes.DUPLICATE_FIELD)
 		} else {
 
 			newVariables.add(enumName)
@@ -603,8 +622,8 @@ class AeditValidator extends AbstractAeditValidator {
 			for (symbol : addEnumeration.symbols) {
 				var symbolName = enumName + symbol
 				if (newVariables.contains(symbol)) {
-					error("Enum with this name already exists!", AeditPackage.Literals.ADD_ENUMERATION__SYMBOLS,
-						addEnumeration.symbols.indexOf(symbol))
+					error(ErrorMessages.DUPLICATE_ENUM_CONST, AeditPackage.Literals.ADD_ENUMERATION__SYMBOLS,
+						addEnumeration.symbols.indexOf(symbol), ErrorCodes.DUPLICATE_ENUM_CONST)
 				} else {
 					newVariables.add(symbolName)
 				}
@@ -619,7 +638,7 @@ class AeditValidator extends AbstractAeditValidator {
 
 		if (existingVariables.contains(fullName)) {
 			error(ErrorMessages.DUPLICATE_ENUM_CONST, AeditPackage.Literals.ADD_ENUM__VAR_NAME,
-				ErrorCodes.ADD_ENUM_CONST)
+				ErrorCodes.DUPLICATE_ENUM_CONST)
 		}
 
 	}
@@ -634,7 +653,7 @@ class AeditValidator extends AbstractAeditValidator {
 			newVariables.add(fullName)
 		} else {
 			error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.ADD_VARIABLE__NEW_VAR,
-				ErrorCodes.ADD_VARIABLE)
+				ErrorCodes.DUPLICATE_FIELD)
 		}
 	}
 
@@ -657,6 +676,27 @@ class AeditValidator extends AbstractAeditValidator {
 
 	@Check
 	def checkForConflicts(RuleMap rm) {
+		
+		var nameIsValid = false;
+		
+		for (value : SensorFeatures.Features.values){
+			if (value.toString.equals(rm.name)){
+				nameIsValid = true
+			}
+		}
+		
+		if (!nameIsValid){
+			error(ErrorMessages.INVALID_NAME, AeditPackage.Literals.RULE_MAP__NAME, ErrorCodes.RULE_MAP)
+				return null
+		}
+		
+		if (existingVariables.contains("RuleMap." + rm.name)){
+			error(ErrorMessages.DUPLICATE_NAME, AeditPackage.Literals.RULE_MAP__NAME, ErrorCodes.DUPLICATE_FIELD)
+			return null
+		}
+		
+		existingVariables.add("RuleMap." + rm.name)
+		
 		for (ruleDecl : rm.rules) {
 			for (otherRuleDecl : rm.rules) {
 				if (ruleDecl !== otherRuleDecl) {

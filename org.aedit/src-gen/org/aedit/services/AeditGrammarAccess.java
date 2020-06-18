@@ -807,23 +807,27 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIndexAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cIndexINTTerminalRuleCall_2_0 = (RuleCall)cIndexAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Keyword cRecordKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cNamespaceAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final CrossReference cNamespaceAvroIDLFileCrossReference_5_0 = (CrossReference)cNamespaceAssignment_5.eContents().get(0);
-		private final RuleCall cNamespaceAvroIDLFileIDTerminalRuleCall_5_0_1 = (RuleCall)cNamespaceAvroIDLFileCrossReference_5_0.eContents().get(1);
-		private final Keyword cFullStopKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		private final Assignment cRecordNameAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cRecordNameIDTerminalRuleCall_7_0 = (RuleCall)cRecordNameAssignment_7.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
-		private final Assignment cFieldsAssignment_9 = (Assignment)cGroup.eContents().get(9);
-		private final RuleCall cFieldsFieldParserRuleCall_9_0 = (RuleCall)cFieldsAssignment_9.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Assignment cRecordAnnotationsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cRecordAnnotationsAnnotationParserRuleCall_4_0 = (RuleCall)cRecordAnnotationsAssignment_4.eContents().get(0);
+		private final Keyword cRecordKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cNamespaceAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final CrossReference cNamespaceAvroIDLFileCrossReference_6_0 = (CrossReference)cNamespaceAssignment_6.eContents().get(0);
+		private final RuleCall cNamespaceAvroIDLFileIDTerminalRuleCall_6_0_1 = (RuleCall)cNamespaceAvroIDLFileCrossReference_6_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Assignment cRecordNameAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cRecordNameIDTerminalRuleCall_8_0 = (RuleCall)cRecordNameAssignment_8.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Assignment cFieldsAssignment_10 = (Assignment)cGroup.eContents().get(10);
+		private final RuleCall cFieldsFieldParserRuleCall_10_0 = (RuleCall)cFieldsAssignment_10.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_11 = (Keyword)cGroup.eContents().get(11);
 		
 		//AddRecord:
-		//	'add.at' '(' index=INT ')' 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID '{' fields+=Field* '}';
+		//	'add.at' '(' index=INT ')' recordAnnotations+=Annotation* 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID
+		//	'{' fields+=Field* '}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'add.at' '(' index=INT ')' 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID '{' fields+=Field* '}'
+		//'add.at' '(' index=INT ')' recordAnnotations+=Annotation* 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID
+		//'{' fields+=Field* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'add.at'
@@ -841,38 +845,44 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 		
+		//recordAnnotations+=Annotation*
+		public Assignment getRecordAnnotationsAssignment_4() { return cRecordAnnotationsAssignment_4; }
+		
+		//Annotation
+		public RuleCall getRecordAnnotationsAnnotationParserRuleCall_4_0() { return cRecordAnnotationsAnnotationParserRuleCall_4_0; }
+		
 		//'record'
-		public Keyword getRecordKeyword_4() { return cRecordKeyword_4; }
+		public Keyword getRecordKeyword_5() { return cRecordKeyword_5; }
 		
 		//namespace=[avroIDL::AvroIDLFile]
-		public Assignment getNamespaceAssignment_5() { return cNamespaceAssignment_5; }
+		public Assignment getNamespaceAssignment_6() { return cNamespaceAssignment_6; }
 		
 		//[avroIDL::AvroIDLFile]
-		public CrossReference getNamespaceAvroIDLFileCrossReference_5_0() { return cNamespaceAvroIDLFileCrossReference_5_0; }
+		public CrossReference getNamespaceAvroIDLFileCrossReference_6_0() { return cNamespaceAvroIDLFileCrossReference_6_0; }
 		
 		//ID
-		public RuleCall getNamespaceAvroIDLFileIDTerminalRuleCall_5_0_1() { return cNamespaceAvroIDLFileIDTerminalRuleCall_5_0_1; }
+		public RuleCall getNamespaceAvroIDLFileIDTerminalRuleCall_6_0_1() { return cNamespaceAvroIDLFileIDTerminalRuleCall_6_0_1; }
 		
 		//'.'
-		public Keyword getFullStopKeyword_6() { return cFullStopKeyword_6; }
+		public Keyword getFullStopKeyword_7() { return cFullStopKeyword_7; }
 		
 		//recordName=ID
-		public Assignment getRecordNameAssignment_7() { return cRecordNameAssignment_7; }
+		public Assignment getRecordNameAssignment_8() { return cRecordNameAssignment_8; }
 		
 		//ID
-		public RuleCall getRecordNameIDTerminalRuleCall_7_0() { return cRecordNameIDTerminalRuleCall_7_0; }
+		public RuleCall getRecordNameIDTerminalRuleCall_8_0() { return cRecordNameIDTerminalRuleCall_8_0; }
 		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_8() { return cLeftCurlyBracketKeyword_8; }
+		public Keyword getLeftCurlyBracketKeyword_9() { return cLeftCurlyBracketKeyword_9; }
 		
 		//fields+=Field*
-		public Assignment getFieldsAssignment_9() { return cFieldsAssignment_9; }
+		public Assignment getFieldsAssignment_10() { return cFieldsAssignment_10; }
 		
 		//Field
-		public RuleCall getFieldsFieldParserRuleCall_9_0() { return cFieldsFieldParserRuleCall_9_0; }
+		public RuleCall getFieldsFieldParserRuleCall_10_0() { return cFieldsFieldParserRuleCall_10_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_10() { return cRightCurlyBracketKeyword_10; }
+		public Keyword getRightCurlyBracketKeyword_11() { return cRightCurlyBracketKeyword_11; }
 	}
 	public class AddErrorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.aedit.Aedit.AddError");
@@ -2663,7 +2673,8 @@ public class AeditGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//AddRecord:
-	//	'add.at' '(' index=INT ')' 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID '{' fields+=Field* '}';
+	//	'add.at' '(' index=INT ')' recordAnnotations+=Annotation* 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID
+	//	'{' fields+=Field* '}';
 	public AddRecordElements getAddRecordAccess() {
 		return pAddRecord;
 	}

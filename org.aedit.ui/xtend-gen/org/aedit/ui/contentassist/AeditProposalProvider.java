@@ -9,6 +9,7 @@ import com.google.common.base.Predicate;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
 import org.aedit.ui.contentassist.AbstractAeditProposalProvider;
+import org.aedit.validation.SensorFeatures;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.AbstractElement;
@@ -25,6 +26,14 @@ import org.eclipse.xtext.xbase.lib.Conversions;
  */
 @SuppressWarnings("all")
 public class AeditProposalProvider extends AbstractAeditProposalProvider {
+  @Override
+  public void completeRuleMap_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    SensorFeatures.Features[] _values = SensorFeatures.Features.values();
+    for (final SensorFeatures.Features feature : _values) {
+      acceptor.accept(this.createCompletionProposal(feature.toString(), context));
+    }
+  }
+  
   @Override
   public void completeChangeDefValue_Field(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     AbstractElement _terminal = assignment.getTerminal();

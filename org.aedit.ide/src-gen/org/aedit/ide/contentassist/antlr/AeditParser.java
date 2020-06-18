@@ -129,9 +129,10 @@ public class AeditParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getChangeEnumAccess().getSchemaAssignment_2(), "rule__ChangeEnum__SchemaAssignment_2");
 			builder.put(grammarAccess.getChangeEnumAccess().getRulesAssignment_4(), "rule__ChangeEnum__RulesAssignment_4");
 			builder.put(grammarAccess.getAddRecordAccess().getIndexAssignment_2(), "rule__AddRecord__IndexAssignment_2");
-			builder.put(grammarAccess.getAddRecordAccess().getNamespaceAssignment_5(), "rule__AddRecord__NamespaceAssignment_5");
-			builder.put(grammarAccess.getAddRecordAccess().getRecordNameAssignment_7(), "rule__AddRecord__RecordNameAssignment_7");
-			builder.put(grammarAccess.getAddRecordAccess().getFieldsAssignment_9(), "rule__AddRecord__FieldsAssignment_9");
+			builder.put(grammarAccess.getAddRecordAccess().getRecordAnnotationsAssignment_4(), "rule__AddRecord__RecordAnnotationsAssignment_4");
+			builder.put(grammarAccess.getAddRecordAccess().getNamespaceAssignment_6(), "rule__AddRecord__NamespaceAssignment_6");
+			builder.put(grammarAccess.getAddRecordAccess().getRecordNameAssignment_8(), "rule__AddRecord__RecordNameAssignment_8");
+			builder.put(grammarAccess.getAddRecordAccess().getFieldsAssignment_10(), "rule__AddRecord__FieldsAssignment_10");
 			builder.put(grammarAccess.getAddErrorAccess().getIndexAssignment_2(), "rule__AddError__IndexAssignment_2");
 			builder.put(grammarAccess.getAddErrorAccess().getNamespaceAssignment_5(), "rule__AddError__NamespaceAssignment_5");
 			builder.put(grammarAccess.getAddErrorAccess().getErrorNameAssignment_7(), "rule__AddError__ErrorNameAssignment_7");

@@ -6,6 +6,7 @@ package org.aedit.ui.contentassist
 import avroclipse.avroIDL.AvroIDLFile
 import avroclipse.avroIDL.TypeDef
 import org.aedit.aedit.ChangeEnum
+import org.aedit.validation.SensorFeatures
 import org.aedit.aedit.ChangeSchema
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.Assignment
@@ -19,7 +20,13 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
  * on how to customize the content assistant.
  */
 class AeditProposalProvider extends AbstractAeditProposalProvider {
-
+	
+	override completeRuleMap_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		for (feature : SensorFeatures.Features.values){
+			acceptor.accept(createCompletionProposal(feature.toString, context))
+		}
+	}
+	
 	override completeChangeDefValue_Field(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		lookupCrossReference(

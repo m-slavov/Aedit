@@ -39,6 +39,7 @@ public class Main {
 
 		Singleton.getInstance().setWorkspaceDir(args[0]);
 		main.runGenerator(args[0]);
+		
 	}
 
 	@Inject

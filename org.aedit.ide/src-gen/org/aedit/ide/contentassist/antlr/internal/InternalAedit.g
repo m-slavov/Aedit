@@ -3985,9 +3985,9 @@ rule__AddRecord__Group__4__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAddRecordAccess().getRecordKeyword_4()); }
-	'record'
-	{ after(grammarAccess.getAddRecordAccess().getRecordKeyword_4()); }
+	{ before(grammarAccess.getAddRecordAccess().getRecordAnnotationsAssignment_4()); }
+	(rule__AddRecord__RecordAnnotationsAssignment_4)*
+	{ after(grammarAccess.getAddRecordAccess().getRecordAnnotationsAssignment_4()); }
 )
 ;
 finally {
@@ -4012,9 +4012,9 @@ rule__AddRecord__Group__5__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAddRecordAccess().getNamespaceAssignment_5()); }
-	(rule__AddRecord__NamespaceAssignment_5)
-	{ after(grammarAccess.getAddRecordAccess().getNamespaceAssignment_5()); }
+	{ before(grammarAccess.getAddRecordAccess().getRecordKeyword_5()); }
+	'record'
+	{ after(grammarAccess.getAddRecordAccess().getRecordKeyword_5()); }
 )
 ;
 finally {
@@ -4039,9 +4039,9 @@ rule__AddRecord__Group__6__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAddRecordAccess().getFullStopKeyword_6()); }
-	'.'
-	{ after(grammarAccess.getAddRecordAccess().getFullStopKeyword_6()); }
+	{ before(grammarAccess.getAddRecordAccess().getNamespaceAssignment_6()); }
+	(rule__AddRecord__NamespaceAssignment_6)
+	{ after(grammarAccess.getAddRecordAccess().getNamespaceAssignment_6()); }
 )
 ;
 finally {
@@ -4066,9 +4066,9 @@ rule__AddRecord__Group__7__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAddRecordAccess().getRecordNameAssignment_7()); }
-	(rule__AddRecord__RecordNameAssignment_7)
-	{ after(grammarAccess.getAddRecordAccess().getRecordNameAssignment_7()); }
+	{ before(grammarAccess.getAddRecordAccess().getFullStopKeyword_7()); }
+	'.'
+	{ after(grammarAccess.getAddRecordAccess().getFullStopKeyword_7()); }
 )
 ;
 finally {
@@ -4093,9 +4093,9 @@ rule__AddRecord__Group__8__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAddRecordAccess().getLeftCurlyBracketKeyword_8()); }
-	'{'
-	{ after(grammarAccess.getAddRecordAccess().getLeftCurlyBracketKeyword_8()); }
+	{ before(grammarAccess.getAddRecordAccess().getRecordNameAssignment_8()); }
+	(rule__AddRecord__RecordNameAssignment_8)
+	{ after(grammarAccess.getAddRecordAccess().getRecordNameAssignment_8()); }
 )
 ;
 finally {
@@ -4120,9 +4120,9 @@ rule__AddRecord__Group__9__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAddRecordAccess().getFieldsAssignment_9()); }
-	(rule__AddRecord__FieldsAssignment_9)*
-	{ after(grammarAccess.getAddRecordAccess().getFieldsAssignment_9()); }
+	{ before(grammarAccess.getAddRecordAccess().getLeftCurlyBracketKeyword_9()); }
+	'{'
+	{ after(grammarAccess.getAddRecordAccess().getLeftCurlyBracketKeyword_9()); }
 )
 ;
 finally {
@@ -4135,6 +4135,7 @@ rule__AddRecord__Group__10
 	}
 :
 	rule__AddRecord__Group__10__Impl
+	rule__AddRecord__Group__11
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -4146,9 +4147,35 @@ rule__AddRecord__Group__10__Impl
 	}
 :
 (
-	{ before(grammarAccess.getAddRecordAccess().getRightCurlyBracketKeyword_10()); }
+	{ before(grammarAccess.getAddRecordAccess().getFieldsAssignment_10()); }
+	(rule__AddRecord__FieldsAssignment_10)*
+	{ after(grammarAccess.getAddRecordAccess().getFieldsAssignment_10()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__AddRecord__Group__11
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__AddRecord__Group__11__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__AddRecord__Group__11__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getAddRecordAccess().getRightCurlyBracketKeyword_11()); }
 	'}'
-	{ after(grammarAccess.getAddRecordAccess().getRightCurlyBracketKeyword_10()); }
+	{ after(grammarAccess.getAddRecordAccess().getRightCurlyBracketKeyword_11()); }
 )
 ;
 finally {
@@ -8611,49 +8638,64 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__AddRecord__NamespaceAssignment_5
+rule__AddRecord__RecordAnnotationsAssignment_4
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileCrossReference_5_0()); }
+		{ before(grammarAccess.getAddRecordAccess().getRecordAnnotationsAnnotationParserRuleCall_4_0()); }
+		ruleAnnotation
+		{ after(grammarAccess.getAddRecordAccess().getRecordAnnotationsAnnotationParserRuleCall_4_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__AddRecord__NamespaceAssignment_6
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileCrossReference_6_0()); }
 		(
-			{ before(grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileIDTerminalRuleCall_5_0_1()); }
+			{ before(grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileIDTerminalRuleCall_6_0_1()); }
 			RULE_ID
-			{ after(grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileIDTerminalRuleCall_5_0_1()); }
+			{ after(grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileIDTerminalRuleCall_6_0_1()); }
 		)
-		{ after(grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileCrossReference_5_0()); }
+		{ after(grammarAccess.getAddRecordAccess().getNamespaceAvroIDLFileCrossReference_6_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__AddRecord__RecordNameAssignment_7
+rule__AddRecord__RecordNameAssignment_8
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getAddRecordAccess().getRecordNameIDTerminalRuleCall_7_0()); }
+		{ before(grammarAccess.getAddRecordAccess().getRecordNameIDTerminalRuleCall_8_0()); }
 		RULE_ID
-		{ after(grammarAccess.getAddRecordAccess().getRecordNameIDTerminalRuleCall_7_0()); }
+		{ after(grammarAccess.getAddRecordAccess().getRecordNameIDTerminalRuleCall_8_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__AddRecord__FieldsAssignment_9
+rule__AddRecord__FieldsAssignment_10
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getAddRecordAccess().getFieldsFieldParserRuleCall_9_0()); }
+		{ before(grammarAccess.getAddRecordAccess().getFieldsFieldParserRuleCall_10_0()); }
 		ruleField
-		{ after(grammarAccess.getAddRecordAccess().getFieldsFieldParserRuleCall_9_0()); }
+		{ after(grammarAccess.getAddRecordAccess().getFieldsFieldParserRuleCall_10_0()); }
 	)
 ;
 finally {

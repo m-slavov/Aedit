@@ -239,7 +239,7 @@ class AeditGenerator extends AbstractGenerator {
 		val schemaName = addRecord.recordName
 		// Get name of the protocol
 		val protocolName = addRecord.namespace.name
-
+		
 		val TypeDef newTypeDef = AvroIDLFactory.eINSTANCE.createTypeDef
 		newTypeDef.type = AvroIDLFactory.eINSTANCE.createRecordType => [
 			name = schemaName
@@ -248,6 +248,11 @@ class AeditGenerator extends AbstractGenerator {
 				fields.add(field.createField)
 			]
 		]
+		
+		//Add annotations
+		for (annotation : addRecord.recordAnnotations){
+			newTypeDef.annotations.add(annotation.createAnnotation)
+		}
 
 		protocols.get(protocolName).elements.add(addRecord.index, newTypeDef)
 	}

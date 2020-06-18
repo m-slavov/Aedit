@@ -1083,9 +1083,20 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
    * @generated
    */
   @Override
+  public EReference getAddRecord_RecordAnnotations()
+  {
+    return (EReference)addRecordEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EAttribute getAddRecord_RecordName()
   {
-    return (EAttribute)addRecordEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)addRecordEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1096,7 +1107,7 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
   @Override
   public EReference getAddRecord_Fields()
   {
-    return (EReference)addRecordEClass.getEStructuralFeatures().get(1);
+    return (EReference)addRecordEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -2190,6 +2201,7 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     createEReference(addEClass, ADD__NAMESPACE);
 
     addRecordEClass = createEClass(ADD_RECORD);
+    createEReference(addRecordEClass, ADD_RECORD__RECORD_ANNOTATIONS);
     createEAttribute(addRecordEClass, ADD_RECORD__RECORD_NAME);
     createEReference(addRecordEClass, ADD_RECORD__FIELDS);
 
@@ -2455,6 +2467,7 @@ public class AeditPackageImpl extends EPackageImpl implements AeditPackage
     initEReference(getAdd_Namespace(), theAvroIDLPackage.getAvroIDLFile(), null, "namespace", null, 0, 1, Add.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(addRecordEClass, AddRecord.class, "AddRecord", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAddRecord_RecordAnnotations(), this.getAnnotation(), null, "recordAnnotations", null, 0, -1, AddRecord.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAddRecord_RecordName(), ecorePackage.getEString(), "recordName", null, 0, 1, AddRecord.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAddRecord_Fields(), this.getField(), null, "fields", null, 0, -1, AddRecord.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

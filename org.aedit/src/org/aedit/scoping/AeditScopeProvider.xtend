@@ -15,6 +15,17 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.impl.AliasedEObjectDescription
 import org.eclipse.xtext.scoping.impl.SimpleScope
+import org.eclipse.xtext.EcoreUtil2
+import avroclipse.avroIDL.Field
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.common.util.EList
+import avroclipse.avroIDL.AvroIDLFile
+import avroclipse.avroIDL.TypeDef
+import avroclipse.avroIDL.RecordType
+import avroclipse.avroIDL.ErrorType
+import com.ibm.icu.impl.coll.SharedObject.Reference
+import avroclipse.avroIDL.ArrayFieldType
+import java.util.ArrayList
 
 /**
  * This class contains custom scoping description.
@@ -25,6 +36,39 @@ import org.eclipse.xtext.scoping.impl.SimpleScope
 class AeditScopeProvider extends AbstractAeditScopeProvider {
 
 	override getScope(EObject context, EReference reference) {
+		
+		if (context.eContainer instanceof ChangeSchema){
+			if (reference == AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY
+				|| reference == AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY
+				|| reference == AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE
+			){
+				val scope = super.getScope(context, reference)
+				//TODO: FIX
+				
+				val defs = scope.allElements.map [ d |
+				
+					val resourceSet = EcoreUtil2.getResourceSet(EcoreUtil2.getRoot(context, false))
+					val resources = resourceSet.resources
+					
+					if (d.name.segmentCount > 2) {
+						val shouldAdd = isArray(resources, d.name.segments.get(0), d.name.segments.get(1), d.name.segments.get(2))
+						
+						if (shouldAdd){
+							new AliasedEObjectDescription(QualifiedName.create(d.name.segments.get(2)), d)
+						} else {
+							new AliasedEObjectDescription(QualifiedName.create(""), d)
+						}
+						
+					} else if (d.name.segmentCount > 1) {
+						new AliasedEObjectDescription(QualifiedName.create(d.name.segments.get(1)), d)
+					} else {
+						new AliasedEObjectDescription(QualifiedName.create(d.name.toString()), d)
+					}
+				].map([d| d as IEObjectDescription])
+				 
+				return new SimpleScope(defs)
+			}
+		}
 
 		if (context.eContainer instanceof ChangeSchema || context.eContainer instanceof ChangeEnum) {
 			if (reference == AeditPackage.Literals.RENAME_VARIABLE__VARIABLE ||
@@ -86,5 +130,49 @@ class AeditScopeProvider extends AbstractAeditScopeProvider {
 			}
 		].map([d|d as IEObjectDescription])
 		return defs
+	}
+	
+	def isArray(EList<Resource> resources, String namespace, String schemaName,String arrayName){
+		for (resource : resources){
+			for (content : resource.contents){
+				if (content instanceof AvroIDLFile){
+					if (content.name.equals(namespace)){
+						return getSchema(content, schemaName, arrayName)
+					}
+				}
+			}
+		}
+		return false
+	}
+	
+	def getSchema(AvroIDLFile avroIDLFile, String schemaName, String arrayName){
+		for (element : avroIDLFile.elements){
+			if ( element instanceof TypeDef){
+				
+				val schema = element.type
+				
+				if (schema.name.equals(schemaName)){
+					return getArray(element, arrayName)
+				}
+				
+			}
+		}
+	}
+	
+	def getArray(TypeDef element, String arrayName){
+		val schema = element.type
+		if (schema instanceof ErrorType){
+			for (field : schema.fields){
+				if (field.name.equals(arrayName)){
+					return field.type instanceof ArrayFieldType
+				}
+			}
+		} else if (schema instanceof RecordType){
+			for (field : schema.fields){
+				if (field.name.equals(arrayName)){
+					return field.type instanceof ArrayFieldType
+				}
+			}
+		}
 	}
 }

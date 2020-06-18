@@ -339,6 +339,10 @@ public class AeditGenerator extends AbstractGenerator {
     };
     RecordType _doubleArrow = ObjectExtensions.<RecordType>operator_doubleArrow(_createRecordType, _function);
     newTypeDef.setType(_doubleArrow);
+    EList<Annotation> _recordAnnotations = addRecord.getRecordAnnotations();
+    for (final Annotation annotation : _recordAnnotations) {
+      newTypeDef.getAnnotations().add(this.createAnnotation(annotation));
+    }
     this.protocols.get(protocolName).getElements().add(addRecord.getIndex(), newTypeDef);
   }
   

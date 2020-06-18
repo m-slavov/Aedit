@@ -725,13 +725,22 @@ public interface AeditPackage extends EPackage
   int ADD_RECORD__NAMESPACE = ADD__NAMESPACE;
 
   /**
+   * The feature id for the '<em><b>Record Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_RECORD__RECORD_ANNOTATIONS = ADD_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Record Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ADD_RECORD__RECORD_NAME = ADD_FEATURE_COUNT + 0;
+  int ADD_RECORD__RECORD_NAME = ADD_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Fields</b></em>' containment reference list.
@@ -740,7 +749,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ADD_RECORD__FIELDS = ADD_FEATURE_COUNT + 1;
+  int ADD_RECORD__FIELDS = ADD_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Add Record</em>' class.
@@ -749,7 +758,7 @@ public interface AeditPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ADD_RECORD_FEATURE_COUNT = ADD_FEATURE_COUNT + 2;
+  int ADD_RECORD_FEATURE_COUNT = ADD_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.aedit.aedit.impl.AddErrorImpl <em>Add Error</em>}' class.
@@ -2482,6 +2491,17 @@ public interface AeditPackage extends EPackage
   EClass getAddRecord();
 
   /**
+   * Returns the meta object for the containment reference list '{@link org.aedit.aedit.AddRecord#getRecordAnnotations <em>Record Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Record Annotations</em>'.
+   * @see org.aedit.aedit.AddRecord#getRecordAnnotations()
+   * @see #getAddRecord()
+   * @generated
+   */
+  EReference getAddRecord_RecordAnnotations();
+
+  /**
    * Returns the meta object for the attribute '{@link org.aedit.aedit.AddRecord#getRecordName <em>Record Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3936,6 +3956,14 @@ public interface AeditPackage extends EPackage
      * @generated
      */
     EClass ADD_RECORD = eINSTANCE.getAddRecord();
+
+    /**
+     * The meta object literal for the '<em><b>Record Annotations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD_RECORD__RECORD_ANNOTATIONS = eINSTANCE.getAddRecord_RecordAnnotations();
 
     /**
      * The meta object literal for the '<em><b>Record Name</b></em>' attribute feature.

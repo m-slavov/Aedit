@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.aedit.aedit.AddRecord#getRecordAnnotations <em>Record Annotations</em>}</li>
  *   <li>{@link org.aedit.aedit.AddRecord#getRecordName <em>Record Name</em>}</li>
  *   <li>{@link org.aedit.aedit.AddRecord#getFields <em>Fields</em>}</li>
  * </ul>
@@ -24,6 +25,18 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface AddRecord extends Add
 {
+  /**
+   * Returns the value of the '<em><b>Record Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link org.aedit.aedit.Annotation}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Record Annotations</em>' containment reference list.
+   * @see org.aedit.aedit.AeditPackage#getAddRecord_RecordAnnotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getRecordAnnotations();
+
   /**
    * Returns the value of the '<em><b>Record Name</b></em>' attribute.
    * <!-- begin-user-doc -->

@@ -64,13 +64,13 @@ Add:
 	AddRecord | AddError | AddEnumeration;
 
 AddRecord:
-	'add.at' '(' index=INT ')' 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID '{' fields+=Field* '}';
+	'add.at' '(' index=INT ')' recordAnnotations+=Annotation* 'record' namespace=[avroIDL::AvroIDLFile] '.' recordName=ID '{' fields+=Field* '}';
 
 AddError:
-	'add.at' '(' index=INT ')' 'error' namespace=[avroIDL::AvroIDLFile] '.' errorName=ID '{' fields+=Field* '}';
+	'add.at' '(' index=INT ')'  'error' namespace=[avroIDL::AvroIDLFile] '.' errorName=ID '{' fields+=Field* '}';
 
 AddEnumeration:
-	'add.at' '(' index=INT ')' 'enum' namespace=[avroIDL::AvroIDLFile] '.' enumName=ID '{' symbols+=ID (',' symbols+=ID)*
+	'add.at' '(' index=INT ')'  'enum' namespace=[avroIDL::AvroIDLFile] '.' enumName=ID '{' symbols+=ID (',' symbols+=ID)*
 	'}';
 
 AddVariable:

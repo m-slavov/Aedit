@@ -4,6 +4,11 @@
 package org.aedit.ui.quickfix
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
+import org.aedit.validation.ErrorCodes
+import org.eclipse.xtext.ui.editor.quickfix.Fix
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
+import org.eclipse.xtext.validation.Issue
+import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
 
 /**
  * Custom quickfixes.
@@ -11,14 +16,51 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
  * See https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#quick-fixes
  */
 class AeditQuickfixProvider extends DefaultQuickfixProvider {
-
-//	@Fix(AeditValidator.INVALID_NAME)
-//	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
-//		acceptor.accept(issue, 'Capitalize name', 'Capitalize the name.', 'upcase.png') [
-//			context |
-//			val xtextDocument = context.xtextDocument
-//			val firstLetter = xtextDocument.get(issue.offset, 1)
-//			xtextDocument.replace(issue.offset, 1, firstLetter.toUpperCase)
-//		]
-//	}
+	
+	@Fix(ErrorCodes.DUPLICATE_FIELD)
+	def void suggestNewName(Issue issue, IssueResolutionAcceptor issueResolutionAcceptor){
+		issueResolutionAcceptor.accept(issue,
+			"Rename field",
+			"",
+			"",
+			[context | 
+				val xtextDocument = context.xtextDocument
+				val word = xtextDocument.get(issue.offset, issue.length)
+				xtextDocument.replace(issue.offset, issue.length, word+"1")
+			]
+			
+		)
+	}
+	
+	@Fix(ErrorCodes.DUPLICATE_ANNOTATION)
+	def void suggestNewAnnotationName(Issue issue, IssueResolutionAcceptor issueResolutionAcceptor){
+		issueResolutionAcceptor.accept(issue,
+			"Rename field",
+			"",
+			"",
+			[context | 
+				val xtextDocument = context.xtextDocument
+				val word = xtextDocument.get(issue.offset, issue.length)
+				xtextDocument.replace(issue.offset, issue.length, word+"1")
+			]
+			
+		)
+	}
+	
+	@Fix(ErrorCodes.DUPLICATE_ANNOTATION)
+	def void suggestNewEnumConstant(Issue issue, IssueResolutionAcceptor issueResolutionAcceptor){
+		issueResolutionAcceptor.accept(issue,
+			"Rename field",
+			"",
+			"",
+			[context | 
+				val xtextDocument = context.xtextDocument
+				val word = xtextDocument.get(issue.offset, issue.length)
+				xtextDocument.replace(issue.offset, issue.length, word+"1")
+			]
+			
+		)
+	}
+	
+	
 }

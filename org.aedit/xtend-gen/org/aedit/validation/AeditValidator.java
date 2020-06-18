@@ -56,6 +56,7 @@ import org.aedit.aedit.StringValue;
 import org.aedit.validation.AbstractAeditValidator;
 import org.aedit.validation.ErrorCodes;
 import org.aedit.validation.ErrorMessages;
+import org.aedit.validation.SensorFeatures;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -105,6 +106,7 @@ public class AeditValidator extends AbstractAeditValidator {
     AeditValidator.protocols.clear();
     this.existingAnnotations.clear();
     this.existingNameAnnotations.clear();
+    this.existingVariables.clear();
     boolean _isEmpty = AeditValidator.protocols.isEmpty();
     if (_isEmpty) {
       AeditValidator.protocols = HelperClass.getAvroFiles(model.eResource());
@@ -211,7 +213,7 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _isUnique = this.isUnique(newVar);
       if (_isUnique) {
         this.error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.RENAME_VARIABLE__NEW_VAR_NAME, 
-          ErrorCodes.RENAME_VARIABLE);
+          ErrorCodes.DUPLICATE_FIELD);
       } else {
         _xifexpression = this.removedVariables.add(oldVar);
       }
@@ -296,7 +298,7 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _xifexpression = false;
       if ((this.existingAnnotations.contains(fullName) || this.newAnnotations.contains(fullName))) {
         this.error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_ANNOTATION_TO_SCHEMA__ANNOTATION, 
-          ErrorCodes.ADD_ANNOTATION_TO_SCHEMA, fullName);
+          ErrorCodes.DUPLICATE_ANNOTATION, fullName);
       } else {
         _xifexpression = this.newAnnotations.add(fullName);
       }
@@ -317,15 +319,15 @@ public class AeditValidator extends AbstractAeditValidator {
       removeAnnotationFromSchema.getSchema());
     boolean _not = (!_checkIfTypeIsCorrect);
     if (_not) {
-      this.error("Incorrect type!", AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE, 
-        ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, fullName);
+      this.error(ErrorMessages.TYPE_MISSMATCH, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__SCHEMA_TYPE, 
+        ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA);
     }
     final String annotationToRemoveNamaspace = HelperClass.getAnnotationQualifiedName(
       removeAnnotationFromSchema.getAnnotationToRemove());
     boolean _equals = annotationToRemoveNamaspace.equals(fullName);
     boolean _not_1 = (!_equals);
     if (_not_1) {
-      this.error("Schema does not have such annotation!", 
+      this.error(ErrorMessages.ANNOTATION_NOT_IN_SCHEMA, 
         AeditPackage.Literals.REMOVE_ANNOTATION_FROM_SCHEMA__ANNOTATION_TO_REMOVE, 
         ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, fullName);
     }
@@ -350,7 +352,7 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _xifexpression = false;
       if ((this.existingAnnotations.contains(annotationFullName) || this.newAnnotations.contains(annotationFullName))) {
         this.error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_ANNOTATION_TO_FIELD__ANNOTATION, 
-          ErrorCodes.ADD_ANNOTATION_TO_FIELD, annotationFullName);
+          ErrorCodes.DUPLICATE_ANNOTATION, annotationFullName);
       } else {
         _xifexpression = this.newAnnotations.add(annotationFullName);
       }
@@ -378,7 +380,7 @@ public class AeditValidator extends AbstractAeditValidator {
       boolean _xifexpression = false;
       if ((this.existingNameAnnotations.contains(annotationFullName) || this.newNameAnnotations.contains(annotationFullName))) {
         this.error(ErrorMessages.DUPLICATE_ANNOTATION, AeditPackage.Literals.ADD_NAME_ANNOTATION_TO_FIELD__ANNOTATION, 
-          ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD, annotationFullName);
+          ErrorCodes.DUPLICATE_ANNOTATION, annotationFullName);
       } else {
         _xifexpression = this.newNameAnnotations.add(annotationFullName);
       }
@@ -498,18 +500,18 @@ public class AeditValidator extends AbstractAeditValidator {
       String newEnum = ((((this.currentProtocol + ".") + this.currentSchema) + ".") + _newEnumName);
       boolean _contains = this.removedVariables.contains(oldEnum);
       if (_contains) {
-        this.error("Variable has been deleted!", AeditPackage.Literals.RENAME_ENUM__OLD_NAME);
+        this.error(ErrorMessages.REMOVED_ENUM_CONST, AeditPackage.Literals.RENAME_ENUM__OLD_NAME, ErrorCodes.RENAME_ENUM_CONSTANT);
       } else {
         boolean _contains_1 = this.existingVariables.contains(oldEnum);
         boolean _not = (!_contains_1);
         if (_not) {
-          this.error("Variable has been deleted!", AeditPackage.Literals.RENAME_ENUM__OLD_NAME);
+          this.error(ErrorMessages.NON_EXISTENT_ENUM_CONST, AeditPackage.Literals.RENAME_ENUM__OLD_NAME, ErrorCodes.RENAME_ENUM_CONSTANT);
         }
       }
       boolean _xifexpression = false;
       boolean _isUnique = this.isUnique(newEnum);
       if (_isUnique) {
-        this.error("Variable with that name already exists!", AeditPackage.Literals.RENAME_ENUM__NEW_ENUM_NAME);
+        this.error(ErrorMessages.DUPLICATE_ENUM_CONST, AeditPackage.Literals.RENAME_ENUM__NEW_ENUM_NAME, ErrorCodes.DUPLICATE_ENUM_CONST);
       } else {
         _xifexpression = this.removedVariables.add(oldEnum);
       }
@@ -545,10 +547,13 @@ public class AeditValidator extends AbstractAeditValidator {
             if (_newType != null) {
               switch (_newType) {
                 case "string":
-                  this.error("Cannot convert from int to string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                  this.error(ErrorMessages.CONVERT_INT_TO_STRING, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                   break;
                 case "int":
-                  this.error("Variable is already of type int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                  this.error(ErrorMessages.CONVERT_INT_TO_INT, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
+                  break;
+                case "boolean":
+                  this.error(ErrorMessages.CONVERT_INT_TO_BOOL, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                   break;
               }
             }
@@ -559,16 +564,19 @@ public class AeditValidator extends AbstractAeditValidator {
               if (_newType_1 != null) {
                 switch (_newType_1) {
                   case "string":
-                    this.error("Cannot convert from long to string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                    this.error(ErrorMessages.CONVERT_LONG_TO_STRING, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                     break;
                   case "int":
-                    this.error("Cannot convert from long to int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                    this.error(ErrorMessages.CONVERT_LONG_TO_INT, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                     break;
                   case "double":
-                    this.error("Cannot convert from long to double!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                    this.error(ErrorMessages.CONVERT_LONG_TO_DOUBLE, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                     break;
                   case "long":
-                    this.error("Variable is already of type long!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                    this.error(ErrorMessages.CONVERT_LONG_TO_LONG, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
+                    break;
+                  case "boolean":
+                    this.error(ErrorMessages.CONVERT_LONG_TO_BOOL, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                     break;
                 }
               }
@@ -579,13 +587,16 @@ public class AeditValidator extends AbstractAeditValidator {
                 if (_newType_2 != null) {
                   switch (_newType_2) {
                     case "string":
-                      this.error("Cannot convert from double to string!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                      this.error(ErrorMessages.CONVERT_DOUBLE_TO_STRING, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                       break;
                     case "int":
-                      this.error("Cannot convert from double to int!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                      this.error(ErrorMessages.CONVERT_DOUBLE_TO_INT, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                       break;
                     case "double":
-                      this.error("Variable is already of type double!", AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE);
+                      this.error(ErrorMessages.CONVERT_DOUBLE_TO_DOUBLE, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
+                      break;
+                    case "boolean":
+                      this.error(ErrorMessages.CONVERT_DOUBLE_TO_BOOL, AeditPackage.Literals.CHANGE_TYPE__NEW_TYPE, ErrorCodes.TYPE_MISSMATCH);
                       break;
                   }
                 }
@@ -683,41 +694,41 @@ public class AeditValidator extends AbstractAeditValidator {
           org.aedit.aedit.Value _newVal_1 = changeDefValue.getNewVal();
           if ((_newVal_1 instanceof StringValue)) {
             _matched=true;
-            this.error("Cannot assign string to int!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL);
+            this.error(ErrorMessages.STRING_TO_INT, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
+          }
+          if (!_matched) {
+            org.aedit.aedit.Value _newVal_2 = changeDefValue.getNewVal();
+            if ((_newVal_2 instanceof FloatValue)) {
+              _matched=true;
+              this.error(ErrorMessages.FLOAT_TO_INT, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
+            }
           }
         } else {
           boolean _equals_1 = ((PrimativeTypeLink)varType).getTarget().equals("long");
           if (_equals_1) {
-            org.aedit.aedit.Value _newVal_2 = changeDefValue.getNewVal();
-            boolean _matched_1 = false;
             org.aedit.aedit.Value _newVal_3 = changeDefValue.getNewVal();
-            if ((_newVal_3 instanceof StringValue)) {
+            boolean _matched_1 = false;
+            org.aedit.aedit.Value _newVal_4 = changeDefValue.getNewVal();
+            if ((_newVal_4 instanceof StringValue)) {
               _matched_1=true;
-              this.error("Cannot assign string to long!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL);
+              this.error(ErrorMessages.STRING_TO_LONG, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
             }
             if (!_matched_1) {
-              org.aedit.aedit.Value _newVal_4 = changeDefValue.getNewVal();
-              if ((_newVal_4 instanceof FloatValue)) {
+              org.aedit.aedit.Value _newVal_5 = changeDefValue.getNewVal();
+              if ((_newVal_5 instanceof FloatValue)) {
                 _matched_1=true;
-                this.error("Cannot assign float to long!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL);
+                this.error(ErrorMessages.FLOAT_TO_LONG, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
               }
             }
           } else {
             boolean _equals_2 = ((PrimativeTypeLink)varType).getTarget().equals("double");
             if (_equals_2) {
-              org.aedit.aedit.Value _newVal_5 = changeDefValue.getNewVal();
-              boolean _matched_2 = false;
               org.aedit.aedit.Value _newVal_6 = changeDefValue.getNewVal();
-              if ((_newVal_6 instanceof StringValue)) {
+              boolean _matched_2 = false;
+              org.aedit.aedit.Value _newVal_7 = changeDefValue.getNewVal();
+              if ((_newVal_7 instanceof StringValue)) {
                 _matched_2=true;
-                this.error("Cannot assign string to double!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL);
-              }
-              if (!_matched_2) {
-                org.aedit.aedit.Value _newVal_7 = changeDefValue.getNewVal();
-                if ((_newVal_7 instanceof IntValue)) {
-                  _matched_2=true;
-                  this.error("Cannot assign int to double!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL);
-                }
+                this.error(ErrorMessages.STRING_TO_DOUBLE, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
               }
             } else {
               boolean _equals_3 = ((PrimativeTypeLink)varType).getTarget().equals("string");
@@ -727,13 +738,42 @@ public class AeditValidator extends AbstractAeditValidator {
                 org.aedit.aedit.Value _newVal_9 = changeDefValue.getNewVal();
                 if ((_newVal_9 instanceof IntValue)) {
                   _matched_3=true;
-                  this.error("Cannot assign integer to string!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL);
+                  this.error(ErrorMessages.INTEGER_TO_STRING, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
                 }
                 if (!_matched_3) {
                   org.aedit.aedit.Value _newVal_10 = changeDefValue.getNewVal();
                   if ((_newVal_10 instanceof FloatValue)) {
                     _matched_3=true;
-                    this.error("Cannot assign float to string!", AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL);
+                    this.error(ErrorMessages.FLOAT_TO_STRING, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
+                  }
+                }
+              } else {
+                boolean _equals_4 = ((PrimativeTypeLink)varType).getTarget().equals("float");
+                if (_equals_4) {
+                  org.aedit.aedit.Value _newVal_11 = changeDefValue.getNewVal();
+                  boolean _matched_4 = false;
+                  org.aedit.aedit.Value _newVal_12 = changeDefValue.getNewVal();
+                  if ((_newVal_12 instanceof StringValue)) {
+                    _matched_4=true;
+                    this.error(ErrorMessages.STRING_TO_FLOAT, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
+                  }
+                } else {
+                  boolean _equals_5 = ((PrimativeTypeLink)varType).getTarget().equals("boolean");
+                  if (_equals_5) {
+                    org.aedit.aedit.Value _newVal_13 = changeDefValue.getNewVal();
+                    boolean _matched_5 = false;
+                    org.aedit.aedit.Value _newVal_14 = changeDefValue.getNewVal();
+                    if ((_newVal_14 instanceof IntValue)) {
+                      _matched_5=true;
+                      this.error(ErrorMessages.INTEGER_TO_BOOL, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
+                    }
+                    if (!_matched_5) {
+                      org.aedit.aedit.Value _newVal_15 = changeDefValue.getNewVal();
+                      if ((_newVal_15 instanceof FloatValue)) {
+                        _matched_5=true;
+                        this.error(ErrorMessages.FLOAT_TO_BOOL, AeditPackage.Literals.CHANGE_DEF_VALUE__NEW_VAL, ErrorCodes.TYPE_MISSMATCH);
+                      }
+                    }
                   }
                 }
               }
@@ -755,7 +795,7 @@ public class AeditValidator extends AbstractAeditValidator {
     String _recordName = addRecord.getRecordName();
     String recordName = (_plus + _recordName);
     if ((this.existingVariables.contains(recordName) || this.newVariables.contains(recordName))) {
-      this.error(ErrorMessages.DUPLICATE_SCHEMA, AeditPackage.Literals.ADD_RECORD__RECORD_NAME, ErrorCodes.ADD_RECORD);
+      this.error(ErrorMessages.DUPLICATE_SCHEMA, AeditPackage.Literals.ADD_RECORD__RECORD_NAME, ErrorCodes.DUPLICATE_FIELD);
     } else {
       this.newVariables.add(recordName);
       EList<Field> _fields = addRecord.getFields();
@@ -765,8 +805,8 @@ public class AeditValidator extends AbstractAeditValidator {
           String fullFieldName = ((recordName + ".") + newFieldName);
           boolean _contains = this.newVariables.contains(fullFieldName);
           if (_contains) {
-            this.error("Variable with this name already exists!", AeditPackage.Literals.ADD_RECORD__FIELDS, 
-              addRecord.getFields().indexOf(field));
+            this.error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.ADD_RECORD__FIELDS, 
+              addRecord.getFields().indexOf(field), ErrorCodes.DUPLICATE_FIELD);
           } else {
             this.newVariables.add(fullFieldName);
           }
@@ -782,8 +822,8 @@ public class AeditValidator extends AbstractAeditValidator {
     String _enumName = addEnumeration.getEnumName();
     String enumName = (_plus + _enumName);
     if ((this.existingVariables.contains(enumName) || this.newVariables.contains(enumName))) {
-      this.error("Enumeration with this name already exists in this namespace!", 
-        AeditPackage.Literals.ADD_ENUMERATION__ENUM_NAME);
+      this.error(ErrorMessages.DUPLICATE_SCHEMA, 
+        AeditPackage.Literals.ADD_ENUMERATION__ENUM_NAME, ErrorCodes.DUPLICATE_FIELD);
     } else {
       this.newVariables.add(enumName);
       EList<String> _symbols = addEnumeration.getSymbols();
@@ -792,8 +832,8 @@ public class AeditValidator extends AbstractAeditValidator {
           String symbolName = (enumName + symbol);
           boolean _contains = this.newVariables.contains(symbol);
           if (_contains) {
-            this.error("Enum with this name already exists!", AeditPackage.Literals.ADD_ENUMERATION__SYMBOLS, 
-              addEnumeration.getSymbols().indexOf(symbol));
+            this.error(ErrorMessages.DUPLICATE_ENUM_CONST, AeditPackage.Literals.ADD_ENUMERATION__SYMBOLS, 
+              addEnumeration.getSymbols().indexOf(symbol), ErrorCodes.DUPLICATE_ENUM_CONST);
           } else {
             this.newVariables.add(symbolName);
           }
@@ -809,7 +849,7 @@ public class AeditValidator extends AbstractAeditValidator {
     boolean _contains = this.existingVariables.contains(fullName);
     if (_contains) {
       this.error(ErrorMessages.DUPLICATE_ENUM_CONST, AeditPackage.Literals.ADD_ENUM__VAR_NAME, 
-        ErrorCodes.ADD_ENUM_CONST);
+        ErrorCodes.DUPLICATE_ENUM_CONST);
     }
   }
   
@@ -826,7 +866,7 @@ public class AeditValidator extends AbstractAeditValidator {
         _xifexpression = this.newVariables.add(fullName);
       } else {
         this.error(ErrorMessages.DUPLICATE_FIELD, AeditPackage.Literals.ADD_VARIABLE__NEW_VAR, 
-          ErrorCodes.ADD_VARIABLE);
+          ErrorCodes.DUPLICATE_FIELD);
       }
       _xblockexpression = _xifexpression;
     }
@@ -861,7 +901,29 @@ public class AeditValidator extends AbstractAeditValidator {
   }
   
   @Check
-  public void checkForConflicts(final RuleMap rm) {
+  public Object checkForConflicts(final RuleMap rm) {
+    boolean nameIsValid = false;
+    SensorFeatures.Features[] _values = SensorFeatures.Features.values();
+    for (final SensorFeatures.Features value : _values) {
+      boolean _equals = value.toString().equals(rm.getName());
+      if (_equals) {
+        nameIsValid = true;
+      }
+    }
+    if ((!nameIsValid)) {
+      this.error(ErrorMessages.INVALID_NAME, AeditPackage.Literals.RULE_MAP__NAME, ErrorCodes.RULE_MAP);
+      return null;
+    }
+    String _name = rm.getName();
+    String _plus = ("RuleMap." + _name);
+    boolean _contains = this.existingVariables.contains(_plus);
+    if (_contains) {
+      this.error(ErrorMessages.DUPLICATE_NAME, AeditPackage.Literals.RULE_MAP__NAME, ErrorCodes.DUPLICATE_FIELD);
+      return null;
+    }
+    String _name_1 = rm.getName();
+    String _plus_1 = ("RuleMap." + _name_1);
+    this.existingVariables.add(_plus_1);
     EList<RuleDeclaration> _rules = rm.getRules();
     for (final RuleDeclaration ruleDecl : _rules) {
       EList<RuleDeclaration> _rules_1 = rm.getRules();
@@ -873,6 +935,7 @@ public class AeditValidator extends AbstractAeditValidator {
         }
       }
     }
+    return null;
   }
   
   public void getDeleteConflicts(final RuleDeclaration a, final RuleDeclaration b, final int index) {

@@ -174,65 +174,6 @@ public class AeditArrayValidatorTest {
   }
   
   @Test
-  public void testAddArrayValue__NotArray() {
-    try {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("rule Rule1 {");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("change record SRF.Burst_parameters {");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.append("add_value.at(0) foo => 1;");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("}");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("}");
-      _builder.newLine();
-      URI _createFileURI = URI.createFileURI("/Main.aedit");
-      ResourceSet _get = this.rsp.get();
-      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
-        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
-          try {
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("@namespace(\'SRF\')");
-            _builder_1.newLine();
-            _builder_1.append("protocol SRF{");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.append("record Burst_parameters{ ");
-            _builder_1.newLine();
-            _builder_1.append("\t\t");
-            _builder_1.append("array <int> myArray = [1 , 0  ]; ");
-            _builder_1.newLine();
-            _builder_1.append("\t\t");
-            _builder_1.append("int foo;");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.append("}");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.newLine();
-            _builder_1.append("}");
-            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
-            it_1.load(_stringInputStream, null);
-          } catch (Throwable _e) {
-            throw Exceptions.sneakyThrow(_e);
-          }
-        };
-        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
-      };
-      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddValueToArray(), ErrorCodes.ADD_ARRAY_VALUE, ErrorMessages.NOT_ARRAY);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  @Test
   public void testAddArrayValue__DeletedArray() {
     try {
       StringConcatenation _builder = new StringConcatenation();
@@ -609,65 +550,6 @@ public class AeditArrayValidatorTest {
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
       this._validationTestHelper.assertNoErrors(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow));
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  @Test
-  public void testRemoveArrayValueAtIndex__NotArray() {
-    try {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("rule Rule1 {");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("change record SRF.Burst_parameters {");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.append("remove_value.at(1) foo;");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("}");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("}");
-      _builder.newLine();
-      URI _createFileURI = URI.createFileURI("/Main.aedit");
-      ResourceSet _get = this.rsp.get();
-      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
-        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
-          try {
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("@namespace(\'SRF\')");
-            _builder_1.newLine();
-            _builder_1.append("protocol SRF{");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.append("record Burst_parameters{ ");
-            _builder_1.newLine();
-            _builder_1.append("\t\t");
-            _builder_1.append("array <int> myArray = [1 , 0  ]; ");
-            _builder_1.newLine();
-            _builder_1.append("\t\t");
-            _builder_1.append("int foo;");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.append("}");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.newLine();
-            _builder_1.append("}");
-            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
-            it_1.load(_stringInputStream, null);
-          } catch (Throwable _e) {
-            throw Exceptions.sneakyThrow(_e);
-          }
-        };
-        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
-      };
-      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveArrayValueAtIndex(), ErrorCodes.REMOVE_ARRAY_VALUE_AT_INDEX, ErrorMessages.NOT_ARRAY);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -1086,65 +968,6 @@ public class AeditArrayValidatorTest {
   }
   
   @Test
-  public void testRemoveArrayValue__NotArray() {
-    try {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("rule Rule1 {");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("change record SRF.Burst_parameters {");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.append("remove_value foo => 1;");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("}");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("}");
-      _builder.newLine();
-      URI _createFileURI = URI.createFileURI("/Main.aedit");
-      ResourceSet _get = this.rsp.get();
-      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
-        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
-          try {
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("@namespace(\'SRF\')");
-            _builder_1.newLine();
-            _builder_1.append("protocol SRF{");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.append("record Burst_parameters{ ");
-            _builder_1.newLine();
-            _builder_1.append("\t\t");
-            _builder_1.append("array <int> myArray = [1 , 0  ]; ");
-            _builder_1.newLine();
-            _builder_1.append("\t\t");
-            _builder_1.append("int foo;");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.append("}");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.newLine();
-            _builder_1.append("}");
-            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
-            it_1.load(_stringInputStream, null);
-          } catch (Throwable _e) {
-            throw Exceptions.sneakyThrow(_e);
-          }
-        };
-        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
-      };
-      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveArrayValue(), ErrorCodes.REMOVE_ARRAY_VALUE, ErrorMessages.NOT_ARRAY);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  @Test
   public void testRemoveArrayValue__DeletedArray() {
     try {
       StringConcatenation _builder = new StringConcatenation();
@@ -1254,62 +1077,6 @@ public class AeditArrayValidatorTest {
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
       this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveArrayValue(), ErrorCodes.REMOVE_ARRAY_VALUE, ErrorMessages.EMPTY_ARRAY);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  @Test
-  public void testRemoveArrayValue__ValueNotInArray() {
-    try {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("rule Rule1 {");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("change record SRF.Burst_parameters {");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.append("remove_value myArray => 5;");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("}");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("}");
-      _builder.newLine();
-      URI _createFileURI = URI.createFileURI("/Main.aedit");
-      ResourceSet _get = this.rsp.get();
-      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
-        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
-        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
-          try {
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("@namespace(\'SRF\')");
-            _builder_1.newLine();
-            _builder_1.append("protocol SRF{");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.append("record Burst_parameters{ ");
-            _builder_1.newLine();
-            _builder_1.append("\t\t");
-            _builder_1.append("array <int> myArray = [1 , 0 ]; ");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.append("}");
-            _builder_1.newLine();
-            _builder_1.append("\t");
-            _builder_1.newLine();
-            _builder_1.append("}");
-            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
-            it_1.load(_stringInputStream, null);
-          } catch (Throwable _e) {
-            throw Exceptions.sneakyThrow(_e);
-          }
-        };
-        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
-      };
-      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveArrayValue(), ErrorCodes.REMOVE_ARRAY_VALUE, ErrorMessages.VALUE_DOES_NOT_EXIST_IN_ARRAY);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

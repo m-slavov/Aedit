@@ -3,7 +3,14 @@
  */
 package org.aedit.ui.quickfix;
 
+import org.aedit.validation.ErrorCodes;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.ui.editor.model.edit.IModification;
+import org.eclipse.xtext.ui.editor.model.edit.IModificationContext;
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
+import org.eclipse.xtext.ui.editor.quickfix.Fix;
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
+import org.eclipse.xtext.validation.Issue;
 
 /**
  * Custom quickfixes.
@@ -12,4 +19,42 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
  */
 @SuppressWarnings("all")
 public class AeditQuickfixProvider extends DefaultQuickfixProvider {
+  @Fix(ErrorCodes.DUPLICATE_FIELD)
+  public void suggestNewName(final Issue issue, final IssueResolutionAcceptor issueResolutionAcceptor) {
+    final IModification _function = (IModificationContext context) -> {
+      final IXtextDocument xtextDocument = context.getXtextDocument();
+      final String word = xtextDocument.get((issue.getOffset()).intValue(), (issue.getLength()).intValue());
+      xtextDocument.replace((issue.getOffset()).intValue(), (issue.getLength()).intValue(), (word + "1"));
+    };
+    issueResolutionAcceptor.accept(issue, 
+      "Rename field", 
+      "", 
+      "", _function);
+  }
+  
+  @Fix(ErrorCodes.DUPLICATE_ANNOTATION)
+  public void suggestNewAnnotationName(final Issue issue, final IssueResolutionAcceptor issueResolutionAcceptor) {
+    final IModification _function = (IModificationContext context) -> {
+      final IXtextDocument xtextDocument = context.getXtextDocument();
+      final String word = xtextDocument.get((issue.getOffset()).intValue(), (issue.getLength()).intValue());
+      xtextDocument.replace((issue.getOffset()).intValue(), (issue.getLength()).intValue(), (word + "1"));
+    };
+    issueResolutionAcceptor.accept(issue, 
+      "Rename field", 
+      "", 
+      "", _function);
+  }
+  
+  @Fix(ErrorCodes.DUPLICATE_ANNOTATION)
+  public void suggestNewEnumConstant(final Issue issue, final IssueResolutionAcceptor issueResolutionAcceptor) {
+    final IModification _function = (IModificationContext context) -> {
+      final IXtextDocument xtextDocument = context.getXtextDocument();
+      final String word = xtextDocument.get((issue.getOffset()).intValue(), (issue.getLength()).intValue());
+      xtextDocument.replace((issue.getOffset()).intValue(), (issue.getLength()).intValue(), (word + "1"));
+    };
+    issueResolutionAcceptor.accept(issue, 
+      "Rename field", 
+      "", 
+      "", _function);
+  }
 }

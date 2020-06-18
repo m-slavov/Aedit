@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import org.aedit.aedit.AddRecord;
 import org.aedit.aedit.AeditPackage;
+import org.aedit.aedit.Annotation;
 import org.aedit.aedit.Field;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.aedit.aedit.impl.AddRecordImpl#getRecordAnnotations <em>Record Annotations</em>}</li>
  *   <li>{@link org.aedit.aedit.impl.AddRecordImpl#getRecordName <em>Record Name</em>}</li>
  *   <li>{@link org.aedit.aedit.impl.AddRecordImpl#getFields <em>Fields</em>}</li>
  * </ul>
@@ -38,6 +40,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class AddRecordImpl extends AddImpl implements AddRecord
 {
+  /**
+   * The cached value of the '{@link #getRecordAnnotations() <em>Record Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRecordAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> recordAnnotations;
+
   /**
    * The default value of the '{@link #getRecordName() <em>Record Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -95,6 +107,21 @@ public class AddRecordImpl extends AddImpl implements AddRecord
    * @generated
    */
   @Override
+  public EList<Annotation> getRecordAnnotations()
+  {
+    if (recordAnnotations == null)
+    {
+      recordAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, AeditPackage.ADD_RECORD__RECORD_ANNOTATIONS);
+    }
+    return recordAnnotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getRecordName()
   {
     return recordName;
@@ -139,6 +166,8 @@ public class AddRecordImpl extends AddImpl implements AddRecord
   {
     switch (featureID)
     {
+      case AeditPackage.ADD_RECORD__RECORD_ANNOTATIONS:
+        return ((InternalEList<?>)getRecordAnnotations()).basicRemove(otherEnd, msgs);
       case AeditPackage.ADD_RECORD__FIELDS:
         return ((InternalEList<?>)getFields()).basicRemove(otherEnd, msgs);
     }
@@ -155,6 +184,8 @@ public class AddRecordImpl extends AddImpl implements AddRecord
   {
     switch (featureID)
     {
+      case AeditPackage.ADD_RECORD__RECORD_ANNOTATIONS:
+        return getRecordAnnotations();
       case AeditPackage.ADD_RECORD__RECORD_NAME:
         return getRecordName();
       case AeditPackage.ADD_RECORD__FIELDS:
@@ -174,6 +205,10 @@ public class AddRecordImpl extends AddImpl implements AddRecord
   {
     switch (featureID)
     {
+      case AeditPackage.ADD_RECORD__RECORD_ANNOTATIONS:
+        getRecordAnnotations().clear();
+        getRecordAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case AeditPackage.ADD_RECORD__RECORD_NAME:
         setRecordName((String)newValue);
         return;
@@ -195,6 +230,9 @@ public class AddRecordImpl extends AddImpl implements AddRecord
   {
     switch (featureID)
     {
+      case AeditPackage.ADD_RECORD__RECORD_ANNOTATIONS:
+        getRecordAnnotations().clear();
+        return;
       case AeditPackage.ADD_RECORD__RECORD_NAME:
         setRecordName(RECORD_NAME_EDEFAULT);
         return;
@@ -215,6 +253,8 @@ public class AddRecordImpl extends AddImpl implements AddRecord
   {
     switch (featureID)
     {
+      case AeditPackage.ADD_RECORD__RECORD_ANNOTATIONS:
+        return recordAnnotations != null && !recordAnnotations.isEmpty();
       case AeditPackage.ADD_RECORD__RECORD_NAME:
         return RECORD_NAME_EDEFAULT == null ? recordName != null : !RECORD_NAME_EDEFAULT.equals(recordName);
       case AeditPackage.ADD_RECORD__FIELDS:

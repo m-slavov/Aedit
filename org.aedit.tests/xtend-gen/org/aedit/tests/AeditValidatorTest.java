@@ -43,6 +43,84 @@ public class AeditValidatorTest {
   private Provider<ResourceSet> rsp;
   
   @Test
+  public void testRuleMapDeclaration__InvalidName() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("ruleset RuleMap1 { }");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{ }");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRuleMap(), ErrorCodes.RULE_MAP, ErrorMessages.INVALID_NAME);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRuleMapDeclaration__DuplicateName() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("ruleset RuleSet1 { }");
+      _builder.newLine();
+      _builder.append("ruleset RuleSet1 { }");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{ }");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRuleMap(), ErrorCodes.DUPLICATE_FIELD, ErrorMessages.DUPLICATE_NAME);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
   public void testRemoveSchema__DeletedSchema() {
     try {
       StringConcatenation _builder = new StringConcatenation();
@@ -553,7 +631,7 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddRecord(), ErrorCodes.ADD_RECORD, ErrorMessages.DUPLICATE_SCHEMA);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddRecord(), ErrorCodes.DUPLICATE_FIELD, ErrorMessages.DUPLICATE_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -978,7 +1056,7 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameVariable(), ErrorCodes.RENAME_VARIABLE, ErrorMessages.DUPLICATE_FIELD);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameVariable(), ErrorCodes.DUPLICATE_FIELD, ErrorMessages.DUPLICATE_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -1280,7 +1358,7 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddVariable(), ErrorCodes.ADD_VARIABLE, ErrorMessages.DUPLICATE_FIELD);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddVariable(), ErrorCodes.DUPLICATE_FIELD, ErrorMessages.DUPLICATE_FIELD);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -1347,7 +1425,7 @@ public class AeditValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddEnum(), ErrorCodes.ADD_ENUM_CONST, ErrorMessages.DUPLICATE_ENUM_CONST);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddEnum(), ErrorCodes.DUPLICATE_ENUM_CONST, ErrorMessages.DUPLICATE_ENUM_CONST);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -1485,6 +1563,1442 @@ public class AeditValidatorTest {
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
       this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveEnum(), ErrorCodes.REMOVE_ENUM_CONST, ErrorMessages.NON_EXISTENT_ENUM_CONST);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRenameEnumConstant__RemovedEnumConstant() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change enum house.Colors {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("remove RED;");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("rename RED => NewPurple;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("enum Colors{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("RED, GREEN, BLUE\t");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameEnum(), ErrorCodes.RENAME_ENUM_CONSTANT, ErrorMessages.REMOVED_ENUM_CONST);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRenameEnumConstant__MissingEnumConstant() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change enum house.Colors {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("rename PURPLE => Green;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("enum Colors{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("RED, GREEN, BLUE\t");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameEnum(), ErrorCodes.RENAME_ENUM_CONSTANT, ErrorMessages.NON_EXISTENT_ENUM_CONST);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRenameEnumConstant_InvalidNewName() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change enum house.Colors {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("rename RED => GREEN;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("enum Colors{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("RED, GREEN, BLUE\t");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRenameEnum(), ErrorCodes.DUPLICATE_ENUM_CONST, ErrorMessages.DUPLICATE_ENUM_CONST);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue_StringToInt() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => Hello;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.STRING_TO_INT);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue_FloatToInt() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => 5.5;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.FLOAT_TO_INT);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue_StringToLong() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => Hello;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("long num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.STRING_TO_LONG);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue_FloatToLong() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => 5.5;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("long num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.FLOAT_TO_LONG);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue_FloatToDouble() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => Hello;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("double num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.STRING_TO_DOUBLE);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue_FloatToString() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => 5.5;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("string num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.FLOAT_TO_STRING);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue_IntegerToString() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => 1;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("string num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.INTEGER_TO_STRING);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue_StringToFloat() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => Hello;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("float num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.STRING_TO_FLOAT);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue__FloatToBoolean() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => 5.5;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("boolean num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.FLOAT_TO_BOOL);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeDefValue__IntToBoolean() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_val num => 1;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("boolean num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeDefValue(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.INTEGER_TO_BOOL);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertIntToString() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => string;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num = 1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_INT_TO_STRING);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertIntToInt() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => int;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num = 1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_INT_TO_INT);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertIntToBool() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => boolean;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num = 1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_INT_TO_BOOL);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertLongToInt() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => int;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("long num = 1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_INT);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertLongToString() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => string;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("long num = 1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_STRING);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertLongToDouble() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => double;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("long num = 1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_DOUBLE);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertLongToLong() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => long;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("long num = 1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_LONG);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertLongToBool() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => boolean;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("long num = 1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_BOOL);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertDoubleToBool() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => boolean;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("double num = 1.1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_DOUBLE_TO_BOOL);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertDoubleToString() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => string;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("double num = 1.1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_DOUBLE_TO_STRING);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertDoubleToDouble() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => double;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("double num = 1.1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_DOUBLE_TO_DOUBLE);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testChangeType__ConvertDoubleToInteger() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("change record house.Garage {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("set_type num => int;");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("double num = 1.1;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getChangeType(), ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_DOUBLE_TO_INT);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

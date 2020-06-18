@@ -2,7 +2,7 @@ package org.aedit.validation;
 
 public class ErrorCodes {
 	
-	protected static String ISSUE_CODE_PREFIX = "org.aedit.";
+	protected static final String ISSUE_CODE_PREFIX = "org.aedit.";
 	
 	public static String CHANGE_SCHEMA = ISSUE_CODE_PREFIX + "ChangeSchema";
 	public static String CHANGE_ENUM = ISSUE_CODE_PREFIX + "ChangeEnum";
@@ -13,7 +13,9 @@ public class ErrorCodes {
 	public static String REMOVE_ENUM_CONST = ISSUE_CODE_PREFIX + "RemoveEnumConst";
 	public static String CHANGE_TYPE = ISSUE_CODE_PREFIX + "ChangeType";
 	public static String CHANGE_DEF_VALUE = ISSUE_CODE_PREFIX + "ChangeDefValue";
-	public static String DUPLICATE_FIELD = ISSUE_CODE_PREFIX + "DuplicateField";
+	public static final String DUPLICATE_FIELD = ISSUE_CODE_PREFIX + "DuplicateField";
+	public static final String DUPLICATE_ANNOTATION= ISSUE_CODE_PREFIX + "DuplicateAnnotation";
+	public static final String DUPLICATE_ENUM_CONST= ISSUE_CODE_PREFIX + "DuplicateEnumConstant";
 	public static String ADD_RECORD = ISSUE_CODE_PREFIX + "AddRecord";
 	public static String ADD_VARIABLE = ISSUE_CODE_PREFIX + "AddVariable";
 	public static String ADD_ENUM_CONST = ISSUE_CODE_PREFIX + "AddEnumConst";
@@ -26,5 +28,7 @@ public class ErrorCodes {
 	public static String REMOVE_ARRAY_VALUE = ISSUE_CODE_PREFIX + "RemoveArrayValue";
 	public static String REMOVE_ARRAY_VALUE_AT_INDEX = ISSUE_CODE_PREFIX + "RemoveArrayValueAtIndex";
 	public static String ADD_ARRAY_VALUE = ISSUE_CODE_PREFIX + "AddArrayValue";
-			
+	public static String RENAME_ENUM_CONSTANT = ISSUE_CODE_PREFIX + "RenameEnumConstant";
+	public static String RULE_MAP = ISSUE_CODE_PREFIX + "RuleMap";
+	public static String TYPE_MISSMATCH = ISSUE_CODE_PREFIX + "TypeMissmatch";
 }

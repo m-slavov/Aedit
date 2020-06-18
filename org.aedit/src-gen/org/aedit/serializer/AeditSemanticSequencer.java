@@ -342,7 +342,7 @@ public class AeditSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     AddRecord returns AddRecord
 	 *
 	 * Constraint:
-	 *     (index=INT namespace=[AvroIDLFile|ID] recordName=ID fields+=Field*)
+	 *     (index=INT recordAnnotations+=Annotation* namespace=[AvroIDLFile|ID] recordName=ID fields+=Field*)
 	 */
 	protected void sequence_AddRecord(ISerializationContext context, AddRecord semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

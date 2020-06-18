@@ -3,14 +3,27 @@
  */
 package org.aedit.scoping;
 
+import avroclipse.avroIDL.ArrayFieldType;
+import avroclipse.avroIDL.AvroIDLFile;
+import avroclipse.avroIDL.ErrorType;
+import avroclipse.avroIDL.Field;
+import avroclipse.avroIDL.FieldType;
+import avroclipse.avroIDL.ProtocolElement;
+import avroclipse.avroIDL.RecordType;
+import avroclipse.avroIDL.Type;
+import avroclipse.avroIDL.TypeDef;
 import com.google.common.base.Objects;
 import org.aedit.aedit.AeditPackage;
 import org.aedit.aedit.ChangeEnum;
 import org.aedit.aedit.ChangeSchema;
 import org.aedit.aedit.RemoveAnnotationFromSchema;
 import org.aedit.scoping.AbstractAeditScopeProvider;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.impl.AliasedEObjectDescription;
@@ -31,6 +44,57 @@ public class AeditScopeProvider extends AbstractAeditScopeProvider {
   public IScope getScope(final EObject context, final EReference reference) {
     IScope _xblockexpression = null;
     {
+      EObject _eContainer = context.eContainer();
+      if ((_eContainer instanceof ChangeSchema)) {
+        if (((Objects.equal(reference, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY) || Objects.equal(reference, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY)) || Objects.equal(reference, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE))) {
+          final IScope scope = super.getScope(context, reference);
+          final Function1<IEObjectDescription, AliasedEObjectDescription> _function = (IEObjectDescription d) -> {
+            AliasedEObjectDescription _xblockexpression_1 = null;
+            {
+              final ResourceSet resourceSet = EcoreUtil2.getResourceSet(EcoreUtil2.getRoot(context, false));
+              final EList<Resource> resources = resourceSet.getResources();
+              AliasedEObjectDescription _xifexpression = null;
+              int _segmentCount = d.getName().getSegmentCount();
+              boolean _greaterThan = (_segmentCount > 2);
+              if (_greaterThan) {
+                AliasedEObjectDescription _xblockexpression_2 = null;
+                {
+                  final Boolean shouldAdd = this.isArray(resources, d.getName().getSegments().get(0), d.getName().getSegments().get(1), d.getName().getSegments().get(2));
+                  AliasedEObjectDescription _xifexpression_1 = null;
+                  if ((shouldAdd).booleanValue()) {
+                    QualifiedName _create = QualifiedName.create(d.getName().getSegments().get(2));
+                    _xifexpression_1 = new AliasedEObjectDescription(_create, d);
+                  } else {
+                    QualifiedName _create_1 = QualifiedName.create("");
+                    _xifexpression_1 = new AliasedEObjectDescription(_create_1, d);
+                  }
+                  _xblockexpression_2 = _xifexpression_1;
+                }
+                _xifexpression = _xblockexpression_2;
+              } else {
+                AliasedEObjectDescription _xifexpression_1 = null;
+                int _segmentCount_1 = d.getName().getSegmentCount();
+                boolean _greaterThan_1 = (_segmentCount_1 > 1);
+                if (_greaterThan_1) {
+                  QualifiedName _create = QualifiedName.create(d.getName().getSegments().get(1));
+                  _xifexpression_1 = new AliasedEObjectDescription(_create, d);
+                } else {
+                  QualifiedName _create_1 = QualifiedName.create(d.getName().toString());
+                  _xifexpression_1 = new AliasedEObjectDescription(_create_1, d);
+                }
+                _xifexpression = _xifexpression_1;
+              }
+              _xblockexpression_1 = _xifexpression;
+            }
+            return _xblockexpression_1;
+          };
+          final Function1<AliasedEObjectDescription, IEObjectDescription> _function_1 = (AliasedEObjectDescription d) -> {
+            return ((IEObjectDescription) d);
+          };
+          final Iterable<IEObjectDescription> defs = IterableExtensions.<AliasedEObjectDescription, IEObjectDescription>map(IterableExtensions.<IEObjectDescription, AliasedEObjectDescription>map(scope.getAllElements(), _function), _function_1);
+          return new SimpleScope(defs);
+        }
+      }
       if (((context.eContainer() instanceof ChangeSchema) || (context.eContainer() instanceof ChangeEnum))) {
         if (((((((((((Objects.equal(reference, AeditPackage.Literals.RENAME_VARIABLE__VARIABLE) || 
           Objects.equal(reference, AeditPackage.Literals.REMOVE_VARIABLE__VARIABLE)) || 
@@ -43,8 +107,8 @@ public class AeditScopeProvider extends AbstractAeditScopeProvider {
           Objects.equal(reference, AeditPackage.Literals.ADD_VALUE_TO_ARRAY__ARRAY)) || 
           Objects.equal(reference, AeditPackage.Literals.REMOVE_ARRAY_VALUE__VARIABLE)) || 
           Objects.equal(reference, AeditPackage.Literals.REMOVE_ARRAY_VALUE_AT_INDEX__ARRAY))) {
-          final IScope scope = super.getScope(context, reference);
-          final Function1<IEObjectDescription, AliasedEObjectDescription> _function = (IEObjectDescription d) -> {
+          final IScope scope_1 = super.getScope(context, reference);
+          final Function1<IEObjectDescription, AliasedEObjectDescription> _function_2 = (IEObjectDescription d) -> {
             AliasedEObjectDescription _xifexpression = null;
             int _segmentCount = d.getName().getSegmentCount();
             boolean _greaterThan = (_segmentCount > 2);
@@ -66,11 +130,11 @@ public class AeditScopeProvider extends AbstractAeditScopeProvider {
             }
             return _xifexpression;
           };
-          final Function1<AliasedEObjectDescription, IEObjectDescription> _function_1 = (AliasedEObjectDescription d) -> {
+          final Function1<AliasedEObjectDescription, IEObjectDescription> _function_3 = (AliasedEObjectDescription d) -> {
             return ((IEObjectDescription) d);
           };
-          final Iterable<IEObjectDescription> defs = IterableExtensions.<AliasedEObjectDescription, IEObjectDescription>map(IterableExtensions.<IEObjectDescription, AliasedEObjectDescription>map(scope.getAllElements(), _function), _function_1);
-          return new SimpleScope(defs);
+          final Iterable<IEObjectDescription> defs_1 = IterableExtensions.<AliasedEObjectDescription, IEObjectDescription>map(IterableExtensions.<IEObjectDescription, AliasedEObjectDescription>map(scope_1.getAllElements(), _function_2), _function_3);
+          return new SimpleScope(defs_1);
         } else {
           boolean _equals = Objects.equal(reference, AeditPackage.Literals.REMOVE_ANNOTATION_FROM_FIELD__ANNOTATION_TO_REMOVE);
           if (_equals) {
@@ -136,5 +200,60 @@ public class AeditScopeProvider extends AbstractAeditScopeProvider {
     };
     final Iterable<IEObjectDescription> defs = IterableExtensions.<AliasedEObjectDescription, IEObjectDescription>map(IterableExtensions.<IEObjectDescription, AliasedEObjectDescription>map(scope.getAllElements(), _function), _function_1);
     return defs;
+  }
+  
+  public Boolean isArray(final EList<Resource> resources, final String namespace, final String schemaName, final String arrayName) {
+    for (final Resource resource : resources) {
+      EList<EObject> _contents = resource.getContents();
+      for (final EObject content : _contents) {
+        if ((content instanceof AvroIDLFile)) {
+          boolean _equals = ((AvroIDLFile)content).getName().equals(namespace);
+          if (_equals) {
+            return this.getSchema(((AvroIDLFile)content), schemaName, arrayName);
+          }
+        }
+      }
+    }
+    return Boolean.valueOf(false);
+  }
+  
+  public Boolean getSchema(final AvroIDLFile avroIDLFile, final String schemaName, final String arrayName) {
+    EList<ProtocolElement> _elements = avroIDLFile.getElements();
+    for (final ProtocolElement element : _elements) {
+      if ((element instanceof TypeDef)) {
+        final Type schema = ((TypeDef)element).getType();
+        boolean _equals = schema.getName().equals(schemaName);
+        if (_equals) {
+          return this.getArray(((TypeDef)element), arrayName);
+        }
+      }
+    }
+    return null;
+  }
+  
+  public Boolean getArray(final TypeDef element, final String arrayName) {
+    final Type schema = element.getType();
+    if ((schema instanceof ErrorType)) {
+      EList<Field> _fields = ((ErrorType)schema).getFields();
+      for (final Field field : _fields) {
+        boolean _equals = field.getName().equals(arrayName);
+        if (_equals) {
+          FieldType _type = field.getType();
+          return Boolean.valueOf((_type instanceof ArrayFieldType));
+        }
+      }
+    } else {
+      if ((schema instanceof RecordType)) {
+        EList<Field> _fields_1 = ((RecordType)schema).getFields();
+        for (final Field field_1 : _fields_1) {
+          boolean _equals_1 = field_1.getName().equals(arrayName);
+          if (_equals_1) {
+            FieldType _type_1 = field_1.getType();
+            return Boolean.valueOf((_type_1 instanceof ArrayFieldType));
+          }
+        }
+      }
+    }
+    return null;
   }
 }

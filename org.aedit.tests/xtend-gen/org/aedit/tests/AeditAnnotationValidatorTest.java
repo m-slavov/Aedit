@@ -127,7 +127,7 @@ public class AeditAnnotationValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddAnnotationToSchema(), ErrorCodes.ADD_ANNOTATION_TO_SCHEMA, ErrorMessages.DUPLICATE_ANNOTATION);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddAnnotationToSchema(), ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -361,7 +361,7 @@ public class AeditAnnotationValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddAnnotationToField(), ErrorCodes.ADD_ANNOTATION_TO_FIELD, ErrorMessages.DUPLICATE_ANNOTATION);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddAnnotationToField(), ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -415,7 +415,7 @@ public class AeditAnnotationValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddAnnotationToField(), ErrorCodes.ADD_ANNOTATION_TO_FIELD, ErrorMessages.DUPLICATE_ANNOTATION);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddAnnotationToField(), ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -659,7 +659,7 @@ public class AeditAnnotationValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddNameAnnotationToField(), ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD, ErrorMessages.DUPLICATE_ANNOTATION);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddNameAnnotationToField(), ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -713,7 +713,7 @@ public class AeditAnnotationValidatorTest {
         ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
-      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddNameAnnotationToField(), ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD, ErrorMessages.DUPLICATE_ANNOTATION);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getAddNameAnnotationToField(), ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -1498,6 +1498,126 @@ public class AeditAnnotationValidatorTest {
       };
       ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
       this._validationTestHelper.assertNoErrors(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow));
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRemoveAnnotationFromSchema__SchemaTypeMissmatch() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("remove.annot error house.Garage => foo;");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("@foo(\"foo\")");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveAnnotationFromSchema(), ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, ErrorMessages.TYPE_MISSMATCH);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testRemoveAnnotationFromSchema__MissingAnnotation() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("rule Rule1 {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("remove.annot record house.Garage => foo1;");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      URI _createFileURI = URI.createFileURI("/Main.aedit");
+      ResourceSet _get = this.rsp.get();
+      final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+        Resource _createResource = it.createResource(URI.createFileURI("/Other.avdl"));
+        final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+          try {
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("@namespace(\'house\')");
+            _builder_1.newLine();
+            _builder_1.append("protocol House{");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("@foo(\"foo\")");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("@foo1(\"foo\")");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("record Garage{");
+            _builder_1.newLine();
+            _builder_1.append("\t\t");
+            _builder_1.append("int num;");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.append("}");
+            _builder_1.newLine();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("}");
+            StringInputStream _stringInputStream = new StringInputStream(_builder_1.toString(), "UTF-8");
+            it_1.load(_stringInputStream, null);
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      };
+      ResourceSet _doubleArrow = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+      this.assertMethod(this._parseHelper.parse(_builder, _createFileURI, _doubleArrow), AeditPackage.eINSTANCE.getRemoveAnnotationFromSchema(), ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, ErrorMessages.ANNOTATION_NOT_IN_SCHEMA);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

@@ -7,6 +7,7 @@ import avroclipse.avroIDL.AvroIDLFile;
 import avroclipse.avroIDL.BooleanValue;
 import avroclipse.avroIDL.CustomTypeLink;
 import avroclipse.avroIDL.EnumType;
+import avroclipse.avroIDL.ErrorType;
 import avroclipse.avroIDL.Field;
 import avroclipse.avroIDL.FieldType;
 import avroclipse.avroIDL.FloatValue;
@@ -133,6 +134,17 @@ public class AeditGeneratorTest {
           _builder.append("\t");
           _builder.append("}");
           _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("error Err{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int Foo;\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
           _builder.append("}");
           StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
           it_1.load(_stringInputStream, null);
@@ -151,10 +163,12 @@ public class AeditGeneratorTest {
     Assert.assertTrue(elements.contains("NSRadar.Radar.num"));
     Assert.assertTrue(elements.contains("NSRadar.Measures"));
     Assert.assertTrue(elements.contains("NSRadar.Measures.Foo"));
+    Assert.assertTrue(elements.contains("NSRadar.Err"));
+    Assert.assertTrue(elements.contains("NSRadar.Err.Foo"));
   }
   
   @Test
-  public void testRemoveRecord() {
+  public void testRemove__Record() {
     final String toRemove = "NSRadar.Radar";
     final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
     ResourceSet _get = this.rsp.get();
@@ -245,7 +259,7 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testRemoveEnum() {
+  public void testRemove__Enum() {
     final String toRemove = "NSRadar.Measures";
     final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
     ResourceSet _get = this.rsp.get();
@@ -340,7 +354,102 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testRenameRecord() {
+  public void testRemove__Error() {
+    final String toRemove = "NSRadar.Measures";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("remove error ");
+          _builder.append(toRemove, "\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("error Measures{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int Foo;");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    boolean _contains = elements.contains(toRemove);
+    boolean _not = (!_contains);
+    Assert.assertTrue(_not);
+  }
+  
+  @Test
+  public void testRename__Record() {
     final String protocolName = "NSRadar";
     final String toRename = ((protocolName + ".") + "Radar");
     final String newName = "NewRadar";
@@ -440,7 +549,7 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testRenameEnum() {
+  public void testRename__Enum() {
     final String protocolName = "NSRadar";
     final String toRename = ((protocolName + ".") + "Measures");
     final String newName = "NewMeasures";
@@ -540,7 +649,107 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testRemoveFieldFromRecord() {
+  public void testRename__Error() {
+    final String protocolName = "NSRadar";
+    final String toRename = ((protocolName + ".") + "Radar");
+    final String newName = "NewRadar";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("rename error ");
+          _builder.append(toRename, "\t");
+          _builder.append(" => ");
+          _builder.append(newName, "\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("error Radar{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int num;");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    boolean _contains = elements.contains(toRename);
+    boolean _not = (!_contains);
+    Assert.assertTrue(_not);
+    Assert.assertTrue(elements.contains(((protocolName + ".") + newName)));
+  }
+  
+  @Test
+  public void testRemoveField__Record() {
     final String recordName = "NSRadar.Record";
     final String fieldToRemove = "num";
     final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
@@ -647,7 +856,7 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testRemoveConstantFromEnum() {
+  public void testRemoveEnumConstant__Enum() {
     final String protocolName = "NSRadar";
     final String enumName = "Measures";
     final String constantToRemove = "Foo";
@@ -757,7 +966,114 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testRenameField() {
+  public void testRemoveField__Error() {
+    final String errorName = "NSRadar.Record";
+    final String fieldToRemove = "num";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("change error ");
+          _builder.append(errorName, "\t");
+          _builder.append(" {");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("remove ");
+          _builder.append(fieldToRemove, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("};");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("error Record{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int num;");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("string name;");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    boolean _contains = elements.contains(((errorName + ".") + fieldToRemove));
+    boolean _not = (!_contains);
+    Assert.assertTrue(_not);
+    Assert.assertTrue(elements.contains(((errorName + ".") + "name")));
+  }
+  
+  @Test
+  public void testRenameField__Record() {
     final String protocolName = "NSRadar";
     final String recordName = "Record";
     final String fieldToRename1 = "num";
@@ -885,7 +1201,135 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testRenameConstant() {
+  public void testRenameField__Error() {
+    final String protocolName = "NSRadar";
+    final String errorName = "Record";
+    final String fieldToRename1 = "num";
+    final String fieldToRename2 = "seconds";
+    final String newName1 = "newNum";
+    final String newName2 = "seconds1";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("change error ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(errorName, "\t");
+          _builder.append(" {");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("rename ");
+          _builder.append(fieldToRename1, "\t\t");
+          _builder.append(" => ");
+          _builder.append(newName1, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("rename ");
+          _builder.append(fieldToRename2, "\t\t");
+          _builder.append(" => ");
+          _builder.append(newName2, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("};");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("error Record{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int num;");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int seconds = 1;");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    boolean _contains = elements.contains(((((protocolName + ".") + errorName) + ".") + fieldToRename1));
+    boolean _not = (!_contains);
+    Assert.assertTrue(_not);
+    boolean _contains_1 = elements.contains(((((protocolName + ".") + errorName) + ".") + fieldToRename2));
+    boolean _not_1 = (!_contains_1);
+    Assert.assertTrue(_not_1);
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + errorName) + ".") + newName1)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + errorName) + ".") + newName2)));
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), errorName, newName1, "int")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), errorName, newName2, "int")).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), errorName, newName2, Integer.valueOf(1))).booleanValue());
+  }
+  
+  @Test
+  public void testRenameEnumConstant__Enum() {
     final String protocolName = "NSRadar";
     final String enumName = "Measures";
     final String constantToRename = "Foo";
@@ -999,7 +1443,7 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testAddFeildWithoutValueToRecord() {
+  public void testAddFeildWithoutValue__Record() {
     final String protocolName = "NSRadar";
     final String recordName = "Record";
     final String intField = "intVal";
@@ -1154,7 +1598,277 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testAddFeildWithValueToRecord() {
+  public void testAddFeildWithoutValue__Error() {
+    final String protocolName = "NSRadar";
+    final String errorName = "Record";
+    final String intField = "intVal";
+    final String stringField = "strVal";
+    final String floatField = "floatVal";
+    final String booleanField = "boolVal";
+    final String longField = "longVal";
+    final String doubleField = "doubleVal";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("change error ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(errorName, "\t");
+          _builder.append(" {");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) int ");
+          _builder.append(intField, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) string ");
+          _builder.append(stringField, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) float ");
+          _builder.append(floatField, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) boolean ");
+          _builder.append(booleanField, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) long ");
+          _builder.append(longField, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) double ");
+          _builder.append(doubleField, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("};");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("error Record{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int num;");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("string name;");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + errorName) + ".") + intField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + errorName) + ".") + stringField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + errorName) + ".") + booleanField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + errorName) + ".") + longField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + errorName) + ".") + doubleField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + errorName) + ".") + floatField)));
+    Assert.assertEquals(5, (this.getFieldPosition(this.generator.protocols.get(protocolName), errorName, intField)).intValue());
+    Assert.assertEquals(4, (this.getFieldPosition(this.generator.protocols.get(protocolName), errorName, stringField)).intValue());
+    Assert.assertEquals(3, (this.getFieldPosition(this.generator.protocols.get(protocolName), errorName, floatField)).intValue());
+    Assert.assertEquals(2, (this.getFieldPosition(this.generator.protocols.get(protocolName), errorName, booleanField)).intValue());
+    Assert.assertEquals(1, (this.getFieldPosition(this.generator.protocols.get(protocolName), errorName, longField)).intValue());
+    Assert.assertEquals(0, (this.getFieldPosition(this.generator.protocols.get(protocolName), errorName, doubleField)).intValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), errorName, intField, "int")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), errorName, stringField, "string")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), errorName, floatField, "float")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), errorName, doubleField, "double")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), errorName, booleanField, "boolean")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), errorName, longField, "long")).booleanValue());
+  }
+  
+  @Test
+  public void testAddFeild__CustomField() {
+    final String protocolName = "NSRadar";
+    final String recordName = "Record";
+    final String customField = "customVal";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("change record ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(recordName, "\t");
+          _builder.append(" {");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) NSRadar.CustomRecord ");
+          _builder.append(customField, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("};");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record Record{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int num;");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("string name;");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record CustomRecord{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + recordName) + ".") + customField)));
+    Assert.assertEquals(0, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, customField)).intValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), recordName, customField, "CustomRecord")).booleanValue());
+  }
+  
+  @Test
+  public void testAddFeildWithValue__Record() {
     final String protocolName = "NSRadar";
     final String recordName = "Record";
     final String intField = "intVal";
@@ -1326,7 +2040,179 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testAddConstantToEnum() {
+  public void testAddFeildWithValue__Error() {
+    final String protocolName = "NSRadar";
+    final String errorName = "Record";
+    final String intField = "intVal";
+    final String stringField = "strVal";
+    final String floatField = "floatVal";
+    final String booleanField1 = "boolVal1";
+    final String booleanField2 = "boolVal2";
+    final String longField = "longVal";
+    final String doubleField = "doubleVal";
+    final int intValue = 1;
+    final String stringValue = "HelloWorld";
+    final float floatValue = 99.9f;
+    final boolean booleanValue1 = false;
+    final boolean booleanValue2 = true;
+    final int longValue = 10000;
+    final float doubleValue = 66.6f;
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("change error ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(errorName, "\t");
+          _builder.append(" {");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) int ");
+          _builder.append(intField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(intValue, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) string ");
+          _builder.append(stringField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(stringValue, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) float ");
+          _builder.append(floatField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(floatValue, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) boolean ");
+          _builder.append(booleanField1, "\t\t");
+          _builder.append(" = ");
+          _builder.append(booleanValue1, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) boolean ");
+          _builder.append(booleanField2, "\t\t");
+          _builder.append(" = ");
+          _builder.append(booleanValue2, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) long ");
+          _builder.append(longField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(longValue, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("add.at(0) double ");
+          _builder.append(doubleField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(doubleValue, "\t\t");
+          _builder.append(" ;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("};");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("error Record{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int num;");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("string name;");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), errorName, intField, Integer.valueOf(intValue))).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), errorName, doubleField, Float.valueOf(doubleValue))).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), errorName, longField, Integer.valueOf(longValue))).booleanValue());
+    Assert.assertTrue(
+      (this.getFieldValue(this.generator.protocols.get(protocolName), errorName, booleanField1, Boolean.valueOf(booleanValue1))).booleanValue());
+    Assert.assertTrue(
+      (this.getFieldValue(this.generator.protocols.get(protocolName), errorName, booleanField2, Boolean.valueOf(booleanValue2))).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), errorName, stringField, stringValue)).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), errorName, floatField, Float.valueOf(floatValue))).booleanValue());
+  }
+  
+  @Test
+  public void testAddEnumConstant__Enum() {
     final String protocolName = "NSRadar";
     final String enumName = "Measures";
     final String constantToAdd = "WIDTH";
@@ -1433,7 +2319,7 @@ public class AeditGeneratorTest {
   }
   
   @Test
-  public void testAddRecord() {
+  public void testAdd__Record() {
     final String protocolName = "NSRadar";
     final String newRecordName = "Sensor";
     final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
@@ -1524,10 +2410,108 @@ public class AeditGeneratorTest {
     final List<String> elements = this.getElements(this.generator.protocols);
     Assert.assertTrue(elements.contains(((protocolName + ".") + newRecordName)));
     Assert.assertEquals(1, (this.getSchemaPosition(this.generator.protocols.get(protocolName), newRecordName)).intValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newRecordName);
+    Assert.assertTrue((_schemaType instanceof RecordType));
   }
   
   @Test
-  public void testAddEnum() {
+  public void testAdd__Error() {
+    final String protocolName = "NSRadar";
+    final String newErrorName = "Sensor";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("add.at(1) error ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(newErrorName, "\t");
+          _builder.append("{}");
+          _builder.newLineIfNotEmpty();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarOne{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarTwo{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    Assert.assertTrue(elements.contains(((protocolName + ".") + newErrorName)));
+    Assert.assertEquals(1, (this.getSchemaPosition(this.generator.protocols.get(protocolName), newErrorName)).intValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newErrorName);
+    Assert.assertTrue((_schemaType instanceof ErrorType));
+  }
+  
+  @Test
+  public void testAdd__Enum() {
     final String protocolName = "NSRadar";
     final String newEnumName = "Range";
     final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
@@ -1621,10 +2605,12 @@ public class AeditGeneratorTest {
     final List<String> elements = this.getElements(this.generator.protocols);
     Assert.assertTrue(elements.contains(((protocolName + ".") + newEnumName)));
     Assert.assertEquals(2, (this.getSchemaPosition(this.generator.protocols.get(protocolName), newEnumName)).intValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newEnumName);
+    Assert.assertTrue((_schemaType instanceof EnumType));
   }
   
   @Test
-  public void testAddRecordWithFieldsWithoutValues() {
+  public void testAdd__RecordWithFieldsWithoutValues() {
     final String protocolName = "NSRadar";
     final String newRecordName = "Sensor";
     final String intField = "intVal";
@@ -1768,10 +2754,161 @@ public class AeditGeneratorTest {
     Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newRecordName, doubleField, "double")).booleanValue());
     Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newRecordName, booleanField, "boolean")).booleanValue());
     Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newRecordName, longField, "long")).booleanValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newRecordName);
+    Assert.assertTrue((_schemaType instanceof RecordType));
   }
   
   @Test
-  public void testAddRecordWithCustomTypeFields() {
+  public void testAdd__ErrorWithFieldsWithoutValues() {
+    final String protocolName = "NSRadar";
+    final String newErrorName = "Sensor";
+    final String intField = "intVal";
+    final String stringField = "strVal";
+    final String floatField = "floatVal";
+    final String booleanField = "boolVal";
+    final String longField = "longVal";
+    final String doubleField = "doubleVal";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("add.at(2) error ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(newErrorName, "\t");
+          _builder.append("{");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("int ");
+          _builder.append(intField, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("string ");
+          _builder.append(stringField, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("float ");
+          _builder.append(floatField, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("boolean ");
+          _builder.append(booleanField, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("double ");
+          _builder.append(doubleField, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("long ");
+          _builder.append(longField, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarOne{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("enum Foo {}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarTwo{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    Assert.assertTrue(elements.contains(((protocolName + ".") + newErrorName)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + intField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + stringField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + floatField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + doubleField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + longField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + booleanField)));
+    Assert.assertEquals(0, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, intField)).intValue());
+    Assert.assertEquals(1, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, stringField)).intValue());
+    Assert.assertEquals(2, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, floatField)).intValue());
+    Assert.assertEquals(3, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, booleanField)).intValue());
+    Assert.assertEquals(4, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, doubleField)).intValue());
+    Assert.assertEquals(5, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, longField)).intValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, intField, "int")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, stringField, "string")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, floatField, "float")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, doubleField, "double")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, booleanField, "boolean")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, longField, "long")).booleanValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newErrorName);
+    Assert.assertTrue((_schemaType instanceof ErrorType));
+  }
+  
+  @Test
+  public void testAdd__RecordWithCustomTypeFields() {
     final String protocolName = "NSRadar";
     final String newRecordName = "Sensor";
     final String customTypeField1 = "customValRecord";
@@ -1886,10 +3023,132 @@ public class AeditGeneratorTest {
     Assert.assertTrue(
       (this.getFieldType(this.generator.protocols.get(protocolName), newRecordName, customTypeField1, "RadarOne")).booleanValue());
     Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newRecordName, customTypeField2, "Foo")).booleanValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newRecordName);
+    Assert.assertTrue((_schemaType instanceof RecordType));
   }
   
   @Test
-  public void testAddRecordWithFieldsWithValues() {
+  public void testAdd__ErrorWithCustomTypeFields() {
+    final String protocolName = "NSRadar";
+    final String newErrorName = "Sensor";
+    final String customTypeField1 = "customValRecord";
+    final String customTypeField2 = "customValEnum";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("add.at(2) error ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(newErrorName, "\t");
+          _builder.append("{");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("NSRadar.RadarOne ");
+          _builder.append(customTypeField1, "\t\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("NSRadar.Foo ");
+          _builder.append(customTypeField2, "\t\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarOne{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("enum Foo { FOO1 }");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarTwo{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    Assert.assertTrue(elements.contains(((protocolName + ".") + newErrorName)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + customTypeField1)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + customTypeField2)));
+    Assert.assertEquals(0, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, customTypeField1)).intValue());
+    Assert.assertEquals(1, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, customTypeField2)).intValue());
+    Assert.assertTrue(
+      (this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, customTypeField1, "RadarOne")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, customTypeField2, "Foo")).booleanValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newErrorName);
+    Assert.assertTrue((_schemaType instanceof ErrorType));
+  }
+  
+  @Test
+  public void testAdd__RecordWithFieldsWithValues() {
     final String protocolName = "NSRadar";
     final String newRecordName = "Sensor";
     final String intField = "intVal";
@@ -2071,10 +3330,199 @@ public class AeditGeneratorTest {
       (this.getFieldValue(this.generator.protocols.get(protocolName), newRecordName, booleanField2, Boolean.valueOf(booleanValue2))).booleanValue());
     Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), newRecordName, stringField, stringValue)).booleanValue());
     Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), newRecordName, floatField, Float.valueOf(floatValue))).booleanValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newRecordName);
+    Assert.assertTrue((_schemaType instanceof RecordType));
   }
   
   @Test
-  public void testAddEnumWithConstants() {
+  public void testAdd__ErrorWithFieldsWithValues() {
+    final String protocolName = "NSRadar";
+    final String newErrorName = "Sensor";
+    final String intField = "intVal";
+    final String stringField = "strVal";
+    final String floatField = "floatVal";
+    final String booleanField1 = "boolVal1";
+    final String booleanField2 = "boolVal2";
+    final String longField = "longVal";
+    final String doubleField = "doubleVal";
+    final int intValue = 1;
+    final String stringValue = "HelloWorld";
+    final float floatValue = 99.9f;
+    final boolean booleanValue1 = false;
+    final boolean booleanValue2 = true;
+    final int longValue = 10000;
+    final float doubleValue = 66.6f;
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("add.at(2) error ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(newErrorName, "\t");
+          _builder.append("{");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("int ");
+          _builder.append(intField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(intValue, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("string ");
+          _builder.append(stringField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(stringValue, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("float ");
+          _builder.append(floatField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(floatValue, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("boolean ");
+          _builder.append(booleanField1, "\t\t");
+          _builder.append(" = ");
+          _builder.append(booleanValue1, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("boolean ");
+          _builder.append(booleanField2, "\t\t");
+          _builder.append(" = ");
+          _builder.append(booleanValue2, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("double ");
+          _builder.append(doubleField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(doubleValue, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("long ");
+          _builder.append(longField, "\t\t");
+          _builder.append(" = ");
+          _builder.append(longValue, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarOne{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("enum Foo { }");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarTwo{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    final List<String> elements = this.getElements(this.generator.protocols);
+    Assert.assertTrue(elements.contains(((protocolName + ".") + newErrorName)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + intField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + stringField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + floatField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + doubleField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + longField)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + booleanField1)));
+    Assert.assertTrue(elements.contains(((((protocolName + ".") + newErrorName) + ".") + booleanField2)));
+    Assert.assertEquals(0, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, intField)).intValue());
+    Assert.assertEquals(1, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, stringField)).intValue());
+    Assert.assertEquals(2, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, floatField)).intValue());
+    Assert.assertEquals(3, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, booleanField1)).intValue());
+    Assert.assertEquals(4, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, booleanField2)).intValue());
+    Assert.assertEquals(5, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, doubleField)).intValue());
+    Assert.assertEquals(6, (this.getFieldPosition(this.generator.protocols.get(protocolName), newErrorName, longField)).intValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, intField, "int")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, stringField, "string")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, floatField, "float")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, doubleField, "double")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, booleanField1, "boolean")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, booleanField2, "boolean")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), newErrorName, longField, "long")).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), newErrorName, intField, Integer.valueOf(intValue))).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), newErrorName, doubleField, Float.valueOf(doubleValue))).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), newErrorName, longField, Integer.valueOf(longValue))).booleanValue());
+    Assert.assertTrue(
+      (this.getFieldValue(this.generator.protocols.get(protocolName), newErrorName, booleanField1, Boolean.valueOf(booleanValue1))).booleanValue());
+    Assert.assertTrue(
+      (this.getFieldValue(this.generator.protocols.get(protocolName), newErrorName, booleanField2, Boolean.valueOf(booleanValue2))).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), newErrorName, stringField, stringValue)).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), newErrorName, floatField, Float.valueOf(floatValue))).booleanValue());
+    Type _schemaType = this.getSchemaType(this.generator.protocols.get(protocolName), newErrorName);
+    Assert.assertTrue((_schemaType instanceof ErrorType));
+  }
+  
+  @Test
+  public void testAdd__EnumWithConstants() {
     final String protocolName = "NSRadar";
     final String newEnumName = "Range";
     final String constant1 = "WIDE";
@@ -2184,6 +3632,426 @@ public class AeditGeneratorTest {
     Assert.assertEquals(1, (this.getConstantValuePosition(this.generator.protocols.get(protocolName), newEnumName, constant2)).intValue());
   }
   
+  @Test
+  public void testChangeDefType__PrimitiveValue_NoValues() {
+    final String protocolName = "NSRadar";
+    final String recordName = "RadarOne";
+    final String intField = "intVal";
+    final String stringField = "strVal";
+    final String floatField = "floatVal";
+    final String booleanField1 = "boolVal1";
+    final String longField = "longVal";
+    final String doubleField = "doubleVal";
+    final String intType = "int";
+    final String stringType = "string";
+    final String floatType = "float";
+    final String booleanType = "boolean";
+    final String longType = "long";
+    final String doubleType = "double";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("change record ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(recordName, "\t");
+          _builder.append("{");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("set_type ");
+          _builder.append(intField, "\t\t");
+          _builder.append(" => ");
+          _builder.append(longType, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("set_type ");
+          _builder.append(stringField, "\t\t");
+          _builder.append(" => ");
+          _builder.append(doubleType, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("set_type ");
+          _builder.append(floatField, "\t\t");
+          _builder.append(" => ");
+          _builder.append(booleanType, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("set_type ");
+          _builder.append(booleanField1, "\t\t");
+          _builder.append(" => ");
+          _builder.append(floatType, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("set_type ");
+          _builder.append(doubleField, "\t\t");
+          _builder.append(" => ");
+          _builder.append(stringType, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("set_type ");
+          _builder.append(longField, "\t\t");
+          _builder.append(" => ");
+          _builder.append(intType, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarOne{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int ");
+          _builder.append(intField, "\t\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("string ");
+          _builder.append(stringField, "\t\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("float ");
+          _builder.append(floatField, "\t\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("boolean ");
+          _builder.append(booleanField1, "\t\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("double ");
+          _builder.append(doubleField, "\t\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("long ");
+          _builder.append(longField, "\t\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("enum Foo { }");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarTwo{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    Assert.assertEquals(0, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, intField)).intValue());
+    Assert.assertEquals(1, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, stringField)).intValue());
+    Assert.assertEquals(2, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, floatField)).intValue());
+    Assert.assertEquals(3, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, booleanField1)).intValue());
+    Assert.assertEquals(4, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, doubleField)).intValue());
+    Assert.assertEquals(5, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, longField)).intValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), recordName, intField, "long")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), recordName, stringField, "double")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), recordName, floatField, "boolean")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), recordName, doubleField, "string")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), recordName, booleanField1, "float")).booleanValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), recordName, longField, "int")).booleanValue());
+  }
+  
+  @Test
+  public void testChangeDefType__PrimitiveValue_WithValues() {
+    final String protocolName = "NSRadar";
+    final String recordName = "RadarOne";
+    final String intField = "intVal";
+    final String doubleType = "double";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("change record ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(recordName, "\t");
+          _builder.append("{");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("set_type ");
+          _builder.append(intField, "\t\t");
+          _builder.append(" => ");
+          _builder.append(doubleType, "\t\t");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarOne{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int ");
+          _builder.append(intField, "\t\t");
+          _builder.append(" = 1;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("enum Foo { }");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarTwo{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    Assert.assertEquals(0, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, intField)).intValue());
+    Assert.assertTrue((this.getFieldType(this.generator.protocols.get(protocolName), recordName, intField, "double")).booleanValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), recordName, intField, Integer.valueOf(1))).booleanValue());
+  }
+  
+  @Test
+  public void testChangeDefValue() {
+    final String protocolName = "NSRadar";
+    final String recordName = "RadarOne";
+    final String intField = "intVal";
+    final String doubleType = "double";
+    final InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+    ResourceSet _get = this.rsp.get();
+    final Procedure1<ResourceSet> _function = (ResourceSet it) -> {
+      Resource _createResource = it.createResource(URI.createFileURI("/Main.aedit"));
+      final Procedure1<Resource> _function_1 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("feature FeatureOne {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("RuleSet1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("use FeatureOne;");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource, _function_1);
+      Resource _createResource_1 = it.createResource(URI.createFileURI("/Other.aedit"));
+      final Procedure1<Resource> _function_2 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("rule Rule1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("change record ");
+          _builder.append(protocolName, "\t");
+          _builder.append(".");
+          _builder.append(recordName, "\t");
+          _builder.append("{");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("set_val ");
+          _builder.append(intField, "\t\t");
+          _builder.append(" => 55;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+          _builder.append("ruleset RuleSet1 {");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("Rule1");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_1, _function_2);
+      Resource _createResource_2 = it.createResource(URI.createFileURI("/Other.avdl"));
+      final Procedure1<Resource> _function_3 = (Resource it_1) -> {
+        try {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("@namespace(\'NSRadar\')");
+          _builder.newLine();
+          _builder.append("protocol NSRadar{");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarOne{");
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("int ");
+          _builder.append(intField, "\t\t");
+          _builder.append(" = 1;");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("enum Foo { }");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("record RadarTwo{}");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("}");
+          StringInputStream _stringInputStream = new StringInputStream(_builder.toString(), "UTF-8");
+          it_1.load(_stringInputStream, null);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      ObjectExtensions.<Resource>operator_doubleArrow(_createResource_2, _function_3);
+    };
+    final ResourceSet resourceSet = ObjectExtensions.<ResourceSet>operator_doubleArrow(_get, _function);
+    final GeneratorContext context = new GeneratorContext();
+    context.setCancelIndicator(CancelIndicator.NullImpl);
+    this.generator.doGenerate(resourceSet.getResources().get(0), fsa, context);
+    Assert.assertEquals(0, (this.getFieldPosition(this.generator.protocols.get(protocolName), recordName, intField)).intValue());
+    Assert.assertTrue((this.getFieldValue(this.generator.protocols.get(protocolName), recordName, intField, Integer.valueOf(55))).booleanValue());
+  }
+  
   public List<String> getElements(final Map<String, AvroIDLFile> protocols) {
     final List<String> schemasAndFields = new ArrayList<String>();
     final BiConsumer<String, AvroIDLFile> _function = (String p1, AvroIDLFile p2) -> {
@@ -2225,6 +4093,25 @@ public class AeditGeneratorTest {
                 String _plus_11 = (_plus_10 + _name_8);
                 schemasAndFields.add(_plus_11);
               }
+            } else {
+              if ((currentSchema instanceof ErrorType)) {
+                String _name_9 = p2.getName();
+                String _plus_12 = (_name_9 + ".");
+                String _name_10 = ((ErrorType)currentSchema).getName();
+                String _plus_13 = (_plus_12 + _name_10);
+                schemasAndFields.add(_plus_13);
+                EList<Field> _fields_1 = ((ErrorType)currentSchema).getFields();
+                for (final Field field_1 : _fields_1) {
+                  String _name_11 = p2.getName();
+                  String _plus_14 = (_name_11 + ".");
+                  String _name_12 = ((ErrorType)currentSchema).getName();
+                  String _plus_15 = (_plus_14 + _name_12);
+                  String _plus_16 = (_plus_15 + ".");
+                  String _name_13 = field_1.getName();
+                  String _plus_17 = (_plus_16 + _name_13);
+                  schemasAndFields.add(_plus_17);
+                }
+              }
             }
           }
         }
@@ -2248,6 +4135,20 @@ public class AeditGeneratorTest {
     return null;
   }
   
+  public Type getSchemaType(final AvroIDLFile avdl, final String schemaName) {
+    Iterable<TypeDef> _filter = Iterables.<TypeDef>filter(avdl.getElements(), TypeDef.class);
+    for (final TypeDef typeDef : _filter) {
+      {
+        Type currentSchema = typeDef.getType();
+        boolean _equals = currentSchema.getName().equals(schemaName);
+        if (_equals) {
+          return currentSchema;
+        }
+      }
+    }
+    return null;
+  }
+  
   public Integer getFieldPosition(final AvroIDLFile avdl, final String schemaName, final String fieldName) {
     Iterable<TypeDef> _filter = Iterables.<TypeDef>filter(avdl.getElements(), TypeDef.class);
     for (final TypeDef typeDef : _filter) {
@@ -2255,11 +4156,23 @@ public class AeditGeneratorTest {
         Type currentSchema = typeDef.getType();
         boolean _equals = currentSchema.getName().equals(schemaName);
         if (_equals) {
-          EList<Field> _fields = ((RecordType) currentSchema).getFields();
-          for (final Field field : _fields) {
-            boolean _equals_1 = field.getName().equals(fieldName);
-            if (_equals_1) {
-              return Integer.valueOf(((RecordType) currentSchema).getFields().indexOf(field));
+          if ((currentSchema instanceof ErrorType)) {
+            EList<Field> _fields = ((ErrorType)currentSchema).getFields();
+            for (final Field field : _fields) {
+              boolean _equals_1 = field.getName().equals(fieldName);
+              if (_equals_1) {
+                return Integer.valueOf(((ErrorType) currentSchema).getFields().indexOf(field));
+              }
+            }
+          } else {
+            if ((currentSchema instanceof RecordType)) {
+              EList<Field> _fields_1 = ((RecordType)currentSchema).getFields();
+              for (final Field field_1 : _fields_1) {
+                boolean _equals_2 = field_1.getName().equals(fieldName);
+                if (_equals_2) {
+                  return Integer.valueOf(((RecordType) currentSchema).getFields().indexOf(field_1));
+                }
+              }
             }
           }
         }
@@ -2291,11 +4204,23 @@ public class AeditGeneratorTest {
         Type currentSchema = typeDef.getType();
         boolean _equals = currentSchema.getName().equals(schemaName);
         if (_equals) {
-          EList<Field> _fields = ((RecordType) currentSchema).getFields();
-          for (final Field field : _fields) {
-            boolean _equals_1 = field.getName().equals(fieldName);
-            if (_equals_1) {
-              return Boolean.valueOf(this.getType(field.getType()).equals(expectedType));
+          if ((currentSchema instanceof RecordType)) {
+            EList<Field> _fields = ((RecordType)currentSchema).getFields();
+            for (final Field field : _fields) {
+              boolean _equals_1 = field.getName().equals(fieldName);
+              if (_equals_1) {
+                return Boolean.valueOf(this.getType(field.getType()).equals(expectedType));
+              }
+            }
+          } else {
+            if ((currentSchema instanceof ErrorType)) {
+              EList<Field> _fields_1 = ((ErrorType)currentSchema).getFields();
+              for (final Field field_1 : _fields_1) {
+                boolean _equals_2 = field_1.getName().equals(fieldName);
+                if (_equals_2) {
+                  return Boolean.valueOf(this.getType(field_1.getType()).equals(expectedType));
+                }
+              }
             }
           }
         }
@@ -2318,6 +4243,12 @@ public class AeditGeneratorTest {
           if ((_target_2 instanceof EnumType)) {
             Type _target_3 = ((CustomTypeLink)fieldType).getTarget();
             return ((EnumType) _target_3).getName();
+          } else {
+            Type _target_4 = ((CustomTypeLink)fieldType).getTarget();
+            if ((_target_4 instanceof ErrorType)) {
+              Type _target_5 = ((CustomTypeLink)fieldType).getTarget();
+              return ((ErrorType) _target_5).getName();
+            }
           }
         }
       }
@@ -2332,11 +4263,23 @@ public class AeditGeneratorTest {
         Type currentSchema = typeDef.getType();
         boolean _equals = currentSchema.getName().equals(schemaName);
         if (_equals) {
-          EList<Field> _fields = ((RecordType) currentSchema).getFields();
-          for (final Field field : _fields) {
-            boolean _equals_1 = field.getName().equals(fieldName);
-            if (_equals_1) {
-              return Boolean.valueOf(this.getDefValue(field.getDefault()).equals(expectedValue));
+          if ((currentSchema instanceof RecordType)) {
+            EList<Field> _fields = ((RecordType)currentSchema).getFields();
+            for (final Field field : _fields) {
+              boolean _equals_1 = field.getName().equals(fieldName);
+              if (_equals_1) {
+                return Boolean.valueOf(this.getDefValue(field.getDefault()).equals(expectedValue));
+              }
+            }
+          } else {
+            if ((currentSchema instanceof ErrorType)) {
+              EList<Field> _fields_1 = ((ErrorType)currentSchema).getFields();
+              for (final Field field_1 : _fields_1) {
+                boolean _equals_2 = field_1.getName().equals(fieldName);
+                if (_equals_2) {
+                  return Boolean.valueOf(this.getDefValue(field_1.getDefault()).equals(expectedValue));
+                }
+              }
             }
           }
         }

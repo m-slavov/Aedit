@@ -32,6 +32,7 @@ import avroclipse.avroIDL.RecordType
 import avroclipse.avroIDL.StringValue
 import avroclipse.avroIDL.TypeDef
 import avroclipse.avroIDL.Value
+import avroclipse.avroIDL.ErrorType
 
 @RunWith(XtextRunner)
 @InjectWith(AvroclipseProvider)
@@ -76,6 +77,10 @@ class AeditGeneratorTest {
 					enum Measures{
 						Foo
 					}
+					
+					error Err{
+						int Foo;	
+					}
 				}''', "UTF-8"), null)
 			]
 		]
@@ -90,10 +95,13 @@ class AeditGeneratorTest {
 		Assert.assertTrue(elements.contains("NSRadar.Radar.num"))
 		Assert.assertTrue(elements.contains("NSRadar.Measures"))
 		Assert.assertTrue(elements.contains("NSRadar.Measures.Foo"))
+		Assert.assertTrue(elements.contains("NSRadar.Err"))
+		Assert.assertTrue(elements.contains("NSRadar.Err.Foo"))
+		
 	}
 
 	@Test
-	def testRemoveRecord() {
+	def testRemove__Record() {
 
 		val toRemove = "NSRadar.Radar"
 		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
@@ -141,7 +149,7 @@ class AeditGeneratorTest {
 	}
 
 	@Test
-	def testRemoveEnum() {
+	def testRemove__Enum() {
 		val toRemove = "NSRadar.Measures"
 
 		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
@@ -188,9 +196,58 @@ class AeditGeneratorTest {
 		// Assert that the enum is removed
 		Assert.assertTrue(!elements.contains(toRemove))
 	}
+	
+	@Test
+	def testRemove__Error() {
+		val toRemove = "NSRadar.Measures"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						remove error «toRemove»;
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					error Measures{
+						int Foo;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that the enum is removed
+		Assert.assertTrue(!elements.contains(toRemove))
+	}
 
 	@Test
-	def testRenameRecord() {
+	def testRename__Record() {
 
 		val protocolName = "NSRadar"
 		val toRename = protocolName + "." + "Radar"
@@ -244,7 +301,7 @@ class AeditGeneratorTest {
 	}
 
 	@Test
-	def testRenameEnum() {
+	def testRename__Enum() {
 
 		val protocolName = "NSRadar"
 		val toRename = protocolName + "." + "Measures"
@@ -296,9 +353,63 @@ class AeditGeneratorTest {
 		// Assert that the enum with the new name is added
 		Assert.assertTrue(elements.contains(protocolName + "." + newName))
 	}
+	
+	@Test
+	def testRename__Error() {
+
+		val protocolName = "NSRadar"
+		val toRename = protocolName + "." + "Radar"
+		val newName = "NewRadar"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						rename error «toRename» => «newName»;
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					error Radar{
+						int num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that a record with the old name does not exist
+		Assert.assertTrue(!elements.contains(toRename))
+		// Assert that a reocrd with the new name has been added
+		Assert.assertTrue(elements.contains(protocolName + "." + newName))
+	}
 
 	@Test
-	def testRemoveFieldFromRecord() {
+	def testRemoveField__Record() {
 
 		val recordName = "NSRadar.Record"
 		val fieldToRemove = "num"
@@ -354,7 +465,7 @@ class AeditGeneratorTest {
 	}
 
 	@Test
-	def testRemoveConstantFromEnum() {
+	def testRemoveEnumConstant__Enum() {
 
 		val protocolName = "NSRadar"
 		val enumName = "Measures"
@@ -410,9 +521,65 @@ class AeditGeneratorTest {
 		Assert.assertTrue(elements.contains(protocolName + '.' + enumName + '.' + "Other"))
 
 	}
-
+	
 	@Test
-	def testRenameField() {
+	def testRemoveField__Error() {
+
+		val errorName = "NSRadar.Record"
+		val fieldToRemove = "num"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						change error «errorName» {
+							remove «fieldToRemove»
+						};
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					error Record{
+						int num;
+						string name;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that the field is removed
+		Assert.assertTrue(!elements.contains(errorName + '.' + fieldToRemove))
+		// Assert that the other field is not deleted
+		Assert.assertTrue(elements.contains(errorName + '.' + "name"))
+	}
+	
+	@Test
+	def testRenameField__Record() {
 
 		val protocolName = "NSRadar"
 		val recordName = "Record"
@@ -481,9 +648,80 @@ class AeditGeneratorTest {
 		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), recordName, newName2, 1))
 
 	}
+	
+	@Test
+	def testRenameField__Error() {
+
+		val protocolName = "NSRadar"
+		val errorName = "Record"
+
+		val fieldToRename1 = "num"
+		val fieldToRename2 = "seconds"
+
+		val newName1 = "newNum"
+		val newName2 = "seconds1"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						change error «protocolName».«errorName» {
+							rename «fieldToRename1» => «newName1»
+							rename «fieldToRename2» => «newName2»
+						};
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					error Record{
+						int num;
+						int seconds = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that fields with the old names no longer exist
+		Assert.assertTrue(!elements.contains(protocolName + '.' + errorName + '.' + fieldToRename1))
+		Assert.assertTrue(!elements.contains(protocolName + '.' + errorName + '.' + fieldToRename2))
+		// Assert that the fields with the new names are added
+		Assert.assertTrue(elements.contains(protocolName + '.' + errorName + '.' + newName1))
+		Assert.assertTrue(elements.contains(protocolName + '.' + errorName + '.' + newName2))
+		// Assert that the type remains unchanged
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), errorName, newName1, "int"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), errorName, newName2, "int"))
+		// Assert that the values remain unchanged
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), errorName, newName2, 1))
+
+	}
 
 	@Test
-	def testRenameConstant() {
+	def testRenameEnumConstant__Enum() {
 
 		val protocolName = "NSRadar"
 		val enumName = "Measures"
@@ -546,7 +784,7 @@ class AeditGeneratorTest {
 	}
 
 	@Test
-	def testAddFeildWithoutValueToRecord() {
+	def testAddFeildWithoutValue__Record() {
 
 		val protocolName = "NSRadar"
 		val recordName = "Record"
@@ -632,9 +870,162 @@ class AeditGeneratorTest {
 		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, longField, "long"))
 
 	}
-
+	
 	@Test
-	def testAddFeildWithValueToRecord() {
+	def testAddFeildWithoutValue__Error() {
+
+		val protocolName = "NSRadar"
+		val errorName = "Record"
+
+		val intField = "intVal";
+		val stringField = "strVal";
+		val floatField = "floatVal";
+		val booleanField = "boolVal";
+		val longField = "longVal";
+		val doubleField = "doubleVal"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						change error «protocolName».«errorName» {
+							add.at(0) int «intField» ;
+							add.at(0) string «stringField» ;
+							add.at(0) float «floatField» ;
+							add.at(0) boolean «booleanField» ;
+							add.at(0) long «longField» ;
+							add.at(0) double «doubleField» ;
+						};
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					error Record{
+						int num;
+						string name;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that all fields are added
+		Assert.assertTrue(elements.contains(protocolName + '.' + errorName + '.' + intField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + errorName + '.' + stringField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + errorName + '.' + booleanField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + errorName + '.' + longField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + errorName + '.' + doubleField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + errorName + '.' + floatField))
+
+		// Assert that all fields are added in the order that is specified in the DSL
+		Assert.assertEquals(5, getFieldPosition(generator.protocols.get(protocolName), errorName, intField))
+		Assert.assertEquals(4, getFieldPosition(generator.protocols.get(protocolName), errorName, stringField))
+		Assert.assertEquals(3, getFieldPosition(generator.protocols.get(protocolName), errorName, floatField))
+		Assert.assertEquals(2, getFieldPosition(generator.protocols.get(protocolName), errorName, booleanField))
+		Assert.assertEquals(1, getFieldPosition(generator.protocols.get(protocolName), errorName, longField))
+		Assert.assertEquals(0, getFieldPosition(generator.protocols.get(protocolName), errorName, doubleField))
+
+		// Assert that the fields are of the correct type
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), errorName, intField, "int"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), errorName, stringField, "string"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), errorName, floatField, "float"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), errorName, doubleField, "double"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), errorName, booleanField, "boolean"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), errorName, longField, "long"))
+
+	}
+	
+	@Test
+	def testAddFeild__CustomField() {
+
+		val protocolName = "NSRadar"
+		val recordName = "Record"
+
+		val customField = "customVal";
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						change record «protocolName».«recordName» {
+							add.at(0) NSRadar.CustomRecord «customField» ;
+						};
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					record Record{
+						int num;
+						string name;
+					}
+					
+					record CustomRecord{}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that all fields are added
+		Assert.assertTrue(elements.contains(protocolName + '.' + recordName + '.' + customField))
+
+		// Assert that all fields are added in the order that is specified in the DSL
+		Assert.assertEquals(0, getFieldPosition(generator.protocols.get(protocolName), recordName, customField))
+
+		// Assert that the fields are of the correct type
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, customField, "CustomRecord"))
+
+	}
+	
+	@Test
+	def testAddFeildWithValue__Record() {
 
 		val protocolName = "NSRadar"
 		val recordName = "Record"
@@ -716,9 +1107,93 @@ class AeditGeneratorTest {
 		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), recordName, stringField, stringValue))
 		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), recordName, floatField, floatValue))
 	}
+	
+	@Test
+	def testAddFeildWithValue__Error() {
+
+		val protocolName = "NSRadar"
+		val errorName = "Record"
+
+		val intField = "intVal";
+		val stringField = "strVal";
+		val floatField = "floatVal";
+		val booleanField1 = "boolVal1";
+		val booleanField2 = "boolVal2";
+		val longField = "longVal";
+		val doubleField = "doubleVal"
+
+		val intValue = 1
+		val stringValue = "HelloWorld"
+		val float floatValue = 99.9f
+		val booleanValue1 = false
+		val booleanValue2 = true
+		val longValue = 10000
+		val float doubleValue = 66.6f
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						change error «protocolName».«errorName» {
+							add.at(0) int «intField» = «intValue» ;
+							add.at(0) string «stringField» = «stringValue» ;
+							add.at(0) float «floatField» = «floatValue» ;
+							add.at(0) boolean «booleanField1» = «booleanValue1» ;
+							add.at(0) boolean «booleanField2» = «booleanValue2» ;
+							add.at(0) long «longField» = «longValue» ;
+							add.at(0) double «doubleField» = «doubleValue» ;
+						};
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					error Record{
+						int num;
+						string name;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+
+		// Assert that the correct values are assigned
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), errorName, intField, intValue))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), errorName, doubleField, doubleValue))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), errorName, longField, longValue))
+
+		Assert.assertTrue(
+			getFieldValue(generator.protocols.get(protocolName), errorName, booleanField1, booleanValue1))
+		Assert.assertTrue(
+			getFieldValue(generator.protocols.get(protocolName), errorName, booleanField2, booleanValue2))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), errorName, stringField, stringValue))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), errorName, floatField, floatValue))
+	}
 
 	@Test
-	def testAddConstantToEnum() {
+	def testAddEnumConstant__Enum() {
 
 		val protocolName = "NSRadar"
 		val enumName = "Measures"
@@ -778,7 +1253,7 @@ class AeditGeneratorTest {
 	}
 
 	@Test
-	def testAddRecord() {
+	def testAdd__Record() {
 
 		val protocolName = "NSRadar"
 		val newRecordName = "Sensor"
@@ -827,10 +1302,66 @@ class AeditGeneratorTest {
 		Assert.assertTrue(elements.contains(protocolName + '.' + newRecordName))
 		// Assert that the schema has been added to the correct position
 		Assert.assertEquals(1, getSchemaPosition(generator.protocols.get(protocolName), newRecordName))
+		//Assert that the schema has the correct type
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newRecordName) instanceof RecordType)
+	}
+	
+		@Test
+	def testAdd__Error() {
+
+		val protocolName = "NSRadar"
+		val newErrorName = "Sensor"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						add.at(1) error «protocolName».«newErrorName»{}
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					record RadarOne{}
+					record RadarTwo{}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that the schema has been added to the file
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName))
+		// Assert that the schema has been added to the correct position
+		Assert.assertEquals(1, getSchemaPosition(generator.protocols.get(protocolName), newErrorName))
+		//Assert that the schema has the correct type
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newErrorName) instanceof ErrorType)
 	}
 
 	@Test
-	def testAddEnum() {
+	def testAdd__Enum() {
 
 		val protocolName = "NSRadar"
 		val newEnumName = "Range"
@@ -880,10 +1411,11 @@ class AeditGeneratorTest {
 		Assert.assertTrue(elements.contains(protocolName + '.' + newEnumName))
 		// Assert that the schema has been added to the correct position
 		Assert.assertEquals(2, getSchemaPosition(generator.protocols.get(protocolName), newEnumName))
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newEnumName) instanceof EnumType)
 	}
 
 	@Test
-	def testAddRecordWithFieldsWithoutValues() {
+	def testAdd__RecordWithFieldsWithoutValues() {
 
 		val protocolName = "NSRadar"
 		val newRecordName = "Sensor"
@@ -970,10 +1502,105 @@ class AeditGeneratorTest {
 		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newRecordName, doubleField, "double"))
 		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newRecordName, booleanField, "boolean"))
 		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newRecordName, longField, "long"))
+		
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newRecordName) instanceof RecordType)
+	}
+	
+	@Test
+	def testAdd__ErrorWithFieldsWithoutValues() {
+
+		val protocolName = "NSRadar"
+		val newErrorName = "Sensor"
+
+		val intField = "intVal";
+		val stringField = "strVal";
+		val floatField = "floatVal";
+		val booleanField = "boolVal";
+		val longField = "longVal";
+		val doubleField = "doubleVal"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						add.at(2) error «protocolName».«newErrorName»{
+							int «intField»
+							string «stringField»
+							float «floatField»
+							boolean «booleanField»
+							double «doubleField»
+							long «longField»
+						}
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					record RadarOne{}
+					enum Foo {}
+					record RadarTwo{}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that the schema has been added to the file
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName))
+
+		// Assert that the fields are added
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + intField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + stringField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + floatField))
+
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + doubleField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + longField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + booleanField))
+		// Assert that the fields are added to the correct positions
+		Assert.assertEquals(0, getFieldPosition(generator.protocols.get(protocolName), newErrorName, intField))
+		Assert.assertEquals(1, getFieldPosition(generator.protocols.get(protocolName), newErrorName, stringField))
+		Assert.assertEquals(2, getFieldPosition(generator.protocols.get(protocolName), newErrorName, floatField))
+
+		Assert.assertEquals(3, getFieldPosition(generator.protocols.get(protocolName), newErrorName, booleanField))
+		Assert.assertEquals(4, getFieldPosition(generator.protocols.get(protocolName), newErrorName, doubleField))
+		Assert.assertEquals(5, getFieldPosition(generator.protocols.get(protocolName), newErrorName, longField))
+		// Assert that the fields are of the correct type
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, intField, "int"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, stringField, "string"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, floatField, "float"))
+
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, doubleField, "double"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, booleanField, "boolean"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, longField, "long"))
+		
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newErrorName) instanceof ErrorType)
+		
 	}
 
 	@Test
-	def testAddRecordWithCustomTypeFields() {
+	def testAdd__RecordWithCustomTypeFields() {
 
 		val protocolName = "NSRadar"
 		val newRecordName = "Sensor"
@@ -1040,10 +1667,86 @@ class AeditGeneratorTest {
 		Assert.assertTrue(
 			getFieldType(generator.protocols.get(protocolName), newRecordName, customTypeField1, "RadarOne"))
 		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newRecordName, customTypeField2, "Foo"))
+		
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newRecordName) instanceof RecordType)
+		
+	}
+	
+	@Test
+	def testAdd__ErrorWithCustomTypeFields() {
+
+		val protocolName = "NSRadar"
+		val newErrorName = "Sensor"
+
+		val customTypeField1 = "customValRecord"
+		val customTypeField2 = "customValEnum"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						add.at(2) error «protocolName».«newErrorName»{
+							NSRadar.RadarOne «customTypeField1»;
+							NSRadar.Foo «customTypeField2»;
+						}
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					record RadarOne{}
+					enum Foo { FOO1 }
+					record RadarTwo{}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that the schema has been added to the file
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName))
+
+		// Assert that the fields are added
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + customTypeField1))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + customTypeField2))
+
+		// Assert that the fields are added to the correct positions
+		Assert.assertEquals(0, getFieldPosition(generator.protocols.get(protocolName), newErrorName, customTypeField1))
+		Assert.assertEquals(1, getFieldPosition(generator.protocols.get(protocolName), newErrorName, customTypeField2))
+
+		// Assert that the fields are of the correct type
+		Assert.assertTrue(
+			getFieldType(generator.protocols.get(protocolName), newErrorName, customTypeField1, "RadarOne"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, customTypeField2, "Foo"))
+		
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newErrorName) instanceof ErrorType)
+		
 	}
 
 	@Test
-	def testAddRecordWithFieldsWithValues() {
+	def testAdd__RecordWithFieldsWithValues() {
 
 		val protocolName = "NSRadar"
 		val newRecordName = "Sensor"
@@ -1158,10 +1861,132 @@ class AeditGeneratorTest {
 		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), newRecordName, stringField, stringValue))
 		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), newRecordName, floatField, floatValue))
 
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newRecordName) instanceof RecordType)
+		
+	}
+	
+	@Test
+	def testAdd__ErrorWithFieldsWithValues() {
+
+		val protocolName = "NSRadar"
+		val newErrorName = "Sensor"
+
+		val intField = "intVal";
+		val stringField = "strVal";
+		val floatField = "floatVal";
+		val booleanField1 = "boolVal1";
+		val booleanField2 = "boolVal2";
+		val longField = "longVal";
+		val doubleField = "doubleVal"
+
+		val intValue = 1
+		val stringValue = "HelloWorld"
+		val float floatValue = 99.9f
+		val booleanValue1 = false
+		val booleanValue2 = true
+		val longValue = 10000
+		val float doubleValue = 66.6f
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						add.at(2) error «protocolName».«newErrorName»{
+							int «intField» = «intValue»
+							string «stringField» = «stringValue»
+							float «floatField» = «floatValue»
+							boolean «booleanField1» = «booleanValue1»
+							boolean «booleanField2» = «booleanValue2»
+							double «doubleField» = «doubleValue»
+							long «longField» = «longValue»
+						}
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					record RadarOne{}
+					enum Foo { }
+					record RadarTwo{}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+		val elements = getElements(generator.protocols)
+
+		// Assert that the schema has been added to the file
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName))
+
+		// Assert that the fields are added
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + intField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + stringField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + floatField))
+
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + doubleField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + longField))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + booleanField1))
+		Assert.assertTrue(elements.contains(protocolName + '.' + newErrorName + '.' + booleanField2))
+
+		// Assert that the fields are added to the correct positions
+		Assert.assertEquals(0, getFieldPosition(generator.protocols.get(protocolName), newErrorName, intField))
+		Assert.assertEquals(1, getFieldPosition(generator.protocols.get(protocolName), newErrorName, stringField))
+		Assert.assertEquals(2, getFieldPosition(generator.protocols.get(protocolName), newErrorName, floatField))
+
+		Assert.assertEquals(3, getFieldPosition(generator.protocols.get(protocolName), newErrorName, booleanField1))
+		Assert.assertEquals(4, getFieldPosition(generator.protocols.get(protocolName), newErrorName, booleanField2))
+		Assert.assertEquals(5, getFieldPosition(generator.protocols.get(protocolName), newErrorName, doubleField))
+		Assert.assertEquals(6, getFieldPosition(generator.protocols.get(protocolName), newErrorName, longField))
+
+		// Assert that the fields are of the correct type
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, intField, "int"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, stringField, "string"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, floatField, "float"))
+
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, doubleField, "double"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, booleanField1, "boolean"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, booleanField2, "boolean"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), newErrorName, longField, "long"))
+
+		// Assert that the correct values are assigned
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), newErrorName, intField, intValue))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), newErrorName, doubleField, doubleValue))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), newErrorName, longField, longValue))
+
+		Assert.assertTrue(
+			getFieldValue(generator.protocols.get(protocolName), newErrorName, booleanField1, booleanValue1))
+		Assert.assertTrue(
+			getFieldValue(generator.protocols.get(protocolName), newErrorName, booleanField2, booleanValue2))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), newErrorName, stringField, stringValue))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), newErrorName, floatField, floatValue))
+
+		Assert.assertTrue(getSchemaType(generator.protocols.get(protocolName), newErrorName) instanceof ErrorType)
+		
 	}
 
 	@Test
-	def testAddEnumWithConstants() {
+	def testAdd__EnumWithConstants() {
 		val protocolName = "NSRadar"
 		val newEnumName = "Range"
 
@@ -1224,6 +2049,219 @@ class AeditGeneratorTest {
 		Assert.assertEquals(1, getConstantValuePosition(generator.protocols.get(protocolName), newEnumName, constant2))
 	}
 
+	@Test
+	def testChangeDefType__PrimitiveValue_NoValues(){
+		val protocolName = "NSRadar"
+		val recordName = "RadarOne"
+
+		val intField = "intVal";
+		val stringField = "strVal";
+		val floatField = "floatVal";
+		val booleanField1 = "boolVal1";
+		val longField = "longVal";
+		val doubleField = "doubleVal"
+
+		val intType = "int"
+		val stringType = "string"
+		val floatType = "float"
+		val booleanType = "boolean"
+		val longType = "long"
+		val doubleType = "double"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						change record «protocolName».«recordName»{
+							set_type «intField» => «longType»
+							set_type «stringField» => «doubleType»
+							set_type «floatField» => «booleanType»
+							set_type «booleanField1» => «floatType»
+							set_type «doubleField» => «stringType»
+							set_type «longField» => «intType»
+						}
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					record RadarOne{
+						int «intField»;
+						string «stringField»;
+						float «floatField»;
+						boolean «booleanField1»;
+						double «doubleField»;
+						long «longField»;
+					}
+					enum Foo { }
+					record RadarTwo{}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+		
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+
+		// Assert that the fields are still in the correct positions
+		Assert.assertEquals(0, getFieldPosition(generator.protocols.get(protocolName), recordName, intField))
+		Assert.assertEquals(1, getFieldPosition(generator.protocols.get(protocolName), recordName, stringField))
+		Assert.assertEquals(2, getFieldPosition(generator.protocols.get(protocolName), recordName, floatField))
+
+		Assert.assertEquals(3, getFieldPosition(generator.protocols.get(protocolName), recordName, booleanField1))
+		Assert.assertEquals(4, getFieldPosition(generator.protocols.get(protocolName), recordName, doubleField))
+		Assert.assertEquals(5, getFieldPosition(generator.protocols.get(protocolName), recordName, longField))
+		// Assert that the fields are of the correct type
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, intField, "long"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, stringField, "double"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, floatField, "boolean"))
+
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, doubleField, "string"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, booleanField1, "float"))
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, longField, "int"))
+	}
+	
+	@Test
+	def testChangeDefType__PrimitiveValue_WithValues(){
+		val protocolName = "NSRadar"
+		val recordName = "RadarOne"
+
+		val intField = "intVal";
+		val doubleType = "double"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						change record «protocolName».«recordName»{
+							set_type «intField» => «doubleType»
+						}
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					record RadarOne{
+						int «intField» = 1;
+					}
+					enum Foo { }
+					record RadarTwo{}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+		
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+
+		// Assert that the fields are still in the correct positions
+		Assert.assertEquals(0, getFieldPosition(generator.protocols.get(protocolName), recordName, intField))
+
+		// Assert that the fields are of the correct type
+		Assert.assertTrue(getFieldType(generator.protocols.get(protocolName), recordName, intField, "double"))
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), recordName, intField, 1))
+	}
+	
+	@Test
+	def testChangeDefValue(){
+		val protocolName = "NSRadar"
+		val recordName = "RadarOne"
+
+		val intField = "intVal";
+		val doubleType = "double"
+
+		val InMemoryFileSystemAccess fsa = new InMemoryFileSystemAccess();
+		val resourceSet = rsp.get => [
+			createResource(URI.createFileURI("/Main.aedit")) => [
+				load(new StringInputStream('''
+					feature FeatureOne {
+						RuleSet1
+					}
+					
+					use FeatureOne;
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.aedit")) => [
+				load(new StringInputStream('''
+					rule Rule1 {
+						change record «protocolName».«recordName»{
+							set_val «intField» => 55;
+						}
+					}
+					
+					ruleset RuleSet1 {
+						Rule1
+					}
+				''', "UTF-8"), null)
+			]
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('NSRadar')
+				protocol NSRadar{
+					
+					record RadarOne{
+						int «intField» = 1;
+					}
+					enum Foo { }
+					record RadarTwo{}
+					
+				}''', "UTF-8"), null)
+			]
+		]
+		
+		val GeneratorContext context = new GeneratorContext();
+		context.setCancelIndicator(CancelIndicator.NullImpl);
+
+		generator.doGenerate(resourceSet.resources.get(0), fsa, context);
+
+		// Assert that the fields are still in the correct positions
+		Assert.assertEquals(0, getFieldPosition(generator.protocols.get(protocolName), recordName, intField))
+
+		// Assert that the fields are of the correct type
+		Assert.assertTrue(getFieldValue(generator.protocols.get(protocolName), recordName, intField, 55))
+	}
+	
+	
+
+	//Helper methods
 	def getElements(Map<String, AvroIDLFile> protocols) {
 		val List<String> schemasAndFields = new ArrayList<String>()
 		protocols.forEach [ p1, p2 |
@@ -1236,6 +2274,11 @@ class AeditGeneratorTest {
 						schemasAndFields.add(p2.name + '.' + currentSchema.name + '.' + literal)
 					}
 				} else if (currentSchema instanceof RecordType) {
+					schemasAndFields.add(p2.name + '.' + currentSchema.name)
+					for (field : currentSchema.fields) {
+						schemasAndFields.add(p2.name + '.' + currentSchema.name + '.' + field.name)
+					}
+				} else if (currentSchema instanceof ErrorType) {
 					schemasAndFields.add(p2.name + '.' + currentSchema.name)
 					for (field : currentSchema.fields) {
 						schemasAndFields.add(p2.name + '.' + currentSchema.name + '.' + field.name)
@@ -1256,6 +2299,15 @@ class AeditGeneratorTest {
 			}
 		}
 	}
+	
+	def getSchemaType(AvroIDLFile avdl, String schemaName){
+		for (typeDef : avdl.elements.filter(TypeDef)) {
+			var currentSchema = typeDef.type
+			if (currentSchema.name.equals(schemaName)) {
+				return currentSchema
+			}
+		}
+	}
 
 	def getFieldPosition(AvroIDLFile avdl, String schemaName, String fieldName) {
 
@@ -1263,9 +2315,18 @@ class AeditGeneratorTest {
 		for (typeDef : avdl.elements.filter(TypeDef)) {
 			var currentSchema = typeDef.type
 			if (currentSchema.name.equals(schemaName)) {
-				for (field : (currentSchema as RecordType).fields) {
+				
+				if (currentSchema instanceof ErrorType){
+					for (field : currentSchema.fields) {
 					if (field.name.equals(fieldName)) {
-						return (currentSchema as RecordType).fields.indexOf(field)
+							return (currentSchema as ErrorType).fields.indexOf(field)
+						}
+					}
+				} else if (currentSchema instanceof RecordType){
+					for (field : currentSchema.fields) {
+					if (field.name.equals(fieldName)) {
+							return (currentSchema as RecordType).fields.indexOf(field)
+						}
 					}
 				}
 			}
@@ -1290,8 +2351,9 @@ class AeditGeneratorTest {
 			var currentSchema = typeDef.type
 
 			if (currentSchema.name.equals(schemaName)) {
-
-				for (field : (currentSchema as RecordType).fields) {
+				
+				if (currentSchema instanceof RecordType){
+					for (field : currentSchema.fields) {
 
 					if (field.name.equals(fieldName)) {
 
@@ -1300,6 +2362,18 @@ class AeditGeneratorTest {
 					}
 
 				}
+				} else if (currentSchema instanceof ErrorType){
+					for (field : currentSchema.fields) {
+
+					if (field.name.equals(fieldName)) {
+
+						return getType(field.type).equals(expectedType)
+
+					}
+
+				}
+				}
+				
 			}
 		}
 	}
@@ -1312,6 +2386,8 @@ class AeditGeneratorTest {
 				return (fieldType.target as RecordType).name
 			} else if (fieldType.target instanceof EnumType) {
 				return (fieldType.target as EnumType).name
+			} else if (fieldType.target instanceof ErrorType){
+				return (fieldType.target as ErrorType).name
 			}
 		}
 	}
@@ -1320,11 +2396,20 @@ class AeditGeneratorTest {
 		for (typeDef : avdl.elements.filter(TypeDef)) {
 			var currentSchema = typeDef.type
 			if (currentSchema.name.equals(schemaName)) {
-				for (field : (currentSchema as RecordType).fields) {
-					if (field.name.equals(fieldName)) {
-						return getDefValue(field.^default).equals(expectedValue)
+				if (currentSchema instanceof RecordType){
+					for (field : currentSchema.fields) {
+						if (field.name.equals(fieldName)) {
+							return getDefValue(field.^default).equals(expectedValue)
+						}
+					}
+				} else if (currentSchema instanceof ErrorType){
+					for (field : currentSchema.fields) {
+						if (field.name.equals(fieldName)) {
+							return getDefValue(field.^default).equals(expectedValue)
+						}
 					}
 				}
+				
 			}
 		}
 	}

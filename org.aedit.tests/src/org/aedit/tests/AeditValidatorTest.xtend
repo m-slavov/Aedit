@@ -31,6 +31,39 @@ class AeditValidatorTest {
 	Provider<ResourceSet> rsp;
 
 	@Test
+	def void testRuleMapDeclaration__InvalidName(){
+		parse('''
+			ruleset RuleMap1 { }
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{ }
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.ruleMap, ErrorCodes.RULE_MAP, ErrorMessages.INVALID_NAME)
+	}
+	
+	@Test
+	def void testRuleMapDeclaration__DuplicateName(){
+		parse('''
+			ruleset RuleSet1 { }
+			ruleset RuleSet1 { }
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{ }
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.ruleMap, ErrorCodes.DUPLICATE_FIELD, ErrorMessages.DUPLICATE_NAME)
+	}
+
+	@Test
 	def void testRemoveSchema__DeletedSchema() {
 
 		parse('''
@@ -245,7 +278,7 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			] 
-		]).assertMethod(AeditPackage.eINSTANCE.addRecord, ErrorCodes.ADD_RECORD, ErrorMessages.DUPLICATE_SCHEMA)
+		]).assertMethod(AeditPackage.eINSTANCE.addRecord, ErrorCodes.DUPLICATE_FIELD, ErrorMessages.DUPLICATE_SCHEMA)
 	}
 
 	@Test
@@ -410,7 +443,7 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertMethod(AeditPackage.eINSTANCE.renameVariable, ErrorCodes.RENAME_VARIABLE, ErrorMessages.DUPLICATE_FIELD)
+		]).assertMethod(AeditPackage.eINSTANCE.renameVariable, ErrorCodes.DUPLICATE_FIELD, ErrorMessages.DUPLICATE_FIELD)
 	}
 	
 
@@ -528,7 +561,7 @@ class AeditValidatorTest {
 					}
 				}''', "UTF-8"), null)
 			]
-		]).assertMethod(AeditPackage.eINSTANCE.addVariable, ErrorCodes.ADD_VARIABLE, ErrorMessages.DUPLICATE_FIELD)
+		]).assertMethod(AeditPackage.eINSTANCE.addVariable, ErrorCodes.DUPLICATE_FIELD, ErrorMessages.DUPLICATE_FIELD)
 	}
 
 	@Test
@@ -554,7 +587,7 @@ class AeditValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertMethod(AeditPackage.eINSTANCE.addEnum, ErrorCodes.ADD_ENUM_CONST, ErrorMessages.DUPLICATE_ENUM_CONST)
+		]).assertMethod(AeditPackage.eINSTANCE.addEnum, ErrorCodes.DUPLICATE_ENUM_CONST, ErrorMessages.DUPLICATE_ENUM_CONST)
 	}
 
 	@Test
@@ -609,7 +642,573 @@ class AeditValidatorTest {
 			]
 		]).assertMethod(AeditPackage.eINSTANCE.removeEnum, ErrorCodes.REMOVE_ENUM_CONST, ErrorMessages.NON_EXISTENT_ENUM_CONST)
 	}
+	
+	@Test
+	def testRenameEnumConstant__RemovedEnumConstant(){
+		parse('''
+			rule Rule1 {
+					change enum house.Colors {
+						remove RED;
+						rename RED => NewPurple;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					
+					enum Colors{
+						RED, GREEN, BLUE	
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.renameEnum, ErrorCodes.RENAME_ENUM_CONSTANT, ErrorMessages.REMOVED_ENUM_CONST)
+	}
+	
+	@Test
+	def testRenameEnumConstant__MissingEnumConstant(){
+		parse('''
+			rule Rule1 {
+					change enum house.Colors {
+						rename PURPLE => Green;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					
+					enum Colors{
+						RED, GREEN, BLUE	
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.renameEnum, ErrorCodes.RENAME_ENUM_CONSTANT, ErrorMessages.NON_EXISTENT_ENUM_CONST)
+	}
+	
+	@Test
+	def testRenameEnumConstant_InvalidNewName(){
+		parse('''
+			rule Rule1 {
+					change enum house.Colors {
+						rename RED => GREEN;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					
+					enum Colors{
+						RED, GREEN, BLUE	
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.renameEnum, ErrorCodes.DUPLICATE_ENUM_CONST, ErrorMessages.DUPLICATE_ENUM_CONST)
+	}
 
+	@Test
+	def testChangeDefValue_StringToInt(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => Hello;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.STRING_TO_INT)
+	}
+	
+	@Test
+	def testChangeDefValue_FloatToInt(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => 5.5;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.FLOAT_TO_INT)
+	}
+	
+	@Test
+	def testChangeDefValue_StringToLong(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => Hello;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						long num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.STRING_TO_LONG)
+	}
+	
+	@Test
+	def testChangeDefValue_FloatToLong(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => 5.5;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						long num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.FLOAT_TO_LONG)
+	}
+	
+	@Test
+	def testChangeDefValue_FloatToDouble(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => Hello;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						double num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.STRING_TO_DOUBLE)
+	}
+	
+	@Test
+	def testChangeDefValue_FloatToString(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => 5.5;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						string num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.FLOAT_TO_STRING)
+	}
+	
+	@Test
+	def testChangeDefValue_IntegerToString(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => 1;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						string num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.INTEGER_TO_STRING)
+	}
+	
+	@Test
+	def testChangeDefValue_StringToFloat(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => Hello;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						float num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.STRING_TO_FLOAT)
+	}
+	
+	@Test
+	def testChangeDefValue__FloatToBoolean(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => 5.5;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						boolean num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.FLOAT_TO_BOOL)
+	}
+	
+	
+	
+	@Test
+	def testChangeDefValue__IntToBoolean(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_val num => 1;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						boolean num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeDefValue, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.INTEGER_TO_BOOL)
+	}
+	
+	@Test
+	def testChangeType__ConvertIntToString(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => string;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_INT_TO_STRING)
+	}
+	
+	@Test
+	def testChangeType__ConvertIntToInt(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => int;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_INT_TO_INT)
+	}
+	
+	@Test
+	def testChangeType__ConvertIntToBool(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => boolean;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						int num = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_INT_TO_BOOL)
+	}
+	
+	@Test
+	def testChangeType__ConvertLongToInt(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => int;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						long num = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_INT)
+	}
+	
+	@Test
+	def testChangeType__ConvertLongToString(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => string;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						long num = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_STRING)
+	}
+	
+	@Test
+	def testChangeType__ConvertLongToDouble(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => double;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						long num = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_DOUBLE)
+	}
+	
+	@Test
+	def testChangeType__ConvertLongToLong(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => long;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						long num = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_LONG)
+	}
+	
+	@Test
+	def testChangeType__ConvertLongToBool(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => boolean;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						long num = 1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_LONG_TO_BOOL)
+	}
+	
+	@Test
+	def testChangeType__ConvertDoubleToBool(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => boolean;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						double num = 1.1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_DOUBLE_TO_BOOL)
+	}
+	
+	@Test
+	def testChangeType__ConvertDoubleToString(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => string;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						double num = 1.1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_DOUBLE_TO_STRING)
+	}
+	
+	@Test
+	def testChangeType__ConvertDoubleToDouble(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => double;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						double num = 1.1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_DOUBLE_TO_DOUBLE)
+	}
+	
+	@Test
+	def testChangeType__ConvertDoubleToInteger(){
+		parse('''
+			rule Rule1 {
+					change record house.Garage {
+						set_type num => int;
+					}
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					record Garage{
+						double num = 1.1;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.changeType, ErrorCodes.TYPE_MISSMATCH, ErrorMessages.CONVERT_DOUBLE_TO_INT)
+	}
+	
+	
 	def private assertMethod(Model m, EClass model, String code, String message) {
 		m.assertError(
 			model,

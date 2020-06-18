@@ -68,7 +68,7 @@ class AeditAnnotationValidatorTest {
 					
 				}''', "UTF-8"), null)
 			]
-		]).assertMethod(AeditPackage.eINSTANCE.addAnnotationToSchema, ErrorCodes.ADD_ANNOTATION_TO_SCHEMA, ErrorMessages.DUPLICATE_ANNOTATION)
+		]).assertMethod(AeditPackage.eINSTANCE.addAnnotationToSchema, ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION)
 		
 	}
 	
@@ -165,7 +165,7 @@ class AeditAnnotationValidatorTest {
 					}
 				}''', "UTF-8"), null)
 			]
-		]).assertMethod(AeditPackage.eINSTANCE.addAnnotationToField, ErrorCodes.ADD_ANNOTATION_TO_FIELD, ErrorMessages.DUPLICATE_ANNOTATION)
+		]).assertMethod(AeditPackage.eINSTANCE.addAnnotationToField, ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION)
 	}
 	
 	@Test
@@ -186,7 +186,7 @@ class AeditAnnotationValidatorTest {
 					}
 				}''', "UTF-8"), null)
 			]
-		]).assertMethod(AeditPackage.eINSTANCE.addAnnotationToField, ErrorCodes.ADD_ANNOTATION_TO_FIELD, ErrorMessages.DUPLICATE_ANNOTATION)
+		]).assertMethod(AeditPackage.eINSTANCE.addAnnotationToField, ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION)
 	}
 	
 	@Test
@@ -286,7 +286,7 @@ class AeditAnnotationValidatorTest {
 					}
 				}''', "UTF-8"), null)
 			]
-		]).assertMethod(AeditPackage.eINSTANCE.addNameAnnotationToField, ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD, ErrorMessages.DUPLICATE_ANNOTATION)
+		]).assertMethod(AeditPackage.eINSTANCE.addNameAnnotationToField, ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION)
 	}
 	
 	@Test
@@ -307,7 +307,7 @@ class AeditAnnotationValidatorTest {
 					}
 				}''', "UTF-8"), null)
 			]
-		]).assertMethod(AeditPackage.eINSTANCE.addNameAnnotationToField, ErrorCodes.ADD_NAME_ANNOTATION_TO_FIELD, ErrorMessages.DUPLICATE_ANNOTATION)
+		]).assertMethod(AeditPackage.eINSTANCE.addNameAnnotationToField, ErrorCodes.DUPLICATE_ANNOTATION, ErrorMessages.DUPLICATE_ANNOTATION)
 	}
 	
 	@Test
@@ -635,6 +635,53 @@ class AeditAnnotationValidatorTest {
 			]
 		]).assertNoErrors
 		
+	}
+	
+	@Test
+	def testRemoveAnnotationFromSchema__SchemaTypeMissmatch(){
+		parse('''
+			rule Rule1 {
+					remove.annot error house.Garage => foo;
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					@foo("foo")
+					record Garage{
+						int num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.removeAnnotationFromSchema, ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, ErrorMessages.TYPE_MISSMATCH)
+	}
+	
+	@Test
+	def testRemoveAnnotationFromSchema__MissingAnnotation(){
+		parse('''
+			rule Rule1 {
+					remove.annot record house.Garage => foo1;
+				}
+		''', URI.createFileURI("/Main.aedit"), rsp.get => [
+			createResource(URI.createFileURI("/Other.avdl")) => [
+				load(new StringInputStream('''
+				@namespace('house')
+				protocol House{
+					@foo("foo")
+					record Garage{
+						int num;
+					}
+					
+					@foo1("foo")
+					record Garage{
+						int num;
+					}
+					
+				}''', "UTF-8"), null)
+			]
+		]).assertMethod(AeditPackage.eINSTANCE.removeAnnotationFromSchema, ErrorCodes.REMOVE_ANNOTATION_FROM_SCHEMA, ErrorMessages.ANNOTATION_NOT_IN_SCHEMA)
 	}
 	
 	def private assertMethod(Model m, EClass model, String code, String message) {
